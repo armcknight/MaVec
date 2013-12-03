@@ -55,6 +55,11 @@
                                   columns:columns];
 }
 
+- (void)dealloc
+{
+    free(self.values);
+}
+
 #pragma mark - Matrix operations
 
 - (Matrix *)transpose
