@@ -1,14 +1,18 @@
 //
 //  main.m
-//  McNumerics
+//  MCNumerics
 //
-//  Created by andrew mcknight on 12/1/13.
+//  Created by andrew mcknight on 12/2/13.
 //  Copyright (c) 2013 andrew mcknight. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <UIKit/UIKit.h>
 
-int main(int argc, const char * argv[])
+#import "AppDelegate.h"
+
+int main(int argc, char * argv[])
 {
-    return NSApplicationMain(argc, argv);
+    @autoreleasepool {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+    }
 }

@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49B6823C184C202D006A61D3"
-               BuildableName = "McNumerics.app"
-               BlueprintName = "McNumerics"
-               ReferencedContainer = "container:McNumerics.xcodeproj">
+               BlueprintIdentifier = "49B6828B184D8342006A61D3"
+               BuildableName = "MCNumerics.app"
+               BlueprintName = "MCNumerics"
+               ReferencedContainer = "container:MCNumerics.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49B6825D184C202D006A61D3"
-               BuildableName = "McNumericsTests.xctest"
-               BlueprintName = "McNumericsTests"
-               ReferencedContainer = "container:McNumerics.xcodeproj">
+               BlueprintIdentifier = "49B682A6184D8342006A61D3"
+               BuildableName = "MCNumericsTests.xctest"
+               BlueprintName = "MCNumericsTests"
+               ReferencedContainer = "container:MCNumerics.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49B6823C184C202D006A61D3"
-            BuildableName = "McNumerics.app"
-            BlueprintName = "McNumerics"
-            ReferencedContainer = "container:McNumerics.xcodeproj">
+            BlueprintIdentifier = "49B6828B184D8342006A61D3"
+            BuildableName = "MCNumerics.app"
+            BlueprintName = "MCNumerics"
+            ReferencedContainer = "container:MCNumerics.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -61,10 +61,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49B6823C184C202D006A61D3"
-            BuildableName = "McNumerics.app"
-            BlueprintName = "McNumerics"
-            ReferencedContainer = "container:McNumerics.xcodeproj">
+            BlueprintIdentifier = "49B6828B184D8342006A61D3"
+            BuildableName = "MCNumerics.app"
+            BlueprintName = "MCNumerics"
+            ReferencedContainer = "container:MCNumerics.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49B6823C184C202D006A61D3"
-            BuildableName = "McNumerics.app"
-            BlueprintName = "McNumerics"
-            ReferencedContainer = "container:McNumerics.xcodeproj">
+            BlueprintIdentifier = "49B6828B184D8342006A61D3"
+            BuildableName = "MCNumerics.app"
+            BlueprintName = "MCNumerics"
+            ReferencedContainer = "container:MCNumerics.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
