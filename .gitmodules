@@ -1,0 +1,3 @@
+[submodule "MCNumerics/External"]
+	path = MCNumerics/External
+	url = https://sixstringtheory@github.com/Raizlabs/RZCollectionList.git
