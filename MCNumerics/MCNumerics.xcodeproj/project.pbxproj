@@ -238,13 +238,8 @@
 		49B68295184D8342006A61D3 /* MCNumerics */ = {
 			isa = PBXGroup;
 			children = (
-				49B6829E184D8342006A61D3 /* AppDelegate.h */,
-				49B6829F184D8342006A61D3 /* AppDelegate.m */,
-				49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */,
-				49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */,
-				49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */,
-				49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */,
-				49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */,
+				49B682E71854DEB8006A61D3 /* Demo */,
+				49B682E81854DEC1006A61D3 /* Library */,
 				49B682A1184D8342006A61D3 /* Images.xcassets */,
 				49B68296184D8342006A61D3 /* Supporting Files */,
 			);
@@ -278,6 +273,35 @@
 				49B682B1184D8342006A61D3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		49B682E71854DEB8006A61D3 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				494F4458185B61BB00347096 /* External */,
+				49B6829E184D8342006A61D3 /* AppDelegate.h */,
+				49B6829F184D8342006A61D3 /* AppDelegate.m */,
+				49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */,
+				49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */,
+				49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */,
+				49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */,
+				49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */,
+			);
+			name = Demo;
+			sourceTree = "<group>";
+		};
+		49B682E81854DEC1006A61D3 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				49B682BE184D8390006A61D3 /* MCMatrix.h */,
+				49B682BF184D8390006A61D3 /* MCMatrix.m */,
+				49B682E91854DEF8006A61D3 /* MCVector.h */,
+				49B682EA1854DEF8006A61D3 /* MCVector.m */,
+				494F4541185BDA6200347096 /* MCPolynomial.h */,
+				494F4542185BDA6200347096 /* MCPolynomial.m */,
+				494F4549185D041200347096 /* Categories */,
+			);
+			name = Library;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
