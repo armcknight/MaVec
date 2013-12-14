@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class SingularValueDecomposition;
-@class LUFactorization;
-@class QRFactorization;
+@class MCSingularValueDecomposition;
+@class MCLUFactorization;
+@class MCQRFactorization;
 
-@interface Matrix : NSObject
+@interface MCMatrix : NSObject
 
 @property (nonatomic, assign) double *values;
 @property (nonatomic, assign) NSUInteger rows;
@@ -49,14 +49,14 @@
 #pragma mark - Operations
 
 // compute and return the transpose of this matrix in a new object
-- (Matrix *)transpose;
+- (MCMatrix *)transpose;
 
 // return a matrix object with this matrix' values (stored in column-major order) with values in row-major order
-- (Matrix *)rowMajor;
+- (MCMatrix *)rowMajor;
 
 // return a matrix object with this matrix' values (stored in row-major order) with values in column-major order
-- (Matrix *)columnMajor;
-- (Matrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column;
+- (MCMatrix *)columnMajor;
+- (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column;
 - (double)determinant;
 //- (Matrix *)inverse;
 //- (double)conditionNumber;
@@ -64,43 +64,46 @@
 //- (LUFactorization *)luFactorization;
 
 // compute the singular value decomposition and return a container object with the component matrices, or nil if no decomposition exists
-- (SingularValueDecomposition *)singularValueDecomposition;
+- (MCSingularValueDecomposition *)singularValueDecomposition;
 
 #pragma mark - Inspection
 
 // print the matrix in standard form by implicitly transposing from column-major to row-major ordering
 - (NSString *)description;
+- (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column;
+- (BOOL)isSymmetric;
+- (BOOL)isPositiveDefinite;
 
 #pragma mark - Class-level operations
 
 // returns a column vector containing coefficients for unknows to solve a linear system Ax=B, or nil if the system cannot be solved
-+ (Matrix *)productOfMatrixA:(Matrix *)matrixA andMatrixB:(Matrix *)matrixB;
++ (MCMatrix *)productOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB;
 //+ (Matrix *)sumOfMatrixA:(Matrix *)matrixA andMatrixB:(Matrix *)matrixB;
 //+ (Matrix *)differenceOfMatrixA:(Matrix *)matrixA andMatrixB:(Matrix *)matrixB;
-+ (Matrix *)solveLinearSystemWithMatrixA:(Matrix *)A
-                                 valuesB:(Matrix*)B;
++ (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
+                                 valuesB:(MCMatrix*)B;
 
 @end
 
-@interface QRFactorization : NSObject
+@interface MCQRFactorization : NSObject
 
-@property (nonatomic, strong) Matrix *q;
-@property (nonatomic, strong) Matrix *r;
-
-@end
-
-@interface LUFactorization : NSObject
-
-@property (nonatomic, strong) Matrix *l;
-@property (nonatomic, strong) Matrix *u;
+@property (nonatomic, strong) MCMatrix *q;
+@property (nonatomic, strong) MCMatrix *r;
 
 @end
 
-@interface SingularValueDecomposition : NSObject
+@interface MCLUFactorization : NSObject
 
-@property (nonatomic, strong) Matrix *u;
-@property (nonatomic, strong) Matrix *s;
-@property (nonatomic, strong) Matrix *vT;
+@property (nonatomic, strong) MCMatrix *l;
+@property (nonatomic, strong) MCMatrix *u;
+
+@end
+
+@interface MCSingularValueDecomposition : NSObject
+
+@property (nonatomic, strong) MCMatrix *u;
+@property (nonatomic, strong) MCMatrix *s;
+@property (nonatomic, strong) MCMatrix *vT;
 
 - (id)initWithM:(NSUInteger)m n:(NSUInteger)n numberOfSingularValues:(NSUInteger)s;
 + (id)SingularValueDecompositionWithM:(NSUInteger)m n:(NSUInteger)n numberOfSingularValues:(NSUInteger)s;

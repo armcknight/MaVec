@@ -44,7 +44,7 @@
 		49B682AB184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
 		49B682B3184D8342006A61D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49B682B1184D8342006A61D3 /* InfoPlist.strings */; };
 		49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682B4184D8342006A61D3 /* MCNumericsTests.m */; };
-		49B682C0184D8390006A61D3 /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682BF184D8390006A61D3 /* Matrix.m */; };
+		49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682BF184D8390006A61D3 /* MCMatrix.m */; };
 		49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */; };
 		49B682D7184ED2D5006A61D3 /* LinearApproximationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */; };
 		49B682D8184ED2D5006A61D3 /* LinearApproximationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */; };
@@ -105,8 +105,8 @@
 		49B682B0184D8342006A61D3 /* MCNumericsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCNumericsTests-Info.plist"; sourceTree = "<group>"; };
 		49B682B2184D8342006A61D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		49B682B4184D8342006A61D3 /* MCNumericsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCNumericsTests.m; sourceTree = "<group>"; };
-		49B682BE184D8390006A61D3 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
-		49B682BF184D8390006A61D3 /* Matrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix.m; sourceTree = "<group>"; };
+		49B682BE184D8390006A61D3 /* MCMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMatrix.h; sourceTree = "<group>"; };
+		49B682BF184D8390006A61D3 /* MCMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrix.m; sourceTree = "<group>"; };
 		49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoiceTableViewController.h; sourceTree = "<group>"; };
 		49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoChoiceTableViewController.m; sourceTree = "<group>"; };
 		49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinearApproximationView.xib; sourceTree = "<group>"; };
@@ -238,8 +238,6 @@
 				49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */,
 				49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */,
 				49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */,
-				49B682BE184D8390006A61D3 /* Matrix.h */,
-				49B682BF184D8390006A61D3 /* Matrix.m */,
 				49B682A1184D8342006A61D3 /* Images.xcassets */,
 				49B68296184D8342006A61D3 /* Supporting Files */,
 			);
@@ -382,10 +380,11 @@
 				494F44D5185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
 				494F44CF185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m in Sources */,
 				49B6829C184D8342006A61D3 /* main.m in Sources */,
-				49B682C0184D8390006A61D3 /* Matrix.m in Sources */,
 				494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
 				494F44E3185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
 				494F44DF185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
+				49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */,
+				49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */,
 				494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
 				494F4547185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */,
 			);

@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 andrew mcknight. All rights reserved.
 //
 
-#import "Matrix.h"
+#import "MCMatrix.h"
 #import <Accelerate/Accelerate.h>
 
-@implementation Matrix
+@implementation MCMatrix
 
 #pragma mark - Constructors
 
@@ -43,14 +43,14 @@
 
 + (id)matrixWithRows:(NSUInteger)rows columns:(NSUInteger)columns
 {
-    return [[Matrix alloc] initWithRows:rows columns:columns];
+    return [[MCMatrix alloc] initWithRows:rows columns:columns];
 }
 
 + (id)matrixWithValues:(double *)values
                   rows:(NSUInteger)rows
                columns:(NSUInteger)columns
 {
-    return [[Matrix alloc] initWithValues:values
+    return [[MCMatrix alloc] initWithValues:values
                                      rows:rows
                                   columns:columns];
 }
@@ -62,7 +62,7 @@
 
 #pragma mark - Matrix operations
 
-- (Matrix *)transpose
+- (MCMatrix *)transpose
 {
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
     
@@ -77,10 +77,10 @@
         }
     }
     
-    return [Matrix matrixWithValues:tVals rows:self.columns columns:self.rows];
+    return [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
 }
 
-- (Matrix *)rowMajor
+- (MCMatrix *)rowMajor
 {
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
     
@@ -95,10 +95,10 @@
         }
     }
     
-    return [Matrix matrixWithValues:tVals rows:self.rows columns:self.columns];
+    return [MCMatrix matrixWithValues:tVals rows:self.rows columns:self.columns];
 }
 
-- (Matrix *)columnMajor
+- (MCMatrix *)columnMajor
 {
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
     
@@ -113,13 +113,13 @@
         }
     }
     
-    return [Matrix matrixWithValues:tVals rows:self.rows columns:self.columns];
+    return [MCMatrix matrixWithValues:tVals rows:self.rows columns:self.columns];
 }
 
-- (Matrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
+- (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
 {
     // page 269 of Bretscher
-    Matrix *minor = [Matrix matrixWithRows:self.rows - 1 columns:self.columns - 1];
+    MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1];
     
     // TODO: implement
     @throw [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil];
@@ -137,7 +137,7 @@
     return determinant;
 }
 
-- (SingularValueDecomposition *)singularValueDecomposition
+- (MCSingularValueDecomposition *)singularValueDecomposition
 {
     /*
      examples of dgesdd_(...) usage found at
@@ -158,7 +158,7 @@
     int m = (int)self.rows;
     int n = (int)self.columns;
     
-    SingularValueDecomposition *svd = [SingularValueDecomposition SingularValueDecompositionWithM:self.rows n:self.columns numberOfSingularValues:numSingularValues];
+    MCSingularValueDecomposition *svd = [MCSingularValueDecomposition SingularValueDecompositionWithM:self.rows n:self.columns numberOfSingularValues:numSingularValues];
     
     double *values = malloc(m * n * sizeof(double));
     for (int i = 0; i < m * n; i++) {
@@ -215,9 +215,9 @@
 
 #pragma mark - Class-level matrix operations
 
-+ (Matrix *)productOfMatrixA:(Matrix *)matrixA andMatrixB:(Matrix *)matrixB
++ (MCMatrix *)productOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
-    Matrix *product = [Matrix matrixWithRows:matrixA.rows columns:matrixB.columns];
+    MCMatrix *product = [MCMatrix matrixWithRows:matrixA.rows columns:matrixB.columns];
     
     double *aVals = matrixA.rowMajor.values;
     double *bVals = matrixB.rowMajor.values;
@@ -235,8 +235,8 @@
     return product.columnMajor;
 }
 
-+ (Matrix *)solveLinearSystemWithMatrixA:(Matrix *)A
-                                 valuesB:(Matrix*)B
++ (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
+                                 valuesB:(MCMatrix*)B
 {
     if (A.rows == A.columns) {
         // solve for square matrix A
@@ -267,7 +267,7 @@
         if (info != 0) {
             return nil;
         } else {
-            Matrix *solution = [Matrix matrixWithRows:n columns:1];
+            MCMatrix *solution = [MCMatrix matrixWithRows:n columns:1];
             solution.values = malloc(n * sizeof(double));
             for (int i = 0; i < n; i++) {
                 solution.values[i] = b[i];
@@ -320,7 +320,7 @@
         if (info != 0) {
             return nil;
         } else {
-            Matrix *solution = [Matrix matrixWithRows:n columns:1];
+            MCMatrix *solution = [MCMatrix matrixWithRows:n columns:1];
             solution.values = malloc(n * sizeof(double));
             for (int i = 0; i < n; i++) {
                 solution.values[i] = b[i];
@@ -332,22 +332,22 @@
 
 @end
 
-@implementation SingularValueDecomposition
+@implementation MCSingularValueDecomposition
 
 - (id)initWithM:(NSUInteger)m n:(NSUInteger)n numberOfSingularValues:(NSUInteger)s
 {
     self = [super init];
     if (self) {
-        self.u = [Matrix matrixWithRows:m columns:m];
-        self.vT = [Matrix matrixWithRows:n columns:n];
-        self.s = [Matrix matrixWithRows:m columns:n];
+        self.u = [MCMatrix matrixWithRows:m columns:m];
+        self.vT = [MCMatrix matrixWithRows:n columns:n];
+        self.s = [MCMatrix matrixWithRows:m columns:n];
     }
     return self;
 }
 
 + (id)SingularValueDecompositionWithM:(NSUInteger)m n:(NSUInteger)n numberOfSingularValues:(NSUInteger)s
 {
-    return [[SingularValueDecomposition alloc] initWithM:m n:n numberOfSingularValues:s];
+    return [[MCSingularValueDecomposition alloc] initWithM:m n:n numberOfSingularValues:s];
 }
 
 @end
