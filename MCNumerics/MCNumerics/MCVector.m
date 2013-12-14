@@ -42,7 +42,7 @@
 
 #pragma mark - NSObject overrides
 
-- (BOOL)isEqual:(MCVector *)otherVector
+- (BOOL)isEqualToVector:(MCVector *)otherVector
 {
     BOOL __block equal = self == otherVector.self;
     

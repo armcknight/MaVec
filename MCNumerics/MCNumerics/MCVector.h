@@ -17,7 +17,7 @@
 
 #pragma mark - NSObject overrides
 
-- (BOOL)isEqual:(MCVector *)otherVector;
+- (BOOL)isEqualToVector:(MCVector *)otherVector;
 - (NSUInteger)hash;
 
 #pragma mark - Inspection
