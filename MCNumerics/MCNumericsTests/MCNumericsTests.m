@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "Matrix.h"
+#import "MCMatrix.h"
 
 @interface MCNumericsTests : XCTestCase
 
@@ -40,10 +40,10 @@
     bVals[1] = 8.0;
     bVals[2] = 7.0;
     bVals[3] = 9.0;
-    Matrix *a = [Matrix matrixWithValues:aVals rows:2 columns:2];
-    Matrix *b = [Matrix matrixWithValues:bVals rows:2 columns:2];
+    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:2 columns:2];
+    MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:2 columns:2];
     
-    Matrix *p = [Matrix productOfMatrixA:a andMatrixB:b];
+    MCMatrix *p = [MCMatrix productOfMatrixA:a andMatrixB:b];
     
     double *solution = malloc(4 * sizeof(double));
     solution[0] = 22.0;
@@ -80,10 +80,10 @@
     bVals[6] = 3.0;
     bVals[7] = 6.0;
     bVals[8] = 9.0;
-    Matrix *a = [Matrix matrixWithValues:aVals rows:2 columns:3];
-    Matrix *b = [Matrix matrixWithValues:bVals rows:3 columns:3];
+    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:2 columns:3];
+    MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:3 columns:3];
     
-    Matrix *p = [Matrix productOfMatrixA:a andMatrixB:b];
+    MCMatrix *p = [MCMatrix productOfMatrixA:a andMatrixB:b];
     
     double *solution = malloc(6 * sizeof(double));
     solution[0] = -3.0;
@@ -112,12 +112,12 @@
     values[3] = -0.5;
     values[4] = 0.0;
     values[5] = 0.0;
-    Matrix *a = [Matrix matrixWithValues:values rows:3 columns:2];
+    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:2];
     
-    SingularValueDecomposition *svd = a.singularValueDecomposition;
+    MCSingularValueDecomposition *svd = a.singularValueDecomposition;
     
-    Matrix *intermediate = [Matrix productOfMatrixA:svd.u andMatrixB:svd.s];
-    Matrix *original = [Matrix productOfMatrixA:intermediate andMatrixB:svd.vT];
+    MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
+    MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
     
     for (int i = 0; i < 6; i++) {
         XCTAssertEqualWithAccuracy(values[i], original.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
@@ -138,12 +138,12 @@
     values[5] = -1.0;
     values[6] = -3.0;
     values[7] = -5.0;
-    Matrix *a = [Matrix matrixWithValues:values rows:2 columns:4];
+    MCMatrix *a = [MCMatrix matrixWithValues:values rows:2 columns:4];
     
-    SingularValueDecomposition *svd = a.singularValueDecomposition;
+    MCSingularValueDecomposition *svd = a.singularValueDecomposition;
     
-    Matrix *intermediate = [Matrix productOfMatrixA:svd.u andMatrixB:svd.s];
-    Matrix *original = [Matrix productOfMatrixA:intermediate andMatrixB:svd.vT];
+    MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
+    MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
     
     for (int i = 0; i < 8; i++) {
         XCTAssertEqualWithAccuracy(values[i], original.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
@@ -166,10 +166,10 @@
     bVals[0] = 2.0;
     bVals[1] = 1.0;
     bVals[2] = 3.0;
-    Matrix *a = [Matrix matrixWithValues:aVals rows:3 columns:2];
-    Matrix *b = [Matrix matrixWithValues:bVals rows:3 columns:1];
+    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:3 columns:2];
+    MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:3 columns:1];
     
-    Matrix *coefficients = [Matrix solveLinearSystemWithMatrixA:a valuesB:b];
+    MCMatrix *coefficients = [MCMatrix solveLinearSystemWithMatrixA:a valuesB:b];
     
     double *solution = malloc(2 * sizeof(double));
     solution[0] = 7.0 / 4.0;
@@ -209,10 +209,10 @@
     bVals[1] = -2.9778;
     bVals[2] = -10.2376;
     bVals[3] = 4.5;
-    Matrix *a = [Matrix matrixWithValues:aVals rows:4 columns:4];
-    Matrix *b = [Matrix matrixWithValues:bVals rows:4 columns:1];
+    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:4 columns:4];
+    MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:4 columns:1];
     
-    Matrix *coefficients = [Matrix solveLinearSystemWithMatrixA:a valuesB:b];
+    MCMatrix *coefficients = [MCMatrix solveLinearSystemWithMatrixA:a valuesB:b];
     
     double *solution = malloc(2 * sizeof(double));
     solution[0] = -1.95;
