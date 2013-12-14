@@ -21,6 +21,23 @@
         self.rows = rows;
         self.columns = columns;
         self.values = malloc(rows * columns * sizeof(double));
+        self.valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
+    }
+    
+    return self;
+}
+
+- (id)initWithRows:(NSUInteger)rows
+           columns:(NSUInteger)columns
+valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    self = [super init];
+    
+    if (self) {
+        self.rows = rows;
+        self.columns = columns;
+        self.values = malloc(rows * columns * sizeof(double));
+        self.valueStorageFormat = valueStorageFormat;
     }
     
     return self;
@@ -36,6 +53,24 @@
         self.rows = rows;
         self.columns = columns;
         self.values = values;
+        self.valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
+    }
+    
+    return self;
+}
+
+- (id)initWithValues:(double *)values
+                rows:(NSUInteger)rows
+             columns:(NSUInteger)columns
+  valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    self = [super init];
+    
+    if (self) {
+        self.rows = rows;
+        self.columns = columns;
+        self.values = values;
+        self.valueStorageFormat = valueStorageFormat;
     }
     
     return self;
@@ -46,6 +81,15 @@
     return [[MCMatrix alloc] initWithRows:rows columns:columns];
 }
 
++ (id)matrixWithRows:(NSUInteger)rows
+             columns:(NSUInteger)columns
+  valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    return [[MCMatrix alloc] initWithRows:rows
+                                  columns:columns
+                       valueStorageFormat:valueStorageFormat];
+}
+
 + (id)matrixWithValues:(double *)values
                   rows:(NSUInteger)rows
                columns:(NSUInteger)columns
@@ -53,6 +97,17 @@
     return [[MCMatrix alloc] initWithValues:values
                                      rows:rows
                                   columns:columns];
+}
+
++ (id)matrixWithValues:(double *)values
+                  rows:(NSUInteger)rows
+               columns:(NSUInteger)columns
+    valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    return [[MCMatrix alloc] initWithValues:values
+                                       rows:rows
+                                    columns:columns
+                         valueStorageFormat:valueStorageFormat];
 }
 
 - (void)dealloc
@@ -80,40 +135,30 @@
     return [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
 }
 
-- (MCMatrix *)rowMajor
+- (MCMatrix *)matrixWithValuesStoredInFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
+    if (self.valueStorageFormat == valueStorageFormat) {
+        return [MCMatrix matrixWithValues:self.values
+                                     rows:self.rows
+                                  columns:self.columns
+                       valueStorageFormat:valueStorageFormat];
+    }
+    
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
     
     int i = 0;
-    for (int j = 0; j < self.rows; j++) {
-        for (int k = 0; k < self.columns; k++) {
-            int idx = ((i * self.rows) % (self.columns * self.rows)) + j;
-            
+    for (int j = 0; j < (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.rows : self.columns); j++) {
+        for (int k = 0; k < (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.columns : self.rows); k++) {
+            int idx = ((i * (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
             tVals[i] = self.values[idx];
-            
             i++;
         }
     }
     
-    return [MCMatrix matrixWithValues:tVals rows:self.rows columns:self.columns];
-}
-
-- (MCMatrix *)columnMajor
-{
-    double *tVals = malloc(self.rows * self.columns * sizeof(double));
-    
-    int i = 0;
-    for (int j = 0; j < self.columns; j++) {
-        for (int k = 0; k < self.rows; k++) {
-            int idx = ((i * self.columns) % (self.rows * self.columns)) + j;
-            
-            tVals[i] = self.values[idx];
-            
-            i++;
-        }
-    }
-    
-    return [MCMatrix matrixWithValues:tVals rows:self.rows columns:self.columns];
+    return [MCMatrix matrixWithValues:tVals
+                                 rows:self.rows
+                              columns:self.columns
+                   valueStorageFormat:valueStorageFormat];
 }
 
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
@@ -219,8 +264,8 @@
 {
     MCMatrix *product = [MCMatrix matrixWithRows:matrixA.rows columns:matrixB.columns];
     
-    double *aVals = matrixA.rowMajor.values;
-    double *bVals = matrixB.rowMajor.values;
+    double *aVals = [matrixA matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
+    double *bVals = [matrixB matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
     
     for (int i = 0; i < matrixA.rows; i++) {
         for (int j = 0; j < matrixB.columns; j++) {
@@ -232,7 +277,7 @@
         }
     }
     
-    return product.columnMajor;
+    return [product matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatColumnMajor];
 }
 
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A

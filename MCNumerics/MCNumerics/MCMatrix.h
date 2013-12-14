@@ -12,16 +12,23 @@
 @class MCLUFactorization;
 @class MCQRFactorization;
 
+typedef enum {
+    MCMatrixValueStorageFormatRowMajor,
+    MCMatrixValueStorageFormatColumnMajor
+} MCMatrixValueStorageFormat;
+
 @interface MCMatrix : NSObject
 
 @property (nonatomic, assign) double *values;
 @property (nonatomic, assign) NSUInteger rows;
 @property (nonatomic, assign) NSUInteger columns;
+@property (nonatomic, assign) MCMatrixValueStorageFormat valueStorageFormat;
 
 #pragma mark - Constructors
 
 /* 
- values arrays must be in column major format
+ by default (except for initWithValues:rows:columns:valueStorageFormat:)  values arrays must be in column major format
+ 
  e.g.  [ 1  2  3
          4  5  6 ]
  
@@ -32,16 +39,34 @@
 - (id)initWithRows:(NSUInteger)rows
            columns:(NSUInteger)columns;
 
+- (id)initWithRows:(NSUInteger)rows
+           columns:(NSUInteger)columns
+valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+
 - (id)initWithValues:(double *)values
                 rows:(NSUInteger)rows
              columns:(NSUInteger)columns;
 
+- (id)initWithValues:(double *)values
+                rows:(NSUInteger)rows
+             columns:(NSUInteger)columns
+  valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+
 + (id)matrixWithRows:(NSUInteger)rows
              columns:(NSUInteger)columns;
+
++ (id)matrixWithRows:(NSUInteger)rows
+             columns:(NSUInteger)columns
+  valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 + (id)matrixWithValues:(double *)values
                   rows:(NSUInteger)rows
                columns:(NSUInteger)columns;
+
++ (id)matrixWithValues:(double *)values
+                  rows:(NSUInteger)rows
+               columns:(NSUInteger)columns
+    valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 //+ (id)identityMatrixWithSize:(NSUInteger)size;
 //+ (id)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size;
@@ -51,11 +76,8 @@
 // compute and return the transpose of this matrix in a new object
 - (MCMatrix *)transpose;
 
-// return a matrix object with this matrix' values (stored in column-major order) with values in row-major order
-- (MCMatrix *)rowMajor;
-
-// return a matrix object with this matrix' values (stored in row-major order) with values in column-major order
-- (MCMatrix *)columnMajor;
+// return a matrix object with this matrix' values stored in the specified format (row-major or column-major)
+- (MCMatrix *)matrixWithValuesStoredInFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column;
 - (double)determinant;
 //- (Matrix *)inverse;
