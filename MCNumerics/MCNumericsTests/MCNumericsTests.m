@@ -225,5 +225,77 @@
     }
 }
 
+- (void)testMatrixEqualityComparison
+{
+    int size = 16;
+    double *aValues = malloc(size * sizeof(double));
+    for (int i = 0; i < size; i++) {
+        aValues[i] = i;
+    }
+    double *bValues = malloc(size * sizeof(double));
+    for (int i = 0; i < size; i++) {
+        bValues[i] = i;
+    }
+    
+    MCMatrix *a = [MCMatrix matrixWithValues:aValues rows:4 columns:4];
+    MCMatrix *b = [MCMatrix matrixWithValues:bValues rows:4 columns:4];
+    
+    XCTAssertEqual([a isEqual:[NSArray array]], NO, @"Thought an MCMatrix was equal to an NSArray using isEqual:");
+    XCTAssertEqual([a isEqual:a], YES, @"Couldn't tell an MCMatrix was equal to itself (same instance object) using isEqual:");
+    XCTAssertEqual([a isEqual:b], YES, @"Couldn't tell different MCMatrix instances with identical values were equal using isEqual:");
+    XCTAssertEqual([a isEqualToMatrix:(MCMatrix *)[NSArray array]], NO, @"Thought an MCMatrix was equal to an NSArray using isEqualToMatrix:");
+    XCTAssertEqual([a isEqualToMatrix:a], YES, @"Couldn't tell an MCMatrix was equal to itself (same instance object) using isEqualToMatrix:");
+    XCTAssertEqual([a isEqualToMatrix:b], YES, @"Couldn't tell different MCMatrix instances with identical values were equal using isEqualToMatrix:");
+    
+    double *cValues = malloc(size * sizeof(double));
+    for (int i = 0; i < size; i++) {
+        cValues[i] = i;
+    }
+    MCMatrix *c = [MCMatrix matrixWithValues:cValues rows:4 columns:4];
+    MCMatrix *cr = [c matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor];
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            double oldCValue = [c valueAtRow:i column:j];
+            [c setEntryAtRow:i column:j toValue:-1.0];
+            double oldCRValue = [cr valueAtRow:i column:j];
+            [cr setEntryAtRow:i column:j toValue:-1.0];
+            XCTAssertEqual([a isEqual:c], NO, @"Couldn't tell two MCMatrix objects differing at value %u are unequal using isEqual:", i);
+            XCTAssertEqual([a isEqualToMatrix:c], NO, @"Couldn't tell two MCMatrix objects differing at value %u are unequal using isEqualToMatrix:", i);
+            XCTAssertEqual([a isEqual:cr], NO, @"Couldn't tell two MCMatrix objects with different value storage formats differing at value %u are unequal using isEqual:", i);
+            XCTAssertEqual([a isEqualToMatrix:cr], NO, @"Couldn't tell two MCMatrix objects with different value storage formats  differing at value %u are unequal using isEqualToMatrix:", i);
+            [c setEntryAtRow:i column:j toValue:oldCValue];
+            [cr setEntryAtRow:i column:j toValue:oldCRValue];
+        }
+    }
+    
+    int smallerSize = 12;
+    double *dValues = malloc(smallerSize * sizeof(double));
+    for (int i = 0; i < smallerSize; i++) {
+        dValues[i] = i;
+    }
+    MCMatrix *d = [MCMatrix matrixWithValues:dValues rows:4 columns:3];
+    XCTAssertEqual([a isEqual:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqual:");
+    XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqualToMatrix:");
+    dValues = malloc(smallerSize * sizeof(double));
+    for (int i = 0; i < smallerSize; i++) {
+        dValues[i] = i;
+    }
+    d = [MCMatrix matrixWithValues:dValues rows:3 columns:4];
+    XCTAssertEqual([a isEqual:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqual:");
+    XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqualToMatrix:");
+    
+    smallerSize = 9;
+    dValues = malloc(smallerSize * sizeof(double));
+    for (int i = 0; i < smallerSize; i++) {
+        dValues[i] = i;
+    }
+    d = [MCMatrix matrixWithValues:dValues rows:3 columns:3];
+    XCTAssertEqual([a isEqual:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and columns are unequal using isEqual:");
+    XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and  columns are unequal using isEqualToMatrix:");
+    
+    MCMatrix *r = [b matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor];
+    XCTAssertEqual([a isEqual:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqual:");
+    XCTAssertEqual([a isEqualToMatrix:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
+}
 
 @end

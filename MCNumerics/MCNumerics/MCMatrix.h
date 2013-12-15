@@ -214,6 +214,16 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 #pragma mark - Inspection
 
 /**
+ @return YES if object is either this MCMatrix instance or is identical in dimension and contains identical values at all positions, NO otherwise.
+ */
+- (BOOL)isEqualToMatrix:(MCMatrix *)otherMatrix;
+
+/**
+ @return YES if object is either this MCMatrix instance or is identical in dimension and contains identical values at all positions, NO otherwise.
+ */
+- (BOOL)isEqual:(id)object;
+
+/**
  @return An NSString that can represent the values of this matrix in the usual two-dimensional human-readable format.
  */
 - (NSString *)description;

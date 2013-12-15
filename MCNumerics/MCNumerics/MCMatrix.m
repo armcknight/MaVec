@@ -239,6 +239,36 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 #pragma mark - Inspection
 
+- (BOOL)isEqualToMatrix:(MCMatrix *)otherMatrix
+{
+    if (!([otherMatrix isKindOfClass:[MCMatrix class]] && self.rows == otherMatrix.rows && self.columns == otherMatrix.columns)) {
+        return NO;
+    } else {
+        double *otherValues = otherMatrix.values;
+        if (self.valueStorageFormat != otherMatrix.valueStorageFormat) {
+            MCMatrix *otherMatrixWithSameStorageFormat = [otherMatrix matrixWithValuesStoredInFormat:self.valueStorageFormat];
+            otherValues = otherMatrixWithSameStorageFormat.values;
+        }
+        for(int i = 0; i < self.rows * self.columns; i++) {
+            if (self.values[i] != otherValues[i]) {
+                return NO;
+            }
+        }
+        return YES;
+    }
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (self == object) {
+        return YES;
+    }
+    if (![object isKindOfClass:[MCMatrix class]]) {
+        return NO;
+    }
+    return [self isEqualToMatrix:(MCMatrix *)object];
+}
+
 - (NSString *)description
 {
     NSMutableString *description = [@"\n" mutableCopy];
