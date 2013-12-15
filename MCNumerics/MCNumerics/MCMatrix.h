@@ -32,28 +32,22 @@ typedef enum {
 @interface MCMatrix : NSObject
 
 /**
- @property values 
- @brief A one-dimensional C array of floating point values.
- */
-@property (nonatomic, assign) double *values;
-
-/**
  @property rows 
  @brief The number of rows in the matrix.
  */
-@property (nonatomic, assign) NSUInteger rows;
+@property (nonatomic, readonly, assign) NSUInteger rows;
 
 /**
  @property columns
  @brief The number of columns in the matrix.
  */
-@property (nonatomic, assign) NSUInteger columns;
+@property (nonatomic, readonly, assign) NSUInteger columns;
 
 /**
  @property valueStorageFormat 
  @brief The logical storage format for the matrix' values in the one-dimensional array.
  */
-@property (nonatomic, assign) MCMatrixValueStorageFormat valueStorageFormat;
+@property (nonatomic, readonly, assign) MCMatrixValueStorageFormat valueStorageFormat;
 
 #pragma mark - Constructors
 
@@ -241,6 +235,16 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @return YES if this matrix is positive definite, NO otherwise.
  */
 - (BOOL)isPositiveDefinite;
+
+#pragma mark - Mutation
+
+/**
+ @description Set the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.
+ @param row The row in which the value will be set.
+ @param column The column in which the value will be set.
+ @param value The value to set at the specified position.
+ */
+- (void)setEntryAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(double)value;
 
 #pragma mark - Class-level operations
 

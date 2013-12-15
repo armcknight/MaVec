@@ -9,6 +9,16 @@
 #import "MCMatrix.h"
 #import <Accelerate/Accelerate.h>
 
+@interface MCMatrix ()
+
+/**
+ @property values
+ @brief A one-dimensional C array of floating point values.
+ */
+@property (nonatomic, assign) double *values;
+
+@end
+
 @implementation MCMatrix
 
 #pragma mark - Constructors
@@ -18,10 +28,10 @@
     self = [super init];
     
     if (self) {
-        self.rows = rows;
-        self.columns = columns;
+        _rows = rows;
+        _columns = columns;
         self.values = malloc(rows * columns * sizeof(double));
-        self.valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
+        _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
     }
     
     return self;
@@ -34,10 +44,10 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     self = [super init];
     
     if (self) {
-        self.rows = rows;
-        self.columns = columns;
+        _rows = rows;
+        _columns = columns;
         self.values = malloc(rows * columns * sizeof(double));
-        self.valueStorageFormat = valueStorageFormat;
+        _valueStorageFormat = valueStorageFormat;
     }
     
     return self;
@@ -50,10 +60,10 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     self = [super init];
     
     if (self) {
-        self.rows = rows;
-        self.columns = columns;
+        _rows = rows;
+        _columns = columns;
         self.values = values;
-        self.valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
+        _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
     }
     
     return self;
@@ -67,10 +77,10 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     self = [super init];
     
     if (self) {
-        self.rows = rows;
-        self.columns = columns;
+        _rows = rows;
+        _columns = columns;
         self.values = values;
-        self.valueStorageFormat = valueStorageFormat;
+        _valueStorageFormat = valueStorageFormat;
     }
     
     return self;
@@ -247,6 +257,32 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         [description appendFormat:@"%@\n", line];
     }
     return description;
+}
+
+- (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column
+{
+    if (row >= self.rows || column >= self.columns) {
+        @throw NSRangeException;
+    }
+    if (self.valueStorageFormat == MCMatrixValueStorageFormatRowMajor) {
+        return self.values[row * self.columns + column];
+    } else {
+        return self.values[column * self.rows + row];
+    }
+}
+
+#pragma mark - Mutation
+
+- (void)setEntryAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(double)value
+{
+    if (row >= self.rows || column >= self.columns) {
+        @throw NSRangeException;
+    }
+    if (self.valueStorageFormat == MCMatrixValueStorageFormatRowMajor) {
+        self.values[row * self.columns + column] = value;
+    } else {
+        self.values[column * self.rows + row] = value;
+    }
 }
 
 #pragma mark - Class-level matrix operations

@@ -51,8 +51,12 @@
     solution[2] = 25.0;
     solution[3] = 66.0;
     
-    for (int i = 0; i < 4; i++) {
-        XCTAssertEqual(p.values[i], solution[i], @"Value at index %i incorrect", i);
+    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:2 columns:2];
+    
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            XCTAssertEqual([p valueAtRow:i column:j], [s valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+        }
     }
 }
 
@@ -88,9 +92,12 @@
     solution[3] = 10.0;
     solution[4] = -3.0;
     solution[5] = 12.0;
+    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:2 columns:3];
     
-    for (int i = 0; i < 6; i++) {
-        XCTAssertEqual(p.values[i], solution[i], @"Value at index %i incorrect", i);
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            XCTAssertEqual([p valueAtRow:i column:j], [s valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+        }
     }
 }
 
@@ -111,8 +118,10 @@
     MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
     MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
     
-    for (int i = 0; i < 6; i++) {
-        XCTAssertEqualWithAccuracy(values[i], original.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 2; j++) {
+            XCTAssertEqualWithAccuracy([a valueAtRow:i column:j], [original valueAtRow:i column:j], __DBL_EPSILON__ * 10.0, @"Value at row %u and column %u incorrect", i, j);
+        }
     }
 }
 
@@ -135,8 +144,10 @@
     MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
     MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
     
-    for (int i = 0; i < 8; i++) {
-        XCTAssertEqualWithAccuracy(values[i], original.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            XCTAssertEqualWithAccuracy([a valueAtRow:i column:j], [original valueAtRow:i column:j], __DBL_EPSILON__ * 10.0, @"Value at row %u and column %u incorrect", i, j);
+        }
     }
 }
 
@@ -162,9 +173,10 @@
     double *solution = malloc(2 * sizeof(double));
     solution[0] = 7.0 / 4.0;
     solution[1] = 3.0 / 4.0;
+    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:2 columns:1];
     
     for (int i = 0; i < 2; i++) {
-        XCTAssertEqualWithAccuracy(solution[i], coefficients.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
+        XCTAssertEqualWithAccuracy([s valueAtRow:i column:0], [coefficients valueAtRow:i column:0], __DBL_EPSILON__ * 10.0, @"Coefficient %u incorrect", i);
     }
 }
 
@@ -203,9 +215,13 @@
     solution[1] = -0.7445;
     solution[2] = -2.5594;
     solution[3] = 1.125;
+    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:4 columns:1];
     
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqualWithAccuracy(solution[i], coefficients.values[i], 0.0005, @"Value at index %i incorrect", i);
+        XCTAssertEqualWithAccuracy([s valueAtRow:i column:0], [coefficients valueAtRow:i column:0], 0.0005, @"Coefficient %u incorrect", i);
+    }
+    
+    for (int i = 0; i < 4; i++) {
     }
 }
 
