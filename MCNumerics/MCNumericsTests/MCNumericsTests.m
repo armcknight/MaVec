@@ -102,7 +102,7 @@
     free(solution);
 }
 
-- (void)firstSVDTest
+- (void)testFirstSVDTest
 {
     // page 568 example 12.5 from Sauer
     double *values = malloc(6 * sizeof(double));
@@ -126,7 +126,7 @@
     free(values);
 }
 
-- (void)secondSVDTest
+- (void)testSecondSVDTest
 {
     // page 574 example 12.9 from Sauer
     double *values = malloc(8 * sizeof(double));
