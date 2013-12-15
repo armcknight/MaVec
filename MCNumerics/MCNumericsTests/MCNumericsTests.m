@@ -54,10 +54,6 @@
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual(p.values[i], solution[i], @"Value at index %i incorrect", i);
     }
-    
-    free(aVals);
-    free(bVals);
-    free(solution);
 }
 
 - (void)testMultiplyRectangularMatrices
@@ -96,10 +92,6 @@
     for (int i = 0; i < 6; i++) {
         XCTAssertEqual(p.values[i], solution[i], @"Value at index %i incorrect", i);
     }
-    
-    free(aVals);
-    free(bVals);
-    free(solution);
 }
 
 - (void)testFirstSVDTest
@@ -122,8 +114,6 @@
     for (int i = 0; i < 6; i++) {
         XCTAssertEqualWithAccuracy(values[i], original.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
     }
-    
-    free(values);
 }
 
 - (void)testSecondSVDTest
@@ -148,8 +138,6 @@
     for (int i = 0; i < 8; i++) {
         XCTAssertEqualWithAccuracy(values[i], original.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
     }
-    
-    free(values);
 }
 
 - (void)testOverdeterminedSystem
@@ -178,10 +166,6 @@
     for (int i = 0; i < 2; i++) {
         XCTAssertEqualWithAccuracy(solution[i], coefficients.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
     }
-    
-    free(aVals);
-    free(bVals);
-    free(solution);
 }
 
 - (void)testNormalSystemOfEquations
@@ -223,10 +207,6 @@
     for (int i = 0; i < 4; i++) {
         XCTAssertEqualWithAccuracy(solution[i], coefficients.values[i], 0.0005, @"Value at index %i incorrect", i);
     }
-    
-    free(aVals);
-    free(bVals);
-    free(solution);
 }
 
 
