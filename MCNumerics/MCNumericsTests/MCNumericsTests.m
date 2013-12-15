@@ -210,7 +210,7 @@
     
     MCMatrix *coefficients = [MCMatrix solveLinearSystemWithMatrixA:a valuesB:b];
     
-    double *solution = malloc(2 * sizeof(double));
+    double *solution = malloc(4 * sizeof(double));
     solution[0] = -1.95;
     solution[1] = -0.7445;
     solution[2] = -2.5594;
