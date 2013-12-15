@@ -184,15 +184,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (MCSingularValueDecomposition *)singularValueDecomposition
 {
-    /*
-     examples of dgesdd_(...) usage found at
-     http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/lapacke_dgesdd_row.c.htm 
-     and
-     http://stackoverflow.com/questions/5047503/lapack-svd-singular-value-decomposition
-     
-     good documentation here: http://www.nag.com/numeric/FL/nagdoc_fl22/xhtml/F08/f08kdf.xml
-     */
-    
     double workSize;
     double *work = &workSize;
     int lwork = -1;
