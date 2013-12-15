@@ -220,8 +220,70 @@
     for (int i = 0; i < 4; i++) {
         XCTAssertEqualWithAccuracy([s valueAtRow:i column:0], [coefficients valueAtRow:i column:0], 0.0005, @"Coefficient %u incorrect", i);
     }
+}
+
+- (void)testDiagonalMatrixCreation
+{
+    double *diagonalValues = malloc(4 * sizeof(double));
+    diagonalValues[0] = 1.0;
+    diagonalValues[1] = 2.0;
+    diagonalValues[2] = 3.0;
+    diagonalValues[3] = 4.0;
+    MCMatrix *diagonal = [MCMatrix diagonalMatrixWithValues:diagonalValues size:4];
+    
+    double *solution = malloc(16 * sizeof(double));
+    solution[0] = 1.0;
+    solution[1] = 0.0;
+    solution[2] = 0.0;
+    solution[3] = 0.0;
+    solution[4] = 0.0;
+    solution[5] = 2.0;
+    solution[6] = 0.0;
+    solution[7] = 0.0;
+    solution[8] = 0.0;
+    solution[9] = 0.0;
+    solution[10] = 3.0;
+    solution[11] = 0.0;
+    solution[12] = 0.0;
+    solution[13] = 0.0;
+    solution[14] = 0.0;
+    solution[15] = 4.0;
+    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:4 columns:4];
     
     for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            XCTAssertEqual([diagonal valueAtRow:i column:j], [s valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+        }
+    }
+}
+
+- (void)testIdentityMatrixCreation
+{
+    MCMatrix *identity = [MCMatrix identityMatrixWithSize:4];
+    
+    double *solution = malloc(16 * sizeof(double));
+    solution[0] = 1.0;
+    solution[1] = 0.0;
+    solution[2] = 0.0;
+    solution[3] = 0.0;
+    solution[4] = 0.0;
+    solution[5] = 1.0;
+    solution[6] = 0.0;
+    solution[7] = 0.0;
+    solution[8] = 0.0;
+    solution[9] = 0.0;
+    solution[10] = 1.0;
+    solution[11] = 0.0;
+    solution[12] = 0.0;
+    solution[13] = 0.0;
+    solution[14] = 0.0;
+    solution[15] = 1.0;
+    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:4 columns:4];
+    
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            XCTAssertEqual([identity valueAtRow:i column:j], [s valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+        }
     }
 }
 

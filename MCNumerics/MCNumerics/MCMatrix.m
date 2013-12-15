@@ -120,6 +120,32 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
                          valueStorageFormat:valueStorageFormat];
 }
 
++ (id)identityMatrixWithSize:(NSUInteger)size
+{
+    double *values = malloc(size * size * sizeof(double));
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            values[i * size + j] = i == j ? 1.0 : 0.0;
+        }
+    }
+    return [MCMatrix matrixWithValues:values
+                                 rows:size
+                              columns:size];
+}
+
++ (id)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size
+{
+    double *allValues = malloc(size * size * sizeof(double));
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            allValues[i * size + j] = i == j ? values[i] : 0.0;
+        }
+    }
+    return [MCMatrix matrixWithValues:allValues
+                                 rows:size
+                              columns:size];
+}
+
 - (void)dealloc
 {
     free(self.values);
