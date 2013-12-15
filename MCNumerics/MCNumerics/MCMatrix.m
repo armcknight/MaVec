@@ -253,7 +253,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 + (MCMatrix *)productOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
-    MCMatrix *product = [MCMatrix matrixWithRows:matrixA.rows columns:matrixB.columns];
+    MCMatrix *product = [MCMatrix matrixWithRows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
     
     double *aVals = [matrixA matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
     double *bVals = [matrixB matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
