@@ -297,21 +297,32 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (NSString *)description
 {
+    double max = DBL_MIN;
+    for (int i = 0; i < self.rows * self.columns; i++) {
+        max = MAX(max, self.values[i]);
+    }
+    int padding = floor(log10(max)) + 5;
+    
     NSMutableString *description = [@"\n" mutableCopy];
     
     int i = 0;
     for (int j = 0; j < self.rows; j++) {
         NSMutableString *line = [NSMutableString string];
         for (int k = 0; k < self.columns; k++) {
-            int idx = ((i * self.rows) % (self.columns * self.rows)) + j;
+            int idx;
+            
+            if (self.valueStorageFormat == MCMatrixValueStorageFormatRowMajor) {
+                idx = j * self.rows + k;
+            } else {
+                idx = ((i++ * self.rows) % (self.columns * self.rows)) + j;
+            }
             
             NSString *string = [NSString stringWithFormat:@"%.1f", self.values[idx]];
-            [line appendString:[string stringByPaddingToLength:25 withString:@" " startingAtIndex:0]];
-            
-            i++;
+            [line appendString:[string stringByPaddingToLength:padding withString:@" " startingAtIndex:0]];
         }
         [description appendFormat:@"%@\n", line];
     }
+    
     return description;
 }
 

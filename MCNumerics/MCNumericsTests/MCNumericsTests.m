@@ -360,4 +360,25 @@
     XCTAssertEqual([a isEqualToMatrix:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
 }
 
+- (void)testMatrixDescription
+{
+    double *values = malloc(9 * sizeof(double));
+    values[0] = 1.0;
+    values[1] = 22.0;
+    values[2] = 333.0;
+    values[3] = 4444.0;
+    values[4] = 55555.0;
+    values[5] = 666666.0;
+    values[6] = 7777777.0;
+    values[7] = 88888888.0;
+    values[8] = 999999999.0;
+    MCMatrix *a = [MCMatrix diagonalMatrixWithValues:values size:9];
+    NSLog(@"Column major");
+    NSLog(@"");
+    NSLog(a.description);
+    NSLog(@"Row major");
+    NSLog(@"");
+    NSLog([a matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].description);
+}
+
 @end
