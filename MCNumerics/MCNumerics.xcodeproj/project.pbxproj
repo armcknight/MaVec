@@ -31,6 +31,8 @@
 		494F4548185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */; };
 		494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
 		494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
+		494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
+		494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -88,6 +90,8 @@
 		494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCArithmetic.m"; sourceTree = "<group>"; };
 		494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSingularValueDecomposition.h; sourceTree = "<group>"; };
 		494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSingularValueDecomposition.m; sourceTree = "<group>"; };
+		494F454E185EA9DA00347096 /* MCLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLUFactorization.h; sourceTree = "<group>"; };
+		494F454F185EA9DA00347096 /* MCLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLUFactorization.m; sourceTree = "<group>"; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -289,6 +293,8 @@
 				494F4542185BDA6200347096 /* MCPolynomial.m */,
 				494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */,
 				494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */,
+				494F454E185EA9DA00347096 /* MCLUFactorization.h */,
+				494F454F185EA9DA00347096 /* MCLUFactorization.m */,
 				494F4549185D041200347096 /* Categories */,
 			);
 			name = Library;
@@ -408,6 +414,7 @@
 				494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
 				494F4543185BDA6200347096 /* MCPolynomial.m in Sources */,
 				494F4547185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */,
+				494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +430,7 @@
 				494F44DA185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,
 				494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
 				494F4544185BDA6200347096 /* MCPolynomial.m in Sources */,
+				494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */,
 				494F44DC185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
 				494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
