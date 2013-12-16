@@ -430,6 +430,10 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 + (MCMatrix *)productOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
+    if (matrixA.columns != matrixB.rows) {
+        @throw NSInvalidArgumentException;
+    }
+    
     MCMatrix *product = [MCMatrix matrixWithRows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
     
     double *aVals = [matrixA matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
