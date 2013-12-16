@@ -190,6 +190,10 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  */
 - (MCMatrix *)inverse;
 
+- (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB;
+
+- (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB;
+
 /**
  @return The condition number of this matrix.
  */
