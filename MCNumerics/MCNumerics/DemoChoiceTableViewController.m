@@ -27,8 +27,8 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.delegate = self;
     
-    NSArray *approximations = @[@"Linear Approximation"];
-    self.demosACL = [[RZArrayCollectionList alloc] initWithSectionTitlesAndSectionArrays:@"Approximations", approximations, nil];
+    self.demosACL = [[RZArrayCollectionList alloc] initWithSectionTitlesAndSectionArrays:@"Approximations", @[@"Linear Approximation"],
+                     @"Images", @[@"Alpha Compositing", @"Convolution", @"Decompression Filtering" , @"Geometry", @"Histogram", @"Morphology", @"Transform"], nil];
     
     self.tableViewDataSource = [[RZCollectionListTableViewDataSource alloc] initWithTableView:self.tableView collectionList:self.demosACL delegate:self];
 }

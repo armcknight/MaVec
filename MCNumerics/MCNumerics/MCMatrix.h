@@ -201,12 +201,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 - (MCQRFactorization *)qrFactorization;
 
 /**
+ @description Helpful documentation at http://www.netlib.no/netlib/lapack/double/dgetrf.f and https://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_hsgetrf.htm
  @return An MCLUFactorization object contatining matrices representing the LU factorization of this matrix.
  */
 - (MCLUFactorization *)luFactorization;
 
 /**
- @description Uses the Accelerate framework function dgesdd_. Examples of dgesdd_(...) usage found at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/lapacke_dgesdd_row.c.htm and http://stackoverflow.com/questions/5047503/lapack-svd-singular-value-decomposition Good documentation exists at http://www.netlib.org/lapack/lug/node53.html and http://www.nag.com/numeric/FL/nagdoc_fl22/xhtml/F08/f08kdf.xml
+ @description Uses the Accelerate framework function dgesdd_. Examples of dgesdd_(...) usage found at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/lapacke_dgesdd_row.c.htm and http://stackoverflow.com/questions/5047503/lapack-svd-singular-value-decomposition Good documentation exists at http://www.netlib.org/lapack/lug/node53.html and http://www.nag.com/numeric/FL/nagdoc_fl22/xhtml/F08/f08kdf.xml. See http://www.netlib.org/lapack/lug/node38.html for general documentation.
  @return An MCSingularValueDecomposition object containing matrices representing the singular value decomposition of this matrix, or nil if no such decomposition exists.
  */
 - (MCSingularValueDecomposition *)singularValueDecomposition;
@@ -277,6 +278,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 + (MCMatrix *)differenceOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB;
 
 /**
+ @description Good documentation for solving Ax=b where A is a square matrix located  at http://www.netlib.org/lapack/double/dgesv.f and example at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgesv_ex.c.htm. When A is a general m x n matrix, see documentation at http://www.netlib.org/lapack/double/dgels.f and example at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgels_ex.c.htm
  @return A column vector containing coefficients for unknows to solve a linear system Ax=B, or nil if the system cannot be solved. Raises an NSInvalidArgumentException if A and B are of incompatible dimension.
  */
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
@@ -309,6 +311,9 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @description The LU factorization decomposes a matrix A into the product LU, where L is a lower triangular matrix and U is an upper triangular matrix.
  */
 @interface MCLUFactorization : NSObject
+
+- (id)initWithL:(MCMatrix *)l u:(MCMatrix *)u p:(MCMatrix *)p;
++ (id)luFactorizationWithL:(MCMatrix *)l u:(MCMatrix *)u p:(MCMatrix *)p;
 
 /**
  @property l

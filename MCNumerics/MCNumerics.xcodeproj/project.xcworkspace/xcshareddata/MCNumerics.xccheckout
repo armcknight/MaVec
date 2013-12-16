@@ -21,6 +21,8 @@
 	<dict>
 		<key>3123AF5B-841D-4EB8-933D-7DC1CB7E4C86</key>
 		<string>../../..</string>
+		<key>8F3EBB6F-C8BD-458A-8DE0-7A7E574FF8E9</key>
+		<string>../../MCNumerics/External/RZCollectionList</string>
 		<key>A01DB105-1D6E-46A2-B9EC-B62642920665</key>
 		<string>../../External/RZCollectionList</string>
 	</dict>
@@ -45,6 +47,14 @@
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>A01DB105-1D6E-46A2-B9EC-B62642920665</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RZCollectionList</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8F3EBB6F-C8BD-458A-8DE0-7A7E574FF8E9</string>
 			<key>IDESourceControlWCCName</key>
 			<string>RZCollectionList</string>
 		</dict>

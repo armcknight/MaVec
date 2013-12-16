@@ -218,6 +218,63 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return determinant;
 }
 
+- (MCLUFactorization *)luFactorization
+{
+    NSUInteger size = self.rows * self.columns;
+    double *values = malloc(size * sizeof(double));
+    for (int i = 0; i < size; i++) {
+        values[i] = self.values[i];
+    }
+    
+    int m = self.rows;
+    int n = self.columns;
+    
+    int lda = m;
+    
+    int *ipiv = malloc(MIN(m, n) * sizeof(int));
+    
+    int info = 0;
+    
+    dgetrf_(&m, &n, values, &lda, ipiv, &info);
+    
+    // extract L from values array
+    MCMatrix *l = [MCMatrix matrixWithRows:m columns:n];
+    for (int i = 0; i < self.columns; i++) {
+        for (int j = 0; j < self.rows; j++) {
+            if (j > i) {
+                [l setEntryAtRow:j column:i toValue:values[i * self.columns + j]];
+            } else if (j == i) {
+                [l setEntryAtRow:j column:i toValue:1.0];
+            } else {
+                [l setEntryAtRow:j column:i toValue:0.0];
+            }
+        }
+    }
+    
+    // extract U from values array
+    MCMatrix *u = [MCMatrix matrixWithRows:n columns:m];
+    for (int i = 0; i < self.columns; i++) {
+        for (int j = 0; j < self.rows; j++) {
+            if (j <= i) {
+                [u setEntryAtRow:j column:i toValue:values[i * self.columns + j]];
+            } else {
+                [u setEntryAtRow:j column:i toValue:0.0];
+            }
+        }
+    }
+    
+    // exchange rows as defined in ipiv
+    MCMatrix *p = [MCMatrix identityMatrixWithSize:MIN(m, n)];
+    for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
+        [p swapRowA:i withRowB:ipiv[i] - 1];
+    }
+    
+    MCLUFactorization *f = [MCLUFactorization luFactorizationWithL:l
+                                                                 u:u];
+    f.p = p;
+    return f;
+}
+
 - (MCSingularValueDecomposition *)singularValueDecomposition
 {
     double workSize;
@@ -380,11 +437,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     if (A.rows == A.columns) {
         // solve for square matrix A
         
-        /*
-         documentation: http://www.netlib.org/lapack/double/dgesv.f
-         example: http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgesv_ex.c.htm
-         */
-        
         int n = A.rows;
         int nrhs = 1;
         int lda = n;
@@ -415,11 +467,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         }
     } else {
         // solve for general m x n rectangular matrix A
-        
-        /*
-         documentation: http://www.netlib.org/lapack/double/dgels.f
-         example: http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgels_ex.c.htm
-         */
         
         int m = A.rows;
         int n = A.columns;

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		494F44CF185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4461185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m */; };
-		494F44D0185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4461185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m */; };
 		494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
 		494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
 		494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4465185B61BB00347096 /* RZBaseCollectionList.m */; };
@@ -21,19 +19,18 @@
 		494F44DA185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446D185B61BB00347096 /* RZCollectionListTableViewDataSource.m */; };
 		494F44DB185B61BB00347096 /* RZCompositeCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446F185B61BB00347096 /* RZCompositeCollectionList.m */; };
 		494F44DC185B61BB00347096 /* RZCompositeCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446F185B61BB00347096 /* RZCompositeCollectionList.m */; };
-		494F44DD185B61BB00347096 /* RZFetchedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4471185B61BB00347096 /* RZFetchedCollectionList.m */; };
-		494F44DE185B61BB00347096 /* RZFetchedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4471185B61BB00347096 /* RZFetchedCollectionList.m */; };
 		494F44DF185B61BB00347096 /* RZFilteredCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4473185B61BB00347096 /* RZFilteredCollectionList.m */; };
 		494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4473185B61BB00347096 /* RZFilteredCollectionList.m */; };
 		494F44E1185B61BB00347096 /* RZObserverCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4475185B61BB00347096 /* RZObserverCollection.m */; };
 		494F44E2185B61BB00347096 /* RZObserverCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4475185B61BB00347096 /* RZObserverCollection.m */; };
 		494F44E3185B61BB00347096 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4477185B61BB00347096 /* RZSortedCollectionList.m */; };
 		494F44E4185B61BB00347096 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4477185B61BB00347096 /* RZSortedCollectionList.m */; };
-		494F4540185B623000347096 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F453F185B623000347096 /* CoreData.framework */; };
 		494F4543185BDA6200347096 /* MCPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCPolynomial.m */; };
 		494F4544185BDA6200347096 /* MCPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCPolynomial.m */; };
 		494F4547185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */; };
 		494F4548185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */; };
+		494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
+		494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -64,8 +61,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		494F4460185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+RZCreationHelpers.h"; sourceTree = "<group>"; };
-		494F4461185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+RZCreationHelpers.m"; sourceTree = "<group>"; };
 		494F4462185B61BB00347096 /* RZArrayCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZArrayCollectionList.h; sourceTree = "<group>"; };
 		494F4463185B61BB00347096 /* RZArrayCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZArrayCollectionList.m; sourceTree = "<group>"; };
 		494F4464185B61BB00347096 /* RZBaseCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZBaseCollectionList.h; sourceTree = "<group>"; };
@@ -80,8 +75,6 @@
 		494F446D185B61BB00347096 /* RZCollectionListTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionListTableViewDataSource.m; sourceTree = "<group>"; };
 		494F446E185B61BB00347096 /* RZCompositeCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCompositeCollectionList.h; sourceTree = "<group>"; };
 		494F446F185B61BB00347096 /* RZCompositeCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCompositeCollectionList.m; sourceTree = "<group>"; };
-		494F4470185B61BB00347096 /* RZFetchedCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZFetchedCollectionList.h; sourceTree = "<group>"; };
-		494F4471185B61BB00347096 /* RZFetchedCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZFetchedCollectionList.m; sourceTree = "<group>"; };
 		494F4472185B61BB00347096 /* RZFilteredCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZFilteredCollectionList.h; sourceTree = "<group>"; };
 		494F4473185B61BB00347096 /* RZFilteredCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZFilteredCollectionList.m; sourceTree = "<group>"; };
 		494F4474185B61BB00347096 /* RZObserverCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZObserverCollection.h; sourceTree = "<group>"; };
@@ -89,11 +82,12 @@
 		494F4476185B61BB00347096 /* RZSortedCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZSortedCollectionList.h; sourceTree = "<group>"; };
 		494F4477185B61BB00347096 /* RZSortedCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZSortedCollectionList.m; sourceTree = "<group>"; };
 		494F4478185B61BB00347096 /* RZCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RZCollectionList.h; path = RZCollectionList/RZCollectionList.h; sourceTree = "<group>"; };
-		494F453F185B623000347096 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		494F4541185BDA6200347096 /* MCPolynomial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPolynomial.h; sourceTree = "<group>"; };
 		494F4542185BDA6200347096 /* MCPolynomial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPolynomial.m; sourceTree = "<group>"; };
 		494F4545185BDE3000347096 /* NSNumber+MCArithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCArithmetic.h"; sourceTree = "<group>"; };
 		494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCArithmetic.m"; sourceTree = "<group>"; };
+		494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSingularValueDecomposition.h; sourceTree = "<group>"; };
+		494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSingularValueDecomposition.m; sourceTree = "<group>"; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -126,7 +120,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				494F4540185B623000347096 /* CoreData.framework in Frameworks */,
 				49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */,
 				49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */,
 				49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */,
@@ -166,8 +159,6 @@
 		494F445F185B61BB00347096 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				494F4460185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.h */,
-				494F4461185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m */,
 				494F4462185B61BB00347096 /* RZArrayCollectionList.h */,
 				494F4463185B61BB00347096 /* RZArrayCollectionList.m */,
 				494F4464185B61BB00347096 /* RZBaseCollectionList.h */,
@@ -182,8 +173,6 @@
 				494F446D185B61BB00347096 /* RZCollectionListTableViewDataSource.m */,
 				494F446E185B61BB00347096 /* RZCompositeCollectionList.h */,
 				494F446F185B61BB00347096 /* RZCompositeCollectionList.m */,
-				494F4470185B61BB00347096 /* RZFetchedCollectionList.h */,
-				494F4471185B61BB00347096 /* RZFetchedCollectionList.m */,
 				494F4472185B61BB00347096 /* RZFilteredCollectionList.h */,
 				494F4473185B61BB00347096 /* RZFilteredCollectionList.m */,
 				494F4474185B61BB00347096 /* RZObserverCollection.h */,
@@ -226,7 +215,6 @@
 		49B6828E184D8342006A61D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				494F453F185B623000347096 /* CoreData.framework */,
 				49B6828F184D8342006A61D3 /* Foundation.framework */,
 				49B68291184D8342006A61D3 /* CoreGraphics.framework */,
 				49B68293184D8342006A61D3 /* UIKit.framework */,
@@ -299,6 +287,8 @@
 				49B682EA1854DEF8006A61D3 /* MCVector.m */,
 				494F4541185BDA6200347096 /* MCPolynomial.h */,
 				494F4542185BDA6200347096 /* MCPolynomial.m */,
+				494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */,
+				494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */,
 				494F4549185D041200347096 /* Categories */,
 			);
 			name = Library;
@@ -406,10 +396,9 @@
 				49B682D8184ED2D5006A61D3 /* LinearApproximationViewController.m in Sources */,
 				494F44D9185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,
 				49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */,
-				494F44DD185B61BB00347096 /* RZFetchedCollectionList.m in Sources */,
+				494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */,
 				494F44D7185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */,
 				494F44D5185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
-				494F44CF185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m in Sources */,
 				49B6829C184D8342006A61D3 /* main.m in Sources */,
 				494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
 				494F44E3185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
@@ -427,9 +416,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				494F44E4185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
+				494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */,
 				494F44D4185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
 				494F44E2185B61BB00347096 /* RZObserverCollection.m in Sources */,
-				494F44D0185B61BB00347096 /* NSFetchRequest+RZCreationHelpers.m in Sources */,
 				494F44D8185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */,
 				494F44DA185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,
 				494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
@@ -439,7 +428,6 @@
 				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
 				494F4548185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */,
 				49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */,
-				494F44DE185B61BB00347096 /* RZFetchedCollectionList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
