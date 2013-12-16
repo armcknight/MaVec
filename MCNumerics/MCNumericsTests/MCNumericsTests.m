@@ -8,6 +8,8 @@
 
 #import <XCTest/XCTest.h>
 #import "MCMatrix.h"
+#import "MCSingularValueDecomposition.h"
+#import "MCLUFactorization.h"
 
 @interface MCNumericsTests : XCTestCase
 

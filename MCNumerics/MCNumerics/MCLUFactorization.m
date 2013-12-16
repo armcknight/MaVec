@@ -10,4 +10,22 @@
 
 @implementation MCLUFactorization
 
+#pragma mark - Init
+
+- (id)initWithL:(MCMatrix *)l u:(MCMatrix *)u
+{
+    self = [super init];
+    if (self) {
+        self.l = l;
+        self.u = u;
+        self.d = nil;
+    }
+    return self;
+}
+
++ (id)luFactorizationWithL:(MCMatrix *)l u:(MCMatrix *)u
+{
+    return [[MCLUFactorization alloc] initWithL:l u:u];
+}
+
 @end
