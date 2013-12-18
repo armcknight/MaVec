@@ -34,6 +34,10 @@
  */
 @property (nonatomic, strong) MCMatrix *u;
 
+/**
+ @property p
+ @brief The permutation matrix of the LU factorization. See see http://www.math.drexel.edu/~tolya/permutations.pdf for explanation of permutation matrices.
+ */
 @property (nonatomic, strong) MCMatrix *p;
 
 @property (nonatomic, strong) MCMatrix *d;

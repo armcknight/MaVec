@@ -280,7 +280,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         }
     }
     
-    // exchange rows as defined in ipiv
+    // exchange rows as defined in ipiv to build permutation matrix
     MCMatrix *p = [MCMatrix identityMatrixWithSize:MIN(m, n)];
     for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
         [p swapRowA:i withRowB:ipiv[i] - 1];
@@ -311,11 +311,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         values[i] = self.values[i];
     }
     
+    // call first with lwork = -1 to determine optimal size of working array
     dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
     
     lwork = workSize;
     work = malloc(lwork * sizeof(double));
     
+    // now run the actual decomposition
     dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
     
     free(work);
