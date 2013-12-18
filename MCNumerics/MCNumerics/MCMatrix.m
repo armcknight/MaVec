@@ -160,7 +160,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     double *aVals = self.values;
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
     
-    mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
+    vDSP_mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
     
     return [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
 }
@@ -432,7 +432,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     double *bVals = [matrixB matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
     double *cVals = malloc(matrixA.rows * matrixB.columns * sizeof(double));
     
-    mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
+    vDSP_mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
     
     return [MCMatrix matrixWithValues:cVals rows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
 }
