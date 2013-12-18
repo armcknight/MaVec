@@ -157,18 +157,10 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (MCMatrix *)transpose
 {
+    double *aVals = self.values;
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
     
-    int i = 0;
-    for (int j = 0; j < self.rows; j++) {
-        for (int k = 0; k < self.columns; k++) {
-            int idx = ((i * self.rows) % (self.columns * self.rows)) + j;
-            
-            tVals[i] = self.values[idx];
-            
-            i++;
-        }
-    }
+    mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
     
     return [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
 }
