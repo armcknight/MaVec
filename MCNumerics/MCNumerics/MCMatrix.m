@@ -436,22 +436,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         @throw NSInvalidArgumentException;
     }
     
-    MCMatrix *product = [MCMatrix matrixWithRows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
-    
     double *aVals = [matrixA matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
     double *bVals = [matrixB matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
+    double *cVals = malloc(matrixA.rows * matrixB.columns * sizeof(double));
     
-    for (int i = 0; i < matrixA.rows; i++) {
-        for (int j = 0; j < matrixB.columns; j++) {
-            double val = 0.0;
-            for (int k = 0; k < matrixA.columns; k++) {
-                val += aVals[i * matrixA.columns + k] * bVals[k * matrixB.columns + j];
-            }
-            product.values[i * matrixB.columns + j] = val;
-        }
-    }
+    mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
     
-    return [product matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatColumnMajor];
+    return [MCMatrix matrixWithValues:cVals rows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
 }
 
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
