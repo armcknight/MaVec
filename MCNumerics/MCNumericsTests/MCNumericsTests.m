@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "MCMatrix.h"
+#import "MCVector.h"
 #import "MCSingularValueDecomposition.h"
 #import "MCLUFactorization.h"
 
@@ -469,6 +470,29 @@
             XCTAssertEqual([a valueAtRow:i column:j], [t valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
         }
     }
+}
+
+- (void)testMatrixCreationFromRowVectors
+{
+    MCVector *v1 = [MCVector vectorWithValues:@[@1, @2, @3]];
+    MCVector *v2 = [MCVector vectorWithValues:@[@4, @5, @6]];
+    MCVector *v3 = [MCVector vectorWithValues:@[@7, @8, @9]];
+    
+    /* create the matrix
+        [ 1  4  7
+          2  5  8
+          3  6  9 ]
+     */
+    MCMatrix *a = [MCMatrix matrixWithColumnVectors:@[v1,v2, v3]];
+    NSLog(a.description);
+    
+    /* create the matrix
+     [ 1  2  3
+       4  5  6
+       7  8  9 ]
+     */
+    MCMatrix *b = [MCMatrix matrixWithRowVectors:@[v1, v2, v3]];
+    NSLog(b.description);
 }
 
 @end

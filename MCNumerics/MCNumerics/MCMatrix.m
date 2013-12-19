@@ -8,6 +8,7 @@
 
 #import <Accelerate/Accelerate.h>
 #import "MCMatrix.h"
+#import "MCVector.h"
 #import "MCSingularValueDecomposition.h"
 #import "MCLUFactorization.h"
 
@@ -86,6 +87,52 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     }
     
     return self;
+}
+
+- (id)initWithColumnVectors:(NSArray *)columnVectors
+{
+    self = [super init];
+    if (self) {
+        _columns = columnVectors.count;
+        _rows = ((MCVector *)columnVectors.firstObject).length;
+        _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
+        
+        self.values = malloc(self.rows * self.columns * sizeof(double));
+        [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
+            for(int i = 0; i < self.rows; i++) {
+                self.values[column * self.rows + i] = [columnVector valueAtIndex:i];
+            }
+        }];
+    }
+    return self;
+}
+
+- (id)initWithRowVectors:(NSArray *)rowVectors
+{
+    self = [super init];
+    if (self) {
+        _rows = rowVectors.count;
+        _columns = ((MCVector *)rowVectors.firstObject).length;
+        _valueStorageFormat = MCMatrixValueStorageFormatRowMajor;
+        
+        self.values = malloc(self.rows * self.columns * sizeof(double));
+        [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
+            for(int i = 0; i < self.rows; i++) {
+                self.values[row * self.columns + i] = [rowVector valueAtIndex:i];
+            }
+        }];
+    }
+    return self;
+}
+
++ (id)matrixWithColumnVectors:(NSArray *)columnVectors
+{
+    return [[MCMatrix alloc] initWithColumnVectors:columnVectors];
+}
+
++ (id)matrixWithRowVectors:(NSArray *)rowVectors
+{
+    return [[MCMatrix alloc] initWithRowVectors:rowVectors];
 }
 
 + (id)matrixWithRows:(NSUInteger)rows columns:(NSUInteger)columns
