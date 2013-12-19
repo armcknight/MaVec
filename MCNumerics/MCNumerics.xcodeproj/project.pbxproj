@@ -35,6 +35,7 @@
 		494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
 		494F45581861453900347096 /* ImageDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F45571861453900347096 /* ImageDemoViewController.m */; };
 		494F45591861453900347096 /* ImageDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F45571861453900347096 /* ImageDemoViewController.m */; };
+		494F455B1861565B00347096 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F455A1861565B00347096 /* Accelerate.framework */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -96,6 +97,7 @@
 		494F454F185EA9DA00347096 /* MCLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLUFactorization.m; sourceTree = "<group>"; };
 		494F45561861453900347096 /* ImageDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDemoViewController.h; sourceTree = "<group>"; };
 		494F45571861453900347096 /* ImageDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDemoViewController.m; sourceTree = "<group>"; };
+		494F455A1861565B00347096 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -128,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				494F455B1861565B00347096 /* Accelerate.framework in Frameworks */,
 				49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */,
 				49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */,
 				49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */,
@@ -223,6 +226,7 @@
 		49B6828E184D8342006A61D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				494F455A1861565B00347096 /* Accelerate.framework */,
 				49B6828F184D8342006A61D3 /* Foundation.framework */,
 				49B68291184D8342006A61D3 /* CoreGraphics.framework */,
 				49B68293184D8342006A61D3 /* UIKit.framework */,
