@@ -7,6 +7,7 @@
 //
 
 #import "DemoChoiceTableViewController.h"
+#import "ImageDemoViewController.h"
 
 #define kCellIdentifier @"kCellIdentifier"
 
