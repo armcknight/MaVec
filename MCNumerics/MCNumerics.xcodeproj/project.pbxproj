@@ -50,9 +50,10 @@
 		49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682B4184D8342006A61D3 /* MCNumericsTests.m */; };
 		49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682BF184D8390006A61D3 /* MCMatrix.m */; };
 		49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */; };
-		49B682D7184ED2D5006A61D3 /* LinearApproximationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */; };
 		49B682D8184ED2D5006A61D3 /* LinearApproximationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */; };
 		49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682EA1854DEF8006A61D3 /* MCVector.m */; };
+		49E10B421863F56800308AD2 /* LinearApproximationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */; };
+		49E10B451863F60900308AD2 /* ApproximationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E10B441863F60900308AD2 /* ApproximationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,11 +119,13 @@
 		49B682BF184D8390006A61D3 /* MCMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrix.m; sourceTree = "<group>"; };
 		49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoiceTableViewController.h; sourceTree = "<group>"; };
 		49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoChoiceTableViewController.m; sourceTree = "<group>"; };
-		49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinearApproximationView.xib; sourceTree = "<group>"; };
 		49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinearApproximationViewController.h; sourceTree = "<group>"; };
 		49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinearApproximationViewController.m; sourceTree = "<group>"; };
 		49B682E91854DEF8006A61D3 /* MCVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCVector.h; sourceTree = "<group>"; };
 		49B682EA1854DEF8006A61D3 /* MCVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVector.m; sourceTree = "<group>"; };
+		49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinearApproximationViewController.xib; sourceTree = "<group>"; };
+		49E10B431863F60900308AD2 /* ApproximationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproximationView.h; sourceTree = "<group>"; };
+		49E10B441863F60900308AD2 /* ApproximationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproximationView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,9 +286,11 @@
 				49B6829F184D8342006A61D3 /* AppDelegate.m */,
 				49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */,
 				49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */,
-				49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */,
 				49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */,
 				49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */,
+				49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */,
+				49E10B431863F60900308AD2 /* ApproximationView.h */,
+				49E10B441863F60900308AD2 /* ApproximationView.m */,
 				494F45561861453900347096 /* ImageDemoViewController.h */,
 				494F45571861453900347096 /* ImageDemoViewController.m */,
 			);
@@ -385,9 +390,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49B682D7184ED2D5006A61D3 /* LinearApproximationView.xib in Resources */,
 				49B6829A184D8342006A61D3 /* InfoPlist.strings in Resources */,
 				49B682A2184D8342006A61D3 /* Images.xcassets in Resources */,
+				49E10B421863F56800308AD2 /* LinearApproximationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +413,7 @@
 			files = (
 				49B682A0184D8342006A61D3 /* AppDelegate.m in Sources */,
 				494F44E1185B61BB00347096 /* RZObserverCollection.m in Sources */,
+				49E10B451863F60900308AD2 /* ApproximationView.m in Sources */,
 				494F44DB185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
 				494F45581861453900347096 /* ImageDemoViewController.m in Sources */,
 				49B682D8184ED2D5006A61D3 /* LinearApproximationViewController.m in Sources */,
