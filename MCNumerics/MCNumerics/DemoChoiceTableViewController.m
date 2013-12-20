@@ -8,6 +8,7 @@
 
 #import "DemoChoiceTableViewController.h"
 #import "ImageDemoViewController.h"
+#import "LinearApproximationViewController.h"
 
 #define kCellIdentifier @"kCellIdentifier"
 
@@ -68,30 +69,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *demoName = [self.demosACL objectAtIndexPath:indexPath];
-    ImageDemoType demoType;
-    
-    if ([demoName isEqualToString:kImageDemoNameAlphaCompositing]) {
-        demoType = ImageDemoTypeAlphaCompositing;
-    } else if ([demoName isEqualToString:kImageDemoNameConvolution]) {
-        demoType = ImageDemoTypeConvolution;
-    } else if ([demoName isEqualToString:kImageDemoNameConvolution]) {
-        demoType = ImageDemoTypeConvolution;
-    } else if ([demoName isEqualToString:kImageDemoNameDecompression]) {
-        demoType = ImageDemoTypeDecompression;
-    } else if ([demoName isEqualToString:kImageDemoNameGeometry]) {
-        demoType = ImageDemoTypeGeometry;
-    } else if ([demoName isEqualToString:kImageDemoNameHistogram]) {
-        demoType = ImageDemoTypeHistogram;
-    } else if ([demoName isEqualToString:kImageDemoNameMorphology]) {
-        demoType = ImageDemoTypeMorphology;
-    } else if ([demoName isEqualToString:kImageDemoNameTransform]) {
-        demoType = ImageDemoTypeTransform;
+    if (indexPath.section == 0) {
+        [self.navigationController pushViewController:[[LinearApproximationViewController alloc] initWithNibName:@"LinearApproximationViewController" bundle:[NSBundle mainBundle]] animated:YES];
+    } else {
+        NSString *demoName = [self.demosACL objectAtIndexPath:indexPath];
+        ImageDemoType demoType;
+        
+        if ([demoName isEqualToString:kImageDemoNameAlphaCompositing]) {
+            demoType = ImageDemoTypeAlphaCompositing;
+        } else if ([demoName isEqualToString:kImageDemoNameConvolution]) {
+            demoType = ImageDemoTypeConvolution;
+        } else if ([demoName isEqualToString:kImageDemoNameConvolution]) {
+            demoType = ImageDemoTypeConvolution;
+        } else if ([demoName isEqualToString:kImageDemoNameDecompression]) {
+            demoType = ImageDemoTypeDecompression;
+        } else if ([demoName isEqualToString:kImageDemoNameGeometry]) {
+            demoType = ImageDemoTypeGeometry;
+        } else if ([demoName isEqualToString:kImageDemoNameHistogram]) {
+            demoType = ImageDemoTypeHistogram;
+        } else if ([demoName isEqualToString:kImageDemoNameMorphology]) {
+            demoType = ImageDemoTypeMorphology;
+        } else {
+            demoType = ImageDemoTypeTransform;
+        }
+        
+        ImageDemoViewController *imageDemoVC = [[ImageDemoViewController alloc] initWithDemoType:demoType];
+        [self.navigationController pushViewController:imageDemoVC animated:YES];
     }
-    
-    ImageDemoViewController *imageDemoVC = [[ImageDemoViewController alloc] initWithDemoType:demoType];
-    [self.navigationController pushViewController:imageDemoVC animated:YES];
-    
 }
 
 @end
