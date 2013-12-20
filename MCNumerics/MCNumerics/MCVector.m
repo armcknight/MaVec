@@ -125,4 +125,16 @@
 
 #pragma mark - Operations
 
++ (double)dotProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
+{
+    if (a.length != b.length) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
+    }
+    
+    double dotProduct;
+    vDSP_dotprD(a.valuesCArray, 1, b.valuesCArray, 1, &dotProduct, a.length);
+    
+    return dotProduct;
+}
+
 @end

@@ -577,4 +577,42 @@
     NSLog(@"plain accelerate runtime: %.2f\nMCMatrix runtime: %.2f", accelerateTime, mcTime);
 }
 
+- (void)testVectorDotProduct
+{
+    double dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
+                                                                                   @1,
+                                                                                   @3,
+                                                                                   @(-5)]]
+                                           andVectorB:[MCVector vectorWithValues:@[
+                                                                                   @4,
+                                                                                   @(-2),
+                                                                                   @(-1)]]];
+    XCTAssertEqual(dotProduct, 3.0, @"Dot product not computed correctly");
+    
+    dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
+                                                                            @0,
+                                                                            @0,
+                                                                            @1]]
+                                    andVectorB:[MCVector vectorWithValues:@[
+                                                                            @0,
+                                                                            @1,
+                                                                            @0]]];
+    XCTAssertEqual(dotProduct, 0.0, @"Dot product not computed correctly");
+    
+    @try {
+        dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
+                                                                                @0,
+                                                                                @0,
+                                                                                @1]]
+                                        andVectorB:[MCVector vectorWithValues:@[
+                                                                                @0,
+                                                                                @1,
+                                                                                @0,
+                                                                                @1]]];
+    }
+    @catch (NSException *exception) {
+        XCTAssert([exception.name isEqualToString:NSInvalidArgumentException], @"Did not detect dimension mismatch in MCVector dot product method");
+    }
+}
+
 @end
