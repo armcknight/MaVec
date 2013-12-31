@@ -254,6 +254,16 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     }
 }
 
+- (double)conditionNumber
+{
+    double conditionNumber = 0.0;
+    
+    // TODO: implement
+    @throw [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil];
+    
+    return conditionNumber;
+}
+
 - (MCLUFactorization *)luFactorization
 {
     NSUInteger size = self.rows * self.columns;
