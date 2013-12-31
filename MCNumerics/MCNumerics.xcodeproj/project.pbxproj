@@ -144,6 +144,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37AE3C0618735D4500FAE5BC /* Equations */ = {
+			isa = PBXGroup;
+			children = (
+				37AE3C0218735B5200FAE5BC /* MCEquation.h */,
+				494F4541185BDA6200347096 /* MCPolynomial.h */,
+				494F4542185BDA6200347096 /* MCPolynomial.m */,
+			);
+			name = Equations;
+			sourceTree = "<group>";
+		};
+		37AE3C0718735D5700FAE5BC /* Matrices */ = {
+			isa = PBXGroup;
+			children = (
+				49B682BE184D8390006A61D3 /* MCMatrix.h */,
+				49B682BF184D8390006A61D3 /* MCMatrix.m */,
+				494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */,
+				494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */,
+				494F454E185EA9DA00347096 /* MCLUFactorization.h */,
+				494F454F185EA9DA00347096 /* MCLUFactorization.m */,
+			);
+			name = Matrices;
+			sourceTree = "<group>";
+		};
+		37AE3C0818735D6800FAE5BC /* Vectors */ = {
+			isa = PBXGroup;
+			children = (
+				49B682E91854DEF8006A61D3 /* MCVector.h */,
+				49B682EA1854DEF8006A61D3 /* MCVector.m */,
+			);
+			name = Vectors;
+			sourceTree = "<group>";
+		};
 		494F4458185B61BB00347096 /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,13 +221,13 @@
 			path = RZCollectionList/Classes;
 			sourceTree = "<group>";
 		};
-		494F4549185D041200347096 /* Categories */ = {
+		494F4549185D041200347096 /* _Categories */ = {
 			isa = PBXGroup;
 			children = (
 				494F4545185BDE3000347096 /* NSNumber+MCArithmetic.h */,
 				494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */,
 			);
-			name = Categories;
+			name = _Categories;
 			sourceTree = "<group>";
 		};
 		49B68283184D8341006A61D3 = {
@@ -286,17 +318,10 @@
 		49B682E81854DEC1006A61D3 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				49B682BE184D8390006A61D3 /* MCMatrix.h */,
-				49B682BF184D8390006A61D3 /* MCMatrix.m */,
-				49B682E91854DEF8006A61D3 /* MCVector.h */,
-				49B682EA1854DEF8006A61D3 /* MCVector.m */,
-				494F4541185BDA6200347096 /* MCPolynomial.h */,
-				494F4542185BDA6200347096 /* MCPolynomial.m */,
-				494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */,
-				494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */,
-				494F454E185EA9DA00347096 /* MCLUFactorization.h */,
-				494F454F185EA9DA00347096 /* MCLUFactorization.m */,
-				494F4549185D041200347096 /* Categories */,
+				494F4549185D041200347096 /* _Categories */,
+				37AE3C0618735D4500FAE5BC /* Equations */,
+				37AE3C0718735D5700FAE5BC /* Matrices */,
+				37AE3C0818735D6800FAE5BC /* Vectors */,
 			);
 			name = Library;
 			sourceTree = "<group>";
