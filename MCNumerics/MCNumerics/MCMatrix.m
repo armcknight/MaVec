@@ -462,6 +462,42 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return [product matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatColumnMajor];
 }
 
++ (MCMatrix *)sumOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
+{
+    if (matrixA.rows != matrixB.rows) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of rows." userInfo:nil];
+    } else if (matrixA.columns != matrixB.columns) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of columns." userInfo:nil];
+    }
+    
+    MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns];
+    for (int i = 0; i < matrixA.rows; i++) {
+        for (int j = 0; j < matrixA.columns; j++) {
+            [sum setEntryAtRow:i column:j toValue:[matrixA valueAtRow:i column:j] + [matrixB valueAtRow:i column:j]];
+        }
+    }
+    
+    return sum;
+}
+
++ (MCMatrix *)differenceOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
+{
+    if (matrixA.rows != matrixB.rows) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of rows." userInfo:nil];
+    } else if (matrixA.columns != matrixB.columns) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of columns." userInfo:nil];
+    }
+    
+    MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns];
+    for (int i = 0; i < matrixA.rows; i++) {
+        for (int j = 0; j < matrixA.columns; j++) {
+            [sum setEntryAtRow:i column:j toValue:[matrixA valueAtRow:i column:j] - [matrixB valueAtRow:i column:j]];
+        }
+    }
+    
+    return sum;
+}
+
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
                                  valuesB:(MCMatrix*)B
 {
