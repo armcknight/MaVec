@@ -176,7 +176,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 - (MCMatrix *)matrixWithValuesStoredInFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
- @return A new MCMatrix object with the values from this matrix, excluding the specified row and index values.
+ @return A new MCMatrix object with the values from this matrix (in the same valueStorageFormat), excluding the specified row and index values. 
  */
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column;
 

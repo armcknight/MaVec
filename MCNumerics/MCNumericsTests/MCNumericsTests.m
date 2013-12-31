@@ -438,4 +438,33 @@
     }
 }
 
+- (void)testMinorComposition
+{
+    double *values = malloc(9 * sizeof(double));
+    values[0] = 1.0;
+    values[1] = 2.0;
+    values[2] = 3.0;
+    values[3] = 4.0;
+    values[4] = 5.0;
+    values[5] = 6.0;
+    values[6] = 7.0;
+    values[7] = 8.0;
+    values[8] = 9.0;
+    
+    MCMatrix *m = [MCMatrix matrixWithValues:values rows:3 columns:3];
+    MCMatrix *minor = [m minorByRemovingRow:1 column:1];
+    
+    // create mcmatrix corresponding to minor of m with 1st row and 1st column removed
+    double *mValues = malloc(4 * sizeof(double));
+    mValues[0] = 5.0;
+    mValues[0] = 6.0;
+    mValues[0] = 8.0;
+    mValues[0] = 9.0;
+    MCMatrix *minorSolution = [MCMatrix matrixWithValues:mValues rows:2 columns:2];
+    
+    // try to create a minor with an invalid row and column
+    XCTAssertThrows([m minorByRemovingRow:3 column:1], @"Should throw an invalid row exception.");
+    XCTAssertThrows([m minorByRemovingRow:1 column:3], @"Should throw an invalid column exception.");
+}
+
 @end

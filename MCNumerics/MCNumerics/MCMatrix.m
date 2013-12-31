@@ -201,11 +201,21 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
 {
-    // page 269 of Bretscher
-    MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1];
+    if (row >= self.rows) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid row." userInfo:nil];
+    } else if (column >= self.columns) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid column." userInfo:nil];
+    }
     
-    // TODO: implement
-    @throw [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil];
+    MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1 valueStorageFormat:self.valueStorageFormat];
+    
+    for (int i = 0; i < self.rows; i++) {
+        for (int j = 0; j < self.rows; j++) {
+            if (i != row && j != column) {
+                [minor setEntryAtRow:i > row ? i - 1 : i  column:j > column ? j - 1 : j toValue:[self valueAtRow:i column:j]];
+            }
+        }
+    }
     
     return minor;
 }
