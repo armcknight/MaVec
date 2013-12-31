@@ -245,6 +245,15 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     }
 }
 
+- (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB
+{
+    for (int i = 0; i < self.rows; i++) {
+        double temp = [self valueAtRow:i column:columnA];
+        [self setEntryAtRow:i column:columnA toValue:[self valueAtRow:i column:columnB]];
+        [self setEntryAtRow:i column:columnB toValue:temp];
+    }
+}
+
 - (MCLUFactorization *)luFactorization
 {
     NSUInteger size = self.rows * self.columns;
