@@ -195,10 +195,12 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
                               columns:size];
 }
 
-- (void)dealloc
-{
-    free(self.values);
-}
+//- (void)dealloc
+//{
+//    if (self.values) {
+//        free(self.values);
+//    }
+//}
 
 #pragma mark - Matrix operations
 
