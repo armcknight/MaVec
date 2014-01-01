@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-//#import <Accelerate/Accelerate.h>
+#import <Accelerate/Accelerate.h>
 #import "MCMatrix.h"
 #import "MCVector.h"
 #import "MCSingularValueDecomposition.h"
