@@ -615,4 +615,64 @@
     }
 }
 
+- (void)testVectorAddition
+{
+    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    
+    MCVector *sum = [MCVector sumOfVectorA:a andVectorB:b];
+    MCVector *solution = [MCVector vectorWithValues:@[@6, @8, @10, @12]];
+    for (int i = 0; i < 4; i++) {
+        XCTAssertEqual([sum valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not added correctly", i);
+    }
+    
+    XCTAssertThrows([MCVector sumOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+}
+
+- (void)testVectorSubtraction
+{
+    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    
+    MCVector *diff = [MCVector differenceOfVectorA:b andVectorB:a];
+    MCVector *solution = [MCVector vectorWithValues:@[@4, @4, @4, @4]];
+    for (int i = 0; i < 4; i++) {
+        XCTAssertEqual([diff valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not subtracted correctly", i);
+    }
+    
+    XCTAssertThrows([MCVector differenceOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+}
+
+- (void)testVectorMultiplication
+{
+    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    
+    MCVector *prod = [MCVector productOfVectorA:a andVectorB:b];
+    MCVector *solution = [MCVector vectorWithValues:@[@5, @12, @21, @32]];
+    for (int i = 0; i < 4; i++) {
+        XCTAssertEqual([prod valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not multiplied correctly", i);
+    }
+    
+    XCTAssertThrows([MCVector productOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+}
+
+- (void)testVectorDivision
+{
+    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @9, @8]];
+    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    
+    MCVector *quotient = [MCVector quotientOfVectorA:b andVectorB:a];
+    MCVector *solution = [MCVector vectorWithValues:@[@5, @3, @3, @2]];
+    for (int i = 0; i < 4; i++) {
+        XCTAssertEqual([quotient valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not divided correctly", i);
+    }
+    
+    XCTAssertThrows([MCVector quotientOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+}
+
 @end
