@@ -99,6 +99,11 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
              columns:(NSUInteger)columns
   valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
+- (id)initWithColumnVectors:(NSArray *)columnVectors;
+- (id)initWithRowVectors:(NSArray *)rowVectors;
++ (id)matrixWithColumnVectors:(NSArray *)columnVectors;
++ (id)matrixWithRowVectors:(NSArray *)rowVectors;
+
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns but without supplying values.
  @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in column-major format.

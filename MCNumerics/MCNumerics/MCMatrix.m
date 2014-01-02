@@ -8,6 +8,7 @@
 
 #import <Accelerate/Accelerate.h>
 #import "MCMatrix.h"
+#import "MCVector.h"
 #import "MCSingularValueDecomposition.h"
 #import "MCLUFactorization.h"
 
@@ -88,6 +89,52 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return self;
 }
 
+- (id)initWithColumnVectors:(NSArray *)columnVectors
+{
+    self = [super init];
+    if (self) {
+        _columns = columnVectors.count;
+        _rows = ((MCVector *)columnVectors.firstObject).length;
+        _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
+        
+        self.values = malloc(self.rows * self.columns * sizeof(double));
+        [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
+            for(int i = 0; i < self.rows; i++) {
+                self.values[column * self.rows + i] = [columnVector valueAtIndex:i];
+            }
+        }];
+    }
+    return self;
+}
+
+- (id)initWithRowVectors:(NSArray *)rowVectors
+{
+    self = [super init];
+    if (self) {
+        _rows = rowVectors.count;
+        _columns = ((MCVector *)rowVectors.firstObject).length;
+        _valueStorageFormat = MCMatrixValueStorageFormatRowMajor;
+        
+        self.values = malloc(self.rows * self.columns * sizeof(double));
+        [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
+            for(int i = 0; i < self.rows; i++) {
+                self.values[row * self.columns + i] = [rowVector valueAtIndex:i];
+            }
+        }];
+    }
+    return self;
+}
+
++ (id)matrixWithColumnVectors:(NSArray *)columnVectors
+{
+    return [[MCMatrix alloc] initWithColumnVectors:columnVectors];
+}
+
++ (id)matrixWithRowVectors:(NSArray *)rowVectors
+{
+    return [[MCMatrix alloc] initWithRowVectors:rowVectors];
+}
+
 + (id)matrixWithRows:(NSUInteger)rows columns:(NSUInteger)columns
 {
     return [[MCMatrix alloc] initWithRows:rows columns:columns];
@@ -148,27 +195,21 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
                               columns:size];
 }
 
-- (void)dealloc
-{
-    free(self.values);
-}
+//- (void)dealloc
+//{
+//    if (self.values) {
+//        free(self.values);
+//    }
+//}
 
 #pragma mark - Matrix operations
 
 - (MCMatrix *)transpose
 {
+    double *aVals = self.values;
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
     
-    int i = 0;
-    for (int j = 0; j < self.rows; j++) {
-        for (int k = 0; k < self.columns; k++) {
-            int idx = ((i * self.rows) % (self.columns * self.rows)) + j;
-            
-            tVals[i] = self.values[idx];
-            
-            i++;
-        }
-    }
+    vDSP_mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
     
     return [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
 }
@@ -309,7 +350,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         }
     }
     
-    // exchange rows as defined in ipiv
+    // exchange rows as defined in ipiv to build permutation matrix
     MCMatrix *p = [MCMatrix identityMatrixWithSize:MIN(m, n)];
     for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
         [p swapRowA:i withRowB:ipiv[i] - 1];
@@ -340,11 +381,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         values[i] = self.values[i];
     }
     
+    // call first with lwork = -1 to determine optimal size of working array
     dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
     
     lwork = workSize;
     work = malloc(lwork * sizeof(double));
     
+    // now run the actual decomposition
     dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
     
     free(work);
@@ -463,22 +506,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         @throw NSInvalidArgumentException;
     }
     
-    MCMatrix *product = [MCMatrix matrixWithRows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
-    
     double *aVals = [matrixA matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
     double *bVals = [matrixB matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
+    double *cVals = malloc(matrixA.rows * matrixB.columns * sizeof(double));
     
-    for (int i = 0; i < matrixA.rows; i++) {
-        for (int j = 0; j < matrixB.columns; j++) {
-            double val = 0.0;
-            for (int k = 0; k < matrixA.columns; k++) {
-                val += aVals[i * matrixA.columns + k] * bVals[k * matrixB.columns + j];
-            }
-            product.values[i * matrixB.columns + j] = val;
-        }
-    }
+    vDSP_mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
     
-    return [product matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatColumnMajor];
+    return [MCMatrix matrixWithValues:cVals rows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
 }
 
 + (MCMatrix *)sumOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB

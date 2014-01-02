@@ -125,4 +125,84 @@
 
 #pragma mark - Operations
 
++ (MCVector *)sumOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
+{
+    if (a.length != b.length) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
+    }
+    
+    double *sum = malloc(a.length * sizeof(double));
+    vDSP_vaddD(a.valuesCArray, 1, b.valuesCArray, 1, sum, 1, a.length);
+    
+    NSMutableArray *values = [NSMutableArray array];
+    for (int i = 0; i < a.length; i++) {
+        [values addObject:@(sum[i])];
+    }
+    
+    return [MCVector vectorWithValues:values];
+}
+
++ (MCVector *)differenceOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
+{
+    if (a.length != b.length) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
+    }
+    
+    double *diff = malloc(a.length * sizeof(double));
+    vDSP_vsubD(b.valuesCArray, 1, a.valuesCArray, 1, diff, 1, a.length);
+    
+    NSMutableArray *values = [NSMutableArray array];
+    for (int i = 0; i < a.length; i++) {
+        [values addObject:@(diff[i])];
+    }
+    
+    return [MCVector vectorWithValues:values];
+}
+
++ (MCVector *)productOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
+{
+    if (a.length != b.length) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
+    }
+    
+    double *product = malloc(a.length * sizeof(double));
+    vDSP_vmulD(a.valuesCArray, 1, b.valuesCArray, 1, product, 1, a.length);
+    
+    NSMutableArray *values = [NSMutableArray array];
+    for (int i = 0; i < a.length; i++) {
+        [values addObject:@(product[i])];
+    }
+    
+    return [MCVector vectorWithValues:values];
+}
+
++ (MCVector *)quotientOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
+{
+    if (a.length != b.length) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
+    }
+    
+    double *quotient = malloc(a.length * sizeof(double));
+    vDSP_vdivD(b.valuesCArray, 1, a.valuesCArray, 1, quotient, 1, a.length);
+    
+    NSMutableArray *values = [NSMutableArray array];
+    for (int i = 0; i < a.length; i++) {
+        [values addObject:@(quotient[i])];
+    }
+    
+    return [MCVector vectorWithValues:values];
+}
+
++ (double)dotProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
+{
+    if (a.length != b.length) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
+    }
+    
+    double dotProduct;
+    vDSP_dotprD(a.valuesCArray, 1, b.valuesCArray, 1, &dotProduct, a.length);
+    
+    return dotProduct;
+}
+
 @end

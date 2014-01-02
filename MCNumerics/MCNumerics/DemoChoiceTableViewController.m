@@ -7,6 +7,7 @@
 //
 
 #import "DemoChoiceTableViewController.h"
+#import "LinearApproximationViewController.h"
 
 #define kCellIdentifier @"kCellIdentifier"
 
@@ -26,9 +27,9 @@
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.delegate = self;
+    [self.view addSubview:self.tableView];
     
-    self.demosACL = [[RZArrayCollectionList alloc] initWithSectionTitlesAndSectionArrays:@"Approximations", @[@"Linear Approximation"],
-                     @"Images", @[@"Alpha Compositing", @"Convolution", @"Decompression Filtering" , @"Geometry", @"Histogram", @"Morphology", @"Transform"], nil];
+    self.demosACL = [[RZArrayCollectionList alloc] initWithSectionTitlesAndSectionArrays:@"Approximations", @[@"Linear Approximation"], nil];
     
     self.tableViewDataSource = [[RZCollectionListTableViewDataSource alloc] initWithTableView:self.tableView collectionList:self.demosACL delegate:self];
 }
@@ -53,7 +54,16 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [self.demosACL.sectionIndexTitles objectAtIndex:section];
+    return ((RZArrayCollectionListSectionInfo *)[self.demosACL.sections objectAtIndex:section]).name;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        [self.navigationController pushViewController:[[LinearApproximationViewController alloc] initWithNibName:@"LinearApproximationViewController" bundle:[NSBundle mainBundle]] animated:YES];
+    } else {
+        
+    }
 }
 
 @end

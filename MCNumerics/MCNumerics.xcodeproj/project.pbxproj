@@ -33,6 +33,7 @@
 		494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
 		494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
 		494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
+		494F455B1861565B00347096 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F455A1861565B00347096 /* Accelerate.framework */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -47,9 +48,10 @@
 		49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682B4184D8342006A61D3 /* MCNumericsTests.m */; };
 		49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682BF184D8390006A61D3 /* MCMatrix.m */; };
 		49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */; };
-		49B682D7184ED2D5006A61D3 /* LinearApproximationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */; };
 		49B682D8184ED2D5006A61D3 /* LinearApproximationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */; };
 		49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682EA1854DEF8006A61D3 /* MCVector.m */; };
+		49E10B421863F56800308AD2 /* LinearApproximationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */; };
+		49E10B451863F60900308AD2 /* ApproximationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E10B441863F60900308AD2 /* ApproximationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,7 @@
 		494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSingularValueDecomposition.m; sourceTree = "<group>"; };
 		494F454E185EA9DA00347096 /* MCLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLUFactorization.h; sourceTree = "<group>"; };
 		494F454F185EA9DA00347096 /* MCLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLUFactorization.m; sourceTree = "<group>"; };
+		494F455A1861565B00347096 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -113,11 +116,13 @@
 		49B682BF184D8390006A61D3 /* MCMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrix.m; sourceTree = "<group>"; };
 		49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoiceTableViewController.h; sourceTree = "<group>"; };
 		49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoChoiceTableViewController.m; sourceTree = "<group>"; };
-		49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinearApproximationView.xib; sourceTree = "<group>"; };
 		49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinearApproximationViewController.h; sourceTree = "<group>"; };
 		49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinearApproximationViewController.m; sourceTree = "<group>"; };
 		49B682E91854DEF8006A61D3 /* MCVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCVector.h; sourceTree = "<group>"; };
 		49B682EA1854DEF8006A61D3 /* MCVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVector.m; sourceTree = "<group>"; };
+		49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinearApproximationViewController.xib; sourceTree = "<group>"; };
+		49E10B431863F60900308AD2 /* ApproximationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproximationView.h; sourceTree = "<group>"; };
+		49E10B441863F60900308AD2 /* ApproximationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproximationView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				494F455B1861565B00347096 /* Accelerate.framework in Frameworks */,
 				49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */,
 				49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */,
 				49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */,
@@ -252,6 +258,7 @@
 		49B6828E184D8342006A61D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				494F455A1861565B00347096 /* Accelerate.framework */,
 				49B6828F184D8342006A61D3 /* Foundation.framework */,
 				49B68291184D8342006A61D3 /* CoreGraphics.framework */,
 				49B68293184D8342006A61D3 /* UIKit.framework */,
@@ -308,9 +315,11 @@
 				49B6829F184D8342006A61D3 /* AppDelegate.m */,
 				49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */,
 				49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */,
-				49B682D3184ED2D5006A61D3 /* LinearApproximationView.xib */,
 				49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */,
 				49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */,
+				49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */,
+				49E10B431863F60900308AD2 /* ApproximationView.h */,
+				49E10B441863F60900308AD2 /* ApproximationView.m */,
 			);
 			name = Demo;
 			sourceTree = "<group>";
@@ -401,9 +410,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49B682D7184ED2D5006A61D3 /* LinearApproximationView.xib in Resources */,
 				49B6829A184D8342006A61D3 /* InfoPlist.strings in Resources */,
 				49B682A2184D8342006A61D3 /* Images.xcassets in Resources */,
+				49E10B421863F56800308AD2 /* LinearApproximationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +433,7 @@
 			files = (
 				49B682A0184D8342006A61D3 /* AppDelegate.m in Sources */,
 				494F44E1185B61BB00347096 /* RZObserverCollection.m in Sources */,
+				49E10B451863F60900308AD2 /* ApproximationView.m in Sources */,
 				494F44DB185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
 				49B682D8184ED2D5006A61D3 /* LinearApproximationViewController.m in Sources */,
 				494F44D9185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,

@@ -7,7 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <Accelerate/Accelerate.h>
 #import "MCMatrix.h"
+#import "MCVector.h"
 #import "MCSingularValueDecomposition.h"
 #import "MCLUFactorization.h"
 
@@ -506,6 +508,7 @@
     XCTAssertThrows([MCMatrix sumOfMatrixA:[MCMatrix matrixWithRows:5 columns:4]
                                 andMatrixB:[MCMatrix matrixWithRows:5 columns:5]], @"Should throw an exception for mismatched column amount");
 }
+
 - (void)testMatrixSubtraction
 {
     double *aValues = malloc(9 * sizeof(double));
@@ -556,6 +559,241 @@
                                 andMatrixB:[MCMatrix matrixWithRows:5 columns:5]], @"Should throw an exception for mismatched row amount");
     XCTAssertThrows([MCMatrix sumOfMatrixA:[MCMatrix matrixWithRows:5 columns:4]
                                 andMatrixB:[MCMatrix matrixWithRows:5 columns:5]], @"Should throw an exception for mismatched column amount");
+}
+
+- (void)testTransposition
+{
+    double *aVals= malloc(9 * sizeof(double));
+    aVals[0] = 1.0;
+    aVals[1] = 2.0;
+    aVals[2] = 3.0;
+    aVals[3] = 4.0;
+    aVals[4] = 5.0;
+    aVals[5] = 6.0;
+    aVals[6] = 7.0;
+    aVals[7] = 8.0;
+    aVals[8] = 9.0;
+    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:3 columns:3];
+    
+    double *tVals= malloc(9 * sizeof(double));
+    tVals[0] = 1.0;
+    tVals[1] = 4.0;
+    tVals[2] = 7.0;
+    tVals[3] = 2.0;
+    tVals[4] = 5.0;
+    tVals[5] = 8.0;
+    tVals[6] = 3.0;
+    tVals[7] = 6.0;
+    tVals[8] = 9.0;
+    MCMatrix *t = [[MCMatrix matrixWithValues:tVals rows:3 columns:3] transpose];
+    
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            XCTAssertEqual([a valueAtRow:i column:j], [t valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+        }
+    }
+}
+
+- (void)testMatrixCreationFromRowVectors
+{
+    MCVector *v1 = [MCVector vectorWithValues:@[@1, @2, @3]];
+    MCVector *v2 = [MCVector vectorWithValues:@[@4, @5, @6]];
+    MCVector *v3 = [MCVector vectorWithValues:@[@7, @8, @9]];
+    
+    /* create the matrix
+        [ 1  4  7
+          2  5  8
+          3  6  9 ]
+     */
+    MCMatrix *a = [MCMatrix matrixWithColumnVectors:@[v1,v2, v3]];
+    NSLog(a.description);
+    
+    /* create the matrix
+     [ 1  2  3
+       4  5  6
+       7  8  9 ]
+     */
+    MCMatrix *b = [MCMatrix matrixWithRowVectors:@[v1, v2, v3]];
+    NSLog(b.description);
+}
+
+- (void)test3x3MatrixMultiplicationRuntime
+{
+    double accelerateTime = 0;
+    double mcTime = 0;
+    
+    for(int i = 0; i < 20000; i++) {
+        
+        // test plain accelerate function with c array of doubles
+        double *aValues = malloc(9 * sizeof(double));
+        aValues[0] = drand48();
+        aValues[1] = drand48();
+        aValues[2] = drand48();
+        aValues[3] = drand48();
+        aValues[4] = drand48();
+        aValues[5] = drand48();
+        aValues[6] = drand48();
+        aValues[7] = drand48();
+        aValues[8] = drand48();
+        double *bValues = malloc(9 * sizeof(double));
+        bValues[0] = drand48();
+        bValues[1] = drand48();
+        bValues[2] = drand48();
+        bValues[3] = drand48();
+        bValues[4] = drand48();
+        bValues[5] = drand48();
+        bValues[6] = drand48();
+        bValues[7] = drand48();
+        bValues[8] = drand48();
+        double *cValues = malloc(9 * sizeof(double));
+        
+        NSDate *startTime = [NSDate date];
+        vDSP_mmulD(aValues, 1, bValues, 1, cValues, 1, 3, 3, 3);
+        NSDate *endTime = [NSDate date];
+        accelerateTime += [endTime timeIntervalSinceDate:startTime];
+        
+        // test with MCMatrix objects constructed from MCVector objects
+        MCMatrix *a = [MCMatrix matrixWithRowVectors:@[
+                                                       [MCVector vectorWithValues:@[
+                                                                                    @(drand48()),
+                                                                                    @(drand48()),
+                                                                                    @(drand48())
+                                                                                    ]],
+                                                       [MCVector vectorWithValues:@[
+                                                                                    @(drand48()),
+                                                                                    @(drand48()),
+                                                                                    @(drand48())
+                                                                                    ]],
+                                                       [MCVector vectorWithValues:@[
+                                                                                    @(drand48()),
+                                                                                    @(drand48()),
+                                                                                    @(drand48())
+                                                                                    ]]
+                                                       ]];
+        MCMatrix *b = [MCMatrix matrixWithRowVectors:@[
+                                                       [MCVector vectorWithValues:@[
+                                                                                    @(drand48()),
+                                                                                    @(drand48()),
+                                                                                    @(drand48())
+                                                                                    ]],
+                                                       [MCVector vectorWithValues:@[
+                                                                                    @(drand48()),
+                                                                                    @(drand48()),
+                                                                                    @(drand48())
+                                                                                    ]],
+                                                       [MCVector vectorWithValues:@[
+                                                                                    @(drand48()),
+                                                                                    @(drand48()),
+                                                                                    @(drand48())
+                                                                                    ]]
+                                                       ]];
+        
+        startTime = [NSDate date];
+        MCMatrix *c = [MCMatrix productOfMatrixA:a andMatrixB:b];
+        
+        endTime = [NSDate date];
+        mcTime += [endTime timeIntervalSinceDate:startTime];
+    }
+    
+    NSLog(@"plain accelerate runtime: %.2f\nMCMatrix runtime: %.2f", accelerateTime, mcTime);
+}
+
+- (void)testVectorDotProduct
+{
+    double dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
+                                                                                   @1,
+                                                                                   @3,
+                                                                                   @(-5)]]
+                                           andVectorB:[MCVector vectorWithValues:@[
+                                                                                   @4,
+                                                                                   @(-2),
+                                                                                   @(-1)]]];
+    XCTAssertEqual(dotProduct, 3.0, @"Dot product not computed correctly");
+    
+    dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
+                                                                            @0,
+                                                                            @0,
+                                                                            @1]]
+                                    andVectorB:[MCVector vectorWithValues:@[
+                                                                            @0,
+                                                                            @1,
+                                                                            @0]]];
+    XCTAssertEqual(dotProduct, 0.0, @"Dot product not computed correctly");
+    
+    @try {
+        dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
+                                                                                @0,
+                                                                                @0,
+                                                                                @1]]
+                                        andVectorB:[MCVector vectorWithValues:@[
+                                                                                @0,
+                                                                                @1,
+                                                                                @0,
+                                                                                @1]]];
+    }
+    @catch (NSException *exception) {
+        XCTAssert([exception.name isEqualToString:NSInvalidArgumentException], @"Did not detect dimension mismatch in MCVector dot product method");
+    }
+}
+
+- (void)testVectorAddition
+{
+    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    
+    MCVector *sum = [MCVector sumOfVectorA:a andVectorB:b];
+    MCVector *solution = [MCVector vectorWithValues:@[@6, @8, @10, @12]];
+    for (int i = 0; i < 4; i++) {
+        XCTAssertEqual([sum valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not added correctly", i);
+    }
+    
+    XCTAssertThrows([MCVector sumOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+}
+
+- (void)testVectorSubtraction
+{
+    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    
+    MCVector *diff = [MCVector differenceOfVectorA:b andVectorB:a];
+    MCVector *solution = [MCVector vectorWithValues:@[@4, @4, @4, @4]];
+    for (int i = 0; i < 4; i++) {
+        XCTAssertEqual([diff valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not subtracted correctly", i);
+    }
+    
+    XCTAssertThrows([MCVector differenceOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+}
+
+- (void)testVectorMultiplication
+{
+    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    
+    MCVector *prod = [MCVector productOfVectorA:a andVectorB:b];
+    MCVector *solution = [MCVector vectorWithValues:@[@5, @12, @21, @32]];
+    for (int i = 0; i < 4; i++) {
+        XCTAssertEqual([prod valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not multiplied correctly", i);
+    }
+    
+    XCTAssertThrows([MCVector productOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+}
+
+- (void)testVectorDivision
+{
+    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @9, @8]];
+    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    
+    MCVector *quotient = [MCVector quotientOfVectorA:b andVectorB:a];
+    MCVector *solution = [MCVector vectorWithValues:@[@5, @3, @3, @2]];
+    for (int i = 0; i < 4; i++) {
+        XCTAssertEqual([quotient valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not divided correctly", i);
+    }
+    
+    XCTAssertThrows([MCVector quotientOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
 }
 
 @end

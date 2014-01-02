@@ -40,6 +40,6 @@
 + (MCVector *)productOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
 + (MCVector *)quotientOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
 + (double)dotProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
-+ (double)crossProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
++ (MCVector *)crossProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
 
 @end
