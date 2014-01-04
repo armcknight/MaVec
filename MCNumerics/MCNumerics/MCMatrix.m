@@ -329,14 +329,14 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         values[i] = self.values[i];
     }
     
-    int m = self.rows;
-    int n = self.columns;
+    long m = self.rows;
+    long n = self.columns;
     
-    int lda = m;
+    long lda = m;
     
-    int *ipiv = malloc(MIN(m, n) * sizeof(int));
+    long *ipiv = malloc(MIN(m, n) * sizeof(long));
     
-    int info = 0;
+    long info = 0;
     
     dgetrf_(&m, &n, values, &lda, ipiv, &info);
     
@@ -382,13 +382,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
     double workSize;
     double *work = &workSize;
-    int lwork = -1;
-    int numSingularValues = (int)MIN(self.rows, self.columns);
+    long lwork = -1;
+    long numSingularValues = MIN(self.rows, self.columns);
     double *singularValues = malloc(numSingularValues * sizeof(double));
-    int *iwork = malloc(8 * numSingularValues);
-    int info = 0;
-    int m = (int)self.rows;
-    int n = (int)self.columns;
+    long *iwork = malloc(8 * numSingularValues);
+    long info = 0;
+    long m = self.rows;
+    long n = self.columns;
     
     MCSingularValueDecomposition *svd = [MCSingularValueDecomposition SingularValueDecompositionWithM:self.rows n:self.columns numberOfSingularValues:numSingularValues];
     
@@ -579,12 +579,12 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     if (A.rows == A.columns) {
         // solve for square matrix A
         
-        int n = A.rows;
-        int nrhs = 1;
-        int lda = n;
-        int ldb = n;
-        int info;
-        int *ipiv = malloc(n * sizeof(int));
+        long n = A.rows;
+        long nrhs = 1;
+        long lda = n;
+        long ldb = n;
+        long info;
+        long *ipiv = malloc(n * sizeof(long));
         double *a = malloc(n * n * sizeof(double));
         for (int i = 0; i < n * n; i++) {
             a[i] = A.values[i];
@@ -611,13 +611,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     } else {
         // solve for general m x n rectangular matrix A
         
-        int m = A.rows;
-        int n = A.columns;
-        int nrhs = 1;
-        int lda = A.rows;
-        int ldb = A.rows;
-        int info;
-        int lwork = -1;
+        long m = A.rows;
+        long n = A.columns;
+        long nrhs = 1;
+        long lda = A.rows;
+        long ldb = A.rows;
+        long info;
+        long lwork = -1;
         double wkopt;
         double* work;
         double *a = malloc(m * n * sizeof(double));
