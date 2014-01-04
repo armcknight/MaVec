@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSNumber (Arithmetic)
+@interface NSNumber (MCMath)
 
 #pragma mark - Basic operations
 

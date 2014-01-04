@@ -8,7 +8,7 @@
 
 #import "NSNumber+MCArithmetic.h"
 
-@implementation NSNumber (Arithmetic)
+@implementation NSNumber (MCMath)
 
 #pragma mark - Basic operations
 

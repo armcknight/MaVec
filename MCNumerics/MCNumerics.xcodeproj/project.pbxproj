@@ -27,8 +27,8 @@
 		494F44E4185B61BB00347096 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4477185B61BB00347096 /* RZSortedCollectionList.m */; };
 		494F4543185BDA6200347096 /* MCPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCPolynomial.m */; };
 		494F4544185BDA6200347096 /* MCPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCPolynomial.m */; };
-		494F4547185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */; };
-		494F4548185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */; };
+		494F4547185BDE3000347096 /* NSNumber+MCMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCMath.m */; };
+		494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCMath.m */; };
 		494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
 		494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
 		494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
@@ -89,8 +89,8 @@
 		494F4478185B61BB00347096 /* RZCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RZCollectionList.h; path = RZCollectionList/RZCollectionList.h; sourceTree = "<group>"; };
 		494F4541185BDA6200347096 /* MCPolynomial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPolynomial.h; sourceTree = "<group>"; };
 		494F4542185BDA6200347096 /* MCPolynomial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPolynomial.m; sourceTree = "<group>"; };
-		494F4545185BDE3000347096 /* NSNumber+MCArithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCArithmetic.h"; sourceTree = "<group>"; };
-		494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCArithmetic.m"; sourceTree = "<group>"; };
+		494F4545185BDE3000347096 /* NSNumber+MCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCMath.h"; sourceTree = "<group>"; };
+		494F4546185BDE3000347096 /* NSNumber+MCMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCMath.m"; sourceTree = "<group>"; };
 		494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSingularValueDecomposition.h; sourceTree = "<group>"; };
 		494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSingularValueDecomposition.m; sourceTree = "<group>"; };
 		494F454E185EA9DA00347096 /* MCLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLUFactorization.h; sourceTree = "<group>"; };
@@ -230,8 +230,8 @@
 		494F4549185D041200347096 /* _Categories */ = {
 			isa = PBXGroup;
 			children = (
-				494F4545185BDE3000347096 /* NSNumber+MCArithmetic.h */,
-				494F4546185BDE3000347096 /* NSNumber+MCArithmetic.m */,
+				494F4545185BDE3000347096 /* NSNumber+MCMath.h */,
+				494F4546185BDE3000347096 /* NSNumber+MCMath.m */,
 			);
 			name = _Categories;
 			sourceTree = "<group>";
@@ -449,7 +449,7 @@
 				49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */,
 				494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
 				494F4543185BDA6200347096 /* MCPolynomial.m in Sources */,
-				494F4547185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */,
+				494F4547185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
 				494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,7 +470,7 @@
 				494F44DC185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
 				494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
-				494F4548185BDE3000347096 /* NSNumber+MCArithmetic.m in Sources */,
+				494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
 				49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
