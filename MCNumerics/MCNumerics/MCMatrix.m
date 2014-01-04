@@ -273,6 +273,12 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
 {
+    if (rowA >= self.rows) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"rowA is outside the range of possible rows." userInfo:nil];
+    } else if (rowB >= self.rows) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"rowB is outside the range of possible rows." userInfo:nil];
+    }
+    
     // TODO: implement using cblas_dswap
     
     for (int i = 0; i < self.columns; i++) {
@@ -290,6 +296,12 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB
 {
+    if (columnA >= self.columns) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"columnA is outside the range of possible columns." userInfo:nil];
+    } else if (columnB >= self.columns) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"columnB is outside the range of possible columns." userInfo:nil];
+    }
+    
     // TODO: implement using cblas_dswap
     
     for (int i = 0; i < self.rows; i++) {
