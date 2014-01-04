@@ -456,15 +456,23 @@
     values[8] = 9.0;
     
     MCMatrix *m = [MCMatrix matrixWithValues:values rows:3 columns:3];
-    MCMatrix *minor = [m minorByRemovingRow:1 column:1];
+    MCMatrix *minor = [m minorByRemovingRow:0 column:0];
     
     // create mcmatrix corresponding to minor of m with 1st row and 1st column removed
     double *mValues = malloc(4 * sizeof(double));
     mValues[0] = 5.0;
-    mValues[0] = 6.0;
-    mValues[0] = 8.0;
-    mValues[0] = 9.0;
+    mValues[1] = 6.0;
+    mValues[2] = 8.0;
+    mValues[3] = 9.0;
     MCMatrix *minorSolution = [MCMatrix matrixWithValues:mValues rows:2 columns:2];
+    
+    XCTAssertEqual(minor.rows, minorSolution.rows, @"Minor computed with incorrect amount of rows.");
+    XCTAssertEqual(minor.columns, minorSolution.columns, @"Minor computed with incorrect amount of columns.");
+    for (int i = 0; i < minorSolution.rows; i++) {
+        for (int j = 0; j < minorSolution.columns; j++) {
+            XCTAssertEqual([minor valueAtRow:i column:j], [minorSolution valueAtRow:i column:j], @"Minor contains incorrect value at %u, %u", i, j);
+        }
+    }
     
     // try to create a minor with an invalid row and column
     XCTAssertThrows([m minorByRemovingRow:3 column:1], @"Should throw an invalid row exception.");
