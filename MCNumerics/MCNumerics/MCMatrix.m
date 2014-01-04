@@ -242,11 +242,21 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
 {
-    // page 269 of Bretscher
-    MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1];
+    if (row >= self.rows) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid row." userInfo:nil];
+    } else if (column >= self.columns) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid column." userInfo:nil];
+    }
     
-    // TODO: implement
-    @throw [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil];
+    MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1 valueStorageFormat:self.valueStorageFormat];
+    
+    for (int i = 0; i < self.rows; i++) {
+        for (int j = 0; j < self.rows; j++) {
+            if (i != row && j != column) {
+                [minor setEntryAtRow:i > row ? i - 1 : i  column:j > column ? j - 1 : j toValue:[self valueAtRow:i column:j]];
+            }
+        }
+    }
     
     return minor;
 }
@@ -276,6 +286,25 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
                      column:i
                     toValue:temp];
     }
+}
+
+- (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB
+{
+    for (int i = 0; i < self.rows; i++) {
+        double temp = [self valueAtRow:i column:columnA];
+        [self setEntryAtRow:i column:columnA toValue:[self valueAtRow:i column:columnB]];
+        [self setEntryAtRow:i column:columnB toValue:temp];
+    }
+}
+
+- (double)conditionNumber
+{
+    double conditionNumber = 0.0;
+    
+    // TODO: implement
+    @throw [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil];
+    
+    return conditionNumber;
 }
 
 - (MCLUFactorization *)luFactorization
@@ -486,6 +515,42 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     vDSP_mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
     
     return [MCMatrix matrixWithValues:cVals rows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+}
+
++ (MCMatrix *)sumOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
+{
+    if (matrixA.rows != matrixB.rows) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of rows." userInfo:nil];
+    } else if (matrixA.columns != matrixB.columns) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of columns." userInfo:nil];
+    }
+    
+    MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns];
+    for (int i = 0; i < matrixA.rows; i++) {
+        for (int j = 0; j < matrixA.columns; j++) {
+            [sum setEntryAtRow:i column:j toValue:[matrixA valueAtRow:i column:j] + [matrixB valueAtRow:i column:j]];
+        }
+    }
+    
+    return sum;
+}
+
++ (MCMatrix *)differenceOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
+{
+    if (matrixA.rows != matrixB.rows) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of rows." userInfo:nil];
+    } else if (matrixA.columns != matrixB.columns) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of columns." userInfo:nil];
+    }
+    
+    MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns];
+    for (int i = 0; i < matrixA.rows; i++) {
+        for (int j = 0; j < matrixA.columns; j++) {
+            [sum setEntryAtRow:i column:j toValue:[matrixA valueAtRow:i column:j] - [matrixB valueAtRow:i column:j]];
+        }
+    }
+    
+    return sum;
 }
 
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A

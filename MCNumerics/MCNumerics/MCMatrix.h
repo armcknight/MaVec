@@ -181,7 +181,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 - (MCMatrix *)matrixWithValuesStoredInFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
- @return A new MCMatrix object with the values from this matrix, excluding the specified row and index values.
+ @return A new MCMatrix object with the values from this matrix (in the same valueStorageFormat), excluding the specified row and index values. 
  */
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column;
 
@@ -276,13 +276,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
  @description Raises an NSInvalidArgumentException if A and B are not of equal dimension.
- @return A new MCMatrix object representing the sum of the supplied matrices.
+ @return A new MCMatrix object representing the sum (A + B) of the supplied matrices.
  */
 + (MCMatrix *)sumOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB;
 
 /**
  @description Raises an NSInvalidArgumentException if A and B are not of equal dimension.
- @return A new MCMatrix object representing the difference of the supplied matrices.
+ @return A new MCMatrix object representing the difference (A - B) of the supplied matrices.
  */
 + (MCMatrix *)differenceOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB;
 
