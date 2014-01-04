@@ -290,6 +290,8 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB
 {
+    // TODO: implement using cblas_dswap
+    
     for (int i = 0; i < self.rows; i++) {
         double temp = [self valueAtRow:i column:columnA];
         [self setEntryAtRow:i column:columnA toValue:[self valueAtRow:i column:columnB]];
