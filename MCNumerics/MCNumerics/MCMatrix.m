@@ -503,6 +503,23 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     }
 }
 
+- (BOOL)isSymmetric
+{
+    if (self.rows != self.columns) {
+        return NO;
+    }
+    
+    for (int i = 0; i < self.rows; i++) {
+        for (int j = i + 1; j < self.columns; j++) {
+            if ([self valueAtRow:i column:j] != [self valueAtRow:j column:i]) {
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
+
 #pragma mark - Mutation
 
 - (void)setEntryAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(double)value

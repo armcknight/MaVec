@@ -698,6 +698,55 @@
     NSLog(@"plain accelerate runtime: %.2f\nMCMatrix runtime: %.2f", accelerateTime, mcTime);
 }
 
+- (void)testMatrixSymmetryQuerying
+{
+    double *aValues = malloc(9 * sizeof(double));
+    aValues[0] = 1.0;
+    aValues[1] = 2.0;
+    aValues[2] = 3.0;
+    aValues[3] = 4.0;
+    aValues[4] = 5.0;
+    aValues[5] = 6.0;
+    aValues[6] = 7.0;
+    aValues[7] = 8.0;
+    aValues[8] = 9.0;
+    MCMatrix *a = [MCMatrix matrixWithValues:aValues rows:3 columns:3];
+    
+    XCTAssertFalse([a isSymmetric], @"Nonsymmetric matrix reported to be symmetric.");
+    
+    aValues[0] = 1.0;
+    aValues[1] = 2.0;
+    aValues[2] = 3.0;
+    
+    aValues[3] = 2.0;
+    aValues[4] = 1.0;
+    aValues[5] = 6.0;
+    
+    aValues[6] = 3.0;
+    aValues[7] = 6.0;
+    aValues[8] = 1.0;
+    a = [MCMatrix matrixWithValues:aValues rows:3 columns:3];
+    
+    XCTAssertTrue([a isSymmetric], @"Symmetric matrix not reported to be symmetric.");
+    
+    double *bValues = malloc(12 * sizeof(double));
+    bValues[0] = 1.0;
+    bValues[1] = 2.0;
+    bValues[2] = 3.0;
+    bValues[3] = 4.0;
+    bValues[4] = 5.0;
+    bValues[5] = 6.0;
+    bValues[6] = 7.0;
+    bValues[7] = 8.0;
+    bValues[8] = 9.0;
+    bValues[9] = 9.0;
+    bValues[10] = 9.0;
+    bValues[11] = 9.0;
+    a = [MCMatrix matrixWithValues:bValues rows:3 columns:4];
+    
+    XCTAssertFalse([a isSymmetric], @"Nonsquare matrix reported to be symmetric.");
+}
+
 - (void)testVectorDotProduct
 {
     double dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
