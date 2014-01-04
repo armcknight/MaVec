@@ -31,6 +31,8 @@
     [super tearDown];
 }
 
+#pragma mark - Matrices
+
 - (void)testMultiplySquareMatrices
 {
     double *aVals = malloc(4 * sizeof(double));
@@ -746,6 +748,8 @@
     
     XCTAssertFalse([a isSymmetric], @"Nonsquare matrix reported to be symmetric.");
 }
+
+#pragma mark - Vectors
 
 - (void)testVectorDotProduct
 {
