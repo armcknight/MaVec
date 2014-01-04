@@ -595,8 +595,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
             b[i] = B.values[i];
         }
         
-        // TODO: do something with the returned error code
-        int error = dgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info);
+        dgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info);
         
         if (info != 0) {
             return nil;
@@ -630,15 +629,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
             b[i] = B.values[i];
         }
         // get the optimal workspace
-        // TODO: do something with the returned error code
-        int error = dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
+        dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
         
         lwork = (int)wkopt;
         work = (double*)malloc(lwork * sizeof(double));
         
         // solve the system of equations
-        // TODO: do something with the returned error code
-        error = dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, work, &lwork, &info);
+        dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, work, &lwork, &info);
         
         /*
          if  m >= n, rows 1 to n of b contain the least
