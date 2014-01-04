@@ -243,9 +243,9 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
 {
     if (row >= self.rows) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid row." userInfo:nil];
+        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
     } else if (column >= self.columns) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid column." userInfo:nil];
+        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
     }
     
     MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1 valueStorageFormat:self.valueStorageFormat];
@@ -478,9 +478,12 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column
 {
-    if (row >= self.rows || column >= self.columns) {
-        @throw NSRangeException;
+    if (row >= self.rows) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
+    } else if (column >= self.columns) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
     }
+    
     if (self.valueStorageFormat == MCMatrixValueStorageFormatRowMajor) {
         return self.values[row * self.columns + column];
     } else {
@@ -492,9 +495,12 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (void)setEntryAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(double)value
 {
-    if (row >= self.rows || column >= self.columns) {
-        @throw NSRangeException;
+    if (row >= self.rows) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
+    } else if (column >= self.columns) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
     }
+    
     if (self.valueStorageFormat == MCMatrixValueStorageFormatRowMajor) {
         self.values[row * self.columns + column] = value;
     } else {
@@ -507,7 +513,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 + (MCMatrix *)productOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
     if (matrixA.columns != matrixB.rows) {
-        @throw NSInvalidArgumentException;
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"matrixA does not have an equal amount of columns as rows in matrixB" userInfo:nil];
     }
     
     double *aVals = [matrixA matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
