@@ -304,19 +304,3 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 /**
  @brief Container class to hold the results of a QR factorization in MCMatrix objects.
  @description The QR factorization decomposes a matrix A into the product QR, where Q is an orthogonal matrix and R is an upper triangular matrix.
- */
-@interface MCQRFactorization : NSObject
-
-/**
- @property q 
- @brief An MCMatrix holding the orthogonal matrix Q of the QR factorization.
- */
-@property (nonatomic, strong) MCMatrix *q;
-
-/**
- @property r 
- @brief An MCMatrix holding the upper triangular matrix R of the QR factorization.
- */
-@property (nonatomic, strong) MCMatrix *r;
-
-@end
