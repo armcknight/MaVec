@@ -11,6 +11,7 @@
 @class MCSingularValueDecomposition;
 @class MCLUFactorization;
 @class MCQRFactorization;
+@class MCEigendecomposition;
 
 /**
  @brief Constants specifying the logical storage type for this matrix' values.
@@ -222,6 +223,11 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 - (MCSingularValueDecomposition *)singularValueDecomposition;
 
 #pragma mark - Inspection
+/**
+ @description Computes the eigendecomposition (spectral factorization) of this matrix. Documentation found at 
+ */
+- (MCEigendecomposition *)eigendecomposition;
+
 
 /**
  @return YES if object is either this MCMatrix instance or is identical in dimension and contains identical values at all positions, NO otherwise.

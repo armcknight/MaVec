@@ -11,6 +11,7 @@
 #import "MCVector.h"
 #import "MCSingularValueDecomposition.h"
 #import "MCLUFactorization.h"
+#import "MCEigendecomposition.h"
 
 @interface MCMatrix ()
 
@@ -426,6 +427,18 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 }
 
 #pragma mark - Inspection
+- (MCEigendecomposition *)eigendecomposition
+{
+    if (self.rows != self.columns) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"Matrix must be square to derive eigendecomposition." userInfo:nil];
+    }
+    
+    if (self.isSymmetric) {
+        <#statements-if-true#>
+    } else {
+        <#statements-if-false#>
+    }
+}
 
 - (BOOL)isEqualToMatrix:(MCMatrix *)otherMatrix
 {
