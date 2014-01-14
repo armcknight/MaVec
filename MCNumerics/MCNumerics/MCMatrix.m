@@ -450,11 +450,11 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
     if (self == object) {
         return YES;
-    }
-    if (![object isKindOfClass:[MCMatrix class]]) {
+    } else if (![object isKindOfClass:[MCMatrix class]]) {
         return NO;
+    } else {
+        return [self isEqualToMatrix:(MCMatrix *)object];
     }
-    return [self isEqualToMatrix:(MCMatrix *)object];
 }
 
 - (NSString *)description
