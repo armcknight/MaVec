@@ -209,8 +209,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 
 - (MCMatrix *)transpose
 {
-    double *aVals = self.values;
-    double *tVals = malloc(self.rows * self.columns * sizeof(double));
     if (!_transpose) {
         double *aVals = self.values;
         double *tVals = malloc(self.rows * self.columns * sizeof(double));
