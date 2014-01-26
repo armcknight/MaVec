@@ -182,14 +182,9 @@
     }
     
     double *sum = malloc(a.length * sizeof(double));
-    vDSP_vaddD(a.valuesCArray, 1, b.valuesCArray, 1, sum, 1, a.length);
+    vDSP_vaddD(a.values, 1, b.values, 1, sum, 1, a.length);
     
-    NSMutableArray *values = [NSMutableArray array];
-    for (int i = 0; i < a.length; i++) {
-        [values addObject:@(sum[i])];
-    }
-    
-    return [MCVector vectorWithValues:values];
+    return [MCVector vectorWithValues:sum];
 }
 
 + (MCVector *)differenceOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
@@ -199,14 +194,9 @@
     }
     
     double *diff = malloc(a.length * sizeof(double));
-    vDSP_vsubD(b.valuesCArray, 1, a.valuesCArray, 1, diff, 1, a.length);
+    vDSP_vsubD(b.values, 1, a.values, 1, diff, 1, a.length);
     
-    NSMutableArray *values = [NSMutableArray array];
-    for (int i = 0; i < a.length; i++) {
-        [values addObject:@(diff[i])];
-    }
-    
-    return [MCVector vectorWithValues:values];
+    return [MCVector vectorWithValues:diff];
 }
 
 + (MCVector *)productOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
@@ -218,12 +208,7 @@
     double *product = malloc(a.length * sizeof(double));
     vDSP_vmulD(a.values, 1, b.values, 1, product, 1, a.length);
     
-    NSMutableArray *values = [NSMutableArray array];
-    for (int i = 0; i < a.length; i++) {
-        [values addObject:@(product[i])];
-    }
-    
-    return [MCVector vectorWithValues:values];
+    return [MCVector vectorWithValues:product];
 }
 
 + (MCVector *)quotientOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
@@ -233,14 +218,9 @@
     }
     
     double *quotient = malloc(a.length * sizeof(double));
-    vDSP_vdivD(b.valuesCArray, 1, a.valuesCArray, 1, quotient, 1, a.length);
+    vDSP_vdivD(b.values, 1, a.values, 1, quotient, 1, a.length);
     
-    NSMutableArray *values = [NSMutableArray array];
-    for (int i = 0; i < a.length; i++) {
-        [values addObject:@(quotient[i])];
-    }
-    
-    return [MCVector vectorWithValues:values];
+    return [MCVector vectorWithValues:quotient];
 }
 
 + (double)dotProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
