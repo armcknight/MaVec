@@ -177,6 +177,15 @@
 
 #pragma mark - Instance Operations
 
+- (MCVector *)vectorByMultiplyingByScalar:(double)scalar
+{
+    double *newValues = malloc(self.length * sizeof(double));
+    for (int i = 0; i < self.length; i++) {
+        newValues[i] = scalar * self.values[i];
+    }
+    return [MCVector vectorWithValues:newValues inVectorFormat:self.vectorFormat];
+}
+
 #pragma mark - Class Operations
 
 + (MCVector *)sumOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
