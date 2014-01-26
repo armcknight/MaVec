@@ -414,7 +414,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
         }
     }
     
-    vDSP_mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
     return [MCTribool triboolWithValue:MCTriboolYes];
 }
 
@@ -422,7 +421,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
     MCTriboolValue isPositiveDefinite = MCTriboolNo;
     
-    return [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
     // TODO: implement
     @throw kMCUnimplementedMethodException;
     
