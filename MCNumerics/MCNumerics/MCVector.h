@@ -31,7 +31,9 @@ typedef enum {
 #pragma mark - NSObject overrides
 
 - (BOOL)isEqualToVector:(MCVector *)otherVector;
+- (BOOL)isEqual:(id)object;
 - (NSUInteger)hash;
+- (NSString *)description;
 
 #pragma mark - Inspection
 
