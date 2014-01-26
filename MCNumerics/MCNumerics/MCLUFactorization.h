@@ -16,31 +16,28 @@
  */
 @interface MCLUFactorization : NSObject
 
-#pragma mark - Init
-
-- (id)initWithL:(MCMatrix *)l u:(MCMatrix *)u;
-
-+ (id)luFactorizationWithL:(MCMatrix *)l u:(MCMatrix *)u;
-
 /**
  @property l
  @brief An MCMatrix holding the lower triangular matrix L of the LU factorization.
  */
-@property (nonatomic, strong) MCMatrix *l;
+@property (nonatomic, readonly, strong) MCMatrix *lowerTriangularMatrix;
 
 /**
  @property u
  @brief An MCMatrix holding the upper triangular matrix U of the LU factorization.
  */
-@property (nonatomic, strong) MCMatrix *u;
+@property (nonatomic, readonly, strong) MCMatrix *upperTriangularMatrix;
 
 /**
  @property p
  @brief The permutation matrix of the LU factorization. See see http://www.math.drexel.edu/~tolya/permutations.pdf for explanation of permutation matrices.
  */
-@property (nonatomic, strong) MCMatrix *p;
+@property (nonatomic, readonly, strong) MCMatrix *permutationMatrix;
 
-@property (nonatomic, strong) MCMatrix *d;
+#pragma mark - Init
+
+- (instancetype)initWithMatrix:(MCMatrix *)matrix;
++ (instancetype)luFactorizationOfMatrix:(MCMatrix *)matrix;
 
 @end
 

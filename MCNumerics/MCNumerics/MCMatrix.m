@@ -266,58 +266,7 @@
 - (MCLUFactorization *)luFactorization
 {
     if (!_luFactorization) {
-        NSUInteger size = self.rows * self.columns;
-        double *values = malloc(size * sizeof(double));
-        for (int i = 0; i < size; i++) {
-            values[i] = self.values[i];
-        }
-        
-        long m = self.rows;
-        long n = self.columns;
-        
-        long lda = m;
-        
-        long *ipiv = malloc(MIN(m, n) * sizeof(long));
-        
-        long info = 0;
-        
-        dgetrf_(&m, &n, values, &lda, ipiv, &info);
-        
-        // extract L from values array
-        MCMatrix *l = [MCMatrix matrixWithRows:m columns:n];
-        for (int i = 0; i < self.columns; i++) {
-            for (int j = 0; j < self.rows; j++) {
-                if (j > i) {
-                    [l setEntryAtRow:j column:i toValue:values[i * self.columns + j]];
-                } else if (j == i) {
-                    [l setEntryAtRow:j column:i toValue:1.0];
-                } else {
-                    [l setEntryAtRow:j column:i toValue:0.0];
-                }
-            }
-        }
-        
-        // extract U from values array
-        MCMatrix *u = [MCMatrix matrixWithRows:n columns:m];
-        for (int i = 0; i < self.columns; i++) {
-            for (int j = 0; j < self.rows; j++) {
-                if (j <= i) {
-                    [u setEntryAtRow:j column:i toValue:values[i * self.columns + j]];
-                } else {
-                    [u setEntryAtRow:j column:i toValue:0.0];
-                }
-            }
-        }
-        
-        // exchange rows as defined in ipiv to build permutation matrix
-        MCMatrix *p = [MCMatrix identityMatrixWithSize:MIN(m, n)];
-        for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
-            [p swapRowA:i withRowB:ipiv[i] - 1];
-        }
-        
-        _luFactorization = [MCLUFactorization luFactorizationWithL:l
-                                                                 u:u];
-        _luFactorization.p = p;
+        _luFactorization = [MCLUFactorization luFactorizationOfMatrix:self];
     }
     
     return _luFactorization;
