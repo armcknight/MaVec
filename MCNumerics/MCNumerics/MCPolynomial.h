@@ -19,9 +19,12 @@
 
 + (MCPolynomial *)polynomialWithCoefficients:(NSArray *)coefficients;
 
-#pragma mark - Inspection
+#pragma mark - NSObject overrides
 
 - (BOOL)isEqualToPolynomial:(MCPolynomial *)otherPolynomial;
+- (NSString *)description;
+- (BOOL)isEqual:(id)object;
+- (NSUInteger)hash;
 
 #pragma mark - Operations
 

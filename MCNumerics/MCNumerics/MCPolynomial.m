@@ -32,7 +32,40 @@
     return [[MCPolynomial alloc] initWithCoefficients:coefficients];
 }
 
-#pragma mark - Inspection
+#pragma mark - MCEquation methods
+
+- (MCPolynomial *)derivativeOfDegree:(NSUInteger)degree
+{
+    NSMutableArray *derivativeCoefficients = [NSMutableArray array];
+    NSIndexSet *coefficientsToEnumerate = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(degree, self.coefficients.count - degree)];
+    [self.coefficients enumerateObjectsAtIndexes:coefficientsToEnumerate
+                                         options:0
+                                      usingBlock:^(NSNumber *coefficient, NSUInteger power, BOOL *stop) {
+                                          NSNumber *derivativeCoefficient = coefficient;
+                                          for (int i = 0; i < degree; i++) {
+                                              derivativeCoefficient = [derivativeCoefficient productByMultiplying:@(power - i)];
+                                          }
+                                          [derivativeCoefficients addObject:derivativeCoefficient];
+                                      }];
+    return [MCPolynomial polynomialWithCoefficients:derivativeCoefficients];
+}
+
+- (NSNumber *)evaluateAtValue:(NSNumber *)value
+{
+    NSNumber __block *sum = @0.0;
+    [self.coefficients enumerateObjectsUsingBlock:^(NSNumber *coefficient, NSUInteger power, BOOL *stop) {
+        sum = [sum sumByAdding:[coefficient productByMultiplying:[value raiseToPower:@(power)]]];
+    }];
+    return sum;
+}
+
+- (NSNumber *)evaluateDerivativeOfDegree:(NSUInteger)degree withValue:(NSNumber *)value
+{
+    MCPolynomial *derivative = [self derivativeOfDegree:degree];
+    return [derivative evaluateAtValue:value];
+}
+
+#pragma mark - NSObject overrides
 
 - (BOOL)isEqualToPolynomial:(MCPolynomial *)otherPolynomial
 {
@@ -74,39 +107,6 @@
     }];
     
     return description;
-}
-
-#pragma mark - Operations
-
-- (MCPolynomial *)derivativeOfDegree:(NSUInteger)degree
-{
-    NSMutableArray *derivativeCoefficients = [NSMutableArray array];
-    NSIndexSet *coefficientsToEnumerate = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(degree, self.coefficients.count - degree)];
-    [self.coefficients enumerateObjectsAtIndexes:coefficientsToEnumerate
-                                         options:0
-                                      usingBlock:^(NSNumber *coefficient, NSUInteger power, BOOL *stop) {
-                                          NSNumber *derivativeCoefficient = coefficient;
-                                          for (int i = 0; i < degree; i++) {
-                                              derivativeCoefficient = [derivativeCoefficient productByMultiplying:@(power - i)];
-                                          }
-                                          [derivativeCoefficients addObject:derivativeCoefficient];
-                                      }];
-    return [MCPolynomial polynomialWithCoefficients:derivativeCoefficients];
-}
-
-- (NSNumber *)evaluateAtValue:(NSNumber *)value
-{
-    NSNumber __block *sum = @0.0;
-    [self.coefficients enumerateObjectsUsingBlock:^(NSNumber *coefficient, NSUInteger power, BOOL *stop) {
-        sum = [sum sumByAdding:[coefficient productByMultiplying:[value raiseToPower:@(power)]]];
-    }];
-    return sum;
-}
-
-- (NSNumber *)evaluateDerivativeOfDegree:(NSUInteger)degree withValue:(NSNumber *)value
-{
-    MCPolynomial *derivative = [self derivativeOfDegree:degree];
-    return [derivative evaluateAtValue:value];
 }
 
 @end
