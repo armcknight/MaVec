@@ -25,7 +25,7 @@
     self.length = sizeof(values) / sizeof(double);
 }
 
-- (id)initWithValues:(double *)values
+- (instancetype)initWithValues:(double *)values
 {
     self = [super init];
     if (self) {
@@ -35,7 +35,7 @@
     return self;
 }
 
-- (id)initWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat
+- (instancetype)initWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat
 {
     self = [super init];
     if (self) {
@@ -45,12 +45,12 @@
     return self;
 }
 
-+ (MCVector *)vectorWithValues:(double *)values
++ (instancetype)vectorWithValues:(double *)values
 {
     return [[MCVector alloc] initWithValues:values];
 }
 
-+ (MCVector *)vectorWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat
++ (instancetype)vectorWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat
 {
     return [[MCVector alloc] initWithValues:values inVectorFormat:vectorFormat];
 }
@@ -64,7 +64,7 @@
     }];
 }
 
-- (id)initWithValuesInArray:(NSArray *)values
+- (instancetype)initWithValuesInArray:(NSArray *)values
 {
     self = [super init];
     if (self) {
@@ -74,7 +74,7 @@
     return self;
 }
 
-- (id)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
+- (instancetype)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
 {
     self = [super init];
     if (self) {
@@ -84,12 +84,12 @@
     return self;
 }
 
-+ (MCVector *)vectorWithValuesInArray:(NSArray *)values
++ (instancetype)vectorWithValuesInArray:(NSArray *)values
 {
     return [[MCVector alloc] initWithValuesInArray:values];
 }
 
-+ (MCVector *)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
++ (instancetype)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
 {
     return [[MCVector alloc] initWithValuesInArray:values inVectorFormat:vectorFormat];
 }

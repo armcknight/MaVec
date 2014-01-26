@@ -23,15 +23,15 @@ typedef enum {
 /**
  @description Initializes a new MCVector with supplied values in column format.
  */
-- (id)initWithValues:(double *)values;
-- (id)initWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat;
-+ (MCVector *)vectorWithValues:(double *)values;
-+ (MCVector *)vectorWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat;
+- (instancetype)initWithValues:(double *)values;
+- (instancetype)initWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat;
++ (instancetype)vectorWithValues:(double *)values;
++ (instancetype)vectorWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat;
 
-- (id)initWithValuesInArray:(NSArray *)values;
-- (id)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
-+ (MCVector *)vectorWithValuesInArray:(NSArray *)values;
-+ (MCVector *)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
+- (instancetype)initWithValuesInArray:(NSArray *)values;
+- (instancetype)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
++ (instancetype)vectorWithValuesInArray:(NSArray *)values;
++ (instancetype)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
 
 #pragma mark - NSObject overrides
 

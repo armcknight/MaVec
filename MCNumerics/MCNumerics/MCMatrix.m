@@ -23,7 +23,7 @@
 
 #pragma mark - Constructors
 
-- (id)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
+- (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
 {
     self = [super init];
     
@@ -37,9 +37,9 @@
     return self;
 }
 
-- (id)initWithRows:(NSUInteger)rows
-           columns:(NSUInteger)columns
-valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+- (instancetype)initWithRows:(NSUInteger)rows
+                     columns:(NSUInteger)columns
+          valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
     self = [super init];
     
@@ -53,9 +53,9 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return self;
 }
 
-- (id)initWithValues:(double *)values
-                rows:(NSUInteger)rows
-             columns:(NSUInteger)columns
+- (instancetype)initWithValues:(double *)values
+                          rows:(NSUInteger)rows
+                       columns:(NSUInteger)columns
 {
     self = [super init];
     
@@ -69,10 +69,10 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return self;
 }
 
-- (id)initWithValues:(double *)values
-                rows:(NSUInteger)rows
-             columns:(NSUInteger)columns
-  valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+- (instancetype)initWithValues:(double *)values
+                          rows:(NSUInteger)rows
+                       columns:(NSUInteger)columns
+            valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
     self = [super init];
     
@@ -86,7 +86,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return self;
 }
 
-- (id)initWithColumnVectors:(NSArray *)columnVectors
+- (instancetype)initWithColumnVectors:(NSArray *)columnVectors
 {
     self = [super init];
     if (self) {
@@ -104,7 +104,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return self;
 }
 
-- (id)initWithRowVectors:(NSArray *)rowVectors
+- (instancetype)initWithRowVectors:(NSArray *)rowVectors
 {
     self = [super init];
     if (self) {
@@ -122,43 +122,43 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return self;
 }
 
-+ (id)matrixWithColumnVectors:(NSArray *)columnVectors
++ (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors
 {
     return [[MCMatrix alloc] initWithColumnVectors:columnVectors];
 }
 
-+ (id)matrixWithRowVectors:(NSArray *)rowVectors
++ (instancetype)matrixWithRowVectors:(NSArray *)rowVectors
 {
     return [[MCMatrix alloc] initWithRowVectors:rowVectors];
 }
 
-+ (id)matrixWithRows:(NSUInteger)rows columns:(NSUInteger)columns
++ (instancetype)matrixWithRows:(NSUInteger)rows columns:(NSUInteger)columns
 {
     return [[MCMatrix alloc] initWithRows:rows columns:columns];
 }
 
-+ (id)matrixWithRows:(NSUInteger)rows
-             columns:(NSUInteger)columns
-  valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
++ (instancetype)matrixWithRows:(NSUInteger)rows
+                       columns:(NSUInteger)columns
+            valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
     return [[MCMatrix alloc] initWithRows:rows
                                   columns:columns
                        valueStorageFormat:valueStorageFormat];
 }
 
-+ (id)matrixWithValues:(double *)values
-                  rows:(NSUInteger)rows
-               columns:(NSUInteger)columns
++ (instancetype)matrixWithValues:(double *)values
+                            rows:(NSUInteger)rows
+                         columns:(NSUInteger)columns
 {
     return [[MCMatrix alloc] initWithValues:values
                                      rows:rows
                                   columns:columns];
 }
 
-+ (id)matrixWithValues:(double *)values
-                  rows:(NSUInteger)rows
-               columns:(NSUInteger)columns
-    valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
++ (instancetype)matrixWithValues:(double *)values
+                            rows:(NSUInteger)rows
+                         columns:(NSUInteger)columns
+              valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
     return [[MCMatrix alloc] initWithValues:values
                                        rows:rows
@@ -166,7 +166,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
                          valueStorageFormat:valueStorageFormat];
 }
 
-+ (id)identityMatrixWithSize:(NSUInteger)size
++ (instancetype)identityMatrixWithSize:(NSUInteger)size
 {
     double *values = malloc(size * size * sizeof(double));
     for (int i = 0; i < size; i++) {
@@ -179,7 +179,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
                               columns:size];
 }
 
-+ (id)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size
++ (instancetype)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size
 {
     double *allValues = malloc(size * size * sizeof(double));
     for (int i = 0; i < size; i++) {

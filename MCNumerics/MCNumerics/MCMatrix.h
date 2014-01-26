@@ -130,7 +130,7 @@ typedef enum {
  @param columns The number of columns.
  @return New instance of MCMatrix.
  */
-- (id)initWithRows:(NSUInteger)rows
+- (instancetype)initWithRows:(NSUInteger)rows
            columns:(NSUInteger)columns;
 
 /**
@@ -141,7 +141,7 @@ typedef enum {
  @param valueStorageFormat The format to store values in; either row- or column-major.
  @return New instance of MCMatrix.
  */
-- (id)initWithRows:(NSUInteger)rows
+- (instancetype)initWithRows:(NSUInteger)rows
            columns:(NSUInteger)columns
 valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
@@ -153,7 +153,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @param columns The number of columns.
  @return New instance of MCMatrix.
  */
-- (id)initWithValues:(double *)values
+- (instancetype)initWithValues:(double *)values
                 rows:(NSUInteger)rows
              columns:(NSUInteger)columns;
 
@@ -166,15 +166,15 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @param valueStorageFormat The format to store values in; either row- or column-major.
  @return New instance of MCMatrix.
  */
-- (id)initWithValues:(double *)values
+- (instancetype)initWithValues:(double *)values
                 rows:(NSUInteger)rows
              columns:(NSUInteger)columns
   valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
-- (id)initWithColumnVectors:(NSArray *)columnVectors;
-- (id)initWithRowVectors:(NSArray *)rowVectors;
-+ (id)matrixWithColumnVectors:(NSArray *)columnVectors;
-+ (id)matrixWithRowVectors:(NSArray *)rowVectors;
+- (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
+- (instancetype)initWithRowVectors:(NSArray *)rowVectors;
++ (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors;
++ (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns but without supplying values.
@@ -183,7 +183,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @param columns The number of columns.
  @return New instance of MCMatrix.
  */
-+ (id)matrixWithRows:(NSUInteger)rows
++ (instancetype)matrixWithRows:(NSUInteger)rows
              columns:(NSUInteger)columns;
 
 /**
@@ -194,7 +194,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @param valueStorageFormat The format to store values in; either row- or column-major.
  @return New instance of MCMatrix.
  */
-+ (id)matrixWithRows:(NSUInteger)rows
++ (instancetype)matrixWithRows:(NSUInteger)rows
              columns:(NSUInteger)columns
   valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
@@ -206,7 +206,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @param columns The number of columns.
  @return New instance of MCMatrix.
  */
-+ (id)matrixWithValues:(double *)values
++ (instancetype)matrixWithValues:(double *)values
                   rows:(NSUInteger)rows
                columns:(NSUInteger)columns;
 
@@ -219,7 +219,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @param valueStorageFormat The format to store values in; either row- or column-major.
  @return New instance of MCMatrix.
  */
-+ (id)matrixWithValues:(double *)values
++ (instancetype)matrixWithValues:(double *)values
                   rows:(NSUInteger)rows
                columns:(NSUInteger)columns
     valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
@@ -230,7 +230,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @param size The square dimension in which to create this identity matrix.
  @return New instance of MCMatrix representing the identity matrix of dimension size x size.
  */
-+ (id)identityMatrixWithSize:(NSUInteger)size;
++ (instancetype)identityMatrixWithSize:(NSUInteger)size;
 
 /**
  @brief Class convenience method to create a square matrix with the specified diagonal values.
@@ -238,7 +238,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @param values The values for the diagonal of the matrix, from the top-leftmost value to the bottom-rightmost value.
  @return New instance of MCMatrix representing the square matrix of dimension size x size with specified diagonal values.
  */
-+ (id)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size;
++ (instancetype)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size;
 
 #pragma mark - Operations
 
