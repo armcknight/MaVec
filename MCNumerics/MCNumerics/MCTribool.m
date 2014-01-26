@@ -40,7 +40,7 @@
     return self;
 }
 
-+ (MCTribool *)numberWithTriboolValue:(MCTriboolValue)triboolValue
++ (MCTribool *)triboolWithValue:(MCTriboolValue)triboolValue
 {
     return [[MCTribool alloc] initWithTriboolValue:triboolValue];
 }

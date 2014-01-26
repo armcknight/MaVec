@@ -19,7 +19,7 @@ typedef enum {
 #pragma mark - Init
 
 - (id)initWithTriboolValue:(MCTriboolValue)triboolValue;
-+ (MCTribool *)numberWithTriboolValue:(MCTriboolValue)triboolValue;
++ (MCTribool *)triboolWithValue:(MCTriboolValue)triboolValue;
 
 #pragma mark - Inspection
 
