@@ -367,29 +367,35 @@
 
 - (MCTribool *)isSymmetric
 {
-    if (self.rows != self.columns) {
-        return NO;
-    }
-    
-    for (int i = 0; i < self.rows; i++) {
-        for (int j = i + 1; j < self.columns; j++) {
-            if ([self valueAtRow:i column:j] != [self valueAtRow:j column:i]) {
-                return NO;
+    if (_isSymmetric.triboolValue == MCTriboolIndeterminate) {
+        if (self.rows != self.columns) {
+            _isSymmetric = [MCTribool triboolWithValue:MCTriboolNo];
+        }
+        
+        for (int i = 0; i < self.rows; i++) {
+            for (int j = i + 1; j < self.columns; j++) {
+                if ([self valueAtRow:i column:j] != [self valueAtRow:j column:i]) {
+                    _isSymmetric = [MCTribool triboolWithValue:MCTriboolNo];
+                }
             }
         }
+        
+        _isSymmetric = [MCTribool triboolWithValue:MCTriboolYes];
     }
     
-    return [MCTribool triboolWithValue:MCTriboolYes];
+    
+    return _isSymmetric;
 }
 
 - (MCTribool *)isPositiveDefinite
 {
-    MCTriboolValue isPositiveDefinite = MCTriboolNo;
+    if (_isPositiveDefinite.triboolValue == MCTriboolIndeterminate) {
+        
+        // TODO: implement
+        @throw kMCUnimplementedMethodException;
+    }
     
-    // TODO: implement
-    @throw kMCUnimplementedMethodException;
-    
-    return [MCTribool triboolWithValue:isPositiveDefinite];
+    return _isPositiveDefinite;
 }
 
 #pragma mark - Property overrides
