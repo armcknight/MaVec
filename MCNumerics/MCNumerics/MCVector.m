@@ -122,6 +122,8 @@
     return description;
 }
 
+#pragma mark - Inspection
+
 - (double)valueAtIndex:(NSUInteger)index
 {
     return self.values[index];
@@ -173,7 +175,9 @@
     return min;
 }
 
-#pragma mark - Operations
+#pragma mark - Instance Operations
+
+#pragma mark - Class Operations
 
 + (MCVector *)sumOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
 {
