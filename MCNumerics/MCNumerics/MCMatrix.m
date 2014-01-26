@@ -656,12 +656,13 @@
         if (info != 0) {
             return nil;
         } else {
-            MCMatrix *solution = [MCMatrix matrixWithRows:n columns:1];
-            solution.values = malloc(n * sizeof(double));
+            double *solutionValues = malloc(n * sizeof(double));
             for (int i = 0; i < n; i++) {
-                solution.values[i] = b[i];
+                solutionValues[i] = b[i];
             }
-            return solution;
+            return [MCMatrix matrixWithValues:solutionValues
+                                         rows:n
+                                      columns:1];
         }
     } else {
         // solve for general m x n rectangular matrix A
@@ -704,12 +705,11 @@
         if (info != 0) {
             return nil;
         } else {
-            MCMatrix *solution = [MCMatrix matrixWithRows:n columns:1];
-            solution.values = malloc(n * sizeof(double));
+            double *solutionValues = malloc(n * sizeof(double));
             for (int i = 0; i < n; i++) {
-                solution.values[i] = b[i];
+                solutionValues[i] = b[i];
             }
-            return solution;
+            return [MCMatrix matrixWithValues:solutionValues rows:n columns:1];
         }
     }
 }
