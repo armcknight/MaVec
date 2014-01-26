@@ -270,12 +270,12 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  */
 - (MCSingularValueDecomposition *)singularValueDecomposition;
 
-#pragma mark - Inspection
 /**
  @description Computes the eigendecomposition (spectral factorization) of this matrix. Documentation found at 
  */
 - (MCEigendecomposition *)eigendecomposition;
 
+#pragma mark - NSObject overrides
 
 /**
  @return YES if object is either this MCMatrix instance or is identical in dimension and contains identical values at all positions, NO otherwise.
@@ -291,6 +291,8 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @return An NSString that can represent the values of this matrix in the usual two-dimensional human-readable format.
  */
 - (NSString *)description;
+
+#pragma mark - Inspection
 
 /**
  @description Get the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.

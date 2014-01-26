@@ -205,7 +205,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 //    }
 //}
 
-#pragma mark - Matrix operations
 #pragma mark - Lazy-loaded properties
 
 - (MCMatrix *)transpose
@@ -521,6 +520,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     }
 }
 
+#pragma mark - NSObject overrides
 
 - (BOOL)isEqualToMatrix:(MCMatrix *)otherMatrix
 {
@@ -582,6 +582,8 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     
     return description;
 }
+
+#pragma mark - Inspection
 
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column
 {
