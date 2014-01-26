@@ -59,30 +59,67 @@
 
 - (BOOL)isEqualToVector:(MCVector *)otherVector
 {
-    BOOL __block equal = self == otherVector.self;
-    
-    if (equal) {
-        return equal;
+    if (self == otherVector.self) {
+        return YES;
     } else {
-        equal = YES;
         for (int i = 0; i < self.length; i++) {
-            if (self.valuesCArray[i] != [otherVector valueAtIndex:i]) {
-                equal = NO;
-                break;
+            if (self.values[i] != [otherVector valueAtIndex:i]) {
+                return NO;
             }
         }
-        return equal;
+        return YES;
+    }
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (self == object) {
+        return YES;
+    } else if (![object isKindOfClass:[MCVector class]]) {
+        return NO;
+    } else {
+        return [self isEqualToVector:(MCVector *)object];
     }
 }
 
 - (NSUInteger)hash
 {
-    return self.values.hash;
+    NSMutableArray *array = [NSMutableArray array];
+    
+    for (int i = 0; i < self.length; i++) {
+        [array addObject:@(self.values[i])];
+    }
+    
+    return array.hash;
 }
 
-#pragma mark - Inspection
-
+- (NSString *)description
 {
+    double max = DBL_MIN;
+    for (int i = 0; i < self.length; i++) {
+        max = MAX(max, self.values[i]);
+    }
+    int padding = floor(log10(max)) + 5;
+    
+    NSMutableString *description = [@"\n" mutableCopy];
+    
+    int i = 0;
+    for (int j = 0; j < self.length; j++) {
+        NSString *valueString = [NSString stringWithFormat:@"%.1f", self.values[i]];
+        if (self.vectorFormat == MCVectorFormatColumnVector) {
+            [description appendString:[valueString stringByPaddingToLength:padding withString:@" " startingAtIndex:0]];
+            if (j < self.length - 1) {
+                [description appendString:@"\n"];
+            }
+        } else {
+            [description appendString:valueString];
+            if (j < self.length - 1) {
+                [description appendString:@" "];
+            }
+        }
+    }
+    
+    return description;
 }
 
 - (double)valueAtIndex:(NSUInteger)index
