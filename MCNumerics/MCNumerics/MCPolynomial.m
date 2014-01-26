@@ -8,7 +8,7 @@
 
 #import "MCPolynomial.h"
 
-#import "NSNumber+MCArithmetic.h"
+#import "NSNumber+MCMath.h"
 
 @interface MCPolynomial ()
 

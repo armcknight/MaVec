@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 andrew mcknight. All rights reserved.
 //
 
-#import "NSNumber+MCArithmetic.h"
+#import "NSNumber+MCMath.h"
 
 @implementation NSNumber (MCMath)
 
