@@ -47,6 +47,12 @@ typedef enum {
 @property (nonatomic, readonly, assign) NSUInteger columns;
 
 /**
+ @property values
+ @brief A one-dimensional C array of floating point values.
+ */
+@property (nonatomic, readonly, assign) double *values;
+
+/**
  @property valueStorageFormat 
  @brief The logical storage format for the matrix' values in the one-dimensional array.
  */

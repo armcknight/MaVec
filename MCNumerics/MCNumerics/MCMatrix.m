@@ -17,12 +17,6 @@
 
 @interface MCMatrix ()
 
-/**
- @property values
- @brief A one-dimensional C array of floating point values.
- */
-@property (nonatomic, assign) double *values;
-
 @end
 
 @implementation MCMatrix
