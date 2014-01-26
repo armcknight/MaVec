@@ -600,9 +600,24 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     }
 }
 
+- (MCVector *)rowVectorForRow:(NSUInteger)row
 {
+    MCVector *rowVector = nil;
     
+    // TODO: implement
+    @throw kMCUnimplementedMethodException;
     
+    return rowVector;
+}
+
+- (MCVector *)columnVectorForColumn:(NSUInteger)column
+{
+    MCVector *columnVector = nil;
+    
+    // TODO: implement
+    @throw kMCUnimplementedMethodException;
+    
+    return columnVector;
 }
 
 #pragma mark - Mutation

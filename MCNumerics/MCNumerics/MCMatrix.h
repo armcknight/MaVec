@@ -12,6 +12,7 @@
 @class MCLUFactorization;
 @class MCQRFactorization;
 @class MCEigendecomposition;
+@class MCVector;
 
 /**
  @brief Constants specifying the logical storage type for this matrix' values.
@@ -302,6 +303,8 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  */
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column;
 
+- (MCVector *)columnVectorForColumn:(NSUInteger)column;
+- (MCVector *)rowVectorForRow:(NSUInteger)row;
 
 #pragma mark - Mutation
 
