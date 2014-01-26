@@ -510,7 +510,9 @@
     double *copiedValues = malloc(self.rows * self.columns * sizeof(double));
     
     if (self.valueStorageFormat == valueStorageFormat) {
-        memcpy(copiedValues, self.values, sizeof(self.values));
+        for (int i = 0; i < self.rows * self.columns; i += 1) {
+            copiedValues[i] = self.values[i];
+        }
         return copiedValues;
     }
     
