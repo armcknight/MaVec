@@ -238,12 +238,13 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  */
 + (instancetype)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size;
 
-#pragma mark - Operations
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors;
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
 /**
  */
+
+#pragma mark - Operations
 
 /**
  @return A new MCMatrix object with the values from this matrix (in the same valueStorageFormat), excluding the specified row and index values. 
