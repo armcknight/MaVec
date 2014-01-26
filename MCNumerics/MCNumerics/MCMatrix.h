@@ -13,6 +13,7 @@
 @class MCQRFactorization;
 @class MCEigendecomposition;
 @class MCVector;
+@class MCTribool;
 
 /**
  @brief Constants specifying the logical storage type for this matrix' values.
