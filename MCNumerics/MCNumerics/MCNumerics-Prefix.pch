@@ -14,4 +14,6 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import "RZCollectionList.h"
+
+    #define kMCUnimplementedMethodException [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil]
 #endif
