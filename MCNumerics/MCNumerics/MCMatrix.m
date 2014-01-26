@@ -30,7 +30,7 @@
     if (self) {
         _rows = rows;
         _columns = columns;
-        self.values = malloc(rows * columns * sizeof(double));
+        _values = malloc(rows * columns * sizeof(double));
         _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
     }
     
@@ -46,7 +46,7 @@
     if (self) {
         _rows = rows;
         _columns = columns;
-        self.values = malloc(rows * columns * sizeof(double));
+        _values = malloc(rows * columns * sizeof(double));
         _valueStorageFormat = valueStorageFormat;
     }
     
@@ -62,7 +62,7 @@
     if (self) {
         _rows = rows;
         _columns = columns;
-        self.values = values;
+        _values = values;
         _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
     }
     
@@ -79,7 +79,7 @@
     if (self) {
         _rows = rows;
         _columns = columns;
-        self.values = values;
+        _values = values;
         _valueStorageFormat = valueStorageFormat;
     }
     
@@ -94,10 +94,10 @@
         _rows = ((MCVector *)columnVectors.firstObject).length;
         _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
         
-        self.values = malloc(self.rows * self.columns * sizeof(double));
+        _values = malloc(self.rows * self.columns * sizeof(double));
         [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
             for(int i = 0; i < self.rows; i++) {
-                self.values[column * self.rows + i] = [columnVector valueAtIndex:i];
+                _values[column * self.rows + i] = [columnVector valueAtIndex:i];
             }
         }];
     }
@@ -112,10 +112,10 @@
         _columns = ((MCVector *)rowVectors.firstObject).length;
         _valueStorageFormat = MCMatrixValueStorageFormatRowMajor;
         
-        self.values = malloc(self.rows * self.columns * sizeof(double));
+        _values = malloc(self.rows * self.columns * sizeof(double));
         [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
             for(int i = 0; i < self.rows; i++) {
-                self.values[row * self.columns + i] = [rowVector valueAtIndex:i];
+                _values[row * self.columns + i] = [rowVector valueAtIndex:i];
             }
         }];
     }
