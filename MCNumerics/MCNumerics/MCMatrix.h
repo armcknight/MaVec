@@ -173,8 +173,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
 - (instancetype)initWithRowVectors:(NSArray *)rowVectors;
-+ (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors;
-+ (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns but without supplying values.
@@ -241,6 +239,8 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 + (instancetype)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size;
 
 #pragma mark - Operations
++ (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors;
++ (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
 /**
  */
