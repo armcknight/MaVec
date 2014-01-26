@@ -21,23 +21,40 @@
 
 #pragma mark - Constructors
 
-- (id)initWithValues:(NSArray *)values
+- (void)commonInitWithValues:(double *)values
+{
+    self.values = values;
+    self.length = sizeof(values) / sizeof(double);
+}
+
+- (id)initWithValues:(double *)values
 {
     self = [super init];
     if (self) {
-        self.values = values;
-        self.valuesCArray = malloc(values.count * sizeof(double));
-        self.length = values.count;
-        [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
-            self.valuesCArray[idx] = value.doubleValue;
-        }];
+        [self commonInitWithValues:values];
+        self.vectorFormat = MCVectorFormatColumnVector;
     }
     return self;
 }
 
-+ (MCVector *)vectorWithValues:(NSArray *)values
+- (id)initWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat
+{
+    self = [super init];
+    if (self) {
+        [self commonInitWithValues:values];
+        self.vectorFormat = vectorFormat;
+    }
+    return self;
+}
+
++ (MCVector *)vectorWithValues:(double *)values
 {
     return [[MCVector alloc] initWithValues:values];
+}
+
++ (MCVector *)vectorWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat
+{
+    return [[MCVector alloc] initWithValues:values inVectorFormat:vectorFormat];
 }
 
 #pragma mark - NSObject overrides

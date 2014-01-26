@@ -8,12 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    MCVectorFormatRowVector,
+    MCVectorFormatColumnVector
+} MCVectorFormat;
+
 @interface MCVector : NSObject
 
+@property (assign, nonatomic) MCVectorFormat vectorFormat;
 #pragma mark - Constructors
 
-- (id)initWithValues:(NSArray *)values;
-+ (MCVector *)vectorWithValues:(NSArray *)values;
+/**
+ @description Initializes a new MCVector with supplied values in column format.
+ */
+- (id)initWithValues:(double *)values;
+- (id)initWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat;
++ (MCVector *)vectorWithValues:(double *)values;
++ (MCVector *)vectorWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat;
 
 #pragma mark - NSObject overrides
 
