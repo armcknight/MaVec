@@ -13,7 +13,6 @@
 
 @property (strong, nonatomic) NSArray *values;
 @property (assign, nonatomic) double *valuesCArray;
-@property (assign, nonatomic) NSUInteger length;
 
 @end
 
@@ -84,9 +83,7 @@
 
 #pragma mark - Inspection
 
-- (NSUInteger)length
 {
-    return self.values.count;
 }
 
 - (double)valueAtIndex:(NSUInteger)index

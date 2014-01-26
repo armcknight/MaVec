@@ -16,6 +16,8 @@ typedef enum {
 @interface MCVector : NSObject
 
 @property (assign, nonatomic) MCVectorFormat vectorFormat;
+@property (assign, nonatomic) NSUInteger length;
+
 #pragma mark - Constructors
 
 /**
