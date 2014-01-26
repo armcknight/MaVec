@@ -50,6 +50,69 @@ typedef enum {
  */
 @property (nonatomic, readonly, assign) MCMatrixValueStorageFormat valueStorageFormat;
 
+/**
+ @property transpose
+ @brief Transpose of this matrix. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _transpose) MCMatrix *transpose;
+
+/**
+ @property determinant
+ @brief The determinant of this matrix. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _determinant) NSNumber *determinant;
+
+/**
+ @property inverse
+ @brief The (pseudo)inverse of this matrix in a new MCMatrix object. (Lazy-loaded)
+ */
+
+@property (nonatomic, readonly, strong, getter = _inverse) MCMatrix *inverse;
+
+/**
+ @property conditionNumber
+ @brief The condition number of this matrix. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _conditionNumber) NSNumber *conditionNumber;
+
+/**
+ @property qrFactorization
+ @brief An MCQRFactorization object containing matrices representing the QR factorization of this matrix. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _qrFactorization) MCQRFactorization *qrFactorization;
+
+/**
+ @property luFactorization
+ @description Helpful documentation at http://www.netlib.no/netlib/lapack/double/dgetrf.f and https://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_hsgetrf.htm
+ @brief An MCLUFactorization object contatining matrices representing the LU factorization of this matrix. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _luFactorization) MCLUFactorization *luFactorization;
+
+/**
+ @property singularValueDecomposition
+ @description Uses the Accelerate framework function dgesdd_. Examples of dgesdd_(...) usage found at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/lapacke_dgesdd_row.c.htm and http://stackoverflow.com/questions/5047503/lapack-svd-singular-value-decomposition Good documentation exists at http://www.netlib.org/lapack/lug/node53.html and http://www.nag.com/numeric/FL/nagdoc_fl22/xhtml/F08/f08kdf.xml. See http://www.netlib.org/lapack/lug/node38.html for general documentation.
+ @brief An MCSingularValueDecomposition object containing matrices representing the singular value decomposition of this matrix, or nil if no such decomposition exists. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _singularValueDecomposition) MCSingularValueDecomposition *singularValueDecomposition;
+
+/**
+ @property eigendecomposition
+ @brief Computes the eigendecomposition (spectral factorization) of this matrix. Documentation found at ... . (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _eigendecomposition) MCEigendecomposition *eigendecomposition;
+
+/**
+ @property isSymmetric
+ @brief YES if this matrix is symmetric, NO otherwise. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _isSymmetric) MCTribool *isSymmetric;
+
+/**
+ @property isPositiveDefinite
+ @brief YES if this matrix is positive definite, NO otherwise. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, strong, getter = _isPositiveDefinite) MCTribool *isPositiveDefinite;
+
 #pragma mark - Constructors
 
 /**
@@ -172,11 +235,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 #pragma mark - Operations
 
 /**
- @return Transpose of this matrix.
- */
-- (MCMatrix *)transpose;
-
-/**
  @return A new MCMatrix object with this matrix' values stored in the specified format (row-major or column-major).
  */
 - (MCMatrix *)matrixWithValuesStoredInFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
@@ -187,11 +245,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column;
 
 /**
- @return The determinant of this matrix.
- */
-- (double)determinant;
-
-/**
  @return The (pseudo)inverse of this matrix in a new MCMatrix object.
  */
 - (MCMatrix *)inverse;
@@ -199,11 +252,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB;
 
 - (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB;
-
-/**
- @return The condition number of this matrix.
- */
-- (double)conditionNumber;
 
 /**
  @return An MCQRFactorization object containing matrices representing the QR factorization of this matrix.
@@ -252,15 +300,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  */
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column;
 
-/**
- @return YES if this matrix is symmetric, NO otherwise.
- */
-- (BOOL)isSymmetric;
-
-/**
- @return YES if this matrix is positive definite, NO otherwise.
- */
-- (BOOL)isPositiveDefinite;
 
 #pragma mark - Mutation
 

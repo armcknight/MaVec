@@ -12,6 +12,8 @@
 #import "MCSingularValueDecomposition.h"
 #import "MCLUFactorization.h"
 #import "MCEigendecomposition.h"
+#import "MCQRFactorization.h"
+#import "MCTribool.h"
 
 @interface MCMatrix ()
 
@@ -204,16 +206,233 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 //}
 
 #pragma mark - Matrix operations
+#pragma mark - Lazy-loaded properties
 
 - (MCMatrix *)transpose
 {
     double *aVals = self.values;
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
+    if (!_transpose) {
+        double *aVals = self.values;
+        double *tVals = malloc(self.rows * self.columns * sizeof(double));
+        
+        vDSP_mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
+        
+        _transpose = [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
+    }
+    
+    return _transpose;
+}
+
+- (NSNumber *)determinant
+{
+    if (!_determinant) {
+        _determinant = @(0.0);
+        
+        // TODO: implement
+        @throw kMCUnimplementedMethodException;
+    }
+    
+    return _determinant;
+}
+
+- (MCMatrix *)inverse
+{
+    if (!_inverse) {
+        _inverse = nil;
+        
+        // TODO: implement
+        @throw kMCUnimplementedMethodException;
+    }
+    
+    return _inverse;
+}
+
+- (NSNumber *)conditionNumber
+{
+    if (!_conditionNumber) {
+        _conditionNumber = @(0.0);
+        
+        // TODO: implement
+        @throw kMCUnimplementedMethodException;
+    }
+    
+    return _conditionNumber;
+}
+
+- (MCQRFactorization *)qrFactorization
+{
+    if (!_qrFactorization) {
+        _qrFactorization = nil;
+        
+        // TODO: implement
+        @throw kMCUnimplementedMethodException;
+    }
+    
+    return _qrFactorization;
+}
+
+- (MCLUFactorization *)luFactorization
+{
+    if (!_luFactorization) {
+        NSUInteger size = self.rows * self.columns;
+        double *values = malloc(size * sizeof(double));
+        for (int i = 0; i < size; i++) {
+            values[i] = self.values[i];
+        }
+        
+        long m = self.rows;
+        long n = self.columns;
+        
+        long lda = m;
+        
+        long *ipiv = malloc(MIN(m, n) * sizeof(long));
+        
+        long info = 0;
+        
+        dgetrf_(&m, &n, values, &lda, ipiv, &info);
+        
+        // extract L from values array
+        MCMatrix *l = [MCMatrix matrixWithRows:m columns:n];
+        for (int i = 0; i < self.columns; i++) {
+            for (int j = 0; j < self.rows; j++) {
+                if (j > i) {
+                    [l setEntryAtRow:j column:i toValue:values[i * self.columns + j]];
+                } else if (j == i) {
+                    [l setEntryAtRow:j column:i toValue:1.0];
+                } else {
+                    [l setEntryAtRow:j column:i toValue:0.0];
+                }
+            }
+        }
+        
+        // extract U from values array
+        MCMatrix *u = [MCMatrix matrixWithRows:n columns:m];
+        for (int i = 0; i < self.columns; i++) {
+            for (int j = 0; j < self.rows; j++) {
+                if (j <= i) {
+                    [u setEntryAtRow:j column:i toValue:values[i * self.columns + j]];
+                } else {
+                    [u setEntryAtRow:j column:i toValue:0.0];
+                }
+            }
+        }
+        
+        // exchange rows as defined in ipiv to build permutation matrix
+        MCMatrix *p = [MCMatrix identityMatrixWithSize:MIN(m, n)];
+        for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
+            [p swapRowA:i withRowB:ipiv[i] - 1];
+        }
+        
+        _luFactorization = [MCLUFactorization luFactorizationWithL:l
+                                                                 u:u];
+        _luFactorization.p = p;
+    }
+    
+    return _luFactorization;
+}
+
+- (MCSingularValueDecomposition *)singularValueDecomposition
+{
+    if (!_singularValueDecomposition) {
+        double workSize;
+        double *work = &workSize;
+        long lwork = -1;
+        long numSingularValues = MIN(self.rows, self.columns);
+        double *singularValues = malloc(numSingularValues * sizeof(double));
+        long *iwork = malloc(8 * numSingularValues);
+        long info = 0;
+        long m = self.rows;
+        long n = self.columns;
+        
+        MCSingularValueDecomposition *svd = [MCSingularValueDecomposition SingularValueDecompositionWithM:self.rows n:self.columns numberOfSingularValues:numSingularValues];
+        
+        double *values = malloc(m * n * sizeof(double));
+        for (int i = 0; i < m * n; i++) {
+            values[i] = self.values[i];
+        }
+        
+        // call first with lwork = -1 to determine optimal size of working array
+        dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
+        
+        lwork = workSize;
+        work = malloc(lwork * sizeof(double));
+        
+        // now run the actual decomposition
+        dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
+        
+        free(work);
+        free(iwork);
+        
+        // build the sigma matrix
+        int idx = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == j) {
+                    svd.s.values[idx] = singularValues[i];
+                } else {
+                    svd.s.values[idx] = 0.0;
+                }
+                idx++;
+            }
+        }
+        
+        _singularValueDecomposition = info == 0 ? svd : nil;
+    }
+    
+    return _singularValueDecomposition;
+}
+
+- (MCEigendecomposition *)eigendecomposition
+{
+    if (self.rows != self.columns) {
+        @throw [NSException exceptionWithName:NSRangeException reason:@"Matrix must be square to derive eigendecomposition." userInfo:nil];
+    }
+    
+    // TODO: implement
+    @throw kMCUnimplementedMethodException;
+    
+    if (!_eigendecomposition) {
+        if (self.isSymmetric) {
+            
+        } else {
+            
+        }
+    }
+    
+    return _eigendecomposition;
+}
+
+- (MCTribool *)isSymmetric
+{
+    if (self.rows != self.columns) {
+        return NO;
+    }
+    
+    for (int i = 0; i < self.rows; i++) {
+        for (int j = i + 1; j < self.columns; j++) {
+            if ([self valueAtRow:i column:j] != [self valueAtRow:j column:i]) {
+                return NO;
+            }
+        }
+    }
     
     vDSP_mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
+    return [MCTribool triboolWithValue:MCTriboolYes];
+}
+
+- (MCTribool *)isPositiveDefinite
+{
+    MCTriboolValue isPositiveDefinite = MCTriboolNo;
     
     return [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
+    // TODO: implement
+    @throw kMCUnimplementedMethodException;
+    
+    return [MCTribool triboolWithValue:isPositiveDefinite];
 }
+
+#pragma mark - Matrix operations
 
 - (MCMatrix *)matrixWithValuesStoredInFormat:(MCMatrixValueStorageFormat)valueStorageFormat
 {
@@ -262,16 +481,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     return minor;
 }
 
-- (double)determinant
-{
-    double determinant = 0.0;
-    
-    // TODO: implement
-    @throw [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil];
-    
-    return determinant;
-}
-
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
 {
     if (rowA >= self.rows) {
@@ -312,133 +521,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     }
 }
 
-- (double)conditionNumber
-{
-    double conditionNumber = 0.0;
-    
-    // TODO: implement
-    @throw [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil];
-    
-    return conditionNumber;
-}
-
-- (MCLUFactorization *)luFactorization
-{
-    NSUInteger size = self.rows * self.columns;
-    double *values = malloc(size * sizeof(double));
-    for (int i = 0; i < size; i++) {
-        values[i] = self.values[i];
-    }
-    
-    long m = self.rows;
-    long n = self.columns;
-    
-    long lda = m;
-    
-    long *ipiv = malloc(MIN(m, n) * sizeof(long));
-    
-    long info = 0;
-    
-    dgetrf_(&m, &n, values, &lda, ipiv, &info);
-    
-    // extract L from values array
-    MCMatrix *l = [MCMatrix matrixWithRows:m columns:n];
-    for (int i = 0; i < self.columns; i++) {
-        for (int j = 0; j < self.rows; j++) {
-            if (j > i) {
-                [l setEntryAtRow:j column:i toValue:values[i * self.columns + j]];
-            } else if (j == i) {
-                [l setEntryAtRow:j column:i toValue:1.0];
-            } else {
-                [l setEntryAtRow:j column:i toValue:0.0];
-            }
-        }
-    }
-    
-    // extract U from values array
-    MCMatrix *u = [MCMatrix matrixWithRows:n columns:m];
-    for (int i = 0; i < self.columns; i++) {
-        for (int j = 0; j < self.rows; j++) {
-            if (j <= i) {
-                [u setEntryAtRow:j column:i toValue:values[i * self.columns + j]];
-            } else {
-                [u setEntryAtRow:j column:i toValue:0.0];
-            }
-        }
-    }
-    
-    // exchange rows as defined in ipiv to build permutation matrix
-    MCMatrix *p = [MCMatrix identityMatrixWithSize:MIN(m, n)];
-    for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
-        [p swapRowA:i withRowB:ipiv[i] - 1];
-    }
-    
-    MCLUFactorization *f = [MCLUFactorization luFactorizationWithL:l
-                                                                 u:u];
-    f.p = p;
-    return f;
-}
-
-- (MCSingularValueDecomposition *)singularValueDecomposition
-{
-    double workSize;
-    double *work = &workSize;
-    long lwork = -1;
-    long numSingularValues = MIN(self.rows, self.columns);
-    double *singularValues = malloc(numSingularValues * sizeof(double));
-    long *iwork = malloc(8 * numSingularValues);
-    long info = 0;
-    long m = self.rows;
-    long n = self.columns;
-    
-    MCSingularValueDecomposition *svd = [MCSingularValueDecomposition SingularValueDecompositionWithM:self.rows n:self.columns numberOfSingularValues:numSingularValues];
-    
-    double *values = malloc(m * n * sizeof(double));
-    for (int i = 0; i < m * n; i++) {
-        values[i] = self.values[i];
-    }
-    
-    // call first with lwork = -1 to determine optimal size of working array
-    dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
-    
-    lwork = workSize;
-    work = malloc(lwork * sizeof(double));
-    
-    // now run the actual decomposition
-    dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
-    
-    free(work);
-    free(iwork);
-    
-    // build the sigma matrix
-    int idx = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            if (i == j) {
-                svd.s.values[idx] = singularValues[i];
-            } else {
-                svd.s.values[idx] = 0.0;
-            }
-            idx++;
-        }
-    }
-    
-    return info == 0 ? svd : nil;
-}
-
-#pragma mark - Inspection
-- (MCEigendecomposition *)eigendecomposition
-{
-    if (self.rows != self.columns) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"Matrix must be square to derive eigendecomposition." userInfo:nil];
-    }
-    
-    if (self.isSymmetric) {
-        <#statements-if-true#>
-    } else {
-        <#statements-if-false#>
-    }
-}
 
 - (BOOL)isEqualToMatrix:(MCMatrix *)otherMatrix
 {
@@ -516,21 +598,9 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
     }
 }
 
-- (BOOL)isSymmetric
 {
-    if (self.rows != self.columns) {
-        return NO;
-    }
     
-    for (int i = 0; i < self.rows; i++) {
-        for (int j = i + 1; j < self.columns; j++) {
-            if ([self valueAtRow:i column:j] != [self valueAtRow:j column:i]) {
-                return NO;
-            }
-        }
-    }
     
-    return YES;
 }
 
 #pragma mark - Mutation
