@@ -55,6 +55,45 @@
     return [[MCVector alloc] initWithValues:values inVectorFormat:vectorFormat];
 }
 
+- (void)commonInitWithValuesInArray:(NSArray *)values
+{
+    self.length = values.count;
+    self.values = malloc(values.count * sizeof(double));
+    [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
+        self.values[idx] = value.doubleValue;
+    }];
+}
+
+- (id)initWithValuesInArray:(NSArray *)values
+{
+    self = [super init];
+    if (self) {
+        [self commonInitWithValuesInArray:values];
+        self.vectorFormat = MCVectorFormatColumnVector;
+    }
+    return self;
+}
+
+- (id)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
+{
+    self = [super init];
+    if (self) {
+        [self commonInitWithValuesInArray:values];
+        self.vectorFormat = vectorFormat;
+    }
+    return self;
+}
+
++ (MCVector *)vectorWithValuesInArray:(NSArray *)values
+{
+    return [[MCVector alloc] initWithValuesInArray:values];
+}
+
++ (MCVector *)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
+{
+    return [[MCVector alloc] initWithValuesInArray:values inVectorFormat:vectorFormat];
+}
+
 #pragma mark - NSObject overrides
 
 - (BOOL)isEqualToVector:(MCVector *)otherVector

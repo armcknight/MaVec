@@ -28,6 +28,11 @@ typedef enum {
 + (MCVector *)vectorWithValues:(double *)values;
 + (MCVector *)vectorWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat;
 
+- (id)initWithValuesInArray:(NSArray *)values;
+- (id)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
++ (MCVector *)vectorWithValuesInArray:(NSArray *)values;
++ (MCVector *)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
+
 #pragma mark - NSObject overrides
 
 - (BOOL)isEqualToVector:(MCVector *)otherVector;
