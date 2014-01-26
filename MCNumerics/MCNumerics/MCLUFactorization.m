@@ -19,13 +19,10 @@
 {
     self = [super init];
     if (self) {
-        MCMatrix *columnMajorMatrix = [matrix matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatColumnMajor];
-        NSUInteger size = columnMajorMatrix.rows * columnMajorMatrix.columns;
-        double *values = malloc(size * sizeof(double));
-        values = columnMajorMatrix.values;
+        double *columnMajorValues = [matrix valuesInStorageFormat:MCMatrixValueStorageFormatColumnMajor];
         
-        long m = columnMajorMatrix.rows;
-        long n = columnMajorMatrix.columns;
+        long m = matrix.rows;
+        long n = matrix.columns;
         
         long lda = m;
         
@@ -33,14 +30,14 @@
         
         long info = 0;
         
-        dgetrf_(&m, &n, values, &lda, ipiv, &info);
+        dgetrf_(&m, &n, columnMajorValues, &lda, ipiv, &info);
         
         // extract L from values array
         MCMatrix *l = [MCMatrix matrixWithRows:m columns:n];
-        for (int i = 0; i < columnMajorMatrix.columns; i++) {
-            for (int j = 0; j < columnMajorMatrix.rows; j++) {
+        for (int i = 0; i < matrix.columns; i++) {
+            for (int j = 0; j < matrix.rows; j++) {
                 if (j > i) {
-                    [l setEntryAtRow:j column:i toValue:values[i * columnMajorMatrix.columns + j]];
+                    [l setEntryAtRow:j column:i toValue:columnMajorValues[i * matrix.columns + j]];
                 } else if (j == i) {
                     [l setEntryAtRow:j column:i toValue:1.0];
                 } else {
@@ -51,10 +48,10 @@
         
         // extract U from values array
         MCMatrix *u = [MCMatrix matrixWithRows:n columns:m];
-        for (int i = 0; i < columnMajorMatrix.columns; i++) {
-            for (int j = 0; j < columnMajorMatrix.rows; j++) {
+        for (int i = 0; i < matrix.columns; i++) {
+            for (int j = 0; j < matrix.rows; j++) {
                 if (j <= i) {
-                    [u setEntryAtRow:j column:i toValue:values[i * columnMajorMatrix.columns + j]];
+                    [u setEntryAtRow:j column:i toValue:columnMajorValues[i * matrix.columns + j]];
                 } else {
                     [u setEntryAtRow:j column:i toValue:0.0];
                 }

@@ -372,32 +372,6 @@
 
 #pragma mark - Matrix operations
 
-- (MCMatrix *)matrixWithValuesStoredInFormat:(MCMatrixValueStorageFormat)valueStorageFormat
-{
-    if (self.valueStorageFormat == valueStorageFormat) {
-        return [MCMatrix matrixWithValues:self.values
-                                     rows:self.rows
-                                  columns:self.columns
-                       valueStorageFormat:valueStorageFormat];
-    }
-    
-    double *tVals = malloc(self.rows * self.columns * sizeof(double));
-    
-    int i = 0;
-    for (int j = 0; j < (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.rows : self.columns); j++) {
-        for (int k = 0; k < (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.columns : self.rows); k++) {
-            int idx = ((i * (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
-            tVals[i] = self.values[idx];
-            i++;
-        }
-    }
-    
-    return [MCMatrix matrixWithValues:tVals
-                                 rows:self.rows
-                              columns:self.columns
-                   valueStorageFormat:valueStorageFormat];
-}
-
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
 {
     if (row >= self.rows) {
@@ -466,14 +440,11 @@
     if (!([otherMatrix isKindOfClass:[MCMatrix class]] && self.rows == otherMatrix.rows && self.columns == otherMatrix.columns)) {
         return NO;
     } else {
-        double *otherValues = otherMatrix.values;
-        if (self.valueStorageFormat != otherMatrix.valueStorageFormat) {
-            MCMatrix *otherMatrixWithSameStorageFormat = [otherMatrix matrixWithValuesStoredInFormat:self.valueStorageFormat];
-            otherValues = otherMatrixWithSameStorageFormat.values;
-        }
-        for(int i = 0; i < self.rows * self.columns; i++) {
-            if (self.values[i] != otherValues[i]) {
-                return NO;
+        for (int row = 0; row < self.rows; row += 1) {
+            for (int col = 0; col < self.columns; col += 1) {
+                if ([self valueAtRow:row column:col] != [otherMatrix valueAtRow:row column:col]) {
+                    return NO;
+                }
             }
         }
         return YES;
@@ -523,6 +494,29 @@
 }
 
 #pragma mark - Inspection
+
+- (double *)valuesInStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    double *copiedValues = malloc(self.rows * self.columns * sizeof(double));
+    
+    if (self.valueStorageFormat == valueStorageFormat) {
+        memcpy(copiedValues, self.values, sizeof(self.values));
+        return copiedValues;
+    }
+    
+    double *tVals = malloc(self.rows * self.columns * sizeof(double));
+    
+    int i = 0;
+    for (int j = 0; j < (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.rows : self.columns); j++) {
+        for (int k = 0; k < (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.columns : self.rows); k++) {
+            int idx = ((i * (valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
+            tVals[i] = self.values[idx];
+            i++;
+        }
+    }
+    
+    return tVals;
+}
 
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column
 {
@@ -584,8 +578,8 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"matrixA does not have an equal amount of columns as rows in matrixB" userInfo:nil];
     }
     
-    double *aVals = [matrixA matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
-    double *bVals = [matrixB matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].values;
+    double *aVals = [matrixA valuesInStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    double *bVals = [matrixB valuesInStorageFormat:MCMatrixValueStorageFormatRowMajor];
     double *cVals = malloc(matrixA.rows * matrixB.columns * sizeof(double));
     
     vDSP_mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
@@ -632,6 +626,8 @@
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
                                  valuesB:(MCMatrix*)B
 {
+    double *aVals = [A valuesInStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+    
     if (A.rows == A.columns) {
         // solve for square matrix A
         
@@ -643,7 +639,7 @@
         long *ipiv = malloc(n * sizeof(long));
         double *a = malloc(n * n * sizeof(double));
         for (int i = 0; i < n * n; i++) {
-            a[i] = A.values[i];
+            a[i] = aVals[i];
         }
         int nb = B.rows;
         double *b = malloc(nb * sizeof(double));
@@ -678,7 +674,7 @@
         double* work;
         double *a = malloc(m * n * sizeof(double));
         for (int i = 0; i < m * n; i++) {
-            a[i] = A.values[i];
+            a[i] = aVals[i];
         }
         int nb = B.rows;
         double *b = malloc(nb * sizeof(double));

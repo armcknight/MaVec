@@ -243,9 +243,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 #pragma mark - Operations
 
 /**
- @return A new MCMatrix object with this matrix' values stored in the specified format (row-major or column-major).
  */
-- (MCMatrix *)matrixWithValuesStoredInFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
  @return A new MCMatrix object with the values from this matrix (in the same valueStorageFormat), excluding the specified row and index values. 
@@ -301,6 +299,11 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 - (NSString *)description;
 
 #pragma mark - Inspection
+
+/**
+ @return A copy of this matrix' values stored in the specified format (row-major or column-major).
+ */
+- (double *)valuesInStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
  @description Get the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.
