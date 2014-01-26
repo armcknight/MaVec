@@ -35,6 +35,7 @@
 		494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
 		494F455B1861565B00347096 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F455A1861565B00347096 /* Accelerate.framework */; };
 		4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2D51877D9030095DE06 /* MCEigendecomposition.m */; };
+		4978F2E4187852330095DE06 /* MCTribool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2E3187852330095DE06 /* MCTribool.m */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -100,6 +101,8 @@
 		494F455A1861565B00347096 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		4978F2D41877D9030095DE06 /* MCEigendecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCEigendecomposition.h; sourceTree = "<group>"; };
 		4978F2D51877D9030095DE06 /* MCEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEigendecomposition.m; sourceTree = "<group>"; };
+		4978F2E2187852330095DE06 /* MCTribool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTribool.h; sourceTree = "<group>"; };
+		4978F2E3187852330095DE06 /* MCTribool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTribool.m; sourceTree = "<group>"; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -246,6 +249,15 @@
 			name = _Categories;
 			sourceTree = "<group>";
 		};
+		4978F2E1187852230095DE06 /* Data Types */ = {
+			isa = PBXGroup;
+			children = (
+				4978F2E2187852330095DE06 /* MCTribool.h */,
+				4978F2E3187852330095DE06 /* MCTribool.m */,
+			);
+			name = "Data Types";
+			sourceTree = "<group>";
+		};
 		49B68283184D8341006A61D3 = {
 			isa = PBXGroup;
 			children = (
@@ -337,6 +349,7 @@
 		49B682E81854DEC1006A61D3 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				4978F2E1187852230095DE06 /* Data Types */,
 				494F4549185D041200347096 /* _Categories */,
 				37AE3C0618735D4500FAE5BC /* Equations */,
 				37AE3C0718735D5700FAE5BC /* Matrices */,
@@ -462,6 +475,7 @@
 				494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
 				494F4543185BDA6200347096 /* MCPolynomial.m in Sources */,
 				494F4547185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
+				4978F2E4187852330095DE06 /* MCTribool.m in Sources */,
 				494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
