@@ -56,7 +56,7 @@ typedef enum {
  @property valueStorageFormat 
  @brief The logical storage format for the matrix' values in the one-dimensional array.
  */
-@property (nonatomic, readonly, assign) MCMatrixValueStorageFormat valueStorageFormat;
+@property (nonatomic, assign) MCMatrixValueStorageFormat valueStorageFormat;
 
 /**
  @property transpose

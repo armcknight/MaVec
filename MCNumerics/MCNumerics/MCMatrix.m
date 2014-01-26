@@ -370,6 +370,16 @@
     return [MCTribool triboolWithValue:isPositiveDefinite];
 }
 
+#pragma mark - Property overrides
+
+- (void)setValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    if (self.valueStorageFormat != valueStorageFormat) {
+        _values = [self valuesInStorageFormat:valueStorageFormat];
+        _valueStorageFormat = valueStorageFormat;
+    }
+}
+
 #pragma mark - Matrix operations
 
 - (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
