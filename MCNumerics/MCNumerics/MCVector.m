@@ -11,8 +11,7 @@
 
 @interface MCVector()
 
-@property (strong, nonatomic) NSArray *values;
-@property (assign, nonatomic) double *valuesCArray;
+@property (assign, nonatomic) double *values;
 
 @end
 
@@ -88,15 +87,15 @@
 
 - (double)valueAtIndex:(NSUInteger)index
 {
-    return self.valuesCArray[index];
+    return self.values[index];
 }
 
 - (double)maximumValue
 {
     double max = DBL_MIN;
     for (int i = 0; i < self.length; i++) {
-        if (self.valuesCArray[i] > max) {
-            max = self.valuesCArray[i];
+        if (self.values[i] > max) {
+            max = self.values[i];
         }
     }
     return max;
@@ -106,8 +105,8 @@
 {
     double min = DBL_MAX;
     for (int i = 0; i < self.length; i++) {
-        if (self.valuesCArray[i] < min) {
-            min = self.valuesCArray[i];
+        if (self.values[i] < min) {
+            min = self.values[i];
         }
     }
     return min;
@@ -118,7 +117,7 @@
     double max = DBL_MIN;
     NSUInteger idx = -1;
     for (int i = 0; i < self.length; i++) {
-        if (self.valuesCArray[i] > max) {
+        if (self.values[i] > max) {
             idx = i;
         }
     }
@@ -130,7 +129,7 @@
     double min = DBL_MAX;
     NSUInteger idx = -1;
     for (int i = 0; i < self.length; i++) {
-        if (self.valuesCArray[i] < min) {
+        if (self.values[i] < min) {
             idx = i;
         }
     }
@@ -180,7 +179,7 @@
     }
     
     double *product = malloc(a.length * sizeof(double));
-    vDSP_vmulD(a.valuesCArray, 1, b.valuesCArray, 1, product, 1, a.length);
+    vDSP_vmulD(a.values, 1, b.values, 1, product, 1, a.length);
     
     NSMutableArray *values = [NSMutableArray array];
     for (int i = 0; i < a.length; i++) {
@@ -214,7 +213,7 @@
     }
     
     double dotProduct;
-    vDSP_dotprD(a.valuesCArray, 1, b.valuesCArray, 1, &dotProduct, a.length);
+    vDSP_dotprD(a.values, 1, b.values, 1, &dotProduct, a.length);
     
     return dotProduct;
 }
