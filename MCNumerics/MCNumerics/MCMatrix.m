@@ -23,6 +23,20 @@
 
 #pragma mark - Constructors
 
+- (void)commonInit
+{
+    _isSymmetric = [MCTribool triboolWithValue:MCTriboolIndeterminate];
+    _isPositiveDefinite = [MCTribool triboolWithValue:MCTriboolIndeterminate];
+    _qrFactorization = nil;
+    _luFactorization = nil;
+    _singularValueDecomposition = nil;
+    _eigendecomposition = nil;
+    _inverse = nil;
+    _transpose = nil;
+    _conditionNumber = nil;
+    _determinant = nil;
+}
+
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
 {
     self = [super init];
@@ -32,6 +46,7 @@
         _columns = columns;
         _values = malloc(rows * columns * sizeof(double));
         _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
+        [self commonInit];
     }
     
     return self;
@@ -48,6 +63,7 @@
         _columns = columns;
         _values = malloc(rows * columns * sizeof(double));
         _valueStorageFormat = valueStorageFormat;
+        [self commonInit];
     }
     
     return self;
@@ -64,6 +80,7 @@
         _columns = columns;
         _values = values;
         _valueStorageFormat = MCMatrixValueStorageFormatColumnMajor;
+        [self commonInit];
     }
     
     return self;
@@ -81,6 +98,7 @@
         _columns = columns;
         _values = values;
         _valueStorageFormat = valueStorageFormat;
+        [self commonInit];
     }
     
     return self;
@@ -100,6 +118,8 @@
                 _values[column * self.rows + i] = [columnVector valueAtIndex:i];
             }
         }];
+        
+        [self commonInit];
     }
     return self;
 }
@@ -118,6 +138,8 @@
                 _values[row * self.columns + i] = [rowVector valueAtIndex:i];
             }
         }];
+        
+        [self commonInit];
     }
     return self;
 }
