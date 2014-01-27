@@ -276,10 +276,7 @@
 - (MCQRFactorization *)qrFactorization
 {
     if (!_qrFactorization) {
-        _qrFactorization = nil;
-        
-        // TODO: implement
-        @throw kMCUnimplementedMethodException;
+        _qrFactorization = [MCQRFactorization qrFactorizationOfMatrix:self];
     }
     
     return _qrFactorization;
