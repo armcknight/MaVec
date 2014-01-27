@@ -241,9 +241,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors;
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
-/**
- */
-
 #pragma mark - Operations
 
 /**
