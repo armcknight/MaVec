@@ -10,6 +10,23 @@
 
 @implementation MCQRFactorization
 
+#pragma mark - Init
+
+- (instancetype)initWithMatrix:(MCMatrix *)matrix
+{
+    self = [super init];
+    if (self) {
+        // TODO: implement
+        @throw kMCUnimplementedMethodException;
+    }
+    return self;
+}
+
++ (instancetype)qrFactorizationOfMatrix:(MCMatrix *)matrix
+{
+    return [[MCQRFactorization alloc] initWithMatrix:matrix];
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone

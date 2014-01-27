@@ -28,4 +28,9 @@
  */
 @property (nonatomic, strong) MCMatrix *r;
 
+#pragma mark - Init
+
+- (instancetype)initWithMatrix:(MCMatrix *)matrix;
++ (instancetype)qrFactorizationOfMatrix:(MCMatrix *)matrix;
+
 @end
