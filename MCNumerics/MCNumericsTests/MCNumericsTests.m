@@ -12,6 +12,7 @@
 #import "MCVector.h"
 #import "MCSingularValueDecomposition.h"
 #import "MCLUFactorization.h"
+#import "MCTribool.h"
 
 @interface MCNumericsTests : XCTestCase
 
@@ -119,7 +120,7 @@
     values[5] = 0.0;
     MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:2];
     
-    MCSingularValueDecomposition *svd = a.singularValueDecomposition;
+    MCSingularValueDecomposition *svd = [a singularValueDecomposition];
     
     MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
     MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
@@ -145,7 +146,7 @@
     values[7] = -5.0;
     MCMatrix *a = [MCMatrix matrixWithValues:values rows:2 columns:4];
     
-    MCSingularValueDecomposition *svd = a.singularValueDecomposition;
+    MCSingularValueDecomposition *svd = [a singularValueDecomposition];
     
     MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
     MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
@@ -320,7 +321,8 @@
         cValues[i] = i;
     }
     MCMatrix *c = [MCMatrix matrixWithValues:cValues rows:4 columns:4];
-    MCMatrix *cr = [c matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor];
+    MCMatrix *cr = c.copy;
+    cr.valueStorageFormat = MCMatrixValueStorageFormatRowMajor;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             double oldCValue = [c valueAtRow:i column:j];
@@ -361,7 +363,8 @@
     XCTAssertEqual([a isEqual:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and columns are unequal using isEqual:");
     XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and  columns are unequal using isEqualToMatrix:");
     
-    MCMatrix *r = [b matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor];
+    MCMatrix *r = b.copy;
+    r.valueStorageFormat = MCMatrixValueStorageFormatRowMajor;
     XCTAssertEqual([a isEqual:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqual:");
     XCTAssertEqual([a isEqualToMatrix:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
 }
@@ -384,7 +387,9 @@
     NSLog(a.description);
     NSLog(@"Row major");
     NSLog(@"");
-    NSLog([a matrixWithValuesStoredInFormat:MCMatrixValueStorageFormatRowMajor].description);
+    MCMatrix *b = a.copy;
+    b.valueStorageFormat = MCMatrixValueStorageFormatRowMajor;
+    NSLog(b.description);
 }
 
 - (void)testLUDecompositionOfSquareMatrix1
@@ -404,9 +409,11 @@
     MCMatrix *m = [MCMatrix matrixWithValues:values rows:3 columns:3];
     
     MCLUFactorization *f = [m luFactorization];
-    
-    MCMatrix *pl = [MCMatrix productOfMatrixA:f.p andMatrixB:f.l];
-    MCMatrix *product = [MCMatrix productOfMatrixA:pl andMatrixB:f.u];
+
+//    MCMatrix *i = [MCMatrix productOfMatrixA:f.lowerTriangularMatrix andMatrixB:f.upperTriangularMatrix];
+//    MCMatrix *product = [MCMatrix productOfMatrixA:i andMatrixB:f.permutationMatrix];
+    MCMatrix *pl = [MCMatrix productOfMatrixA:f.permutationMatrix andMatrixB:f.lowerTriangularMatrix];
+    MCMatrix *product = [MCMatrix productOfMatrixA:pl andMatrixB:f.upperTriangularMatrix];
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -430,8 +437,8 @@
     
     MCLUFactorization *f = [m luFactorization];
     
-    MCMatrix *pl = [MCMatrix productOfMatrixA:f.p andMatrixB:f.l];
-    MCMatrix *product = [MCMatrix productOfMatrixA:pl andMatrixB:f.u];
+    MCMatrix *pl = [MCMatrix productOfMatrixA:f.permutationMatrix andMatrixB:f.lowerTriangularMatrix];
+    MCMatrix *product = [MCMatrix productOfMatrixA:pl andMatrixB:f.upperTriangularMatrix];
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
@@ -595,7 +602,7 @@
     tVals[6] = 3.0;
     tVals[7] = 6.0;
     tVals[8] = 9.0;
-    MCMatrix *t = [[MCMatrix matrixWithValues:tVals rows:3 columns:3] transpose];
+    MCMatrix *t = [MCMatrix matrixWithValues:tVals rows:3 columns:3].transpose;
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -606,9 +613,9 @@
 
 - (void)testMatrixCreationFromRowVectors
 {
-    MCVector *v1 = [MCVector vectorWithValues:@[@1, @2, @3]];
-    MCVector *v2 = [MCVector vectorWithValues:@[@4, @5, @6]];
-    MCVector *v3 = [MCVector vectorWithValues:@[@7, @8, @9]];
+    MCVector *v1 = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
+    MCVector *v2 = [MCVector vectorWithValuesInArray:@[@4, @5, @6]];
+    MCVector *v3 = [MCVector vectorWithValuesInArray:@[@7, @8, @9]];
     
     /* create the matrix
         [ 1  4  7
@@ -664,38 +671,38 @@
         
         // test with MCMatrix objects constructed from MCVector objects
         MCMatrix *a = [MCMatrix matrixWithRowVectors:@[
-                                                       [MCVector vectorWithValues:@[
-                                                                                    @(drand48()),
-                                                                                    @(drand48()),
-                                                                                    @(drand48())
-                                                                                    ]],
-                                                       [MCVector vectorWithValues:@[
-                                                                                    @(drand48()),
-                                                                                    @(drand48()),
-                                                                                    @(drand48())
-                                                                                    ]],
-                                                       [MCVector vectorWithValues:@[
-                                                                                    @(drand48()),
-                                                                                    @(drand48()),
-                                                                                    @(drand48())
-                                                                                    ]]
+                                                       [MCVector vectorWithValuesInArray:@[
+                                                                                           @(drand48()),
+                                                                                           @(drand48()),
+                                                                                           @(drand48())
+                                                                                           ]],
+                                                       [MCVector vectorWithValuesInArray:@[
+                                                                                           @(drand48()),
+                                                                                           @(drand48()),
+                                                                                           @(drand48())
+                                                                                           ]],
+                                                       [MCVector vectorWithValuesInArray:@[
+                                                                                           @(drand48()),
+                                                                                           @(drand48()),
+                                                                                           @(drand48())
+                                                                                           ]]
                                                        ]];
         MCMatrix *b = [MCMatrix matrixWithRowVectors:@[
-                                                       [MCVector vectorWithValues:@[
-                                                                                    @(drand48()),
-                                                                                    @(drand48()),
-                                                                                    @(drand48())
-                                                                                    ]],
-                                                       [MCVector vectorWithValues:@[
-                                                                                    @(drand48()),
-                                                                                    @(drand48()),
-                                                                                    @(drand48())
-                                                                                    ]],
-                                                       [MCVector vectorWithValues:@[
-                                                                                    @(drand48()),
-                                                                                    @(drand48()),
-                                                                                    @(drand48())
-                                                                                    ]]
+                                                       [MCVector vectorWithValuesInArray:@[
+                                                                                           @(drand48()),
+                                                                                           @(drand48()),
+                                                                                           @(drand48())
+                                                                                           ]],
+                                                       [MCVector vectorWithValuesInArray:@[
+                                                                                           @(drand48()),
+                                                                                           @(drand48()),
+                                                                                           @(drand48())
+                                                                                           ]],
+                                                       [MCVector vectorWithValuesInArray:@[
+                                                                                           @(drand48()),
+                                                                                           @(drand48()),
+                                                                                           @(drand48())
+                                                                                           ]]
                                                        ]];
         
         startTime = [NSDate date];
@@ -722,7 +729,8 @@
     aValues[8] = 9.0;
     MCMatrix *a = [MCMatrix matrixWithValues:aValues rows:3 columns:3];
     
-    XCTAssertFalse([a isSymmetric], @"Nonsymmetric matrix reported to be symmetric.");
+    
+    XCTAssertFalse(a.isSymmetric.isYes, @"Nonsymmetric matrix reported to be symmetric.");
     
     aValues[0] = 1.0;
     aValues[1] = 2.0;
@@ -737,7 +745,7 @@
     aValues[8] = 1.0;
     a = [MCMatrix matrixWithValues:aValues rows:3 columns:3];
     
-    XCTAssertTrue([a isSymmetric], @"Symmetric matrix not reported to be symmetric.");
+    XCTAssertTrue(!a.isSymmetric.isYes, @"Symmetric matrix not reported to be symmetric.");
     
     double *bValues = malloc(12 * sizeof(double));
     bValues[0] = 1.0;
@@ -754,43 +762,43 @@
     bValues[11] = 9.0;
     a = [MCMatrix matrixWithValues:bValues rows:3 columns:4];
     
-    XCTAssertFalse([a isSymmetric], @"Nonsquare matrix reported to be symmetric.");
+    XCTAssertFalse(a.isSymmetric.isYes, @"Nonsquare matrix reported to be symmetric.");
 }
 
 #pragma mark - Vectors
 
 - (void)testVectorDotProduct
 {
-    double dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
-                                                                                   @1,
-                                                                                   @3,
-                                                                                   @(-5)]]
-                                           andVectorB:[MCVector vectorWithValues:@[
-                                                                                   @4,
-                                                                                   @(-2),
-                                                                                   @(-1)]]];
+    double dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
+                                                                                          @1,
+                                                                                          @3,
+                                                                                          @(-5)]]
+                                           andVectorB:[MCVector vectorWithValuesInArray:@[
+                                                                                           @4,
+                                                                                           @(-2),
+                                                                                           @(-1)]]];
     XCTAssertEqual(dotProduct, 3.0, @"Dot product not computed correctly");
     
-    dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
-                                                                            @0,
-                                                                            @0,
-                                                                            @1]]
-                                    andVectorB:[MCVector vectorWithValues:@[
-                                                                            @0,
-                                                                            @1,
-                                                                            @0]]];
+    dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
+                                                                                   @0,
+                                                                                   @0,
+                                                                                   @1]]
+                                    andVectorB:[MCVector vectorWithValuesInArray:@[
+                                                                                   @0,
+                                                                                   @1,
+                                                                                   @0]]];
     XCTAssertEqual(dotProduct, 0.0, @"Dot product not computed correctly");
     
     @try {
-        dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValues:@[
-                                                                                @0,
-                                                                                @0,
-                                                                                @1]]
-                                        andVectorB:[MCVector vectorWithValues:@[
-                                                                                @0,
-                                                                                @1,
-                                                                                @0,
-                                                                                @1]]];
+        dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
+                                                                                       @0,
+                                                                                       @0,
+                                                                                       @1]]
+                                        andVectorB:[MCVector vectorWithValuesInArray:@[
+                                                                                       @0,
+                                                                                       @1,
+                                                                                       @0,
+                                                                                       @1]]];
     }
     @catch (NSException *exception) {
         XCTAssert([exception.name isEqualToString:NSInvalidArgumentException], @"Did not detect dimension mismatch in MCVector dot product method");
@@ -799,12 +807,12 @@
 
 - (void)testVectorAddition
 {
-    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
-    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
-    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     
     MCVector *sum = [MCVector sumOfVectorA:a andVectorB:b];
-    MCVector *solution = [MCVector vectorWithValues:@[@6, @8, @10, @12]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@6, @8, @10, @12]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([sum valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not added correctly", i);
     }
@@ -814,12 +822,12 @@
 
 - (void)testVectorSubtraction
 {
-    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
-    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
-    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     
     MCVector *diff = [MCVector differenceOfVectorA:b andVectorB:a];
-    MCVector *solution = [MCVector vectorWithValues:@[@4, @4, @4, @4]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@4, @4, @4, @4]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([diff valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not subtracted correctly", i);
     }
@@ -829,12 +837,12 @@
 
 - (void)testVectorMultiplication
 {
-    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
-    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @7, @8]];
-    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
+    MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     
     MCVector *prod = [MCVector productOfVectorA:a andVectorB:b];
-    MCVector *solution = [MCVector vectorWithValues:@[@5, @12, @21, @32]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@5, @12, @21, @32]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([prod valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not multiplied correctly", i);
     }
@@ -844,12 +852,12 @@
 
 - (void)testVectorDivision
 {
-    MCVector *a = [MCVector vectorWithValues:@[@1, @2, @3, @4]];
-    MCVector *b = [MCVector vectorWithValues:@[@5, @6, @9, @8]];
-    MCVector *c = [MCVector vectorWithValues:@[@1, @2, @3]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@1, @2, @3, @4]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @9, @8]];
+    MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     
     MCVector *quotient = [MCVector quotientOfVectorA:b andVectorB:a];
-    MCVector *solution = [MCVector vectorWithValues:@[@5, @3, @3, @2]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@5, @3, @3, @2]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([quotient valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not divided correctly", i);
     }
