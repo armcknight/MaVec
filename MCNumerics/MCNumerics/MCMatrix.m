@@ -21,6 +21,17 @@
 
 @implementation MCMatrix
 
+@synthesize transpose = _transpose;
+@synthesize qrFactorization = _qrFactorization;
+@synthesize luFactorization = _luFactorization;
+@synthesize singularValueDecomposition = _singularValueDecomposition;
+@synthesize eigendecomposition = _eigendecomposition;
+@synthesize inverse = _inverse;
+@synthesize determinant = _determinant;
+@synthesize conditionNumber = _conditionNumber;
+@synthesize isPositiveDefinite = _isPositiveDefinite;
+@synthesize isSymmetric = _isSymmetric;
+
 #pragma mark - Constructors
 
 - (void)commonInit
