@@ -14,7 +14,9 @@ typedef enum {
     MCTriboolIndeterminate
 } MCTriboolValue;
 
-@interface MCTribool : NSValue
+@interface MCTribool : NSValue <NSCopying>
+
+@property (nonatomic, readonly, assign) MCTriboolValue triboolValue;
 
 #pragma mark - Init
 
@@ -23,17 +25,14 @@ typedef enum {
 
 #pragma mark - Inspection
 
-- (MCTriboolValue)triboolValue;
 - (BOOL)isYes;
-- (BOOL)isIndeterminate;
 
 #pragma mark - Logical operations
 
 - (MCTribool *)andTribool:(MCTribool *)tribool;
 - (MCTribool *)orTribool:(MCTribool *)tribool;
-- (MCTribool *)notTribool:(MCTribool *)tribool;
-- (MCTribool *)nandTribool:(MCTribool *)tribool;
-- (MCTribool *)norTribool:(MCTribool *)tribool;
-- (MCTribool *)xorTribool:(MCTribool *)tribool;
+- (MCTribool *)negate;
+- (MCTribool *)kleeneImplication:(MCTribool *)tribool;
+- (MCTribool *)lukasiewiczImplication:(MCTribool *)tribool;
 
 @end

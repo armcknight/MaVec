@@ -10,12 +10,11 @@
 
 @interface MCTribool ()
 
-@property (nonatomic, assign) BOOL isIndeterminate;
-@property (nonatomic, assign) BOOL boolValue;
-
 @end
 
 @implementation MCTribool
+
+@synthesize triboolValue = _triboolValue;
 
 #pragma mark - Init
 
@@ -23,19 +22,7 @@
 {
     self = [super init];
     if (self) {
-        switch (triboolValue) {
-            default: case MCTriboolIndeterminate:
-                _isIndeterminate = YES;
-                break;
-            case MCTriboolNo:
-                _isIndeterminate = NO;
-                _boolValue = NO;
-                break;
-            case MCTriboolYes:
-                _isIndeterminate = NO;
-                _boolValue = YES;
-                break;
-        }
+        _triboolValue = triboolValue;
     }
     return self;
 }
@@ -47,25 +34,9 @@
 
 #pragma mark - Inspection
 
-- (MCTriboolValue)triboolValue
-{
-    if (self.isIndeterminate) {
-        return MCTriboolIndeterminate;
-    } else if (self.boolValue) {
-        return MCTriboolYes;
-    } else {
-        return MCTriboolNo;
-    }
-}
-
-- (BOOL)isIndeterminate
-{
-    return self.isIndeterminate;
-}
-
 - (BOOL)isYes
 {
-    return self.isIndeterminate ? NO : self.isYes;
+    return _triboolValue == MCTriboolIndeterminate ? NO : _triboolValue == MCTriboolYes ? YES : NO;
 }
 
 #pragma mark - Logical operations
@@ -82,29 +53,33 @@
     return nil;
 }
 
-- (MCTribool *)notTribool:(MCTribool *)tribool
+- (MCTribool *)negate
 {
-    // TODO: implement based on triboolean logic
+    // TODO: implement
     return nil;
 }
 
-- (MCTribool *)nandTribool:(MCTribool *)tribool
+- (MCTribool *)kleeneImplication:(MCTribool *)tribool
 {
-    // TODO: implement based on triboolean logic
+    // TODO: implement
     return nil;
 }
 
-- (MCTribool *)norTribool:(MCTribool *)tribool
+- (MCTribool *)lukasiewiczImplication:(MCTribool *)tribool
 {
-    // TODO: implement based on triboolean logic
+    // TODO: implement
     return nil;
 }
 
-- (MCTribool *)xorTribool:(MCTribool *)tribool
-{
-    // TODO: implement based on triboolean logic
-    return nil;
-}
+#pragma mark - NSCopying
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    MCTribool *triboolCopy = [[self class] allocWithZone:zone];
+    
+    triboolCopy->_triboolValue = _triboolValue;
+    
+    return triboolCopy;
+}
 
 @end
