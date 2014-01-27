@@ -10,4 +10,16 @@
 
 @implementation MCQRFactorization
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MCQRFactorization *qrCopy = [[self class] allocWithZone:zone];
+    
+    qrCopy->_q = _q;
+    qrCopy->_r = _r;
+    
+    return qrCopy;
+}
+
 @end

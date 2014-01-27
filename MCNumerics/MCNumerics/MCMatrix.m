@@ -716,4 +716,57 @@
     }
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MCMatrix *matrixCopy = [[self class] allocWithZone:zone];
+    
+    matrixCopy->_columns = self.columns;
+    matrixCopy->_rows = self.rows;
+    matrixCopy->_valueStorageFormat = self.valueStorageFormat;
+    
+    matrixCopy->_values = malloc(self.rows * self.columns * sizeof(double));
+    for (int i = 0; i < self.rows * self.columns; i += 1) {
+        matrixCopy->_values[i] = self.values[i];
+    }
+    
+    if (_transpose) {
+        matrixCopy->_transpose = _transpose.copy;
+    }
+    
+    if (_determinant) {
+        matrixCopy->_determinant = _determinant.copy;
+    }
+    
+    if (_inverse) {
+        matrixCopy->_inverse = _inverse.copy;
+    }
+    
+    if (_conditionNumber) {
+        matrixCopy->_conditionNumber = _conditionNumber.copy;
+    }
+    
+    if (_qrFactorization) {
+        matrixCopy->_qrFactorization = _qrFactorization.copy;
+    }
+    
+    if (_luFactorization) {
+        matrixCopy->_luFactorization = _luFactorization.copy;
+    }
+    
+    if (_singularValueDecomposition) {
+        matrixCopy->_singularValueDecomposition = _singularValueDecomposition.copy;
+    }
+    
+    if (_eigendecomposition) {
+        matrixCopy->_eigendecomposition = _eigendecomposition.copy;
+    }
+    
+    matrixCopy->_isSymmetric = _isSymmetric.copy;
+    matrixCopy->_isPositiveDefinite = _isPositiveDefinite.copy;
+    
+    return matrixCopy;
+}
+
 @end

@@ -14,7 +14,7 @@
  @brief Container class to hold the results of a LU factorization in MCMatrix objects.
  @description The LU factorization decomposes a matrix A into the product LU, where L is a lower triangular matrix and U is an upper triangular matrix.
  */
-@interface MCLUFactorization : NSObject
+@interface MCLUFactorization : NSObject <NSCopying>
 
 /**
  @property l

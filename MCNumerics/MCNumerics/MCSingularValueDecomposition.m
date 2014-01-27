@@ -75,4 +75,17 @@
     return [[MCSingularValueDecomposition alloc] initWithMatrix:matrix];
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MCSingularValueDecomposition *svdCopy = [[self class] allocWithZone:zone];
+    
+    svdCopy->_s = _s.copy;
+    svdCopy->_u = _u.copy;
+    svdCopy->_vT = _vT.copy;
+    
+    return svdCopy;
+}
+
 @end

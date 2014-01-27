@@ -76,4 +76,17 @@
     return [[MCLUFactorization alloc] initWithMatrix:matrix];
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MCLUFactorization *luCopy = [[self class] allocWithZone:zone];
+    
+    luCopy->_lowerTriangularMatrix = _lowerTriangularMatrix.copy;
+    luCopy->_upperTriangularMatrix = _upperTriangularMatrix.copy;
+    luCopy->_permutationMatrix = _permutationMatrix.copy;
+    
+    return luCopy;
+}
+
 @end

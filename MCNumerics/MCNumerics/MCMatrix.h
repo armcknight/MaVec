@@ -32,7 +32,7 @@ typedef enum {
  
    4  5  6 ]
  */
-@interface MCMatrix : NSObject
+@interface MCMatrix : NSObject <NSCopying>
 
 /**
  @property rows 
