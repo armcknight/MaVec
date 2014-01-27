@@ -305,49 +305,7 @@
 - (MCSingularValueDecomposition *)singularValueDecomposition
 {
     if (!_singularValueDecomposition) {
-        double workSize;
-        double *work = &workSize;
-        long lwork = -1;
-        long numSingularValues = MIN(self.rows, self.columns);
-        double *singularValues = malloc(numSingularValues * sizeof(double));
-        long *iwork = malloc(8 * numSingularValues);
-        long info = 0;
-        long m = self.rows;
-        long n = self.columns;
-        
-        MCSingularValueDecomposition *svd = [MCSingularValueDecomposition SingularValueDecompositionWithM:self.rows n:self.columns numberOfSingularValues:numSingularValues];
-        
-        double *values = malloc(m * n * sizeof(double));
-        for (int i = 0; i < m * n; i++) {
-            values[i] = self.values[i];
-        }
-        
-        // call first with lwork = -1 to determine optimal size of working array
-        dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
-        
-        lwork = workSize;
-        work = malloc(lwork * sizeof(double));
-        
-        // now run the actual decomposition
-        dgesdd_("A", &m, &n, values, &m, singularValues, svd.u.values, &m, svd.vT.values, &n, work, &lwork, iwork, &info);
-        
-        free(work);
-        free(iwork);
-        
-        // build the sigma matrix
-        int idx = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (i == j) {
-                    svd.s.values[idx] = singularValues[i];
-                } else {
-                    svd.s.values[idx] = 0.0;
-                }
-                idx++;
-            }
-        }
-        
-        _singularValueDecomposition = info == 0 ? svd : nil;
+        _singularValueDecomposition = [MCSingularValueDecomposition singularValueDecompositionWithMatrix:self];
     }
     
     return _singularValueDecomposition;
