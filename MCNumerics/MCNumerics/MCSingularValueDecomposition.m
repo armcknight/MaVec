@@ -13,7 +13,7 @@
 
 @implementation MCSingularValueDecomposition
 
-- (id)initWithM:(NSUInteger)m n:(NSUInteger)n numberOfSingularValues:(NSUInteger)s
+- (instancetype)initWithMatrix:(MCMatrix *)matrix
 {
     self = [super init];
     if (self) {
@@ -70,9 +70,9 @@
     return self;
 }
 
-+ (id)SingularValueDecompositionWithM:(NSUInteger)m n:(NSUInteger)n numberOfSingularValues:(NSUInteger)s
++ (instancetype)singularValueDecompositionWithMatrix:(MCMatrix *)matrix
 {
-    return [[MCSingularValueDecomposition alloc] initWithM:m n:n numberOfSingularValues:s];
+    return [[MCSingularValueDecomposition alloc] initWithMatrix:matrix];
 }
 
 @end

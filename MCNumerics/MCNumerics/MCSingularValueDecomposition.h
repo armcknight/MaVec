@@ -18,35 +18,32 @@
 
 /**
  @property u
- @brief An MCMatrix holding the upper triangular matrix U of the LU factorization.
+ @brief An MCMatrix holding the upper triangular matrix U of the SVD.
  */
-@property (nonatomic, strong) MCMatrix *u;
+@property (nonatomic, strong, readonly) MCMatrix *u;
 
 /**
  @property u
- @brief An MCMatrix holding the upper triangular matrix U of the LU factorization.
+ @brief An MCMatrix holding the sigma matrix of the SVD.
  */
-@property (nonatomic, strong) MCMatrix *s;
+@property (nonatomic, strong, readonly) MCMatrix *s;
 
 /**
  @property u
- @brief An MCMatrix holding the upper triangular matrix U of the LU factorization.
+ @brief An MCMatrix holding the v transpose matrix of the SVD.
  */
-@property (nonatomic, strong) MCMatrix *vT;
+@property (nonatomic, strong, readonly) MCMatrix *vT;
 
 /**
- @brief Instantiates a new MCSingularValueDecomposition object.
- @description Instantiates a new MCMatrix object each for u, s and vT.
- @param m The number of rows=columns in u, and number of rows in s.
- @param n The number of rows=columns in vT, and number of columns in s.
- @param s The number of singular values in s.
+ @brief Instantiates a new MCSingularValueDecomposition object as computed from a supplied matrix.
+ @param matrix The matrix to compute the SVD.
  @return A new MCSingularValueDecomposition object.
  */
-- (id)initWithM:(NSUInteger)m n:(NSUInteger)n numberOfSingularValues:(NSUInteger)s;
+- (instancetype)initWithMatrix:(MCMatrix *)matrix;
 
 /**
- @brief Class convenience method for initWithM:n:numberOfSingularValues:.
+ @brief Class convenience method for initWithMatrix:matrix:.
  */
-+ (id)SingularValueDecompositionWithM:(NSUInteger)m n:(NSUInteger)n numberOfSingularValues:(NSUInteger)s;
++ (instancetype)singularValueDecompositionWithMatrix:(MCMatrix *)matrix;
 
 @end
