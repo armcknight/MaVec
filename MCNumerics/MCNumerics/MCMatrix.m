@@ -336,19 +336,20 @@
     if (_isSymmetric.triboolValue == MCTriboolIndeterminate) {
         if (self.rows != self.columns) {
             _isSymmetric = [MCTribool triboolWithValue:MCTriboolNo];
+            return _isSymmetric;
+        } else {
+            _isSymmetric = [MCTribool triboolWithValue:MCTriboolYes];
         }
         
         for (int i = 0; i < self.rows; i++) {
             for (int j = i + 1; j < self.columns; j++) {
                 if ([self valueAtRow:i column:j] != [self valueAtRow:j column:i]) {
                     _isSymmetric = [MCTribool triboolWithValue:MCTriboolNo];
+                    return _isSymmetric;
                 }
             }
         }
-        
-        _isSymmetric = [MCTribool triboolWithValue:MCTriboolYes];
     }
-    
     
     return _isSymmetric;
 }
