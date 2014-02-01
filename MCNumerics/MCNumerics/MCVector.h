@@ -13,7 +13,7 @@ typedef enum {
     MCVectorFormatColumnVector
 } MCVectorFormat;
 
-@interface MCVector : NSObject
+@interface MCVector : NSObject<NSCopying>
 
 @property (assign, nonatomic) MCVectorFormat vectorFormat;
 @property (assign, nonatomic) NSUInteger length;

@@ -161,6 +161,23 @@
     return description;
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MCVector *vectorCopy = [[self class] allocWithZone:zone];
+    
+    vectorCopy->_length = _length;
+    vectorCopy->_vectorFormat = _vectorFormat;
+    
+    vectorCopy->_values = malloc(_length * sizeof(double));
+    for (int i = 0; i < _length; i += 1) {
+        vectorCopy->_values[i] = _values[i];
+    }
+    
+    return vectorCopy;
+}
+
 #pragma mark - Inspection
 
 - (double)valueAtIndex:(NSUInteger)index

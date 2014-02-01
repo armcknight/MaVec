@@ -898,4 +898,13 @@
     XCTAssertTrue([a isEqualToVector:solution], @"Cross product not computed correctly.");
 }
 
+- (void)testVectorCopying
+{
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@3, @(-3), @1]];
+    MCVector *aCopy = a.copy;
+    
+    XCTAssertNotEqual(a.self, aCopy.self, @"The copied vector is the same instance as its source.");
+    XCTAssertTrue([a isEqualToVector:aCopy], @"Vector copy is not equal to its source.");
+}
+
 @end
