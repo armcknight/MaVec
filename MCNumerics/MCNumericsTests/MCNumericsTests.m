@@ -120,7 +120,7 @@
     values[5] = 0.0;
     MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:2];
     
-    MCSingularValueDecomposition *svd = [a singularValueDecomposition];
+    MCSingularValueDecomposition *svd = a.singularValueDecomposition;
     
     MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
     MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
@@ -146,7 +146,7 @@
     values[7] = -5.0;
     MCMatrix *a = [MCMatrix matrixWithValues:values rows:2 columns:4];
     
-    MCSingularValueDecomposition *svd = [a singularValueDecomposition];
+    MCSingularValueDecomposition *svd = a.singularValueDecomposition;
     
     MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
     MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
@@ -408,7 +408,7 @@
     
     MCMatrix *m = [MCMatrix matrixWithValues:values rows:3 columns:3];
     
-    MCLUFactorization *f = [m luFactorization];
+    MCLUFactorization *f = m.luFactorization;
 
 //    MCMatrix *i = [MCMatrix productOfMatrixA:f.lowerTriangularMatrix andMatrixB:f.upperTriangularMatrix];
 //    MCMatrix *product = [MCMatrix productOfMatrixA:i andMatrixB:f.permutationMatrix];
@@ -435,7 +435,7 @@
     
     MCMatrix *m = [MCMatrix matrixWithValues:values rows:2 columns:2];
     
-    MCLUFactorization *f = [m luFactorization];
+    MCLUFactorization *f = m.luFactorization;
     
     MCMatrix *pl = [MCMatrix productOfMatrixA:f.permutationMatrix andMatrixB:f.lowerTriangularMatrix];
     MCMatrix *product = [MCMatrix productOfMatrixA:pl andMatrixB:f.upperTriangularMatrix];
