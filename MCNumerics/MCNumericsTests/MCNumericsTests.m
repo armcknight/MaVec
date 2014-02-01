@@ -765,6 +765,30 @@
     XCTAssertFalse(a.isSymmetric.isYes, @"Nonsquare matrix reported to be symmetric.");
 }
 
+- (void)testMatrixCopy
+{
+    double *values = malloc(9 * sizeof(double));
+    values[0] = 1.0;
+    values[1] = 2.0;
+    values[2] = -3.0;
+    values[3] = 2.0;
+    values[4] = 1.0;
+    values[5] = 1.0;
+    values[6] = -1.0;
+    values[7] = -2.0;
+    values[8] = 1.0;
+    
+    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3];
+    a.luFactorization;
+    a.singularValueDecomposition;
+    a.transpose;
+    
+    MCMatrix *b = a.copy;
+    
+    XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
+    XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
+}
+
 #pragma mark - Vectors
 
 - (void)testVectorDotProduct
@@ -863,30 +887,6 @@
     }
     
     XCTAssertThrows([MCVector quotientOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
-}
-
-- (void)testMatrixCopy
-{
-    double *values = malloc(9 * sizeof(double));
-    values[0] = 1.0;
-    values[1] = 2.0;
-    values[2] = -3.0;
-    values[3] = 2.0;
-    values[4] = 1.0;
-    values[5] = 1.0;
-    values[6] = -1.0;
-    values[7] = -2.0;
-    values[8] = 1.0;
-    
-    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3];
-    a.luFactorization;
-    a.singularValueDecomposition;
-    a.transpose;
-    
-    MCMatrix *b = a.copy;
-    
-    XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
-    XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
 }
 
 - (void)testVectorCrossProduct
