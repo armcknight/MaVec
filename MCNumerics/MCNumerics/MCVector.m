@@ -225,6 +225,36 @@
     return [MCVector vectorWithValues:newValues inVectorFormat:self.vectorFormat];
 }
 
+- (MCVector *)vectorByAddingVector:(MCVector *)addend
+{
+    return [MCVector sumOfVectorA:self andVectorB:addend];
+}
+
+- (MCVector *)vectorBySubtractingVector:(MCVector *)subtrahend
+{
+    return [MCVector differenceOfVectorA:self andVectorB:subtrahend];
+}
+
+- (MCVector *)vectorByMultiplyingByVector:(MCVector *)multiplier
+{
+    return [MCVector productOfVectorA:self andVectorB:multiplier];
+}
+
+- (MCVector *)vectorByDividingByVector:(MCVector *)divisor
+{
+    return [MCVector quotientOfVectorA:self andVectorB:divisor];
+}
+
+- (double)dotProductWithVector:(MCVector *)otherVector
+{
+    return [MCVector dotProductOfVectorA:self andVectorB:otherVector];
+}
+
+- (MCVector *)crossProductWithVector:(MCVector *)otherVector
+{
+    return [MCVector crossProductOfVectorA:self andVectorB:otherVector];
+}
+
 #pragma mark - Class Operations
 
 + (MCVector *)sumOfVectorA:(MCVector *)a andVectorB:(MCVector *)b

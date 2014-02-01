@@ -52,6 +52,12 @@ typedef enum {
 #pragma mark - Instance Operations
 
 - (MCVector *)vectorByMultiplyingByScalar:(double)scalar;
+- (MCVector *)vectorByAddingVector:(MCVector *)addend;
+- (MCVector *)vectorBySubtractingVector:(MCVector *)subtrahend;
+- (MCVector *)vectorByMultiplyingByVector:(MCVector *)multiplier;
+- (MCVector *)vectorByDividingByVector:(MCVector *)divisor;
+- (double)dotProductWithVector:(MCVector *)otherVector;
+- (MCVector *)crossProductWithVector:(MCVector *)otherVector;
 
 #pragma mark - Class Operations
 
