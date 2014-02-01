@@ -745,7 +745,7 @@
     aValues[8] = 1.0;
     a = [MCMatrix matrixWithValues:aValues rows:3 columns:3];
     
-    XCTAssertTrue(!a.isSymmetric.isYes, @"Symmetric matrix not reported to be symmetric.");
+    XCTAssertTrue(a.isSymmetric.isYes, @"Symmetric matrix not reported to be symmetric.");
     
     double *bValues = malloc(12 * sizeof(double));
     bValues[0] = 1.0;
@@ -895,7 +895,7 @@
     MCVector *b = [MCVector vectorWithValuesInArray:@[@4, @9, @2]];
     MCVector *c = [MCVector crossProductOfVectorA:a andVectorB:b];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@(-15), @(-2), @39]];
-    XCTAssertTrue([a isEqualToVector:b], @"Cross product not computed correctly");
+    XCTAssertTrue([a isEqualToVector:solution], @"Cross product not computed correctly.");
 }
 
 @end
