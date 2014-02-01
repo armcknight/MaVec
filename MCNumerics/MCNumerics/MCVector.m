@@ -301,4 +301,18 @@
     return [MCVector vectorWithValues:values];
 }
 
++ (double)scalarTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c
+{
+    return [MCVector dotProductOfVectorA:[MCVector crossProductOfVectorA:a
+                                                              andVectorB:b]
+                              andVectorB:c];
+}
+
++ (MCVector *)vectorTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c
+{
+    return [MCVector crossProductOfVectorA:a
+                                andVectorB:[MCVector crossProductOfVectorA:b
+                                                                andVectorB:c]];
+}
+
 @end

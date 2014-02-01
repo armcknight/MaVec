@@ -61,5 +61,7 @@ typedef enum {
 + (MCVector *)quotientOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
 + (double)dotProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
 + (MCVector *)crossProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
++ (double)scalarTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c;
++ (MCVector *)vectorTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c;
 
 @end
