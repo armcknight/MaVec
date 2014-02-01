@@ -895,7 +895,7 @@
     MCVector *b = [MCVector vectorWithValuesInArray:@[@4, @9, @2]];
     MCVector *c = [MCVector crossProductOfVectorA:a andVectorB:b];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@(-15), @(-2), @39]];
-    XCTAssertTrue([a isEqualToVector:solution], @"Cross product not computed correctly.");
+    XCTAssertTrue([c isEqualToVector:solution], @"Cross product not computed correctly.");
 }
 
 - (void)testVectorCopying
