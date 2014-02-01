@@ -789,6 +789,50 @@
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
 }
 
+- (void)testMatrixValueCopyByStorageFormat
+{
+    double *values = malloc(9 * sizeof(double));
+    values[0] = 1.0;
+    values[1] = 2.0;
+    values[2] = -3.0;
+    
+    values[3] = 2.0;
+    values[4] = 1.0;
+    values[5] = 1.0;
+    
+    values[6] = -1.0;
+    values[7] = -2.0;
+    values[8] = 1.0;
+    
+    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3 valueStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+    
+    double *rowMajorValues = [a valuesInStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    
+    XCTAssertEqual(values[0], rowMajorValues[0], @"Value at 0, 0 incorrect");
+    XCTAssertEqual(values[1], rowMajorValues[3], @"Value at 1, 3 incorrect");
+    XCTAssertEqual(values[2], rowMajorValues[6], @"Value at 2, 6 incorrect");
+    XCTAssertEqual(values[3], rowMajorValues[1], @"Value at 3, 1 incorrect");
+    XCTAssertEqual(values[4], rowMajorValues[4], @"Value at 4, 4 incorrect");
+    XCTAssertEqual(values[5], rowMajorValues[7], @"Value at 5, 7 incorrect");
+    XCTAssertEqual(values[6], rowMajorValues[2], @"Value at 6, 2 incorrect");
+    XCTAssertEqual(values[7], rowMajorValues[5], @"Value at 7, 5 incorrect");
+    XCTAssertEqual(values[8], rowMajorValues[8], @"Value at 8, 8 incorrect");
+    
+    MCMatrix *b = [MCMatrix matrixWithValues:values rows:3 columns:3 valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    
+    double *columnMajorValues = [b valuesInStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+    
+    XCTAssertEqual(values[0], columnMajorValues[0], @"Value at 0, 0 incorrect");
+    XCTAssertEqual(values[1], columnMajorValues[3], @"Value at 1, 3 incorrect");
+    XCTAssertEqual(values[2], columnMajorValues[6], @"Value at 2, 6 incorrect");
+    XCTAssertEqual(values[3], columnMajorValues[1], @"Value at 3, 1 incorrect");
+    XCTAssertEqual(values[4], columnMajorValues[4], @"Value at 4, 4 incorrect");
+    XCTAssertEqual(values[5], columnMajorValues[7], @"Value at 5, 7 incorrect");
+    XCTAssertEqual(values[6], columnMajorValues[2], @"Value at 6, 2 incorrect");
+    XCTAssertEqual(values[7], columnMajorValues[5], @"Value at 7, 5 incorrect");
+    XCTAssertEqual(values[8], columnMajorValues[8], @"Value at 8, 8 incorrect");
+}
+
 #pragma mark - Vectors
 
 - (void)testVectorDotProduct
