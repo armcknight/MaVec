@@ -287,4 +287,18 @@
     return dotProduct;
 }
 
++ (MCVector *)crossProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
+{
+    if (!(a.length == 3 && b.length == 3)) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vectors must both be of length 3 to perform cross products" userInfo:nil];
+    }
+    
+    double *values = malloc(a.length * sizeof(double));
+    values[0] = [a valueAtIndex:1] * [b valueAtIndex:2] - [a valueAtIndex:2] * [b valueAtIndex:1];
+    values[1] = [a valueAtIndex:2] * [b valueAtIndex:0] - [a valueAtIndex:0] * [b valueAtIndex:2];
+    values[2] = [a valueAtIndex:0] * [b valueAtIndex:1] - [a valueAtIndex:1] * [b valueAtIndex:0];
+    
+    return [MCVector vectorWithValues:values];
+}
+
 @end

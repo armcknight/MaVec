@@ -889,4 +889,13 @@
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
 }
 
+- (void)testVectorCrossProduct
+{
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@3, @(-3), @1]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@4, @9, @2]];
+    MCVector *c = [MCVector crossProductOfVectorA:a andVectorB:b];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@(-15), @(-2), @39]];
+    XCTAssertTrue([a isEqualToVector:b], @"Cross product not computed correctly");
+}
+
 @end
