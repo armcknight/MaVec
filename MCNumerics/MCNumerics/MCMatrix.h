@@ -313,6 +313,10 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  */
 - (double *)valuesInStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
+- (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                    inStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                                  withPackingFormat:(MCMatrixValuePackingFormat)packingFormat;
+
 /**
  @description Get the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.
  @param row The row in which the desired value resides.

@@ -525,6 +525,37 @@
     return tVals;
 }
 
+- (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                    inStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                                  withPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+{
+    int numberOfValues = packingFormat == MCMatrixValuePackingFormatPacked ? self.rows + self.columns : self.rows * self.columns;
+    double *values = malloc(numberOfValues * sizeof(double));
+    
+    int i = 0;
+    int outerLimit = self.valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.rows : self.columns;
+    int innerLimit = self.valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? self.columns : self.rows;
+    
+    for (int j = 0; j < outerLimit; j++) {
+        for (int k = 0; k < innerLimit; k++) {
+            int row = valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? j : k;
+            int col = valueStorageFormat == MCMatrixValueStorageFormatRowMajor ? k : j;
+            
+            BOOL shouldStoreValueForLowerTriangle = triangularComponent == MCMatrixTriangularComponentLower && col <= row;
+            BOOL shouldStoreValueForUpperTriangle = triangularComponent == MCMatrixTriangularComponentUpper && row <= col;
+            
+            if (shouldStoreValueForLowerTriangle || shouldStoreValueForUpperTriangle) {
+                double value = [self valueAtRow:row column:col];
+                values[i++] = value;
+            } else if (packingFormat == MCMatrixValuePackingFormatUnpacked) {
+                values[i++] = 0.0;
+            }
+        }
+    }
+    
+    return values;
+}
+
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column
 {
     if (row >= self.rows) {
