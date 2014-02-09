@@ -1245,7 +1245,7 @@
     bVals[2] = -2.5594;
     bVals[3] = 1.125;
     MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:4 columns:4];
-    MCVector *b = [MCVector vectorWithValues:bVals];
+    MCVector *b = [MCVector vectorWithValues:bVals length:4];
     
     MCVector *product = [MCMatrix productOfMatrix:a andVector:b];
     
@@ -1254,7 +1254,7 @@
     solution[1] = -2.9778;
     solution[2] = -10.2376;
     solution[3] = 4.5;
-    MCVector *s = [MCVector vectorWithValues:solution];
+    MCVector *s = [MCVector vectorWithValues:solution length:4];
     
     for (int i = 0; i < 4; i++) {
         XCTAssertEqualWithAccuracy([s valueAtIndex:i], [product valueAtIndex:i], 0.0005, @"Coefficient %u incorrect", i);
