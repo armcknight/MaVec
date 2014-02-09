@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @class MCMatrix;
+@class MCVector;
 
 @interface MCEigendecomposition : NSObject
 
 @property (strong, nonatomic) MCMatrix *z;
-@property (strong, nonatomic) MCMatrix *a;
+@property (strong, nonatomic) MCVector *a;
+
+- (instancetype)initWithMatrix:(MCMatrix *)matrix;
++ (instancetype)eigendecompositionOfMatrix:(MCMatrix *)matrix;
 
 @end

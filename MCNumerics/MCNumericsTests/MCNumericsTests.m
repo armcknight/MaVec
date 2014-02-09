@@ -13,6 +13,7 @@
 #import "MCSingularValueDecomposition.h"
 #import "MCLUFactorization.h"
 #import "MCTribool.h"
+#import "MCEigendecomposition.h"
 
 @interface MCNumericsTests : XCTestCase
 
@@ -787,6 +788,34 @@
     
     XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
+}
+
+- (void)testSymmetricMatrixEigendecomposition
+{
+    // example from http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dsyevd_ex.c.htm; more located at http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_eigevd.htm
+    double values[25] = {
+        6.39,   0.13,  -8.23,   5.71,  -3.18,
+        0.13,   8.37,  -4.46,  -6.10,   7.21,
+        -8.23,  -4.46,  -9.58,  -9.25,  -7.42,
+        5.71,  -6.10,  -9.25,   3.72,   8.54,
+        -3.18,   7.21,  -7.42,   8.54,   2.51
+    };
+    
+    MCMatrix *o = [MCMatrix matrixWithValues:values rows:5 columns:5 valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    MCEigendecomposition *e = o.eigendecomposition;
+    
+    for (int i = 0; i < 5; i += 1) {
+        MCVector *eigenvector = [e.z columnVectorForColumn:i];
+        double eigenvalue = [e.a valueAtIndex:i];
+        MCVector *left = [MCMatrix productOfMatrix:o andVector:eigenvector];
+        MCVector *right = [eigenvector vectorByMultiplyingByScalar:eigenvalue];
+        for (int j = 0; j < 5; j += 1) {
+            double a = [left valueAtIndex:j];
+            double b = [right valueAtIndex:j];
+            double accuracy = 0.0000000001;
+            XCTAssertEqualWithAccuracy(a, b, accuracy, @"Values at index %u differ by more than %f", j, accuracy);
+        }
+    }
 }
 
 - (void)testMatrixValueCopyByStorageFormat

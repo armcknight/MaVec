@@ -317,15 +317,8 @@
         @throw [NSException exceptionWithName:NSRangeException reason:@"Matrix must be square to derive eigendecomposition." userInfo:nil];
     }
     
-    // TODO: implement
-    @throw kMCUnimplementedMethodException;
-    
     if (!_eigendecomposition) {
-        if (self.isSymmetric) {
-            
-        } else {
-            
-        }
+        _eigendecomposition = [MCEigendecomposition eigendecompositionOfMatrix:self];
     }
     
     return _eigendecomposition;
