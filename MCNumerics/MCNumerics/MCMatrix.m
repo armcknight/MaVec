@@ -748,6 +748,20 @@
     }
 }
 
++ (MCVector *)productOfMatrix:(MCMatrix *)matrix andVector:(MCVector *)vector
+{
+    short order = matrix.valueStorageFormat == MCMatrixValueStorageFormatColumnMajor ? CblasColMajor : CblasRowMajor;
+    short transpose = CblasNoTrans;
+    int rows = matrix.rows;
+    int cols = matrix.columns;
+    double *result = malloc(vector.length * sizeof(double));
+    for (int i = 0; i < vector.length; i += 1) {
+        result[i] = 0.0;
+    }
+    cblas_dgemv(order, transpose, rows, cols, 1.0, matrix.values, rows, vector.values, 1, 1.0, result, 1);
+    return [MCVector vectorWithValues:result];
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone

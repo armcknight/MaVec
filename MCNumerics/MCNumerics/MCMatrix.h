@@ -365,4 +365,6 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
                                  valuesB:(MCMatrix*)B;
 
++ (MCVector *)productOfMatrix:(MCMatrix *)matrix andVector:(MCVector *)vector;
+
 @end
