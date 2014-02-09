@@ -11,8 +11,6 @@
 
 @interface MCVector()
 
-@property (assign, nonatomic) double *values;
-
 @end
 
 @implementation MCVector
@@ -21,8 +19,8 @@
 
 - (void)commonInitWithValues:(double *)values
 {
-    self.values = values;
-    self.length = sizeof(values) / sizeof(double);
+    _values = values;
+    _length = sizeof(values);
 }
 
 - (instancetype)initWithValues:(double *)values
@@ -30,7 +28,7 @@
     self = [super init];
     if (self) {
         [self commonInitWithValues:values];
-        self.vectorFormat = MCVectorFormatColumnVector;
+        _vectorFormat = MCVectorFormatColumnVector;
     }
     return self;
 }
@@ -40,7 +38,7 @@
     self = [super init];
     if (self) {
         [self commonInitWithValues:values];
-        self.vectorFormat = vectorFormat;
+        _vectorFormat = vectorFormat;
     }
     return self;
 }
@@ -57,10 +55,10 @@
 
 - (void)commonInitWithValuesInArray:(NSArray *)values
 {
-    self.length = values.count;
-    self.values = malloc(values.count * sizeof(double));
+    _length = values.count;
+    _values = malloc(values.count * sizeof(double));
     [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
-        self.values[idx] = value.doubleValue;
+        _values[idx] = value.doubleValue;
     }];
 }
 
@@ -69,7 +67,7 @@
     self = [super init];
     if (self) {
         [self commonInitWithValuesInArray:values];
-        self.vectorFormat = MCVectorFormatColumnVector;
+        _vectorFormat = MCVectorFormatColumnVector;
     }
     return self;
 }
@@ -79,7 +77,7 @@
     self = [super init];
     if (self) {
         [self commonInitWithValuesInArray:values];
-        self.vectorFormat = vectorFormat;
+        _vectorFormat = vectorFormat;
     }
     return self;
 }

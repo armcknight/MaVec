@@ -15,8 +15,9 @@ typedef enum {
 
 @interface MCVector : NSObject<NSCopying>
 
-@property (assign, nonatomic) MCVectorFormat vectorFormat;
-@property (assign, nonatomic) NSUInteger length;
+@property (assign, readonly, nonatomic) MCVectorFormat vectorFormat;
+@property (assign, readonly, nonatomic) NSUInteger length;
+@property (assign, readonly, nonatomic) double *values;
 
 #pragma mark - Constructors
 
