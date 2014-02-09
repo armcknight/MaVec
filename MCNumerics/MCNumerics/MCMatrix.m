@@ -583,12 +583,12 @@
 
 - (MCVector *)columnVectorForColumn:(NSUInteger)column
 {
-    MCVector *columnVector = nil;
+    double *values = malloc(self.rows * sizeof(double));
+    for (int row = 0; row < self.rows; row += 1) {
+        values[row] = [self valueAtRow:row column:column];
+    }
     
-    // TODO: implement
-    @throw kMCUnimplementedMethodException;
-    
-    return columnVector;
+    return [MCVector vectorWithValues:values length:self.rows inVectorFormat:MCVectorFormatColumnVector];
 }
 
 #pragma mark - Mutation
