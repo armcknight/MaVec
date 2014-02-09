@@ -759,7 +759,7 @@
         result[i] = 0.0;
     }
     cblas_dgemv(order, transpose, rows, cols, 1.0, matrix.values, rows, vector.values, 1, 1.0, result, 1);
-    return [MCVector vectorWithValues:result];
+    return [MCVector vectorWithValues:result length:vector.length];
 }
 
 #pragma mark - NSCopying

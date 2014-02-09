@@ -17,40 +17,40 @@
 
 #pragma mark - Constructors
 
-- (void)commonInitWithValues:(double *)values
+- (void)commonInitWithValues:(double *)values length:(int)length
 {
     _values = values;
-    _length = sizeof(values);
+    _length = length;
 }
 
-- (instancetype)initWithValues:(double *)values
+- (instancetype)initWithValues:(double *)values length:(int)length
 {
     self = [super init];
     if (self) {
-        [self commonInitWithValues:values];
+        [self commonInitWithValues:values length:length];
         _vectorFormat = MCVectorFormatColumnVector;
     }
     return self;
 }
 
-- (instancetype)initWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat
+- (instancetype)initWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat
 {
     self = [super init];
     if (self) {
-        [self commonInitWithValues:values];
+        [self commonInitWithValues:values length:length];
         _vectorFormat = vectorFormat;
     }
     return self;
 }
 
-+ (instancetype)vectorWithValues:(double *)values
++ (instancetype)vectorWithValues:(double *)values length:(int)length
 {
-    return [[MCVector alloc] initWithValues:values];
+    return [[MCVector alloc] initWithValues:values length:length];
 }
 
-+ (instancetype)vectorWithValues:(double *)values inVectorFormat:(MCVectorFormat)vectorFormat
++ (instancetype)vectorWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat
 {
-    return [[MCVector alloc] initWithValues:values inVectorFormat:vectorFormat];
+    return [[MCVector alloc] initWithValues:values length:length inVectorFormat:vectorFormat];
 }
 
 - (void)commonInitWithValuesInArray:(NSArray *)values
@@ -132,17 +132,19 @@
 
 - (NSString *)description
 {
-    double max = DBL_MIN;
-    for (int i = 0; i < self.length; i++) {
-        max = MAX(max, self.values[i]);
+    int padding;
+    if (self.vectorFormat == MCVectorFormatColumnVector) {
+        double max = DBL_MIN;
+        for (int i = 0; i < self.length; i++) {
+            max = MAX(max, fabs(self.values[i]));
+        }
+        padding = floor(log10(max)) + 5;
     }
-    int padding = floor(log10(max)) + 5;
     
     NSMutableString *description = [@"\n" mutableCopy];
     
-    int i = 0;
     for (int j = 0; j < self.length; j++) {
-        NSString *valueString = [NSString stringWithFormat:@"%.1f", self.values[i]];
+        NSString *valueString = [NSString stringWithFormat:@"%.1f", self.values[j]];
         if (self.vectorFormat == MCVectorFormatColumnVector) {
             [description appendString:[valueString stringByPaddingToLength:padding withString:@" " startingAtIndex:0]];
             if (j < self.length - 1) {
@@ -237,7 +239,7 @@
     for (int i = 0; i < self.length; i++) {
         newValues[i] = scalar * self.values[i];
     }
-    return [MCVector vectorWithValues:newValues inVectorFormat:self.vectorFormat];
+    return [MCVector vectorWithValues:newValues length:self.length inVectorFormat:self.vectorFormat];
 }
 
 - (MCVector *)vectorByAddingVector:(MCVector *)addend
@@ -281,7 +283,7 @@
     double *sum = malloc(a.length * sizeof(double));
     vDSP_vaddD(a.values, 1, b.values, 1, sum, 1, a.length);
     
-    return [MCVector vectorWithValues:sum];
+    return [MCVector vectorWithValues:sum length:a.length];
 }
 
 + (MCVector *)differenceOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
@@ -293,7 +295,7 @@
     double *diff = malloc(a.length * sizeof(double));
     vDSP_vsubD(b.values, 1, a.values, 1, diff, 1, a.length);
     
-    return [MCVector vectorWithValues:diff];
+    return [MCVector vectorWithValues:diff length:a.length];
 }
 
 + (MCVector *)productOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
@@ -305,7 +307,7 @@
     double *product = malloc(a.length * sizeof(double));
     vDSP_vmulD(a.values, 1, b.values, 1, product, 1, a.length);
     
-    return [MCVector vectorWithValues:product];
+    return [MCVector vectorWithValues:product length:a.length];
 }
 
 + (MCVector *)quotientOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
@@ -317,7 +319,7 @@
     double *quotient = malloc(a.length * sizeof(double));
     vDSP_vdivD(b.values, 1, a.values, 1, quotient, 1, a.length);
     
-    return [MCVector vectorWithValues:quotient];
+    return [MCVector vectorWithValues:quotient length:a.length];
 }
 
 + (double)dotProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
@@ -343,7 +345,7 @@
     values[1] = [a valueAtIndex:2] * [b valueAtIndex:0] - [a valueAtIndex:0] * [b valueAtIndex:2];
     values[2] = [a valueAtIndex:0] * [b valueAtIndex:1] - [a valueAtIndex:1] * [b valueAtIndex:0];
     
-    return [MCVector vectorWithValues:values];
+    return [MCVector vectorWithValues:values length:a.length];
 }
 
 + (double)scalarTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c
