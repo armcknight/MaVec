@@ -529,11 +529,11 @@
                                     inStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
                                   withPackingFormat:(MCMatrixValuePackingFormat)packingFormat
 {
-    int numberOfValues = packingFormat == MCMatrixValuePackingFormatPacked ? self.rows + self.columns : self.rows * self.columns;
     if (self.rows != self.columns) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot extract triangular components from non-square matrices" userInfo:nil];
     }
     
+    int numberOfValues = packingFormat == MCMatrixValuePackingFormatPacked ? ((self.rows * (self.rows + 1)) / 2) : self.rows * self.rows;
     double *values = malloc(numberOfValues * sizeof(double));
     
     int i = 0;
