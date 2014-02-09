@@ -25,6 +25,16 @@ typedef enum {
     MCMatrixValueStorageFormatColumnMajor
 } MCMatrixValueStorageFormat;
 
+typedef enum {
+    MCMatrixTriangularComponentLower,
+    MCMatrixTriangularComponentUpper
+} MCMatrixTriangularComponent;
+
+typedef enum {
+    MCMatrixValuePackingFormatPacked,
+    MCMatrixValuePackingFormatUnpacked
+} MCMatrixValuePackingFormat;
+
 /**
  @brief A class providing storage and operations for matrices of double-precision floating point numbers.
  @description By default (except for objects instantiated using initWithRows:columns:valueStorageFormat: or initWithValues:rows:columns:valueStorageFormat:) values must be supplied in column-major format, as this is the format in which the accelerate framework expects them. For example, the following matrix is written in a one-dimensional array with column-major format as 1, 4, 2, 5, 3, 6 and in row-major format as 1, 2, 3, 4, 5, 6.@code
