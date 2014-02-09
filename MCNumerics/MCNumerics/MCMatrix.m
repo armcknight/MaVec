@@ -471,7 +471,7 @@
 {
     double max = DBL_MIN;
     for (int i = 0; i < self.rows * self.columns; i++) {
-        max = MAX(max, self.values[i]);
+        max = MAX(max, fabs(self.values[i]));
     }
     int padding = floor(log10(max)) + 5;
     
