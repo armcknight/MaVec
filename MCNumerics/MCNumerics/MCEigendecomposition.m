@@ -44,8 +44,28 @@
                 _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
             }
         } else {
-            // TODO: implement non-symmetric version
-//            dgeev_('V', <#char *jobvr#>, <#__CLPK_integer *n#>, <#__CLPK_doublereal *a#>, <#__CLPK_integer *lda#>, <#__CLPK_doublereal *wr#>, <#__CLPK_doublereal *wi#>, <#__CLPK_doublereal *vl#>, <#__CLPK_integer *ldvl#>, <#__CLPK_doublereal *vr#>, <#__CLPK_integer *ldvr#>, <#__CLPK_doublereal *work#>, <#__CLPK_integer *lwork#>, <#__CLPK_integer *info#>)
+            long n = matrix.rows;
+            double *a = [matrix valuesInStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+            long lda = n;
+            double *wr= malloc(n * sizeof(double));
+            double *wi= malloc(n * sizeof(double));
+            double *vl= malloc(n * sizeof(double));
+            long ldvl = n;
+            double *vr= malloc(n * sizeof(double));
+            long ldvr = n;
+            long lwork = -1;
+            double wkopt;
+            long info;
+            dgeev_("V", "V", &n, a, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
+            
+            lwork = (long)wkopt;
+            double *work = malloc(lwork * sizeof(double));
+            dgeev_("V", "V", &n, a, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
+            
+            if (info == 0) {
+                _eigenvalues = [MCVector vectorWithValues:wr length:n];
+                _eigenvectors = [MCMatrix matrixWithValues:vr rows:n columns:n];
+            }
         }
     }
     return self;

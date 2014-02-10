@@ -820,7 +820,29 @@
 
 - (void)testNonsymmetricMatrixEigendecomposition
 {
+    // example from http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_eigevd.htm
+    double values[16] = {
+        -2.0,  2.0,  2.0,  2.0,
+        -3.0,  3.0,  2.0,  2.0,
+        -2.0,  0.0,  4.0,  2.0,
+        -1.0,  0.0,  0.0,  5.0
+    };
     
+    MCMatrix *source = [MCMatrix matrixWithValues:values rows:4 columns:4 valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    MCEigendecomposition *e = source.eigendecomposition;
+    
+    for (int i = 0; i < 4; i += 1) {
+        MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
+        double eigenvalue = [e.eigenvalues valueAtIndex:i];
+        MCVector *left = [MCMatrix productOfMatrix:source andVector:eigenvector];
+        MCVector *right = [eigenvector vectorByMultiplyingByScalar:eigenvalue];
+        for (int j = 0; j < 4; j += 1) {
+            double a = [left valueAtIndex:j];
+            double b = [right valueAtIndex:j];
+            double accuracy = 0.0000000001;
+            XCTAssertEqualWithAccuracy(a, b, accuracy, @"Values at index %u differ by more than %f", j, accuracy);
+        }
+    }
 }
 
 - (void)testMatrixValueCopyByStorageFormat
