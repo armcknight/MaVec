@@ -40,8 +40,8 @@
             dsyevd_("V", "L", &n, a, &lda, w, work, &lwork, iwork, &liwork, &info);
             
             if (info == 0) {
-                _a = [MCVector vectorWithValues:w length:n];
-                _z = [MCMatrix matrixWithValues:a rows:n columns:n];
+                _eigenvalues = [MCVector vectorWithValues:w length:n];
+                _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
             }
         } else {
             // TODO: implement non-symmetric version

@@ -13,8 +13,8 @@
 
 @interface MCEigendecomposition : NSObject
 
-@property (strong, nonatomic) MCMatrix *z;
-@property (strong, nonatomic) MCVector *a;
+@property (strong, nonatomic) MCMatrix *eigenvectors;
+@property (strong, nonatomic) MCVector *eigenvalues;
 
 - (instancetype)initWithMatrix:(MCMatrix *)matrix;
 + (instancetype)eigendecompositionOfMatrix:(MCMatrix *)matrix;

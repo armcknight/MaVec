@@ -805,8 +805,8 @@
     MCEigendecomposition *e = o.eigendecomposition;
     
     for (int i = 0; i < 5; i += 1) {
-        MCVector *eigenvector = [e.z columnVectorForColumn:i];
-        double eigenvalue = [e.a valueAtIndex:i];
+        MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
+        double eigenvalue = [e.eigenvalues valueAtIndex:i];
         MCVector *left = [MCMatrix productOfMatrix:o andVector:eigenvector];
         MCVector *right = [eigenvector vectorByMultiplyingByScalar:eigenvalue];
         for (int j = 0; j < 5; j += 1) {
@@ -816,6 +816,11 @@
             XCTAssertEqualWithAccuracy(a, b, accuracy, @"Values at index %u differ by more than %f", j, accuracy);
         }
     }
+}
+
+- (void)testNonsymmetricMatrixEigendecomposition
+{
+    
 }
 
 - (void)testMatrixValueCopyByStorageFormat
