@@ -101,6 +101,16 @@
     return self;
 }
 
+- (instancetype)initWithValuesInArray:(NSArray *)valuesArray
+                                 rows:(NSUInteger)rows
+                              columns:(NSUInteger)columns
+{
+    return [self initWithValuesInArray:valuesArray
+                                  rows:rows
+                               columns:columns
+                    valueStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+}
+
 - (instancetype)initWithValues:(double *)values
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
@@ -117,6 +127,21 @@
     }
     
     return self;
+}
+
+- (instancetype)initWithValuesInArray:(NSArray *)valuesArray
+                                 rows:(NSUInteger)rows
+                              columns:(NSUInteger)columns
+                   valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    double *values = malloc(valuesArray.count * sizeof(double));
+    for(long idx = 0; idx < valuesArray.count; idx += 1) {
+        values[idx] = [valuesArray[idx] doubleValue];
+    }
+    return [self initWithValues:values
+                           rows:rows
+                        columns:columns
+             valueStorageFormat:valueStorageFormat];
 }
 
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors
@@ -242,6 +267,26 @@
     return [[MCMatrix alloc] initWithValues:values
                                      rows:rows
                                   columns:columns];
+}
+
++ (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
+                                   rows:(NSUInteger)rows
+                                columns:(NSUInteger)columns
+{
+    return [[MCMatrix alloc] initWithValuesInArray:valuesArray
+                                              rows:rows
+                                           columns:columns];
+}
+
++ (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
+                                   rows:(NSUInteger)rows
+                                columns:(NSUInteger)columns
+                     valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    return [[MCMatrix alloc] initWithValuesInArray:valuesArray
+                                              rows:rows
+                                           columns:columns
+                                valueStorageFormat:valueStorageFormat];
 }
 
 + (instancetype)matrixWithValues:(double *)values

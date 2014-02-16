@@ -167,6 +167,10 @@ typedef enum {
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns;
 
+- (instancetype)initWithValuesInArray:(NSArray *)valuesArray
+                                 rows:(NSUInteger)rows
+                              columns:(NSUInteger)columns;
+
 /**
  @brief Creates a matrix with the specified values (in the specified storage format) and number of rows and columns.
  @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in the specified format.
@@ -180,6 +184,11 @@ typedef enum {
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
             valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+
+- (instancetype)initWithValuesInArray:(NSArray *)valuesArray
+                                 rows:(NSUInteger)rows
+                              columns:(NSUInteger)columns
+                   valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
 - (instancetype)initWithRowVectors:(NSArray *)rowVectors;
@@ -228,6 +237,10 @@ typedef enum {
                             rows:(NSUInteger)rows
                          columns:(NSUInteger)columns;
 
++ (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
+                                   rows:(NSUInteger)rows
+                                columns:(NSUInteger)columns;
+
 /**
  @brief Class convenience method to create a matrix with the specified values (in the specified storage format) and number of rows and columns.
  @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in the specified format.
@@ -241,6 +254,11 @@ typedef enum {
                             rows:(NSUInteger)rows
                          columns:(NSUInteger)columns
               valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+
++ (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
+                                   rows:(NSUInteger)rows
+                                columns:(NSUInteger)columns
+                     valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
  @brief Class convenience method to create a square identity matrix with the specified size.
