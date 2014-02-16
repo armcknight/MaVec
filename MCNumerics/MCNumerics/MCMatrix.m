@@ -687,12 +687,12 @@
 
 - (MCVector *)rowVectorForRow:(NSUInteger)row
 {
-    MCVector *rowVector = nil;
+    double *values = malloc(self.columns * sizeof(double));
+    for (int col = 0; col < self.columns; col += 1) {
+        values[col] = [self valueAtRow:row column:col];
+    }
     
-    // TODO: implement
-    @throw kMCUnimplementedMethodException;
-    
-    return rowVector;
+    return [MCVector vectorWithValues:values length:self.columns inVectorFormat:MCVectorFormatRowVector];
 }
 
 - (MCVector *)columnVectorForColumn:(NSUInteger)column
