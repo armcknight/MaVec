@@ -141,7 +141,7 @@ typedef enum {
  @return New instance of MCMatrix.
  */
 - (instancetype)initWithRows:(NSUInteger)rows
-           columns:(NSUInteger)columns;
+                     columns:(NSUInteger)columns;
 
 /**
  @brief Creates a matrix with the specified number of rows and columns and storage format, but without supplying values.
@@ -152,8 +152,8 @@ typedef enum {
  @return New instance of MCMatrix.
  */
 - (instancetype)initWithRows:(NSUInteger)rows
-           columns:(NSUInteger)columns
-valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+                     columns:(NSUInteger)columns
+          valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
  @brief Creates a matrix with the specified values and number of rows and columns.
@@ -164,8 +164,8 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @return New instance of MCMatrix.
  */
 - (instancetype)initWithValues:(double *)values
-                rows:(NSUInteger)rows
-             columns:(NSUInteger)columns;
+                          rows:(NSUInteger)rows
+                       columns:(NSUInteger)columns;
 
 /**
  @brief Creates a matrix with the specified values (in the specified storage format) and number of rows and columns.
@@ -177,9 +177,9 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @return New instance of MCMatrix.
  */
 - (instancetype)initWithValues:(double *)values
-                rows:(NSUInteger)rows
-             columns:(NSUInteger)columns
-  valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+                          rows:(NSUInteger)rows
+                       columns:(NSUInteger)columns
+            valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
 - (instancetype)initWithRowVectors:(NSArray *)rowVectors;
@@ -192,7 +192,7 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @return New instance of MCMatrix.
  */
 + (instancetype)matrixWithRows:(NSUInteger)rows
-             columns:(NSUInteger)columns;
+                       columns:(NSUInteger)columns;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns and storage format, but without supplying values.
@@ -203,8 +203,8 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @return New instance of MCMatrix.
  */
 + (instancetype)matrixWithRows:(NSUInteger)rows
-             columns:(NSUInteger)columns
-  valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+                       columns:(NSUInteger)columns
+            valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
  @brief Class convenience method to create a matrix with the specified values and number of rows and columns.
@@ -215,8 +215,8 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @return New instance of MCMatrix.
  */
 + (instancetype)matrixWithValues:(double *)values
-                  rows:(NSUInteger)rows
-               columns:(NSUInteger)columns;
+                            rows:(NSUInteger)rows
+                         columns:(NSUInteger)columns;
 
 /**
  @brief Class convenience method to create a matrix with the specified values (in the specified storage format) and number of rows and columns.
@@ -228,9 +228,9 @@ valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
  @return New instance of MCMatrix.
  */
 + (instancetype)matrixWithValues:(double *)values
-                  rows:(NSUInteger)rows
-               columns:(NSUInteger)columns
-    valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+                            rows:(NSUInteger)rows
+                         columns:(NSUInteger)columns
+              valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 /**
  @brief Class convenience method to create a square identity matrix with the specified size.
