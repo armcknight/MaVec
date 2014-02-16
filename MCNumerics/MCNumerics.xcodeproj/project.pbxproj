@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4936537618B012220086C243 /* MCPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537518B012220086C243 /* MCPair.m */; };
 		494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
 		494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
 		494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4465185B61BB00347096 /* RZBaseCollectionList.m */; };
@@ -69,6 +70,8 @@
 
 /* Begin PBXFileReference section */
 		37AE3C0218735B5200FAE5BC /* MCEquation.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MCEquation.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		4936537418B012220086C243 /* MCPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPair.h; sourceTree = "<group>"; };
+		4936537518B012220086C243 /* MCPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPair.m; sourceTree = "<group>"; };
 		494F4462185B61BB00347096 /* RZArrayCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZArrayCollectionList.h; sourceTree = "<group>"; };
 		494F4463185B61BB00347096 /* RZArrayCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZArrayCollectionList.m; sourceTree = "<group>"; };
 		494F4464185B61BB00347096 /* RZBaseCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZBaseCollectionList.h; sourceTree = "<group>"; };
@@ -254,6 +257,8 @@
 			children = (
 				4978F2E2187852330095DE06 /* MCTribool.h */,
 				4978F2E3187852330095DE06 /* MCTribool.m */,
+				4936537418B012220086C243 /* MCPair.h */,
+				4936537518B012220086C243 /* MCPair.m */,
 			);
 			name = "Data Types";
 			sourceTree = "<group>";
@@ -472,6 +477,7 @@
 				494F44DF185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */,
 				49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */,
+				4936537618B012220086C243 /* MCPair.m in Sources */,
 				494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
 				494F4543185BDA6200347096 /* MCPolynomial.m in Sources */,
 				494F4547185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
