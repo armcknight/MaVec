@@ -10,8 +10,14 @@
 
 @interface NSNumber (MCMath)
 
+#pragma mark - Queries
+
+- (BOOL)isPositive;
+- (BOOL)isZero;
+
 #pragma mark - Basic operations
 
+- (NSNumber *)negative;
 - (NSNumber *)sumByAdding:(NSNumber *)addend;
 - (NSNumber *)differenceBySubtracting:(NSNumber *)subtrahend;
 - (NSNumber *)productByMultiplying:(NSNumber *)multiplicand;

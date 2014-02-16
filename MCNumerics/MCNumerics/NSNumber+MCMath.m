@@ -10,7 +10,24 @@
 
 @implementation NSNumber (MCMath)
 
+#pragma mark - Queries
+
+- (BOOL)isPositive
+{
+    return self.doubleValue > 0.0;
+}
+
+- (BOOL)isZero
+{
+    return self.doubleValue == 0.0;
+}
+
 #pragma mark - Basic operations
+
+- (NSNumber *)negative
+{
+    return @(self.doubleValue * -1.0);
+}
 
 - (NSNumber *)sumByAdding:(NSNumber *)addend
 {
