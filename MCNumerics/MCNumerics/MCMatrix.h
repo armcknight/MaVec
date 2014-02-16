@@ -184,6 +184,16 @@ typedef enum {
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
 - (instancetype)initWithRowVectors:(NSArray *)rowVectors;
 
+- (instancetype)initTriangularMatrixWithValues:(double *)values
+                         ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                               inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                          inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                                       ofOrder:(NSUInteger)order;
+- (instancetype)initTriangularMatrixWithValuesInArray:(NSArray *)values
+                                ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                      inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                                 inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns but without supplying values.
  @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in column-major format.
@@ -250,6 +260,16 @@ typedef enum {
 
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors;
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
+
++ (instancetype)triangularMatrixWithValues:(double *)values
+                     ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                           inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                      inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                                   ofOrder:(NSUInteger)order;
++ (instancetype)triangularMatrixWithValuesInArray:(NSArray *)values
+                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                  inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                             inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 #pragma mark - Operations
 

@@ -14,6 +14,10 @@
 #import "MCEigendecomposition.h"
 #import "MCQRFactorization.h"
 #import "MCTribool.h"
+#import "MCQuadratic.h"
+#import "MCPair.h"
+
+#import "NSNumber+MCMath.h"
 
 @interface MCMatrix ()
 
@@ -155,6 +159,58 @@
     return self;
 }
 
+- (instancetype)initTriangularMatrixWithValues:(double *)values
+                         ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                               inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                          inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                                       ofOrder:(NSUInteger)order
+{
+    if (packingFormat == MCMatrixValuePackingFormatUnpacked) {
+        self = [self initWithValues:values rows:order columns:order valueStorageFormat:valueStorageFormat];
+    } else {
+        self = [super init];
+        if (self) {
+            _rows = order;
+            _columns = order;
+            _values = malloc(order * order * sizeof(double));
+            _valueStorageFormat = valueStorageFormat;
+            long k = 0; // current index in parameter array
+            long z = 0; // current index in ivar array
+            for (int i = 0; i < order; i += 1) {
+                for (int j = 0; j < order; j += 1) {
+                    BOOL shouldTakeValue = triangularComponent == MCMatrixTriangularComponentUpper ? (valueStorageFormat == MCMatrixValueStorageFormatColumnMajor ? j <= i : i <= j) : (valueStorageFormat == MCMatrixValueStorageFormatColumnMajor ? i <= j : j <= i);
+                    if (shouldTakeValue) {
+                        _values[z++] = values[k++];
+                    } else {
+                        _values[z++] = 0.0;
+                    }
+                }
+            }
+        }
+    }
+    
+    return self;
+}
+
+- (instancetype)initTriangularMatrixWithValuesInArray:(NSArray *)values
+                                ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                      inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                                 inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    NSUInteger length = values.count;
+    MCPair *orderCandidates = [MCQuadratic quadraticWithA:@1 b:@1 c:@(length)].roots;
+    NSUInteger order = [orderCandidates.first isPositive] ? orderCandidates.first.integerValue : orderCandidates.second.integerValue;
+    double *valuesCArray = malloc(length * sizeof(double));
+    for (int i = 0; i < length; i += 1) {
+        valuesCArray[i] = [[values objectAtIndex:i] doubleValue];
+    }
+    return [self initTriangularMatrixWithValues:valuesCArray
+                          ofTriangularComponent:triangularComponent
+                                inPackingFormat:packingFormat
+                           inValueStorageFormat:valueStorageFormat
+                                        ofOrder:order];
+}
+
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors
 {
     return [[MCMatrix alloc] initWithColumnVectors:columnVectors];
@@ -223,6 +279,30 @@
     return [MCMatrix matrixWithValues:allValues
                                  rows:size
                               columns:size];
+}
+
++ (instancetype)triangularMatrixWithValues:(double *)values
+                     ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                           inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                      inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                                   ofOrder:(NSUInteger)order
+{
+    return [[MCMatrix alloc] initTriangularMatrixWithValues:values
+                                      ofTriangularComponent:triangularComponent
+                                            inPackingFormat:packingFormat
+                                       inValueStorageFormat:valueStorageFormat
+                                                    ofOrder:order];
+}
+
++ (instancetype)triangularMatrixWithValuesInArray:(NSArray *)values
+                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                  inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                             inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    return [[MCMatrix alloc] initTriangularMatrixWithValuesInArray:values
+                                             ofTriangularComponent:triangularComponent
+                                                   inPackingFormat:packingFormat
+                                              inValueStorageFormat:valueStorageFormat];
 }
 
 //- (void)dealloc
