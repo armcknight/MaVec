@@ -212,6 +212,7 @@
                 }
             }
         }
+        [self commonInit];
     }
     
     return self;
