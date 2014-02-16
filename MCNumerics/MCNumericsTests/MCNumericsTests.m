@@ -14,6 +14,7 @@
 #import "MCLUFactorization.h"
 #import "MCTribool.h"
 #import "MCEigendecomposition.h"
+#import "MCQRFactorization.h"
 
 @interface MCNumericsTests : XCTestCase
 
@@ -1153,6 +1154,54 @@
     XCTAssertEqual(0.0, unpackedLowerTriangularValuesColumnMajor[7], @"Value incorrect");
     XCTAssertEqual(values[8], unpackedLowerTriangularValuesColumnMajor[8], @"Value incorrect");
     free(unpackedLowerTriangularValuesColumnMajor);
+}
+
+- (void)testQRDecompositionOfSquareMatrix
+{
+    // example from wikipedia: http://en.wikipedia.org/wiki/QR_decomposition#Example
+    MCMatrix *source = [MCMatrix matrixWithColumnVectors:@[
+                                                           [MCVector vectorWithValuesInArray:@[@12, @6, @(-4)]],
+                                                           [MCVector vectorWithValuesInArray:@[@(-51), @167, @24]],
+                                                           [MCVector vectorWithValuesInArray:@[@4, @(-68), @(-41)]],
+                                                           ]];
+    
+    MCQRFactorization *qrFactorization = source.qrFactorization;
+    
+    MCMatrix *qrProduct = [MCMatrix productOfMatrixA:qrFactorization.q andMatrixB:qrFactorization.r];
+    
+    for(NSUInteger row = 0; row < qrProduct.rows; row += 1) {
+        for(NSUInteger col = 0; col < qrProduct.columns; col += 1) {
+            double a = [source valueAtRow:row column:col];
+            double b = [qrProduct valueAtRow:row column:col];
+            double accuracy = 1.0e-10;
+            XCTAssertEqualWithAccuracy(a, b, accuracy, @"value at (%u, %u) incorrect beyond accuracy = %f", row, col, accuracy);
+        }
+    }
+}
+
+- (void)testQRDecompositionOfGeneralMatrix
+{
+    MCMatrix *source = [MCMatrix matrixWithValuesInArray:@[
+                                                           @0, @2, @2, @0, @2, @2,
+                                                           @2, @(-1), @(-1), @1.5, @(-1), @(-1)
+                                                           ]
+                                                    rows:6
+                                                 columns:2
+                                      valueStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+    
+    MCQRFactorization *qrFactorization = source.qrFactorization.thinFactorization;
+    
+    // need to take the 'thin QR factorization' of the general rectangular matrix
+    MCMatrix *qrProduct = [MCMatrix productOfMatrixA:qrFactorization.q andMatrixB:qrFactorization.r];
+    
+    for(NSUInteger row = 0; row < qrProduct.rows; row += 1) {
+        for(NSUInteger col = 0; col < qrProduct.columns; col += 1) {
+            double a = [source valueAtRow:row column:col];
+            double b = [qrProduct valueAtRow:row column:col];
+            double accuracy = 1.0e-10;
+            XCTAssertEqualWithAccuracy(a, b, accuracy, @"value at (%u, %u) incorrect beyond accuracy = %f", row, col, accuracy);
+        }
+    }
 }
 
 #pragma mark - Vectors

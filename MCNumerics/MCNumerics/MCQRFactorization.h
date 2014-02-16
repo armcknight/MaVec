@@ -33,4 +33,8 @@
 - (instancetype)initWithMatrix:(MCMatrix *)matrix;
 + (instancetype)qrFactorizationOfMatrix:(MCMatrix *)matrix;
 
+#pragma mark - Operations
+
+- (MCQRFactorization *)thinFactorization;
+
 @end
