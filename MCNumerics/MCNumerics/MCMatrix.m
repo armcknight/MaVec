@@ -373,7 +373,7 @@
 - (MCMatrix *)transpose
 {
     if (!_transpose) {
-        double *aVals = self.values;
+        double *aVals = [self valuesInStorageFormat:MCMatrixValueStorageFormatColumnMajor];
         double *tVals = malloc(self.rows * self.columns * sizeof(double));
         
         vDSP_mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
