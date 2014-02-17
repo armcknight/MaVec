@@ -305,11 +305,6 @@ typedef enum {
 
 #pragma mark - Operations
 
-/**
- @return The (pseudo)inverse of this matrix in a new MCMatrix object.
- */
-- (MCMatrix *)inverse;
-
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB;
 
 - (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB;
