@@ -381,7 +381,28 @@
 - (double)determinant
 {
     if (isnan(_determinant)) {
-        _determinant = self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues * pow(-1.0, self.luFactorization.numberOfPermutations);
+        if (_rows == 2 && _columns == 2) {
+            double a = self[0][0].doubleValue;
+            double b = self[0][1].doubleValue;
+            double c = self[1][0].doubleValue;
+            double d = self[1][1].doubleValue;
+            
+            _determinant = a * d - b * c;
+        } else if (_rows == 3 && _columns == 3) {
+            double a = self[0][0].doubleValue;
+            double b = self[0][1].doubleValue;
+            double c = self[0][2].doubleValue;
+            double d = self[1][0].doubleValue;
+            double e = self[1][1].doubleValue;
+            double f = self[1][2].doubleValue;
+            double g = self[2][0].doubleValue;
+            double h = self[2][1].doubleValue;
+            double i = self[2][2].doubleValue;
+            
+            _determinant = a * e * i + b * f * g + c * d * h - g * e * c - h * f * a - i * d * b;
+        } else {
+            _determinant = self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues * pow(-1.0, self.luFactorization.numberOfPermutations);
+        }
     }
     
     return _determinant;

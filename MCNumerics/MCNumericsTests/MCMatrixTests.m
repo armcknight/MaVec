@@ -1207,13 +1207,23 @@
 - (void)testDeterminantCalculation
 {
     MCMatrix *matrix = [MCMatrix matrixWithValuesInArray:@[
-                                                           @6, @1, @1,
-                                                           @4, @(-2), @5,
-                                                           @2, @8, @7
+                                                           @1, @2,
+                                                           @3, @4
                                                            ]
-                                                    rows:3
-                                                 columns:3
+                                                    rows:2
+                                                 columns:2
                                       valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    
+    XCTAssertEqual(matrix.determinant, -2.0, @"Determinant not correct");
+    
+    matrix = [MCMatrix matrixWithValuesInArray:@[
+                                                 @6, @1, @1,
+                                                 @4, @(-2), @5,
+                                                 @2, @8, @7
+                                                 ]
+                                          rows:3
+                                       columns:3
+                            valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
     
     XCTAssertEqual(matrix.determinant, -306.0, @"Determinant not correct");
     
