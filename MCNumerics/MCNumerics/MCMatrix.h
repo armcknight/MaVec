@@ -130,6 +130,7 @@ typedef enum {
  @brief YES if this matrix is positive definite, NO otherwise. (Lazy-loaded)
  */
 @property (nonatomic, readonly, strong) MCTribool *isPositiveDefinite;
+@property (nonatomic, readonly, strong) MCVector *diagonalValues;
 
 #pragma mark - Constructors
 

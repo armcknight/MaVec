@@ -35,6 +35,7 @@
 @synthesize conditionNumber = _conditionNumber;
 @synthesize isPositiveDefinite = _isPositiveDefinite;
 @synthesize isSymmetric = _isSymmetric;
+@synthesize diagonalValues = _diagonalValues;
 
 #pragma mark - Constructors
 
@@ -50,6 +51,7 @@
     _transpose = nil;
     _conditionNumber = nil;
     _determinant = NAN;
+    _diagonalValues = nil;
 }
 
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
@@ -479,6 +481,18 @@
     }
     
     return _isPositiveDefinite;
+
+- (MCVector *)diagonalValues
+{
+    if (!_diagonalValues) {
+        long length = MIN(self.rows, self.columns);
+        double *values = malloc(length * sizeof(double));
+        for (int i = 0; i < length; i += 1) {
+            values[i] = [self valueAtRow:i column:i];
+        }
+        _diagonalValues = [MCVector vectorWithValues:values length:length inVectorFormat:MCVectorFormatRowVector];
+    }
+    return _diagonalValues;
 }
 
 #pragma mark - Property overrides
@@ -919,6 +933,10 @@
     
     if (_eigendecomposition) {
         matrixCopy->_eigendecomposition = _eigendecomposition.copy;
+    }
+    
+    if (_diagonalValues) {
+        matrixCopy->_diagonalValues = _diagonalValues.copy;
     }
     
     matrixCopy->_isSymmetric = _isSymmetric.copy;
