@@ -626,6 +626,18 @@
     return _adjugate;
 }
 
+#pragma mark - Property overrides
+
+- (void)setValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+{
+    if (self.valueStorageFormat != valueStorageFormat) {
+        _values = [self valuesInStorageFormat:valueStorageFormat];
+        _valueStorageFormat = valueStorageFormat;
+    }
+}
+
+#pragma mark - Matrix operations
+
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
 {
     if (rowA >= self.rows) {
