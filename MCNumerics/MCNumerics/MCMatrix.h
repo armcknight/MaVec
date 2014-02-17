@@ -35,6 +35,15 @@ typedef enum {
     MCMatrixValuePackingFormatUnpacked
 } MCMatrixValuePackingFormat;
 
+typedef enum {
+    MCMatrixDefinitenessPositiveDefinite,
+    MCMatrixDefinitenessPositiveSemidefinite,
+    MCMatrixDefinitenessNegativeDefinite,
+    MCMatrixDefinitenessNegativeSemidefinite,
+    MCMatrixDefinitenessIndefinite,
+    MCMatrixDefinitenessUnknown
+} MCMatrixDefiniteness;
+
 /**
  @brief A class providing storage and operations for matrices of double-precision floating point numbers.
  @description By default (except for objects instantiated using initWithRows:columns:valueStorageFormat: or initWithValues:rows:columns:valueStorageFormat:) values must be supplied in column-major format, as this is the format in which the accelerate framework expects them. For example, the following matrix is written in a one-dimensional array with column-major format as 1, 4, 2, 5, 3, 6 and in row-major format as 1, 2, 3, 4, 5, 6.@code
@@ -125,11 +134,8 @@ typedef enum {
  */
 @property (nonatomic, readonly, strong) MCTribool *isSymmetric;
 
-/**
- @property isPositiveDefinite
- @brief YES if this matrix is positive definite, NO otherwise. (Lazy-loaded)
- */
-@property (nonatomic, readonly, strong) MCTribool *isPositiveDefinite;
+@property (nonatomic, readonly, assign) MCMatrixDefiniteness definiteness;
+
 @property (nonatomic, readonly, strong) MCVector *diagonalValues;
 
 #pragma mark - Constructors

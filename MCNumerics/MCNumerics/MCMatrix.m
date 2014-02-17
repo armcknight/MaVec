@@ -33,7 +33,7 @@
 @synthesize inverse = _inverse;
 @synthesize determinant = _determinant;
 @synthesize conditionNumber = _conditionNumber;
-@synthesize isPositiveDefinite = _isPositiveDefinite;
+@synthesize definiteness = _definiteness;
 @synthesize isSymmetric = _isSymmetric;
 @synthesize diagonalValues = _diagonalValues;
 
@@ -42,7 +42,7 @@
 - (void)commonInit
 {
     _isSymmetric = [MCTribool triboolWithValue:MCTriboolIndeterminate];
-    _isPositiveDefinite = [MCTribool triboolWithValue:MCTriboolIndeterminate];
+    _definiteness = MCMatrixDefinitenessUnknown;
     _qrFactorization = nil;
     _luFactorization = nil;
     _singularValueDecomposition = nil;
@@ -472,15 +472,14 @@
     return _isSymmetric;
 }
 
-- (MCTribool *)isPositiveDefinite
+- (MCMatrixDefiniteness)definiteness
 {
-    if (_isPositiveDefinite.triboolValue == MCTriboolIndeterminate) {
-        
-        // TODO: implement
+    if (_definiteness == MCMatrixDefinitenessUnknown) {
         @throw kMCUnimplementedMethodException;
+        // TODO: implement
     }
-    
-    return _isPositiveDefinite;
+    return _definiteness;
+}
 
 - (MCVector *)diagonalValues
 {
@@ -940,7 +939,7 @@
     }
     
     matrixCopy->_isSymmetric = _isSymmetric.copy;
-    matrixCopy->_isPositiveDefinite = _isPositiveDefinite.copy;
+    matrixCopy->_definiteness = _definiteness;
     
     return matrixCopy;
 }
