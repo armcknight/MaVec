@@ -270,6 +270,13 @@
     return min;
 }
 
+#pragma mark - Subscripting
+
+- (NSNumber *)objectAtIndexedSubscript:(NSUInteger)idx
+{
+    return @(self.values[idx]);
+}
+
 #pragma mark - Instance Operations
 
 - (MCVector *)vectorByMultiplyingByScalar:(double)scalar

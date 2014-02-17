@@ -375,6 +375,10 @@ typedef enum {
 - (MCVector *)columnVectorForColumn:(NSUInteger)column;
 - (MCVector *)rowVectorForRow:(NSUInteger)row;
 
+#pragma mark - Subscripting
+
+- (MCVector *)objectAtIndexedSubscript:(NSUInteger)idx;
+
 #pragma mark - Mutation
 
 /**

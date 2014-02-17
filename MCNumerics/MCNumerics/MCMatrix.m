@@ -765,6 +765,13 @@
     return [MCVector vectorWithValues:values length:self.rows inVectorFormat:MCVectorFormatColumnVector];
 }
 
+#pragma mark - Subscripting
+
+- (MCVector *)objectAtIndexedSubscript:(NSUInteger)idx
+{
+    return [self rowVectorForRow:idx];
+}
+
 #pragma mark - Mutation
 
 - (void)setEntryAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(double)value

@@ -53,6 +53,10 @@ typedef enum {
 - (NSUInteger)indexOfMaximumValue;
 - (NSUInteger)indexOfMinimumValue;
 
+#pragma mark - Subscripting
+
+- (NSNumber *)objectAtIndexedSubscript:(NSUInteger)idx;
+
 #pragma mark - Instance Operations
 
 - (MCVector *)vectorByMultiplyingByScalar:(double)scalar;
