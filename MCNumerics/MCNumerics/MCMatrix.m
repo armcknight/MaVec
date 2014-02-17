@@ -906,9 +906,7 @@
         matrixCopy->_transpose = _transpose.copy;
     }
     
-    if (_determinant) {
-        matrixCopy->_determinant = _determinant;
-    }
+    matrixCopy->_determinant = _determinant;
     
     if (_inverse) {
         matrixCopy->_inverse = _inverse.copy;
