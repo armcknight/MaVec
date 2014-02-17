@@ -36,6 +36,7 @@
 @synthesize definiteness = _definiteness;
 @synthesize isSymmetric = _isSymmetric;
 @synthesize diagonalValues = _diagonalValues;
+@synthesize trace = _trace;
 
 #pragma mark - Constructors
 
@@ -52,6 +53,7 @@
     _conditionNumber = nil;
     _determinant = NAN;
     _diagonalValues = nil;
+    _trace = NAN;
 }
 
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
@@ -492,6 +494,14 @@
         _diagonalValues = [MCVector vectorWithValues:values length:length inVectorFormat:MCVectorFormatRowVector];
     }
     return _diagonalValues;
+}
+
+- (double)trace
+{
+    if (isnan(_trace)) {
+        _trace = self.diagonalValues.sumOfValues;
+    }
+    return _trace;
 }
 
 #pragma mark - Property overrides
@@ -938,6 +948,7 @@
     
     matrixCopy->_isSymmetric = _isSymmetric.copy;
     matrixCopy->_definiteness = _definiteness;
+    matrixCopy->_trace = _trace;
     
     return matrixCopy;
 }

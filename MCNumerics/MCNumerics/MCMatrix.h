@@ -138,6 +138,8 @@ typedef enum {
 
 @property (nonatomic, readonly, strong) MCVector *diagonalValues;
 
+@property (nonatomic, readonly, assign) double trace;
+
 #pragma mark - Constructors
 
 /**
