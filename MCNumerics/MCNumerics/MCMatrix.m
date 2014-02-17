@@ -390,7 +390,46 @@
 - (MCMatrix *)inverse
 {
     if (!_inverse) {
-        _inverse = nil;
+        if (_rows == _columns) {
+            double *a = [self valuesInStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+            
+            long m = _rows;
+            long n = _columns;
+            
+            long lda = m;
+            
+            long *ipiv = malloc(MIN(m, n) * sizeof(long));
+            
+            long info = 0;
+            
+            // compute factorization
+            dgetrf_(&m, &n, a, &lda, ipiv, &info);
+        
+            double wkopt;
+            long lwork = -1;
+            
+            // query optimal workspace size
+            dgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
+            
+            lwork = wkopt;
+            double *work = malloc(lwork * sizeof(double));
+            
+            // calculate the inverse
+            dgetri_(&m, a, &lda, ipiv, work, &lwork, &info);
+            
+            _inverse = [MCMatrix matrixWithValues:a
+                                             rows:_rows
+                                          columns:_columns
+                               valueStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+        }
+    }
+    
+    return _inverse;
+}
+
+- (MCMatrix *)adjugate
+{
+    if (!_adjugate) {
         
         // TODO: implement
         @throw kMCUnimplementedMethodException;
