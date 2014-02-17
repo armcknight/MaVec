@@ -13,6 +13,8 @@
 
 @implementation MCLUFactorization
 
+@synthesize numberOfPermutations = _numberOfPermutations;
+
 #pragma mark - Init
 
 - (instancetype)initWithMatrix:(MCMatrix *)matrix
@@ -60,8 +62,14 @@
         
         // exchange rows as defined in ipiv to build permutation matrix
         MCMatrix *p = [MCMatrix identityMatrixWithSize:MIN(m, n)];
+        _numberOfPermutations = 0;
         for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
-            [p swapRowA:i withRowB:ipiv[i] - 1];
+            int a = i;
+            int b = ipiv[i] - 1;
+            if (a != b) {
+                [p swapRowA:i withRowB:ipiv[i] - 1];
+                _numberOfPermutations += 1;
+            }
         }
         
         _lowerTriangularMatrix = l;

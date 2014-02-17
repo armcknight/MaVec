@@ -34,6 +34,8 @@
  */
 @property (nonatomic, readonly, strong) MCMatrix *permutationMatrix;
 
+@property (nonatomic, readonly, assign) NSUInteger numberOfPermutations;
+
 #pragma mark - Init
 
 - (instancetype)initWithMatrix:(MCMatrix *)matrix;
