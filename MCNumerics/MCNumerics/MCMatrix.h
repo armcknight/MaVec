@@ -78,7 +78,7 @@ typedef enum {
  @property determinant
  @brief The determinant of this matrix. (Lazy-loaded)
  */
-@property (nonatomic, readonly, strong) NSNumber *determinant;
+@property (nonatomic, readonly, assign) double determinant;
 
 /**
  @property inverse

@@ -49,7 +49,7 @@
     _inverse = nil;
     _transpose = nil;
     _conditionNumber = nil;
-    _determinant = nil;
+    _determinant = NAN;
 }
 
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
@@ -374,13 +374,10 @@
     return _transpose;
 }
 
-- (NSNumber *)determinant
+- (double)determinant
 {
-    if (!_determinant) {
-        _determinant = @(0.0);
-        
-        // TODO: implement
-        @throw kMCUnimplementedMethodException;
+    if (isnan(_determinant)) {
+        _determinant = self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues * pow(-1.0, self.luFactorization.numberOfPermutations);
     }
     
     return _determinant;
@@ -897,7 +894,7 @@
     }
     
     if (_determinant) {
-        matrixCopy->_determinant = _determinant.copy;
+        matrixCopy->_determinant = _determinant;
     }
     
     if (_inverse) {

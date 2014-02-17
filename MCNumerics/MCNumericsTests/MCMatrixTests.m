@@ -1204,4 +1204,30 @@
     }
 }
 
+- (void)testDeterminantCalculation
+{
+    MCMatrix *matrix = [MCMatrix matrixWithValuesInArray:@[
+                                                           @6, @1, @1,
+                                                           @4, @(-2), @5,
+                                                           @2, @8, @7
+                                                           ]
+                                                    rows:3
+                                                 columns:3
+                                      valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    
+    XCTAssertEqual(matrix.determinant, -306.0, @"Determinant not correct");
+    
+    matrix = [MCMatrix matrixWithValuesInArray:@[
+                                                 @3, @2, @0, @1,
+                                                 @4, @0, @1, @2,
+                                                 @3, @0, @2, @1,
+                                                 @9, @2, @3, @1
+                                                 ]
+                                          rows:4
+                                       columns:4
+                            valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    
+    XCTAssertEqual(matrix.determinant, 24.0, @"Determinant not correct");
+}
+
 @end
