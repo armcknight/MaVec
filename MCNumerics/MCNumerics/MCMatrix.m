@@ -21,8 +21,6 @@
 
 @interface MCMatrix ()
 
-@property (strong, nonatomic) MCMatrix *minors;
-
 @end
 
 @implementation MCMatrix
@@ -39,6 +37,9 @@
 @synthesize isSymmetric = _isSymmetric;
 @synthesize diagonalValues = _diagonalValues;
 @synthesize trace = _trace;
+@synthesize adjugate = _adjugate;
+@synthesize minorMatrix = _minorMatrix;
+@synthesize cofactorMatrix = _cofactorMatrix;
 
 #pragma mark - Constructors
 
@@ -56,7 +57,9 @@
     _determinant = NAN;
     _diagonalValues = nil;
     _trace = NAN;
-    _minors = nil;
+    _adjugate = nil;
+    _minorMatrix = nil;
+    _cofactorMatrix = nil;
 }
 
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
@@ -451,17 +454,6 @@
     return _inverse;
 }
 
-- (MCMatrix *)adjugate
-{
-    if (!_adjugate) {
-        
-        // TODO: implement
-        @throw kMCUnimplementedMethodException;
-    }
-    
-    return _inverse;
-}
-
 - (NSNumber *)conditionNumber
 {
     if (!_conditionNumber) {
@@ -567,49 +559,71 @@
     return _trace;
 }
 
-#pragma mark - Property overrides
-
-- (void)setValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+- (MCMatrix *)minorMatrix
 {
-    if (self.valueStorageFormat != valueStorageFormat) {
-        _values = [self valuesInStorageFormat:valueStorageFormat];
-        _valueStorageFormat = valueStorageFormat;
-    }
-}
-
-#pragma mark - Matrix operations
-
-- (double)minorOfRow:(NSUInteger)row column:(NSUInteger)column
-{
-    if (row >= self.rows) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
-    } else if (column >= self.columns) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
-    }
-    
-    if (!_minors) {
-        double *initialCofactors = malloc(self.rows * self.columns * sizeof(double));
-        for (int i = 0; i < self.rows * self.columns; i += 1) {
-            initialCofactors[i] = NAN;
-        }
-        _minors = [MCMatrix matrixWithValues:initialCofactors rows:self.rows columns:self.columns];
-    }
-    
-    if (isnan([_minors valueAtRow:row column:column])) {
-        MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1 valueStorageFormat:self.valueStorageFormat];
+    if (!_minorMatrix) {
+        double *minorValues = malloc(self.rows * self.columns * sizeof(double));
         
-        for (int i = 0; i < self.rows; i++) {
-            for (int j = 0; j < self.rows; j++) {
-                if (i != row && j != column) {
-                    [minor setEntryAtRow:i > row ? i - 1 : i  column:j > column ? j - 1 : j toValue:[self valueAtRow:i column:j]];
+        int minorIdx = 0;
+        for (int row = 0; row < self.rows; row += 1) {
+            for (int col = 0; col < self.columns; col += 1) {
+                MCMatrix *submatrix = [MCMatrix matrixWithRows:self.rows - 1
+                                                       columns:self.columns - 1
+                                            valueStorageFormat:self.valueStorageFormat];
+                
+                for (int i = 0; i < self.rows; i++) {
+                    for (int j = 0; j < self.rows; j++) {
+                        if (i != row && j != col) {
+                            [submatrix setEntryAtRow:i > row ? i - 1 : i
+                                              column:j > col ? j - 1 : j
+                                             toValue:[self valueAtRow:i column:j]];
+                        }
+                    }
                 }
+                
+                minorValues[minorIdx++] = submatrix.determinant;
             }
         }
         
-        [_minors setEntryAtRow:row column:column toValue:minor.determinant];
+        _minorMatrix = [MCMatrix matrixWithValues:minorValues
+                                             rows:self.rows
+                                          columns:self.columns
+                               valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
     }
     
-    return [_minors valueAtRow:row column:column];
+    return _minorMatrix;
+}
+
+- (MCMatrix *)cofactorMatrix
+{
+    if (!_cofactorMatrix) {
+        double *cofactors = malloc(self.rows * self.columns * sizeof(double));
+        
+        int cofactorIdx = 0;
+        for (int row = 0; row < self.rows; row += 1) {
+            for (int col = 0; col < self.columns; col += 1) {
+                double minor = self.minorMatrix[row][col].doubleValue;
+                double multiplier = pow(-1.0, row + col + 2.0);
+                cofactors[cofactorIdx++] = minor * multiplier;
+            }
+        }
+        
+        _cofactorMatrix = [MCMatrix matrixWithValues:cofactors
+                                                rows:self.rows
+                                             columns:self.columns
+                                  valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    }
+    
+    return _cofactorMatrix;
+}
+
+- (MCMatrix *)adjugate
+{
+    if (!_adjugate) {
+        _adjugate = self.cofactorMatrix.transpose;
+    }
+    
+    return _adjugate;
 }
 
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
@@ -1004,6 +1018,10 @@
         matrixCopy->_inverse = _inverse.copy;
     }
     
+    if (_adjugate) {
+        matrixCopy->_adjugate = _adjugate.copy;
+    }
+    
     if (_conditionNumber) {
         matrixCopy->_conditionNumber = _conditionNumber.copy;
     }
@@ -1028,8 +1046,12 @@
         matrixCopy->_diagonalValues = _diagonalValues.copy;
     }
     
-    if (_minors) {
-        matrixCopy->_minors = _minors.copy;
+    if (_minorMatrix) {
+        matrixCopy->_minorMatrix = _minorMatrix.copy;
+    }
+    
+    if (_cofactorMatrix) {
+        matrixCopy->_cofactorMatrix = _cofactorMatrix.copy;
     }
     
     matrixCopy->_isSymmetric = _isSymmetric.copy;

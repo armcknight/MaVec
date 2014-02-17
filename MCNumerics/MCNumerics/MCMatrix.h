@@ -93,8 +93,13 @@ typedef enum {
  @property inverse
  @brief The (pseudo)inverse of this matrix in a new MCMatrix object. (Lazy-loaded)
  */
-
 @property (nonatomic, readonly, strong) MCMatrix *inverse;
+
+@property (nonatomic, readonly, strong) MCMatrix *minorMatrix;
+
+@property (nonatomic, readonly, strong) MCMatrix *cofactorMatrix;
+
+@property (nonatomic, readonly, strong) MCMatrix *adjugate;
 
 /**
  @property conditionNumber
@@ -299,8 +304,6 @@ typedef enum {
                              inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
 
 #pragma mark - Operations
-
-- (double)minorOfRow:(NSUInteger)row column:(NSUInteger)column;
 
 /**
  @return The (pseudo)inverse of this matrix in a new MCMatrix object.
