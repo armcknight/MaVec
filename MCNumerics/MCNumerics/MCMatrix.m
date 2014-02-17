@@ -21,6 +21,8 @@
 
 @interface MCMatrix ()
 
+@property (strong, nonatomic) MCMatrix *minors;
+
 @end
 
 @implementation MCMatrix
@@ -54,6 +56,7 @@
     _determinant = NAN;
     _diagonalValues = nil;
     _trace = NAN;
+    _minors = nil;
 }
 
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
@@ -576,7 +579,7 @@
 
 #pragma mark - Matrix operations
 
-- (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column
+- (double)minorOfRow:(NSUInteger)row column:(NSUInteger)column
 {
     if (row >= self.rows) {
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
@@ -584,17 +587,29 @@
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
     }
     
-    MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1 valueStorageFormat:self.valueStorageFormat];
-    
-    for (int i = 0; i < self.rows; i++) {
-        for (int j = 0; j < self.rows; j++) {
-            if (i != row && j != column) {
-                [minor setEntryAtRow:i > row ? i - 1 : i  column:j > column ? j - 1 : j toValue:[self valueAtRow:i column:j]];
-            }
+    if (!_minors) {
+        double *initialCofactors = malloc(self.rows * self.columns * sizeof(double));
+        for (int i = 0; i < self.rows * self.columns; i += 1) {
+            initialCofactors[i] = NAN;
         }
+        _minors = [MCMatrix matrixWithValues:initialCofactors rows:self.rows columns:self.columns];
     }
     
-    return minor;
+    if (isnan([_minors valueAtRow:row column:column])) {
+        MCMatrix *minor = [MCMatrix matrixWithRows:self.rows - 1 columns:self.columns - 1 valueStorageFormat:self.valueStorageFormat];
+        
+        for (int i = 0; i < self.rows; i++) {
+            for (int j = 0; j < self.rows; j++) {
+                if (i != row && j != column) {
+                    [minor setEntryAtRow:i > row ? i - 1 : i  column:j > column ? j - 1 : j toValue:[self valueAtRow:i column:j]];
+                }
+            }
+        }
+        
+        [_minors setEntryAtRow:row column:column toValue:minor.determinant];
+    }
+    
+    return [_minors valueAtRow:row column:column];
 }
 
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
@@ -1011,6 +1026,10 @@
     
     if (_diagonalValues) {
         matrixCopy->_diagonalValues = _diagonalValues.copy;
+    }
+    
+    if (_minors) {
+        matrixCopy->_minors = _minors.copy;
     }
     
     matrixCopy->_isSymmetric = _isSymmetric.copy;

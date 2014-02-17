@@ -451,6 +451,11 @@
 
 - (void)testMinorComposition
 {
+    /*
+     1 2 3
+     4 5 6
+     7 8 9
+     */
     double *values = malloc(9 * sizeof(double));
     values[0] = 1.0;
     values[1] = 2.0;
@@ -461,29 +466,41 @@
     values[6] = 7.0;
     values[7] = 8.0;
     values[8] = 9.0;
-    
     MCMatrix *m = [MCMatrix matrixWithValues:values rows:3 columns:3];
-    MCMatrix *minor = [m minorByRemovingRow:0 column:0];
     
-    // create mcmatrix corresponding to minor of m with 1st row and 1st column removed
-    double *mValues = malloc(4 * sizeof(double));
-    mValues[0] = 5.0;
-    mValues[1] = 6.0;
-    mValues[2] = 8.0;
-    mValues[3] = 9.0;
-    MCMatrix *minorSolution = [MCMatrix matrixWithValues:mValues rows:2 columns:2];
+    double *minorValues = malloc(9 * sizeof(double));
+    int minor = 0;
+    for (int row = 0; row < 3; row += 1) {
+        for (int col = 0; col < 3; col += 1) {
+            minorValues[minor++] = [m minorOfRow:row column:col];
+        }
+    }
+    MCMatrix *minors = [MCMatrix matrixWithValues:minorValues
+                                             rows:3
+                                          columns:3
+                               valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
     
-    XCTAssertEqual(minor.rows, minorSolution.rows, @"Minor computed with incorrect amount of rows.");
-    XCTAssertEqual(minor.columns, minorSolution.columns, @"Minor computed with incorrect amount of columns.");
-    for (int i = 0; i < minorSolution.rows; i++) {
-        for (int j = 0; j < minorSolution.columns; j++) {
-            XCTAssertEqual([minor valueAtRow:i column:j], [minorSolution valueAtRow:i column:j], @"Minor contains incorrect value at %u, %u", i, j);
+    double minorSolutionValues[9] = {
+        -3.0, -6.0, -3.0,
+        -6.0, -12.0, -6.0,
+        -3.0, -6.0, -3.0
+    };
+    MCMatrix *minorSolutions = [MCMatrix matrixWithValues:minorSolutionValues
+                                                     rows:3
+                                                  columns:3
+                                       valueStorageFormat:MCMatrixValueStorageFormatRowMajor];
+    
+    for (int row = 0; row < 3; row += 1) {
+        for (int col = 0; col < 3; col += 1) {
+            double a = [minors valueAtRow:row column:col];
+            double b = [minorSolutions valueAtRow:row column:col];
+            XCTAssertEqual(a, b, @"Minor at (%u, %u) calculated incorrectly", row, col);
         }
     }
     
     // try to create a minor with an invalid row and column
-    XCTAssertThrows([m minorByRemovingRow:3 column:1], @"Should throw an invalid row exception.");
-    XCTAssertThrows([m minorByRemovingRow:1 column:3], @"Should throw an invalid column exception.");
+    XCTAssertThrows([m minorOfRow:3 column:1], @"Should throw an invalid row exception.");
+    XCTAssertThrows([m minorOfRow:1 column:3], @"Should throw an invalid column exception.");
 }
 
 - (void)testMatrixAddition

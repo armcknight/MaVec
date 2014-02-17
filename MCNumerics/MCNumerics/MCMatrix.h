@@ -300,10 +300,7 @@ typedef enum {
 
 #pragma mark - Operations
 
-/**
- @return A new MCMatrix object with the values from this matrix (in the same valueStorageFormat), excluding the specified row and index values. 
- */
-- (MCMatrix *)minorByRemovingRow:(NSUInteger)row column:(NSUInteger)column;
+- (double)minorOfRow:(NSUInteger)row column:(NSUInteger)column;
 
 /**
  @return The (pseudo)inverse of this matrix in a new MCMatrix object.
