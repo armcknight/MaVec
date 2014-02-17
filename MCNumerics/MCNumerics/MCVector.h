@@ -19,6 +19,9 @@ typedef enum {
 @property (assign, readonly, nonatomic) NSUInteger length;
 @property (assign, readonly, nonatomic) double *values;
 
+@property (assign, readonly, nonatomic) double sumOfValues;
+@property (assign, readonly, nonatomic) double productOfValues;
+
 #pragma mark - Constructors
 
 /**

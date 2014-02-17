@@ -15,7 +15,16 @@
 
 @implementation MCVector
 
+@synthesize sumOfValues = _sumOfValues;
+@synthesize productOfValues = _productOfValues;
+
 #pragma mark - Constructors
+
+- (void)commonInit
+{
+    _sumOfValues = NAN;
+    _productOfValues = NAN;
+}
 
 - (void)commonInitWithValues:(double *)values length:(int)length
 {
@@ -29,6 +38,7 @@
     if (self) {
         [self commonInitWithValues:values length:length];
         _vectorFormat = MCVectorFormatColumnVector;
+        [self commonInit];
     }
     return self;
 }
@@ -39,6 +49,7 @@
     if (self) {
         [self commonInitWithValues:values length:length];
         _vectorFormat = vectorFormat;
+        [self commonInit];
     }
     return self;
 }
@@ -68,6 +79,7 @@
     if (self) {
         [self commonInitWithValuesInArray:values];
         _vectorFormat = MCVectorFormatColumnVector;
+        [self commonInit];
     }
     return self;
 }
@@ -78,6 +90,7 @@
     if (self) {
         [self commonInitWithValuesInArray:values];
         _vectorFormat = vectorFormat;
+        [self commonInit];
     }
     return self;
 }
@@ -90,6 +103,32 @@
 + (instancetype)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
 {
     return [[MCVector alloc] initWithValuesInArray:values inVectorFormat:vectorFormat];
+}
+
+#pragma mark - Lazy loaded properties
+
+- (double)sumOfValues
+{
+    if (isnan(_sumOfValues)) {
+        double sum = 0.0;
+        for (int i = 0; i < self.length; i += 1) {
+            sum += self.values[i];
+        }
+        _sumOfValues = sum;
+    }
+    return _sumOfValues;
+}
+
+- (double)productOfValues
+{
+    if (isnan(_productOfValues)) {
+        double product = 1.0;
+        for (int i = 0; i < self.length; i += 1) {
+            product *= self.values[i];
+        }
+        _productOfValues = product;
+    }
+    return _productOfValues;
 }
 
 #pragma mark - NSObject overrides
