@@ -57,8 +57,9 @@ typedef enum {
    0 0 m n ]  ->  [* b e i a d h l c g k n f j m *] (* must exist in array but isn't used by the algorithm)
  */
 typedef enum {
+    MCMatrixValuePackingFormatConventional,
     MCMatrixValuePackingFormatPacked,
-    MCMatrixValuePackingFormatUnpacked
+    MCMatrixValuePackingFormatBand
 } MCMatrixValuePackingFormat;
 
 
