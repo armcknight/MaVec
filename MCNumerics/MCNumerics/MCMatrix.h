@@ -25,16 +25,71 @@ typedef enum {
     MCMatrixLeadingDimensionColumn
 } MCMatrixLeadingDimension;
 
+/**
+ @brief Constants specifying the triangular portion of a square matrix.
+ @constant MCMatrixTriangularComponentLower Specifies that values refer to lower triangular portion.
+ @constant MCMatrixTriangularComponentUpper Specifies that values refer to upper triangular portion.
+ */
 typedef enum {
     MCMatrixTriangularComponentLower,
     MCMatrixTriangularComponentUpper
 } MCMatrixTriangularComponent;
 
+/**
+ @brief Constants specifying the matrix flattening method used to construct the values array.
+ @constant MCMatrixValuePackingFormatConventional All values are flattened using a MCMatrixLeadingDimension.
+ 
+ [ a b
+   c d ]   =>    [a b c d] or [a c b d]
+ 
+ @constant MCMatrixValuePackingFormatPacked Exclude triangular matrix' leftover 0 values.
+ 
+ [ a b c
+   0 d e
+   0 0 f ]  =>  [a b c d e f] or [a b d c e f]
+ 
+ @constant MCMatrixValuePackingFormatBand Only store the non-zero band values.
+ 
+ [ a b 0 0
+   c d e 0
+   f g h i
+   0 j k l
+   0 0 m n ]  ->  [* b e i a d h l c g k n f j m *] (* must exist in array but isn't used by the algorithm)
+ */
 typedef enum {
     MCMatrixValuePackingFormatPacked,
     MCMatrixValuePackingFormatUnpacked
 } MCMatrixValuePackingFormat;
 
+
+/**
+ @brief Definiteness of a matrix M.
+ 
+ @constant MCMatrixDefinitenessPositiveDefinite 
+ 
+ x^TMx > 0 for all nonzero real x
+ 
+ @constant MCMatrixDefinitenessPositiveSemidefinite
+ 
+ x^TMx ≥ 0 for all real x
+ 
+ @constant MCMatrixDefinitenessNegativeDefinite
+ 
+ x^TMx < 0 for all nonzero real x
+ 
+ @constant MCMatrixDefinitenessNegativeSemidefinite
+ 
+ x^TMx ≤ 0 for all real x
+ 
+ @constant MCMatrixDefinitenessIndefinite
+ 
+ x^TMx can be greater than, equal to or lesser than 0 for all real x
+ 
+ @constant MCMatrixDefinitenessUnknown
+ 
+ This value has not yet been computed for this matrix.
+ 
+ */
 typedef enum {
     MCMatrixDefinitenessPositiveDefinite,
     MCMatrixDefinitenessPositiveSemidefinite,
@@ -95,10 +150,22 @@ typedef enum {
  */
 @property (nonatomic, readonly, strong) MCMatrix *inverse;
 
+/**
+ @property minorMatrix
+ @brief Each entry holds the value of the matrix minor from that point (the determinant of the submatrix formed by removing particular rows/columns; e.g. Mij of matrix A is the determinant of the submatrix of A without row i or column j).
+ */
 @property (nonatomic, readonly, strong) MCMatrix *minorMatrix;
 
+/**
+ @property cofactorMatrix
+ @brief Each entry holds the cofactor of the matrix from that point (Cij of matrix A is the cofactor obtained by multiplying the minor at the same point by (-1)^(i+j) ).
+ */
 @property (nonatomic, readonly, strong) MCMatrix *cofactorMatrix;
 
+/**
+ @property adjugate
+ @brief The adjugate matrix is the transpose of cofactorMatrix.
+ */
 @property (nonatomic, readonly, strong) MCMatrix *adjugate;
 
 /**
@@ -139,10 +206,22 @@ typedef enum {
  */
 @property (nonatomic, readonly, strong) MCTribool *isSymmetric;
 
+/**
+ @property definiteness
+ @brief The definiteness enum value for this matrix. Default value = MCMatrixDefinitenessUnknown. (Lazy-loaded)
+ */
 @property (nonatomic, readonly, assign) MCMatrixDefiniteness definiteness;
 
+/**
+ @property diagnoalValues
+ @brief A vector containing the value on the main diagonalfrom top to  button. (Lazy-loaded)
+ */
 @property (nonatomic, readonly, strong) MCVector *diagonalValues;
 
+/**
+ @property trace
+ @brief The sum of the values on the main diagonal. (Lazy-loaded)
+ */
 @property (nonatomic, readonly, assign) double trace;
 
 #pragma mark - Constructors
@@ -181,6 +260,14 @@ typedef enum {
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns;
 
+/**
+ @brief Creates a matrix with the specified values and number of rows and columns.
+ @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in column-major format.
+ @param values The values to store in this matrix, supplied as an NSArray object.
+ @param rows The number of rows.
+ @param columns The number of columns.
+ @return New instance of MCMatrix.
+ */
 - (instancetype)initWithValuesInArray:(NSArray *)valuesArray
                                  rows:(NSUInteger)rows
                               columns:(NSUInteger)columns;
@@ -199,6 +286,15 @@ typedef enum {
                        columns:(NSUInteger)columns
             valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
+/**
+ @brief Creates a matrix with the specified values stored using a specified leading dimension and number of rows and columns.
+ @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in column-major format.
+ @param values The values to store in this matrix, supplied as an NSArray object.
+ @param rows The number of rows.
+ @param columns The number of columns.
+ @param valueStorageFormat The leading dimension used to flatten the array values.
+ @return New instance of MCMatrix.
+ */
 - (instancetype)initWithValuesInArray:(NSArray *)valuesArray
                                  rows:(NSUInteger)rows
                               columns:(NSUInteger)columns
