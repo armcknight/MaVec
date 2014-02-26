@@ -16,14 +16,14 @@
 @class MCTribool;
 
 /**
- @brief Constants specifying the logical storage type for this matrix' values.
- @constant MCMatrixValueStorageFormatRowMajor Specifies that this matrix' values are stored in row-major order.
- @constant MCMatrixValueStorageFormatColumnMajor Specifies that this matrix' values are stored in column-major order.
+ @brief Constants specifying the leading dimension used for storing this matrix' values.
+ @constant MCMatrixLeadingDimensionRow Specifies that this matrix' values are stored in row-major order.
+ @constant MCMatrixLeadingDimensionColumn Specifies that this matrix' values are stored in column-major order.
  */
 typedef enum {
-    MCMatrixValueStorageFormatRowMajor,
-    MCMatrixValueStorageFormatColumnMajor
-} MCMatrixValueStorageFormat;
+    MCMatrixLeadingDimensionRow,
+    MCMatrixLeadingDimensionColumn
+} MCMatrixLeadingDimension;
 
 typedef enum {
     MCMatrixTriangularComponentLower,
@@ -75,7 +75,7 @@ typedef enum {
  @property valueStorageFormat 
  @brief The logical storage format for the matrix' values in the one-dimensional array.
  */
-@property (nonatomic, assign) MCMatrixValueStorageFormat valueStorageFormat;
+@property (nonatomic, assign) MCMatrixLeadingDimension valueStorageFormat;
 
 /**
  @property transpose
@@ -167,7 +167,7 @@ typedef enum {
  */
 - (instancetype)initWithRows:(NSUInteger)rows
                      columns:(NSUInteger)columns
-          valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+          valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 /**
  @brief Creates a matrix with the specified values and number of rows and columns.
@@ -197,12 +197,12 @@ typedef enum {
 - (instancetype)initWithValues:(double *)values
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-            valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+            valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 - (instancetype)initWithValuesInArray:(NSArray *)valuesArray
                                  rows:(NSUInteger)rows
                               columns:(NSUInteger)columns
-                   valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+                   valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
 - (instancetype)initWithRowVectors:(NSArray *)rowVectors;
@@ -210,12 +210,12 @@ typedef enum {
 - (instancetype)initTriangularMatrixWithValues:(double *)values
                          ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                          inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                          inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
                                        ofOrder:(NSUInteger)order;
 - (instancetype)initTriangularMatrixWithValuesInArray:(NSArray *)values
                                 ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                       inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                                 inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+                                 inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns but without supplying values.
@@ -237,7 +237,7 @@ typedef enum {
  */
 + (instancetype)matrixWithRows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-            valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+            valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 /**
  @brief Class convenience method to create a matrix with the specified values and number of rows and columns.
@@ -267,12 +267,12 @@ typedef enum {
 + (instancetype)matrixWithValues:(double *)values
                             rows:(NSUInteger)rows
                          columns:(NSUInteger)columns
-              valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+              valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 + (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
                                    rows:(NSUInteger)rows
                                 columns:(NSUInteger)columns
-                     valueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+                     valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 /**
  @brief Class convenience method to create a square identity matrix with the specified size.
@@ -296,12 +296,12 @@ typedef enum {
 + (instancetype)triangularMatrixWithValues:(double *)values
                      ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                            inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                      inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                      inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
                                    ofOrder:(NSUInteger)order;
 + (instancetype)triangularMatrixWithValuesInArray:(NSArray *)values
                             ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                   inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                             inValueStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+                             inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 #pragma mark - Operations
 
@@ -353,10 +353,10 @@ typedef enum {
 /**
  @return A copy of this matrix' values stored in the specified format (row-major or column-major).
  */
-- (double *)valuesInStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat;
+- (double *)valuesInStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat;
 
 - (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                                    inStorageFormat:(MCMatrixValueStorageFormat)valueStorageFormat
+                                    inStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
                                   withPackingFormat:(MCMatrixValuePackingFormat)packingFormat;
 
 /**
