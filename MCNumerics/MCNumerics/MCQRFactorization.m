@@ -32,7 +32,7 @@
         _rows = m;
         _columns = n;
         double *a = malloc(m * m * sizeof(double));
-        double *values = [matrix valuesInStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+        double *values = [matrix valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
         for (int i = 0; i < m * n; i += 1) {
             a[i] = values[i];
         }
@@ -63,7 +63,7 @@
         dorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
         
         // use output from dorgqr to build the q mcmatrix object
-        _q = [MCMatrix matrixWithValues:a rows:m columns:m valueStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+        _q = [MCMatrix matrixWithValues:a rows:m columns:m valueStorageFormat:MCMatrixLeadingDimensionColumn];
         
         // compute r by multiplying the transpose of q by the input matrix
         _r = [MCMatrix productOfMatrixA:_q.transpose andMatrixB:matrix];

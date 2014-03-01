@@ -24,8 +24,8 @@
             long lda = n;
             double *w = malloc(n * sizeof(double));
             double *a = [matrix triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                        inStorageFormat:MCMatrixValueStorageFormatColumnMajor
                                                       withPackingFormat:MCMatrixValuePackingFormatUnpacked];
+                                                        inStorageFormat:MCMatrixLeadingDimensionColumn
             double wkopt;
             long lwork = -1;
             long iwkopt;
@@ -45,7 +45,7 @@
             }
         } else {
             long n = matrix.rows;
-            double *a = [matrix valuesInStorageFormat:MCMatrixValueStorageFormatColumnMajor];
+            double *a = [matrix valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
             long lda = n;
             double *wr= malloc(n * sizeof(double));
             double *wi= malloc(n * sizeof(double));
