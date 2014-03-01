@@ -1396,7 +1396,7 @@
 
 - (void)testMatrixDefiniteness
 {
-    // positive definite
+    // ----- positive definite -----
     double positiveDefiniteValues[9] = {
         2.0, -1.0, 0.0,
         -1.0, 2.0, -1.0,
@@ -1405,15 +1405,15 @@
     MCMatrix *matrix = [MCMatrix matrixWithValues:positiveDefiniteValues rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessPositiveDefinite, @"Positive definite matrix was not recognized.");
     
-    // positive semidefinite
+    // ----- positive semidefinite -----
     double positiveSemidefiniteValues[4] = {
-        1.0, 0.0,
-        0.0, 2,0
+        1, 1,
+        1, 1
     };
     matrix = [MCMatrix matrixWithValues:positiveSemidefiniteValues rows:2 columns:2 valueStorageFormat:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessPositiveSemidefinite, @"Positive semidefinite matrix was not recognized.");
     
-    // indefinite
+    // ----- indefinite -----
     double indefiniteValues[9] = {
         1.0, 1.0, 1.0,
         1.0, 1.0, 1.0,
@@ -1422,7 +1422,9 @@
     matrix = [MCMatrix matrixWithValues:indefiniteValues rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessIndefinite, @"Indefinite matrix was not recognized.");
     
-    // negative semidefinite
+    // ----- negative semidefinite -----
+    
+    // test case from http://www.math.drexel.edu/~tolya/301_spd_cholesky.pdf
     double negativeSemidefiniteValues[4] = {
         0.0, 0.0,
         0.0, -1.0
@@ -1430,7 +1432,14 @@
     matrix = [MCMatrix matrixWithValues:negativeSemidefiniteValues rows:2 columns:2 valueStorageFormat:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessNegativeSemidefinite, @"Negative semidefinite matrix was not recognized.");
     
-    // negative definite
+    // ----- negative definite -----
+    double negativeDefiniteValues[9] = {
+        -1.0, 0.0, 0.0,
+        0.0, -1.0, 0.0,
+        0.0, 0.0, -1.0
+    };
+    matrix = [MCMatrix matrixWithValues:negativeDefiniteValues rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessNegativeDefinite, @"Negative definite matrix was not recognized.");
 }
 
 @end

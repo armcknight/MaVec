@@ -531,9 +531,42 @@
 
 - (MCMatrixDefiniteness)definiteness
 {
-    if (_definiteness == MCMatrixDefinitenessUnknown) {
-        @throw kMCUnimplementedMethodException;
-        // TODO: implement
+    BOOL hasFoundEigenvalueStrictlyGreaterThanZero = NO;
+    BOOL hasFoundEigenvalueStrictlyLesserThanZero = NO;
+    BOOL hasFoundEigenvalueEqualToZero = NO;
+    if (self.isSymmetric && _definiteness == MCMatrixDefinitenessUnknown) {
+        MCVector *eigenvalues = self.eigendecomposition.eigenvalues;
+        for (int i = 0; i < eigenvalues.length; i += 1) {
+            double eigenvalue = [eigenvalues valueAtIndex:i];
+            if (eigenvalue > 0) {
+                hasFoundEigenvalueStrictlyGreaterThanZero = YES;
+            }
+            else if (eigenvalue < 0) {
+                hasFoundEigenvalueStrictlyLesserThanZero = YES;
+            }
+            else {
+                hasFoundEigenvalueEqualToZero = YES;
+            }
+        }
+        if (hasFoundEigenvalueStrictlyGreaterThanZero
+            && !hasFoundEigenvalueStrictlyLesserThanZero
+            && !hasFoundEigenvalueEqualToZero) {
+            _definiteness = MCMatrixDefinitenessPositiveDefinite;
+        } else if (!hasFoundEigenvalueStrictlyGreaterThanZero
+                   && hasFoundEigenvalueStrictlyLesserThanZero
+                   && !hasFoundEigenvalueEqualToZero) {
+            _definiteness = MCMatrixDefinitenessNegativeDefinite;
+        } else if (hasFoundEigenvalueStrictlyGreaterThanZero
+                   && !hasFoundEigenvalueStrictlyLesserThanZero
+                   && hasFoundEigenvalueEqualToZero) {
+            _definiteness = MCMatrixDefinitenessPositiveSemidefinite;
+        } else if (!hasFoundEigenvalueStrictlyGreaterThanZero
+                   && hasFoundEigenvalueStrictlyLesserThanZero
+                   && hasFoundEigenvalueEqualToZero) {
+            _definiteness = MCMatrixDefinitenessNegativeSemidefinite;
+        } else {
+            _definiteness = MCMatrixDefinitenessIndefinite;
+        }
     }
     return _definiteness;
 }
@@ -835,7 +868,6 @@
 }
 
 #pragma mark - Mutation
-
 - (void)setEntryAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(double)value
 {
     if (row >= self.rows) {
