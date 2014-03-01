@@ -200,7 +200,7 @@
                           inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
                                        ofOrder:(NSUInteger)order
 {
-    if (packingFormat == MCMatrixValuePackingFormatUnpacked) {
+    if (packingFormat == MCMatrixValuePackingFormatConventional) {
         self = [self initWithValues:values rows:order columns:order valueStorageFormat:valueStorageFormat];
     } else {
         self = [super init];
@@ -783,7 +783,7 @@
             if (shouldStoreValueForLowerTriangle || shouldStoreValueForUpperTriangle) {
                 double value = [self valueAtRow:row column:col];
                 values[i++] = value;
-            } else if (packingFormat == MCMatrixValuePackingFormatUnpacked) {
+            } else if (packingFormat == MCMatrixValuePackingFormatConventional) {
                 values[i++] = 0.0;
             }
         }
