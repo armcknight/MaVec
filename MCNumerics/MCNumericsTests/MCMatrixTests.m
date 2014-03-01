@@ -1446,4 +1446,17 @@
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessNegativeDefinite, @"Negative definite matrix was not recognized.");
 }
 
+- (void)testConditionNumber
+{
+    double values[81] = {
+        7.0, 3.0,
+        -9.0, 2.0
+    };
+    MCMatrix *matrix = [MCMatrix matrixWithValues:values rows:2 columns:2 valueStorageFormat:MCMatrixLeadingDimensionColumn];
+    
+    double conditionNumber = matrix.conditionNumber;
+    
+    XCTAssertEqualWithAccuracy(conditionNumber, 3.902, 0.001, @"condition number not calculated correctly.");
+}
+
 @end

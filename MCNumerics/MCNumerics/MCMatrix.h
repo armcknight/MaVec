@@ -173,7 +173,7 @@ typedef enum {
  @property conditionNumber
  @brief The condition number of this matrix. (Lazy-loaded)
  */
-@property (nonatomic, readonly, strong) NSNumber *conditionNumber;
+@property (nonatomic, readonly, assign) double conditionNumber;
 
 /**
  @property qrFactorization

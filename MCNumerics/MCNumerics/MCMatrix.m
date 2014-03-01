@@ -53,7 +53,7 @@
     _eigendecomposition = nil;
     _inverse = nil;
     _transpose = nil;
-    _conditionNumber = nil;
+    _conditionNumber = -1.0;
     _determinant = NAN;
     _diagonalValues = nil;
     _trace = NAN;
@@ -454,13 +454,25 @@
     return _inverse;
 }
 
-- (NSNumber *)conditionNumber
+- (double)conditionNumber
 {
-    if (!_conditionNumber) {
-        _conditionNumber = @(0.0);
+    if (_conditionNumber == -1.0) {
+        double *values = [self valuesInStorageFormat:MCMatrixLeadingDimensionRow];
+        long m = self.rows;
+        long n = self.columns;
+        double norm = dlange_("1", &m, &n, values, &m, nil);
         
-        // TODO: implement
-        @throw kMCUnimplementedMethodException;
+        long lda = self.rows;
+        long *ipiv = malloc(m * sizeof(long));
+        long info;
+        dgetrf_(&m, &n, values, &lda, ipiv, &info);
+        
+        double conditionReciprocal;
+        double *work = malloc(4 * m * sizeof(double));
+        long *iwork = malloc(m * sizeof(long));
+        dgecon_("1", &m, values, &lda, &norm, &conditionReciprocal, work, iwork, &info);
+        
+        _conditionNumber = 1.0 / conditionReciprocal;
     }
     
     return _conditionNumber;
@@ -1067,7 +1079,7 @@
     }
     
     if (_conditionNumber) {
-        matrixCopy->_conditionNumber = _conditionNumber.copy;
+        matrixCopy->_conditionNumber = _conditionNumber;
     }
     
     if (_qrFactorization) {
