@@ -5,6 +5,10 @@
 //  Created by andrew mcknight on 2/16/14.
 //  Copyright (c) 2014 andrew mcknight. All rights reserved.
 //
+//  Many tests were created and validated using
+//  https://www.wolframalpha.com/examples/Matrices.html and
+//  http://www.arndt-bruenner.de/mathe/scripts/engl_eigenwert.htm
+//
 
 #import <XCTest/XCTest.h>
 
