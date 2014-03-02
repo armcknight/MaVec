@@ -185,7 +185,43 @@
     return self;
 }
 
+- (instancetype)initSymmetricMatrixWithValues:(double *)values
+                              inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                             leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                                      ofOrder:(NSUInteger)order
 {
+    if (packingFormat == MCMatrixValuePackingFormatBand) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot construct a symmetric matrix with banded value storage. Packing format must be either 'conventional' or 'packed'" userInfo:nil];
+    }
+    
+    if (packingFormat == MCMatrixValuePackingFormatConventional) {
+        self = [self initWithValues:values rows:order columns:order leadingDimension:leadingDimension];
+    } else {
+        self = [super init];
+        if (self) {
+            _rows = order;
+            _columns = order;
+            _values = malloc(order * order * sizeof(double));
+            _leadingDimension = leadingDimension;
+            int k = 0;
+            for (int i = 0; i < order; i += 1) {
+                for (int j = i; j < order; j += 1) {
+                    double value = values[k++];
+                    [self setEntryAtRow:j column:i toValue:value];
+                    if (i != j) {
+                        [self setEntryAtRow:i column:j toValue:value];
+                    }
+                }
+            }
+        }
+        [self commonInit];
+    }
+    _packingFormat = packingFormat;
+    _triangularComponent = MCMatrixTriangularComponentBoth;
+    
+    return self;
+}
+
 }
 
 #pragma mark - Class constructors
@@ -277,6 +313,17 @@
                                             inPackingFormat:packingFormat
                                            leadingDimension:leadingDimension
                                                     ofOrder:order];
+}
+
++ (instancetype)symmetricMatrixWithValues:(double *)values
+                          inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                         leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                                  ofOrder:(NSUInteger)order
+{
+    return [[MCMatrix alloc] initSymmetricMatrixWithValues:values
+                                           inPackingFormat:packingFormat
+                                          leadingDimension:leadingDimension
+                                                   ofOrder:order];
 }
 
 //- (void)dealloc

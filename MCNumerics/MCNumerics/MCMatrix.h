@@ -288,6 +288,11 @@ typedef enum {
                               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                        ofOrder:(NSUInteger)order;
 
+- (instancetype)initSymmetricMatrixWithValues:(double *)values
+                              inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                             leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                                      ofOrder:(NSUInteger)order;
+
 #pragma mark - Class constructors
 
 /**
@@ -364,6 +369,11 @@ typedef enum {
                            inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
                           leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                    ofOrder:(NSUInteger)order;
+
++ (instancetype)symmetricMatrixWithValues:(double *)values
+                          inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                         leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                                  ofOrder:(NSUInteger)order;
 
 #pragma mark - Operations
 

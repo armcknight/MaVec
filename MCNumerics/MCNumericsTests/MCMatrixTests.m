@@ -1464,4 +1464,55 @@
     XCTAssertEqualWithAccuracy(conditionNumber, 3.902, 0.001, @"condition number not calculated correctly.");
 }
 
+- (void)testSymmetricMatrixCreation
+{
+    // conventional row-major
+    double rowMajorConventionalValues[9] = {
+        1.0, 2.0, 3.0,
+        2.0, 5.0, 7.0,
+        3.0, 7.0, 12.0
+    };
+    MCMatrix *matrix = [MCMatrix symmetricMatrixWithValues:rowMajorConventionalValues
+                                           inPackingFormat:MCMatrixValuePackingFormatConventional
+                                          leadingDimension:MCMatrixLeadingDimensionRow
+                                                   ofOrder:3];
+    XCTAssert(matrix.isSymmetric, @"Symmetric row-major matrix constructed incorrectly.");
+    
+    // packed row-major
+    double rowMajorPackedValues[6] = {
+        1.0, 2.0, 3.0,
+             5.0, 7.0,
+                  12.0
+    };
+    matrix = [MCMatrix symmetricMatrixWithValues:rowMajorPackedValues
+                                 inPackingFormat:MCMatrixValuePackingFormatPacked
+                                leadingDimension:MCMatrixLeadingDimensionRow
+                                         ofOrder:3];
+    XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
+    
+    // conventional column-major
+    double columnMajorConventionalValues[9] = {
+        1.0, 2.0, 3.0,
+        2.0, 5.0, 7.0,
+        3.0, 7.0, 12.0
+    };
+    matrix = [MCMatrix symmetricMatrixWithValues:columnMajorConventionalValues
+                                           inPackingFormat:MCMatrixValuePackingFormatConventional
+                                          leadingDimension:MCMatrixLeadingDimensionColumn
+                                                   ofOrder:3];
+    XCTAssert(matrix.isSymmetric, @"Symmetric column-major matrix constructed incorrectly.");
+    
+    // packed column-major
+    double columnMajorPackedValues[6] = {
+        1.0, 2.0, 3.0,
+        5.0, 7.0,
+        12.0
+    };
+    matrix = [MCMatrix symmetricMatrixWithValues:columnMajorPackedValues
+                                 inPackingFormat:MCMatrixValuePackingFormatPacked
+                                leadingDimension:MCMatrixLeadingDimensionColumn
+                                         ofOrder:3];
+    XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
+}
+
 @end
