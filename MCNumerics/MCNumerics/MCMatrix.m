@@ -21,6 +21,8 @@
 
 @interface MCMatrix ()
 
+- (double)normOfType:(MCMatrixNorm)normType;
+
 @end
 
 @implementation MCMatrix
@@ -40,6 +42,10 @@
 @synthesize adjugate = _adjugate;
 @synthesize minorMatrix = _minorMatrix;
 @synthesize cofactorMatrix = _cofactorMatrix;
+@synthesize normL1 = _normL1;
+@synthesize normInfinity = _normInfinity;
+@synthesize normFroebenius = _normFroebenius;
+@synthesize normMax = _normMax;
 
 #pragma mark - Constructors
 
@@ -60,6 +66,10 @@
     _adjugate = nil;
     _minorMatrix = nil;
     _cofactorMatrix = nil;
+    _normInfinity = NAN;
+    _normL1 = NAN;
+    _normMax = NAN;
+    _normFroebenius = NAN;
 }
 
 - (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
@@ -604,6 +614,61 @@
     return _trace;
 }
 
+- (double)normInfinity
+{
+    if (isnan(_normInfinity)) {
+        _normInfinity = [self normOfType:MCMatrixNormInfinity];
+    }
+    return _normInfinity;
+}
+
+- (double)normL1
+{
+    if (isnan(_normL1)) {
+        _normL1 = [self normOfType:MCMatrixNormL1];
+    }
+    return _normL1;
+}
+
+- (double)normMax
+{
+    if (isnan(_normMax)) {
+        _normMax = [self normOfType:MCMatrixNormMax];
+    }
+    return _normMax;
+}
+
+- (double)normFroebenius
+{
+    if (isnan(_normFroebenius)) {
+        _normFroebenius = [self normOfType:MCMatrixNormFroebenius];
+    }
+    return _normFroebenius;
+}
+
+- (double)normOfType:(MCMatrixNorm)normType
+{
+    double normResult = NAN;
+    
+    double *values = [self valuesInStorageFormat:MCMatrixLeadingDimensionRow];
+    long m = self.rows;
+    long n = self.columns;
+    char *norm = "";
+    if (normType == MCMatrixNormL1) {
+        norm = "1";
+    } else if (normType == MCMatrixNormInfinity) {
+        norm = "I";
+    } else if (normType == MCMatrixNormMax) {
+        norm = "M";
+    } else /* if (normType == MCMatrixNormFroebenius) */ {
+        norm = "F";
+    }
+    
+    normResult = dlange_(norm, &m, &n, values, &m, nil);
+    
+    return normResult;
+}
+
 - (MCMatrix *)minorMatrix
 {
     if (!_minorMatrix) {
@@ -1113,6 +1178,11 @@
     matrixCopy->_isSymmetric = _isSymmetric.copy;
     matrixCopy->_definiteness = _definiteness;
     matrixCopy->_trace = _trace;
+    
+    matrixCopy->_normInfinity = _normInfinity;
+    matrixCopy->_normL1 = _normL1;
+    matrixCopy->_normFroebenius = _normFroebenius;
+    matrixCopy->_normFroebenius = _normMax;
     
     return matrixCopy;
 }

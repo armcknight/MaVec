@@ -15,6 +15,13 @@
 @class MCVector;
 @class MCTribool;
 
+typedef NS_ENUM(NSUInteger, MCMatrixNorm) {
+    MCMatrixNormL1,
+    MCMatrixNormInfinity,
+    MCMatrixNormMax,
+    MCMatrixNormFroebenius
+};
+
 /**
  @brief Constants specifying the leading dimension used for storing this matrix' values.
  @constant MCMatrixLeadingDimensionRow Specifies that this matrix' values are stored in row-major order.
@@ -224,6 +231,12 @@ typedef enum {
  @brief The sum of the values on the main diagonal. (Lazy-loaded)
  */
 @property (nonatomic, readonly, assign) double trace;
+
+@property (nonatomic, readonly, assign) double normL1;
+@property (nonatomic, readonly, assign) double normInfinity;
+@property (nonatomic, readonly, assign) double normMax;
+@property (nonatomic, readonly, assign) double normFroebenius;
+
 
 #pragma mark - Constructors
 
