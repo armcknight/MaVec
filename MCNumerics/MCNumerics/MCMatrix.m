@@ -74,24 +74,9 @@
     _normFroebenius = NAN;
 }
 
-- (instancetype)initWithRows:(NSUInteger)rows columns:(NSUInteger)columns
-{
-    self = [super init];
-    
-    if (self) {
-        _rows = rows;
-        _columns = columns;
-        _values = malloc(rows * columns * sizeof(double));
-        _leadingDimension = MCMatrixLeadingDimensionColumn;
-        [self commonInit];
-    }
-    
-    return self;
-}
-
 - (instancetype)initWithRows:(NSUInteger)rows
                      columns:(NSUInteger)columns
-          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+            leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     self = [super init];
     
@@ -100,23 +85,6 @@
         _columns = columns;
         _values = malloc(rows * columns * sizeof(double));
         _leadingDimension = leadingDimension;
-        [self commonInit];
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithValues:(double *)values
-                          rows:(NSUInteger)rows
-                       columns:(NSUInteger)columns
-{
-    self = [super init];
-    
-    if (self) {
-        _rows = rows;
-        _columns = columns;
-        _values = values;
-        _leadingDimension = MCMatrixLeadingDimensionColumn;
         [self commonInit];
     }
     
@@ -271,9 +239,13 @@
     return [[MCMatrix alloc] initWithRowVectors:rowVectors];
 }
 
-+ (instancetype)matrixWithRows:(NSUInteger)rows columns:(NSUInteger)columns
++ (instancetype)matrixWithRows:(NSUInteger)rows
+                       columns:(NSUInteger)columns
 {
-    return [[MCMatrix alloc] initWithRows:rows columns:columns];
+    return [[MCMatrix alloc] initWithValues:malloc(rows * columns * sizeof(double))
+                                       rows:rows
+                                    columns:columns
+                           leadingDimension:MCMatrixLeadingDimensionColumn];
 }
 
 + (instancetype)matrixWithRows:(NSUInteger)rows
@@ -290,8 +262,9 @@
                          columns:(NSUInteger)columns
 {
     return [[MCMatrix alloc] initWithValues:values
-                                     rows:rows
-                                  columns:columns];
+                                       rows:rows
+                                    columns:columns
+                           leadingDimension:MCMatrixLeadingDimensionColumn];
 }
 
 + (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray

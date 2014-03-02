@@ -253,16 +253,6 @@ typedef enum {
 #pragma mark - Constructors
 
 /**
- @brief Creates a column-major matrix with the specified number of rows and columns but without supplying values.
- @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in column-major format.
- @param rows The number of rows.
- @param columns The number of columns.
- @return New instance of MCMatrix.
- */
-- (instancetype)initWithRows:(NSUInteger)rows
-                     columns:(NSUInteger)columns;
-
-/**
  @brief Creates a matrix with the specified number of rows and columns and storage format, but without supplying values.
  @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in the specified format.
  @param rows The number of rows.
@@ -272,31 +262,7 @@ typedef enum {
  */
 - (instancetype)initWithRows:(NSUInteger)rows
                      columns:(NSUInteger)columns
-          leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
-
-/**
- @brief Creates a matrix with the specified values and number of rows and columns.
- @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in column-major format.
- @param values The values to store in this matrix, supplied as a C array.
- @param rows The number of rows.
- @param columns The number of columns.
- @return New instance of MCMatrix.
- */
-- (instancetype)initWithValues:(double *)values
-                          rows:(NSUInteger)rows
-                       columns:(NSUInteger)columns;
-
-/**
- @brief Creates a matrix with the specified values and number of rows and columns.
- @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in column-major format.
- @param values The values to store in this matrix, supplied as an NSArray object.
- @param rows The number of rows.
- @param columns The number of columns.
- @return New instance of MCMatrix.
- */
-- (instancetype)initWithValuesInArray:(NSArray *)valuesArray
-                                 rows:(NSUInteger)rows
-                              columns:(NSUInteger)columns;
+            leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
  @brief Creates a matrix with the specified values (in the specified storage format) and number of rows and columns.
@@ -310,21 +276,7 @@ typedef enum {
 - (instancetype)initWithValues:(double *)values
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-            leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
-
-/**
- @brief Creates a matrix with the specified values stored using a specified leading dimension and number of rows and columns.
- @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in column-major format.
- @param values The values to store in this matrix, supplied as an NSArray object.
- @param rows The number of rows.
- @param columns The number of columns.
- @param leadingDimension The leading dimension used to flatten the array values.
- @return New instance of MCMatrix.
- */
-- (instancetype)initWithValuesInArray:(NSArray *)valuesArray
-                                 rows:(NSUInteger)rows
-                              columns:(NSUInteger)columns
-                   leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
+              leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
 - (instancetype)initWithRowVectors:(NSArray *)rowVectors;
@@ -332,12 +284,8 @@ typedef enum {
 - (instancetype)initTriangularMatrixWithValues:(double *)values
                          ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                        ofOrder:(NSUInteger)order;
-- (instancetype)initTriangularMatrixWithValuesInArray:(NSArray *)values
-                                ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                                      inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns but without supplying values.
@@ -373,10 +321,6 @@ typedef enum {
                             rows:(NSUInteger)rows
                          columns:(NSUInteger)columns;
 
-+ (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
-                                   rows:(NSUInteger)rows
-                                columns:(NSUInteger)columns;
-
 /**
  @brief Class convenience method to create a matrix with the specified values (in the specified storage format) and number of rows and columns.
  @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in the specified format.
@@ -389,12 +333,7 @@ typedef enum {
 + (instancetype)matrixWithValues:(double *)values
                             rows:(NSUInteger)rows
                          columns:(NSUInteger)columns
-              leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
-
-+ (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
-                                   rows:(NSUInteger)rows
-                                columns:(NSUInteger)columns
-                     leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
+                leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
  @brief Class convenience method to create a square identity matrix with the specified size.
@@ -418,12 +357,8 @@ typedef enum {
 + (instancetype)triangularMatrixWithValues:(double *)values
                      ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                            inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                      leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                    ofOrder:(NSUInteger)order;
-+ (instancetype)triangularMatrixWithValuesInArray:(NSArray *)values
-                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                                  inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                             leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 #pragma mark - Operations
 

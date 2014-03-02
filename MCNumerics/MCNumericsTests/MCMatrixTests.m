@@ -1293,13 +1293,14 @@
 
 - (void)testQRDecompositionOfGeneralMatrix
 {
-    MCMatrix *source = [MCMatrix matrixWithValuesInArray:@[
-                                                           @0, @2, @2, @0, @2, @2,
-                                                           @2, @(-1), @(-1), @1.5, @(-1), @(-1)
-                                                           ]
-                                                    rows:6
-                                                 columns:2
-                                      leadingDimension:MCMatrixLeadingDimensionColumn];
+    double values[12] = {
+        0.0, 2.0, 2.0, 0.0, 2.0, 2.0,
+        2.0, -1.0, -1.0, 1.5, -1.0, -1.0
+    };
+    MCMatrix *source = [MCMatrix matrixWithValues:values
+                                             rows:6
+                                          columns:2
+                                 leadingDimension:MCMatrixLeadingDimensionColumn];
     
     MCQRFactorization *qrFactorization = source.qrFactorization.thinFactorization;
     
@@ -1318,36 +1319,39 @@
 
 - (void)testDeterminantCalculation
 {
-    MCMatrix *matrix = [MCMatrix matrixWithValuesInArray:@[
-                                                           @1, @2,
-                                                           @3, @4
-                                                           ]
-                                                    rows:2
-                                                 columns:2
-                                      leadingDimension:MCMatrixLeadingDimensionRow];
+    double values2x2[4] = {
+        1.0, 2.0,
+        3.0, 4.0
+    };
+    MCMatrix *matrix = [MCMatrix matrixWithValues:values2x2
+                                             rows:2
+                                          columns:2
+                                 leadingDimension:MCMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant, -2.0, @"Determinant not correct");
     
-    matrix = [MCMatrix matrixWithValuesInArray:@[
-                                                 @6, @1, @1,
-                                                 @4, @(-2), @5,
-                                                 @2, @8, @7
-                                                 ]
-                                          rows:3
-                                       columns:3
-                            leadingDimension:MCMatrixLeadingDimensionRow];
+    double values3x3[9] = {
+        6.0, 1.0, 1.0,
+        4.0, -2.0, 5.0,
+        2.0, 8.0, 7.0
+    };
+    matrix = [MCMatrix matrixWithValues:values3x3
+                                   rows:3
+                                columns:3
+                       leadingDimension:MCMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant, -306.0, @"Determinant not correct");
     
-    matrix = [MCMatrix matrixWithValuesInArray:@[
-                                                 @3, @2, @0, @1,
-                                                 @4, @0, @1, @2,
-                                                 @3, @0, @2, @1,
-                                                 @9, @2, @3, @1
-                                                 ]
-                                          rows:4
-                                       columns:4
-                            leadingDimension:MCMatrixLeadingDimensionRow];
+    double values4x4[16] = {
+        3.0, 2.0, 0.0, 1.0,
+        4.0, 0.0, 1.0, 2.0,
+        3.0, 0.0, 2.0, 1.0,
+        9.0, 2.0, 3.0, 1.0
+    };
+    matrix = [MCMatrix matrixWithValues:values4x4
+                                   rows:4
+                                columns:4
+                       leadingDimension:MCMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant, 24.0, @"Determinant not correct");
 }
