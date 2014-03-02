@@ -9,6 +9,9 @@
 #import "DemoChoiceTableViewController.h"
 #import "LinearApproximationViewController.h"
 
+#import "RZCollectionListTableViewDataSource.h"
+#import "RZArrayCollectionList.h"
+
 #define kCellIdentifier @"kCellIdentifier"
 
 @interface DemoChoiceTableViewController () <RZCollectionListTableViewDataSourceDelegate, UITableViewDelegate>
