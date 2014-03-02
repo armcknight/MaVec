@@ -701,6 +701,18 @@
     }
 }
 
+- (void)setPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+{
+    @throw kMCUnimplementedMethodException;
+    // TODO: implement
+}
+
+- (void)setTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+{
+    @throw kMCUnimplementedMethodException;
+    // TODO: implement
+}
+
 #pragma mark - Matrix operations
 
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
