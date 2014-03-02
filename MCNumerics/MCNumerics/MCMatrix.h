@@ -279,6 +279,7 @@ typedef enum {
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
+
 - (instancetype)initWithRowVectors:(NSArray *)rowVectors;
 
 - (instancetype)initTriangularMatrixWithValues:(double *)values
@@ -286,6 +287,8 @@ typedef enum {
                                inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
                               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                        ofOrder:(NSUInteger)order;
+
+#pragma mark - Class constructors
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns but without supplying values.
@@ -307,7 +310,7 @@ typedef enum {
  */
 + (instancetype)matrixWithRows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-            leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
+              leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
  @brief Class convenience method to create a matrix with the specified values and number of rows and columns.
@@ -349,9 +352,11 @@ typedef enum {
  @param values The values for the diagonal of the matrix, from the top-leftmost value to the bottom-rightmost value.
  @return New instance of MCMatrix representing the square matrix of dimension size x size with specified diagonal values.
  */
-+ (instancetype)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size;
++ (instancetype)diagonalMatrixWithValues:(double *)values
+                                    size:(NSUInteger)size;
 
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors;
+
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
 + (instancetype)triangularMatrixWithValues:(double *)values

@@ -98,13 +98,13 @@
     return [self initWithValuesInArray:valuesArray
                                   rows:rows
                                columns:columns
-                    leadingDimension:MCMatrixLeadingDimensionColumn];
+                      leadingDimension:MCMatrixLeadingDimensionColumn];
 }
 
 - (instancetype)initWithValues:(double *)values
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-            leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     self = [super init];
     
@@ -122,7 +122,7 @@
 - (instancetype)initWithValuesInArray:(NSArray *)valuesArray
                                  rows:(NSUInteger)rows
                               columns:(NSUInteger)columns
-                   leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                     leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     double *values = malloc(valuesArray.count * sizeof(double));
     for(long idx = 0; idx < valuesArray.count; idx += 1) {
@@ -177,7 +177,7 @@
 - (instancetype)initTriangularMatrixWithValues:(double *)values
                          ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                        ofOrder:(NSUInteger)order
 {
     if (packingFormat == MCMatrixValuePackingFormatConventional) {
@@ -213,7 +213,7 @@
 - (instancetype)initTriangularMatrixWithValuesInArray:(NSArray *)values
                                 ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                       inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                                     leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     NSUInteger length = values.count;
     MCPair *orderCandidates = [MCQuadratic quadraticWithA:@1 b:@1 c:@(length)].roots;
@@ -225,9 +225,11 @@
     return [self initTriangularMatrixWithValues:valuesCArray
                           ofTriangularComponent:triangularComponent
                                 inPackingFormat:packingFormat
-                           leadingDimension:leadingDimension
+                               leadingDimension:leadingDimension
                                         ofOrder:order];
 }
+
+#pragma mark - Class constructors
 
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors
 {
@@ -250,11 +252,11 @@
 
 + (instancetype)matrixWithRows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-            leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initWithRows:rows
                                   columns:columns
-                       leadingDimension:leadingDimension];
+                         leadingDimension:leadingDimension];
 }
 
 + (instancetype)matrixWithValues:(double *)values
@@ -279,23 +281,23 @@
 + (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
                                    rows:(NSUInteger)rows
                                 columns:(NSUInteger)columns
-                     leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                       leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initWithValuesInArray:valuesArray
                                               rows:rows
                                            columns:columns
-                                leadingDimension:leadingDimension];
+                                  leadingDimension:leadingDimension];
 }
 
 + (instancetype)matrixWithValues:(double *)values
                             rows:(NSUInteger)rows
                          columns:(NSUInteger)columns
-              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initWithValues:values
                                        rows:rows
                                     columns:columns
-                         leadingDimension:leadingDimension];
+                           leadingDimension:leadingDimension];
 }
 
 + (instancetype)identityMatrixWithSize:(NSUInteger)size
@@ -311,7 +313,8 @@
                               columns:size];
 }
 
-+ (instancetype)diagonalMatrixWithValues:(double *)values size:(NSUInteger)size
++ (instancetype)diagonalMatrixWithValues:(double *)values
+                                    size:(NSUInteger)size
 {
     double *allValues = malloc(size * size * sizeof(double));
     for (int i = 0; i < size; i++) {
@@ -327,25 +330,25 @@
 + (instancetype)triangularMatrixWithValues:(double *)values
                      ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                            inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                      leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                    ofOrder:(NSUInteger)order
 {
     return [[MCMatrix alloc] initTriangularMatrixWithValues:values
                                       ofTriangularComponent:triangularComponent
                                             inPackingFormat:packingFormat
-                                       leadingDimension:leadingDimension
+                                           leadingDimension:leadingDimension
                                                     ofOrder:order];
 }
 
 + (instancetype)triangularMatrixWithValuesInArray:(NSArray *)values
                             ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                   inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                             leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initTriangularMatrixWithValuesInArray:values
                                              ofTriangularComponent:triangularComponent
                                                    inPackingFormat:packingFormat
-                                              leadingDimension:leadingDimension];
+                                                  leadingDimension:leadingDimension];
 }
 
 //- (void)dealloc
