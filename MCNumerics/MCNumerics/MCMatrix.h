@@ -141,6 +141,18 @@ typedef enum {
 @property (nonatomic, assign) MCMatrixLeadingDimension leadingDimension;
 
 /**
+ @property packingFormat
+ @brief The packing format used to store this matrix' values in a one-dimensional array, either conventional, packed or band.
+ */
+@property (nonatomic, assign) MCMatrixValuePackingFormat packingFormat;
+
+/**
+ @property triangularComponent
+ @brief The type of triangular matrix represented, either upper or lower.
+ */
+@property (nonatomic, readonly, assign) MCMatrixTriangularComponent triangularComponent;
+
+/**
  @property transpose
  @brief Transpose of this matrix. (Lazy-loaded)
  */

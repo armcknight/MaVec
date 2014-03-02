@@ -46,6 +46,8 @@
 @synthesize normInfinity = _normInfinity;
 @synthesize normFroebenius = _normFroebenius;
 @synthesize normMax = _normMax;
+@synthesize packingFormat = _packingFormat;
+@synthesize triangularComponent = _triangularComponent;
 
 #pragma mark - Constructors
 
@@ -219,6 +221,8 @@
             _columns = order;
             _values = malloc(order * order * sizeof(double));
             _leadingDimension = leadingDimension;
+            _packingFormat = packingFormat;
+            _triangularComponent = triangularComponent;
             long k = 0; // current index in parameter array
             long z = 0; // current index in ivar array
             for (int i = 0; i < order; i += 1) {
@@ -1120,9 +1124,12 @@
 {
     MCMatrix *matrixCopy = [[self class] allocWithZone:zone];
     
-    matrixCopy->_columns = self.columns;
-    matrixCopy->_rows = self.rows;
-    matrixCopy->_leadingDimension = self.leadingDimension;
+    matrixCopy->_columns = _columns;
+    matrixCopy->_rows = _rows;
+    
+    matrixCopy->_leadingDimension = _leadingDimension;
+    matrixCopy->_triangularComponent = _triangularComponent;
+    matrixCopy->_packingFormat = _packingFormat;
     
     matrixCopy->_values = malloc(self.rows * self.columns * sizeof(double));
     for (int i = 0; i < self.rows * self.columns; i += 1) {
