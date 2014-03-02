@@ -1446,6 +1446,7 @@
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessNegativeDefinite, @"Negative definite matrix was not recognized.");
 }
 
+// tests can be verified using http://comnuan.com/cmnn0100c/
 - (void)testConditionNumber
 {
     double values[81] = {
