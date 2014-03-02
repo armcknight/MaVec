@@ -326,7 +326,7 @@
     }
     MCMatrix *c = [MCMatrix matrixWithValues:cValues rows:4 columns:4];
     MCMatrix *cr = c.copy;
-    cr.valueStorageFormat = MCMatrixLeadingDimensionRow;
+    cr.leadingDimension = MCMatrixLeadingDimensionRow;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             double oldCValue = [c valueAtRow:i column:j];
@@ -368,7 +368,7 @@
     XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and  columns are unequal using isEqualToMatrix:");
     
     MCMatrix *r = b.copy;
-    r.valueStorageFormat = MCMatrixLeadingDimensionRow;
+    r.leadingDimension = MCMatrixLeadingDimensionRow;
     XCTAssertEqual([a isEqual:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqual:");
     XCTAssertEqual([a isEqualToMatrix:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
 }
@@ -392,7 +392,7 @@
     NSLog(@"Row major");
     NSLog(@"");
     MCMatrix *b = a.copy;
-    b.valueStorageFormat = MCMatrixLeadingDimensionRow;
+    b.leadingDimension = MCMatrixLeadingDimensionRow;
     NSLog(b.description);
 }
 
@@ -473,7 +473,7 @@
     MCMatrix *original = [MCMatrix matrixWithValues:values
                                                rows:3
                                             columns:3
-                                 valueStorageFormat:MCMatrixLeadingDimensionRow];
+                                 leadingDimension:MCMatrixLeadingDimensionRow];
     
     MCMatrix *minorMatrix = original.minorMatrix;
     
@@ -485,7 +485,7 @@
     MCMatrix *minorSolutions = [MCMatrix matrixWithValues:minorSolutionValues
                                                      rows:3
                                                   columns:3
-                                       valueStorageFormat:MCMatrixLeadingDimensionRow];
+                                       leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {
@@ -511,7 +511,7 @@
     MCMatrix *original = [MCMatrix matrixWithValues:values
                                                rows:3
                                             columns:3
-                                 valueStorageFormat:MCMatrixLeadingDimensionRow];
+                                 leadingDimension:MCMatrixLeadingDimensionRow];
     
     MCMatrix *cofactorMatrix = original.cofactorMatrix;
     
@@ -523,7 +523,7 @@
     MCMatrix *cofactorSolutions = [MCMatrix matrixWithValues:cofactorSolutionValues
                                                         rows:3
                                                      columns:3
-                                          valueStorageFormat:MCMatrixLeadingDimensionRow];
+                                          leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {
@@ -545,7 +545,7 @@
     MCMatrix *original = [MCMatrix matrixWithValues:values
                                                rows:3
                                             columns:3
-                                 valueStorageFormat:MCMatrixLeadingDimensionRow];
+                                 leadingDimension:MCMatrixLeadingDimensionRow];
     
     MCMatrix *adjugate = original.adjugate;
     
@@ -557,7 +557,7 @@
     MCMatrix *adjugateSolutions = [MCMatrix matrixWithValues:adjugateSolutionValues
                                                         rows:3
                                                      columns:3
-                                          valueStorageFormat:MCMatrixLeadingDimensionRow];
+                                          leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {
@@ -702,7 +702,7 @@
     aVals[6] = 7.0;
     aVals[7] = 8.0;
     aVals[8] = 9.0;
-    a = [MCMatrix matrixWithValues:aVals rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    a = [MCMatrix matrixWithValues:aVals rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     
     tVals= malloc(9 * sizeof(double));
     tVals[0] = 1.0;
@@ -714,7 +714,7 @@
     tVals[6] = 3.0;
     tVals[7] = 6.0;
     tVals[8] = 9.0;
-    t = [MCMatrix matrixWithValues:tVals rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow].transpose;
+    t = [MCMatrix matrixWithValues:tVals rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow].transpose;
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -912,7 +912,7 @@
         -3.18,   7.21,  -7.42,   8.54,   2.51
     };
     
-    MCMatrix *o = [MCMatrix matrixWithValues:values rows:5 columns:5 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    MCMatrix *o = [MCMatrix matrixWithValues:values rows:5 columns:5 leadingDimension:MCMatrixLeadingDimensionRow];
     MCEigendecomposition *e = o.eigendecomposition;
     
     for (int i = 0; i < 5; i += 1) {
@@ -939,7 +939,7 @@
         -1.0,  0.0,  0.0,  5.0
     };
     
-    MCMatrix *source = [MCMatrix matrixWithValues:values rows:4 columns:4 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    MCMatrix *source = [MCMatrix matrixWithValues:values rows:4 columns:4 leadingDimension:MCMatrixLeadingDimensionRow];
     MCEigendecomposition *e = source.eigendecomposition;
     
     for (int i = 0; i < 4; i += 1) {
@@ -973,7 +973,7 @@
     values[7] = -2.0;
     values[8] = 1.0;
     
-    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionColumn];
+    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionColumn];
     
     double *rowMajorValues = [a valuesInStorageFormat:MCMatrixLeadingDimensionRow];
     
@@ -987,7 +987,7 @@
     XCTAssertEqual(values[7], rowMajorValues[5], @"Value at 7, 5 incorrect");
     XCTAssertEqual(values[8], rowMajorValues[8], @"Value at 8, 8 incorrect");
     
-    MCMatrix *b = [MCMatrix matrixWithValues:values rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    MCMatrix *b = [MCMatrix matrixWithValues:values rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     
     double *columnMajorValues = [b valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
     
@@ -1022,7 +1022,7 @@
     values[7] = 7.0;
     values[8] = 8.0;
     
-    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     
     /*
      0  1  2
@@ -1155,7 +1155,7 @@
     values[7] = 7.0;
     values[8] = 8.0;
     
-    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionColumn];
+    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionColumn];
     
     /*
      0  3  6
@@ -1299,7 +1299,7 @@
                                                            ]
                                                     rows:6
                                                  columns:2
-                                      valueStorageFormat:MCMatrixLeadingDimensionColumn];
+                                      leadingDimension:MCMatrixLeadingDimensionColumn];
     
     MCQRFactorization *qrFactorization = source.qrFactorization.thinFactorization;
     
@@ -1324,7 +1324,7 @@
                                                            ]
                                                     rows:2
                                                  columns:2
-                                      valueStorageFormat:MCMatrixLeadingDimensionRow];
+                                      leadingDimension:MCMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant, -2.0, @"Determinant not correct");
     
@@ -1335,7 +1335,7 @@
                                                  ]
                                           rows:3
                                        columns:3
-                            valueStorageFormat:MCMatrixLeadingDimensionRow];
+                            leadingDimension:MCMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant, -306.0, @"Determinant not correct");
     
@@ -1347,7 +1347,7 @@
                                                  ]
                                           rows:4
                                        columns:4
-                            valueStorageFormat:MCMatrixLeadingDimensionRow];
+                            leadingDimension:MCMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant, 24.0, @"Determinant not correct");
 }
@@ -1367,7 +1367,7 @@
          0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  10.0,  11.0,  12.0
     };
     
-    MCMatrix *original = [MCMatrix matrixWithValues:values rows:9 columns:9 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    MCMatrix *original = [MCMatrix matrixWithValues:values rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
     
     MCMatrix *inverse = original.inverse;
     
@@ -1386,7 +1386,7 @@
          -325.000,  305.000,   5.000,  3.000,  2.000,  1.429, -39.554,  3.125,  3.000
     };
     
-    MCMatrix *solution = [MCMatrix matrixWithValues:inverseValues rows:9 columns:9 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    MCMatrix *solution = [MCMatrix matrixWithValues:inverseValues rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 9; row += 1) {
         for (int col = 0; col < 9; col += 1) {
@@ -1406,7 +1406,7 @@
         -1.0, 2.0, -1.0,
         0.0, -1.0, 2.0
     };
-    MCMatrix *matrix = [MCMatrix matrixWithValues:positiveDefiniteValues rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    MCMatrix *matrix = [MCMatrix matrixWithValues:positiveDefiniteValues rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessPositiveDefinite, @"Positive definite matrix was not recognized.");
     
     // ----- positive semidefinite -----
@@ -1414,7 +1414,7 @@
         1, 1,
         1, 1
     };
-    matrix = [MCMatrix matrixWithValues:positiveSemidefiniteValues rows:2 columns:2 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    matrix = [MCMatrix matrixWithValues:positiveSemidefiniteValues rows:2 columns:2 leadingDimension:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessPositiveSemidefinite, @"Positive semidefinite matrix was not recognized.");
     
     // ----- indefinite -----
@@ -1423,7 +1423,7 @@
         1.0, 1.0, 1.0,
         1.0, 1.0, 0.5
     };
-    matrix = [MCMatrix matrixWithValues:indefiniteValues rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    matrix = [MCMatrix matrixWithValues:indefiniteValues rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessIndefinite, @"Indefinite matrix was not recognized.");
     
     // ----- negative semidefinite -----
@@ -1433,7 +1433,7 @@
         0.0, 0.0,
         0.0, -1.0
     };
-    matrix = [MCMatrix matrixWithValues:negativeSemidefiniteValues rows:2 columns:2 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    matrix = [MCMatrix matrixWithValues:negativeSemidefiniteValues rows:2 columns:2 leadingDimension:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessNegativeSemidefinite, @"Negative semidefinite matrix was not recognized.");
     
     // ----- negative definite -----
@@ -1442,7 +1442,7 @@
         0.0, -1.0, 0.0,
         0.0, 0.0, -1.0
     };
-    matrix = [MCMatrix matrixWithValues:negativeDefiniteValues rows:3 columns:3 valueStorageFormat:MCMatrixLeadingDimensionRow];
+    matrix = [MCMatrix matrixWithValues:negativeDefiniteValues rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessNegativeDefinite, @"Negative definite matrix was not recognized.");
 }
 
@@ -1453,7 +1453,7 @@
         7.0, 3.0,
         -9.0, 2.0
     };
-    MCMatrix *matrix = [MCMatrix matrixWithValues:values rows:2 columns:2 valueStorageFormat:MCMatrixLeadingDimensionColumn];
+    MCMatrix *matrix = [MCMatrix matrixWithValues:values rows:2 columns:2 leadingDimension:MCMatrixLeadingDimensionColumn];
     
     double conditionNumber = matrix.conditionNumber;
     

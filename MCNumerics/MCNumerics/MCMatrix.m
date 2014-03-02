@@ -80,7 +80,7 @@
         _rows = rows;
         _columns = columns;
         _values = malloc(rows * columns * sizeof(double));
-        _valueStorageFormat = MCMatrixLeadingDimensionColumn;
+        _leadingDimension = MCMatrixLeadingDimensionColumn;
         [self commonInit];
     }
     
@@ -89,7 +89,7 @@
 
 - (instancetype)initWithRows:(NSUInteger)rows
                      columns:(NSUInteger)columns
-          valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     self = [super init];
     
@@ -97,7 +97,7 @@
         _rows = rows;
         _columns = columns;
         _values = malloc(rows * columns * sizeof(double));
-        _valueStorageFormat = valueStorageFormat;
+        _leadingDimension = leadingDimension;
         [self commonInit];
     }
     
@@ -114,7 +114,7 @@
         _rows = rows;
         _columns = columns;
         _values = values;
-        _valueStorageFormat = MCMatrixLeadingDimensionColumn;
+        _leadingDimension = MCMatrixLeadingDimensionColumn;
         [self commonInit];
     }
     
@@ -128,13 +128,13 @@
     return [self initWithValuesInArray:valuesArray
                                   rows:rows
                                columns:columns
-                    valueStorageFormat:MCMatrixLeadingDimensionColumn];
+                    leadingDimension:MCMatrixLeadingDimensionColumn];
 }
 
 - (instancetype)initWithValues:(double *)values
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-            valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+            leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     self = [super init];
     
@@ -142,7 +142,7 @@
         _rows = rows;
         _columns = columns;
         _values = values;
-        _valueStorageFormat = valueStorageFormat;
+        _leadingDimension = leadingDimension;
         [self commonInit];
     }
     
@@ -152,7 +152,7 @@
 - (instancetype)initWithValuesInArray:(NSArray *)valuesArray
                                  rows:(NSUInteger)rows
                               columns:(NSUInteger)columns
-                   valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+                   leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     double *values = malloc(valuesArray.count * sizeof(double));
     for(long idx = 0; idx < valuesArray.count; idx += 1) {
@@ -161,7 +161,7 @@
     return [self initWithValues:values
                            rows:rows
                         columns:columns
-             valueStorageFormat:valueStorageFormat];
+             leadingDimension:leadingDimension];
 }
 
 - (instancetype)initWithColumnVectors:(NSArray *)columnVectors
@@ -170,7 +170,7 @@
     if (self) {
         _columns = columnVectors.count;
         _rows = ((MCVector *)columnVectors.firstObject).length;
-        _valueStorageFormat = MCMatrixLeadingDimensionColumn;
+        _leadingDimension = MCMatrixLeadingDimensionColumn;
         
         _values = malloc(self.rows * self.columns * sizeof(double));
         [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
@@ -190,7 +190,7 @@
     if (self) {
         _rows = rowVectors.count;
         _columns = ((MCVector *)rowVectors.firstObject).length;
-        _valueStorageFormat = MCMatrixLeadingDimensionRow;
+        _leadingDimension = MCMatrixLeadingDimensionRow;
         
         _values = malloc(self.rows * self.columns * sizeof(double));
         [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
@@ -207,23 +207,23 @@
 - (instancetype)initTriangularMatrixWithValues:(double *)values
                          ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                          inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                        ofOrder:(NSUInteger)order
 {
     if (packingFormat == MCMatrixValuePackingFormatConventional) {
-        self = [self initWithValues:values rows:order columns:order valueStorageFormat:valueStorageFormat];
+        self = [self initWithValues:values rows:order columns:order leadingDimension:leadingDimension];
     } else {
         self = [super init];
         if (self) {
             _rows = order;
             _columns = order;
             _values = malloc(order * order * sizeof(double));
-            _valueStorageFormat = valueStorageFormat;
+            _leadingDimension = leadingDimension;
             long k = 0; // current index in parameter array
             long z = 0; // current index in ivar array
             for (int i = 0; i < order; i += 1) {
                 for (int j = 0; j < order; j += 1) {
-                    BOOL shouldTakeValue = triangularComponent == MCMatrixTriangularComponentUpper ? (valueStorageFormat == MCMatrixLeadingDimensionColumn ? j <= i : i <= j) : (valueStorageFormat == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
+                    BOOL shouldTakeValue = triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j) : (leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
                     if (shouldTakeValue) {
                         _values[z++] = values[k++];
                     } else {
@@ -241,7 +241,7 @@
 - (instancetype)initTriangularMatrixWithValuesInArray:(NSArray *)values
                                 ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                       inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                                 inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     NSUInteger length = values.count;
     MCPair *orderCandidates = [MCQuadratic quadraticWithA:@1 b:@1 c:@(length)].roots;
@@ -253,7 +253,7 @@
     return [self initTriangularMatrixWithValues:valuesCArray
                           ofTriangularComponent:triangularComponent
                                 inPackingFormat:packingFormat
-                           inValueStorageFormat:valueStorageFormat
+                           leadingDimension:leadingDimension
                                         ofOrder:order];
 }
 
@@ -274,11 +274,11 @@
 
 + (instancetype)matrixWithRows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-            valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+            leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initWithRows:rows
                                   columns:columns
-                       valueStorageFormat:valueStorageFormat];
+                       leadingDimension:leadingDimension];
 }
 
 + (instancetype)matrixWithValues:(double *)values
@@ -302,23 +302,23 @@
 + (instancetype)matrixWithValuesInArray:(NSArray *)valuesArray
                                    rows:(NSUInteger)rows
                                 columns:(NSUInteger)columns
-                     valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+                     leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initWithValuesInArray:valuesArray
                                               rows:rows
                                            columns:columns
-                                valueStorageFormat:valueStorageFormat];
+                                leadingDimension:leadingDimension];
 }
 
 + (instancetype)matrixWithValues:(double *)values
                             rows:(NSUInteger)rows
                          columns:(NSUInteger)columns
-              valueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initWithValues:values
                                        rows:rows
                                     columns:columns
-                         valueStorageFormat:valueStorageFormat];
+                         leadingDimension:leadingDimension];
 }
 
 + (instancetype)identityMatrixWithSize:(NSUInteger)size
@@ -350,25 +350,25 @@
 + (instancetype)triangularMatrixWithValues:(double *)values
                      ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                            inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                      inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+                      leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                    ofOrder:(NSUInteger)order
 {
     return [[MCMatrix alloc] initTriangularMatrixWithValues:values
                                       ofTriangularComponent:triangularComponent
                                             inPackingFormat:packingFormat
-                                       inValueStorageFormat:valueStorageFormat
+                                       leadingDimension:leadingDimension
                                                     ofOrder:order];
 }
 
 + (instancetype)triangularMatrixWithValuesInArray:(NSArray *)values
                             ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                   inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                             inValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+                             leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initTriangularMatrixWithValuesInArray:values
                                              ofTriangularComponent:triangularComponent
                                                    inPackingFormat:packingFormat
-                                              inValueStorageFormat:valueStorageFormat];
+                                              leadingDimension:leadingDimension];
 }
 
 //- (void)dealloc
@@ -457,7 +457,7 @@
             _inverse = [MCMatrix matrixWithValues:a
                                              rows:_rows
                                           columns:_columns
-                               valueStorageFormat:MCMatrixLeadingDimensionColumn];
+                               leadingDimension:MCMatrixLeadingDimensionColumn];
         }
     }
     
@@ -679,7 +679,7 @@
             for (int col = 0; col < self.columns; col += 1) {
                 MCMatrix *submatrix = [MCMatrix matrixWithRows:self.rows - 1
                                                        columns:self.columns - 1
-                                            valueStorageFormat:self.valueStorageFormat];
+                                            leadingDimension:self.leadingDimension];
                 
                 for (int i = 0; i < self.rows; i++) {
                     for (int j = 0; j < self.rows; j++) {
@@ -698,7 +698,7 @@
         _minorMatrix = [MCMatrix matrixWithValues:minorValues
                                              rows:self.rows
                                           columns:self.columns
-                               valueStorageFormat:MCMatrixLeadingDimensionRow];
+                               leadingDimension:MCMatrixLeadingDimensionRow];
     }
     
     return _minorMatrix;
@@ -721,7 +721,7 @@
         _cofactorMatrix = [MCMatrix matrixWithValues:cofactors
                                                 rows:self.rows
                                              columns:self.columns
-                                  valueStorageFormat:MCMatrixLeadingDimensionRow];
+                                  leadingDimension:MCMatrixLeadingDimensionRow];
     }
     
     return _cofactorMatrix;
@@ -738,11 +738,11 @@
 
 #pragma mark - Property overrides
 
-- (void)setValueStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+- (void)setLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
-    if (self.valueStorageFormat != valueStorageFormat) {
-        _values = [self valuesInStorageFormat:valueStorageFormat];
-        _valueStorageFormat = valueStorageFormat;
+    if (self.leadingDimension != leadingDimension) {
+        _values = [self valuesInStorageFormat:leadingDimension];
+        _leadingDimension = leadingDimension;
     }
 }
 
@@ -842,11 +842,11 @@
 
 #pragma mark - Inspection
 
-- (double *)valuesInStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+- (double *)valuesInStorageFormat:(MCMatrixLeadingDimension)leadingDimension
 {
     double *copiedValues = malloc(self.rows * self.columns * sizeof(double));
     
-    if (self.valueStorageFormat == valueStorageFormat) {
+    if (self.leadingDimension == leadingDimension) {
         for (int i = 0; i < self.rows * self.columns; i += 1) {
             copiedValues[i] = self.values[i];
         }
@@ -856,9 +856,9 @@
     double *tVals = malloc(self.rows * self.columns * sizeof(double));
     
     int i = 0;
-    for (int j = 0; j < (valueStorageFormat == MCMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
-        for (int k = 0; k < (valueStorageFormat == MCMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
-            int idx = ((i * (valueStorageFormat == MCMatrixLeadingDimensionRow ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
+    for (int j = 0; j < (leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
+        for (int k = 0; k < (leadingDimension == MCMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
+            int idx = ((i * (leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
             tVals[i] = self.values[idx];
             i++;
         }
@@ -868,7 +868,7 @@
 }
 
 - (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                                    inStorageFormat:(MCMatrixLeadingDimension)valueStorageFormat
+                                    inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
                                   withPackingFormat:(MCMatrixValuePackingFormat)packingFormat
 {
     if (self.rows != self.columns) {
@@ -879,13 +879,13 @@
     double *values = malloc(numberOfValues * sizeof(double));
     
     int i = 0;
-    int outerLimit = self.valueStorageFormat == MCMatrixLeadingDimensionRow ? self.rows : self.columns;
-    int innerLimit = self.valueStorageFormat == MCMatrixLeadingDimensionRow ? self.columns : self.rows;
+    int outerLimit = self.leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns;
+    int innerLimit = self.leadingDimension == MCMatrixLeadingDimensionRow ? self.columns : self.rows;
     
     for (int j = 0; j < outerLimit; j++) {
         for (int k = 0; k < innerLimit; k++) {
-            int row = valueStorageFormat == MCMatrixLeadingDimensionRow ? j : k;
-            int col = valueStorageFormat == MCMatrixLeadingDimensionRow ? k : j;
+            int row = leadingDimension == MCMatrixLeadingDimensionRow ? j : k;
+            int col = leadingDimension == MCMatrixLeadingDimensionRow ? k : j;
             
             BOOL shouldStoreValueForLowerTriangle = triangularComponent == MCMatrixTriangularComponentLower && col <= row;
             BOOL shouldStoreValueForUpperTriangle = triangularComponent == MCMatrixTriangularComponentUpper && row <= col;
@@ -910,7 +910,7 @@
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
     }
     
-    if (self.valueStorageFormat == MCMatrixLeadingDimensionRow) {
+    if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
         return self.values[row * self.columns + column];
     } else {
         return self.values[column * self.rows + row];
@@ -953,7 +953,7 @@
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
     }
     
-    if (self.valueStorageFormat == MCMatrixLeadingDimensionRow) {
+    if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
         self.values[row * self.columns + column] = value;
     } else {
         self.values[column * self.rows + row] = value;
@@ -974,7 +974,7 @@
     
     vDSP_mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
     
-    return [MCMatrix matrixWithValues:cVals rows:matrixA.rows columns:matrixB.columns valueStorageFormat:MCMatrixLeadingDimensionRow];
+    return [MCMatrix matrixWithValues:cVals rows:matrixA.rows columns:matrixB.columns leadingDimension:MCMatrixLeadingDimensionRow];
 }
 
 + (MCMatrix *)sumOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
@@ -1102,7 +1102,7 @@
 
 + (MCVector *)productOfMatrix:(MCMatrix *)matrix andVector:(MCVector *)vector
 {
-    short order = matrix.valueStorageFormat == MCMatrixLeadingDimensionColumn ? CblasColMajor : CblasRowMajor;
+    short order = matrix.leadingDimension == MCMatrixLeadingDimensionColumn ? CblasColMajor : CblasRowMajor;
     short transpose = CblasNoTrans;
     int rows = matrix.rows;
     int cols = matrix.columns;
@@ -1122,7 +1122,7 @@
     
     matrixCopy->_columns = self.columns;
     matrixCopy->_rows = self.rows;
-    matrixCopy->_valueStorageFormat = self.valueStorageFormat;
+    matrixCopy->_leadingDimension = self.leadingDimension;
     
     matrixCopy->_values = malloc(self.rows * self.columns * sizeof(double));
     for (int i = 0; i < self.rows * self.columns; i += 1) {

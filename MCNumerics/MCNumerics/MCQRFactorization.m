@@ -63,7 +63,7 @@
         dorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
         
         // use output from dorgqr to build the q mcmatrix object
-        _q = [MCMatrix matrixWithValues:a rows:m columns:m valueStorageFormat:MCMatrixLeadingDimensionColumn];
+        _q = [MCMatrix matrixWithValues:a rows:m columns:m leadingDimension:MCMatrixLeadingDimensionColumn];
         
         // compute r by multiplying the transpose of q by the input matrix
         _r = [MCMatrix productOfMatrixA:_q.transpose andMatrixB:matrix];
