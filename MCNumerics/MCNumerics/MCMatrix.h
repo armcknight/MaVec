@@ -39,7 +39,8 @@ typedef enum {
  */
 typedef enum {
     MCMatrixTriangularComponentLower,
-    MCMatrixTriangularComponentUpper
+    MCMatrixTriangularComponentUpper,
+    MCMatrixTriangularComponentBoth
 } MCMatrixTriangularComponent;
 
 /**
@@ -148,7 +149,7 @@ typedef enum {
 
 /**
  @property triangularComponent
- @brief The type of triangular matrix represented, either upper or lower.
+ @brief The type of triangular matrix represented, either upper or lower, or both if the matrix is not triangular.
  */
 @property (nonatomic, readonly, assign) MCMatrixTriangularComponent triangularComponent;
 
