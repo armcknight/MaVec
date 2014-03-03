@@ -1515,4 +1515,75 @@
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
 }
 
+- (void)testTriangularMatrixCreation
+{
+    double upperSolutionValues[9] = {
+        1.0,   2.0,   3.0,
+        0.0,   5.0,   7.0,
+        0.0,   0.0,   12.0
+    };
+    MCMatrix *upperSolution = [MCMatrix matrixWithValues:upperSolutionValues
+                                                    rows:3
+                                                 columns:3
+                                        leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    // upper row-major
+    double rowMajorUpperValues[6] = {
+        1.0, 2.0, 3.0,
+        5.0, 7.0,
+        12.0
+    };
+    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:rowMajorUpperValues
+                                            ofTriangularComponent:MCMatrixTriangularComponentUpper
+                                                 leadingDimension:MCMatrixLeadingDimensionRow
+                                                          ofOrder:3];
+    XCTAssert([matrix isEqualToMatrix:upperSolution], @"Upper triangular row major matrix incorrectly created.");
+    
+    // upper column-major
+    double columnMajorUpperValues[6] = {
+        1.0, 2.0, 5.0,
+        3.0, 7.0,
+        12.0
+    };
+    matrix = [MCMatrix triangularMatrixWithPackedValues:columnMajorUpperValues
+                                            ofTriangularComponent:MCMatrixTriangularComponentUpper
+                                                 leadingDimension:MCMatrixLeadingDimensionColumn
+                                                          ofOrder:3];
+    XCTAssert([matrix isEqualToMatrix:upperSolution], @"Upper triangular column major matrix incorrectly created.");
+    
+    double lowerSolutionValues[9] = {
+        1.0,   0.0,   0.0,
+        2.0,   5.0,   0.0,
+        3.0,   7.0,   12.0
+    };
+    MCMatrix *lowerSolution = [MCMatrix matrixWithValues:lowerSolutionValues
+                                                    rows:3
+                                                 columns:3
+                                        leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    // lower row-major
+    double rowMajorLowerValues[6] = {
+        1.0, 2.0, 5.0,
+        3.0, 7.0,
+        12.0
+    };
+    matrix = [MCMatrix triangularMatrixWithPackedValues:rowMajorLowerValues
+                                  ofTriangularComponent:MCMatrixTriangularComponentLower
+                                       leadingDimension:MCMatrixLeadingDimensionRow
+                                                ofOrder:3];
+    XCTAssert([matrix isEqualToMatrix:lowerSolution], @"Lower triangular row major matrix incorrectly created.");
+    
+    // lower column-major
+    double columnMajorLowerValues[6] = {
+        1.0, 2.0, 3.0,
+        5.0, 7.0,
+        12.0
+    };
+    matrix = [MCMatrix triangularMatrixWithPackedValues:columnMajorLowerValues
+                                  ofTriangularComponent:MCMatrixTriangularComponentLower
+                                       leadingDimension:MCMatrixLeadingDimensionColumn
+                                                ofOrder:3];
+    XCTAssert([matrix isEqualToMatrix:lowerSolution], @"Lower triangular column major matrix incorrectly created.");
+}
+
 @end
