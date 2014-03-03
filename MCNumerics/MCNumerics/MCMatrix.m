@@ -51,43 +51,38 @@
 
 #pragma mark - Constructors
 
-- (void)commonInit
-{
-    _isSymmetric = [MCTribool triboolWithValue:MCTriboolIndeterminate];
-    _definiteness = MCMatrixDefinitenessUnknown;
-    _qrFactorization = nil;
-    _luFactorization = nil;
-    _singularValueDecomposition = nil;
-    _eigendecomposition = nil;
-    _inverse = nil;
-    _transpose = nil;
-    _conditionNumber = -1.0;
-    _determinant = NAN;
-    _diagonalValues = nil;
-    _trace = NAN;
-    _adjugate = nil;
-    _minorMatrix = nil;
-    _cofactorMatrix = nil;
-    _normInfinity = NAN;
-    _normL1 = NAN;
-    _normMax = NAN;
-    _normFroebenius = NAN;
-}
-
-- (instancetype)initWithRows:(NSUInteger)rows
-                     columns:(NSUInteger)columns
-            leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+- (instancetype)init
 {
     self = [super init];
-    
     if (self) {
-        _rows = rows;
-        _columns = columns;
-        _values = malloc(rows * columns * sizeof(double));
-        _leadingDimension = leadingDimension;
-        [self commonInit];
+        _rows = 0;
+        _columns = 0;
+        _values = nil;
+        
+        _leadingDimension = MCMatrixLeadingDimensionColumn;
+        _packingFormat = MCMatrixValuePackingFormatConventional;
+        _triangularComponent = MCMatrixTriangularComponentBoth;
+        
+        _isSymmetric = [MCTribool triboolWithValue:MCTriboolIndeterminate];
+        _definiteness = MCMatrixDefinitenessUnknown;
+        _qrFactorization = nil;
+        _luFactorization = nil;
+        _singularValueDecomposition = nil;
+        _eigendecomposition = nil;
+        _inverse = nil;
+        _transpose = nil;
+        _conditionNumber = -1.0;
+        _determinant = NAN;
+        _diagonalValues = nil;
+        _trace = NAN;
+        _adjugate = nil;
+        _minorMatrix = nil;
+        _cofactorMatrix = nil;
+        _normInfinity = NAN;
+        _normL1 = NAN;
+        _normMax = NAN;
+        _normFroebenius = NAN;
     }
-    
     return self;
 }
 
@@ -95,145 +90,75 @@
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                 packingFormat:(MCMatrixValuePackingFormat)packingFormat
+           triangularComponent:(MCMatrixTriangularComponent)triangularComponent
 {
-    self = [super init];
-    
+    self = [self init];
     if (self) {
+        _leadingDimension = leadingDimension;
+        _packingFormat = packingFormat;
+        _triangularComponent = triangularComponent;
+        _values = values;
         _rows = rows;
         _columns = columns;
+    }
+    return self;
+}
+
+- (instancetype)initMatrixWithBandValues:(double *)values
+                                    rows:(NSUInteger)rows
+                                 columns:(NSUInteger)columns
+                               bandwidth:(NSUInteger)bandwidth
+                     oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
+{
+    self = [self init];
+    if (self) {
+        _packingFormat = MCMatrixValuePackingFormatBand;
+        _rows = rows;
+        _columns = columns;
+        _bandwidth = bandwidth;
+        _triangularComponent = oddDiagonalLocation;
         _values = values;
-        _leadingDimension = leadingDimension;
-        [self commonInit];
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithColumnVectors:(NSArray *)columnVectors
-{
-    self = [super init];
-    if (self) {
-        _columns = columnVectors.count;
-        _rows = ((MCVector *)columnVectors.firstObject).length;
-        _leadingDimension = MCMatrixLeadingDimensionColumn;
-        
-        _values = malloc(self.rows * self.columns * sizeof(double));
-        [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
-            for(int i = 0; i < self.rows; i++) {
-                _values[column * self.rows + i] = [columnVector valueAtIndex:i];
-            }
-        }];
-        
-        [self commonInit];
     }
     return self;
-}
-
-- (instancetype)initWithRowVectors:(NSArray *)rowVectors
-{
-    self = [super init];
-    if (self) {
-        _rows = rowVectors.count;
-        _columns = ((MCVector *)rowVectors.firstObject).length;
-        _leadingDimension = MCMatrixLeadingDimensionRow;
-        
-        _values = malloc(self.rows * self.columns * sizeof(double));
-        [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
-            for(int i = 0; i < self.rows; i++) {
-                _values[row * self.columns + i] = [rowVector valueAtIndex:i];
-            }
-        }];
-        
-        [self commonInit];
-    }
-    return self;
-}
-
-- (instancetype)initTriangularMatrixWithValues:(double *)values
-                         ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                               inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                       ofOrder:(NSUInteger)order
-{
-    if (packingFormat == MCMatrixValuePackingFormatConventional) {
-        self = [self initWithValues:values rows:order columns:order leadingDimension:leadingDimension];
-    } else {
-        self = [super init];
-        if (self) {
-            _rows = order;
-            _columns = order;
-            _values = malloc(order * order * sizeof(double));
-            _leadingDimension = leadingDimension;
-            _packingFormat = packingFormat;
-            _triangularComponent = triangularComponent;
-            long k = 0; // current index in parameter array
-            long z = 0; // current index in ivar array
-            for (int i = 0; i < order; i += 1) {
-                for (int j = 0; j < order; j += 1) {
-                    BOOL shouldTakeValue = triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j) : (leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
-                    if (shouldTakeValue) {
-                        _values[z++] = values[k++];
-                    } else {
-                        _values[z++] = 0.0;
-                    }
-                }
-            }
-        }
-        [self commonInit];
-    }
-    
-    return self;
-}
-
-- (instancetype)initSymmetricMatrixWithValues:(double *)values
-                              inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                             leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                      ofOrder:(NSUInteger)order
-{
-    if (packingFormat == MCMatrixValuePackingFormatBand) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot construct a symmetric matrix with banded value storage. Packing format must be either 'conventional' or 'packed'" userInfo:nil];
-    }
-    
-    if (packingFormat == MCMatrixValuePackingFormatConventional) {
-        self = [self initWithValues:values rows:order columns:order leadingDimension:leadingDimension];
-    } else {
-        self = [super init];
-        if (self) {
-            _rows = order;
-            _columns = order;
-            _values = malloc(order * order * sizeof(double));
-            _leadingDimension = leadingDimension;
-            int k = 0;
-            for (int i = 0; i < order; i += 1) {
-                for (int j = i; j < order; j += 1) {
-                    double value = values[k++];
-                    [self setEntryAtRow:j column:i toValue:value];
-                    if (i != j) {
-                        [self setEntryAtRow:i column:j toValue:value];
-                    }
-                }
-            }
-        }
-        [self commonInit];
-    }
-    _packingFormat = packingFormat;
-    _triangularComponent = MCMatrixTriangularComponentBoth;
-    
-    return self;
-}
-
 }
 
 #pragma mark - Class constructors
 
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors
 {
-    return [[MCMatrix alloc] initWithColumnVectors:columnVectors];
+    NSUInteger columns = columnVectors.count;
+    NSUInteger rows = ((MCVector *)columnVectors.firstObject).length;
+    double *values = malloc(rows * columns * sizeof(double));
+    [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
+        for(int i = 0; i < rows; i++) {
+            values[column * rows + i] = [columnVector valueAtIndex:i];
+        }
+    }];
+    return [[MCMatrix alloc] initWithValues:values
+                                       rows:rows
+                                    columns:columns
+                           leadingDimension:MCMatrixLeadingDimensionColumn
+                              packingFormat:MCMatrixValuePackingFormatConventional
+                        triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors
 {
-    return [[MCMatrix alloc] initWithRowVectors:rowVectors];
+    NSUInteger rows = rowVectors.count;
+    NSUInteger columns = ((MCVector *)rowVectors.firstObject).length;
+    double *values = malloc(rows * columns * sizeof(double));
+    [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
+        for(int i = 0; i < rows; i++) {
+            values[row * columns + i] = [rowVector valueAtIndex:i];
+        }
+    }];
+    return [[MCMatrix alloc] initWithValues:values
+                                       rows:rows
+                                    columns:columns
+                           leadingDimension:MCMatrixLeadingDimensionRow
+                              packingFormat:MCMatrixValuePackingFormatConventional
+                        triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
 + (instancetype)matrixWithRows:(NSUInteger)rows
@@ -242,16 +167,21 @@
     return [[MCMatrix alloc] initWithValues:malloc(rows * columns * sizeof(double))
                                        rows:rows
                                     columns:columns
-                           leadingDimension:MCMatrixLeadingDimensionColumn];
+                           leadingDimension:MCMatrixLeadingDimensionColumn
+                              packingFormat:MCMatrixValuePackingFormatConventional
+                        triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
 + (instancetype)matrixWithRows:(NSUInteger)rows
                        columns:(NSUInteger)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
-    return [[MCMatrix alloc] initWithRows:rows
-                                  columns:columns
-                         leadingDimension:leadingDimension];
+    return [[MCMatrix alloc] initWithValues:malloc(rows * columns * sizeof(double))
+                                       rows:rows
+                                    columns:columns
+                           leadingDimension:leadingDimension
+                              packingFormat:MCMatrixValuePackingFormatConventional
+                        triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
 + (instancetype)matrixWithValues:(double *)values
@@ -261,7 +191,9 @@
     return [[MCMatrix alloc] initWithValues:values
                                        rows:rows
                                     columns:columns
-                           leadingDimension:MCMatrixLeadingDimensionColumn];
+                           leadingDimension:MCMatrixLeadingDimensionColumn
+                              packingFormat:MCMatrixValuePackingFormatConventional
+                        triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
 + (instancetype)matrixWithValues:(double *)values
@@ -272,7 +204,9 @@
     return [[MCMatrix alloc] initWithValues:values
                                        rows:rows
                                     columns:columns
-                           leadingDimension:leadingDimension];
+                           leadingDimension:leadingDimension
+                              packingFormat:MCMatrixValuePackingFormatConventional
+                        triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
 + (instancetype)identityMatrixWithSize:(NSUInteger)size
@@ -302,28 +236,68 @@
                               columns:size];
 }
 
-+ (instancetype)triangularMatrixWithValues:(double *)values
-                     ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                           inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                   ofOrder:(NSUInteger)order
++ (instancetype)triangularMatrixWithPackedValues:(double *)values
+                           ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                                         ofOrder:(NSUInteger)order
 {
-    return [[MCMatrix alloc] initTriangularMatrixWithValues:values
-                                      ofTriangularComponent:triangularComponent
-                                            inPackingFormat:packingFormat
-                                           leadingDimension:leadingDimension
-                                                    ofOrder:order];
+    double *unpackedValues = malloc(order * order * sizeof(double));
+    long k = 0; // current index in parameter array
+    long z = 0; // current index in ivar array
+    for (int i = 0; i < order; i += 1) {
+        for (int j = 0; j < order; j += 1) {
+            BOOL shouldTakeValue = triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j) : (leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
+            if (shouldTakeValue) {
+                unpackedValues[z++] = values[k++];
+            } else {
+                unpackedValues[z++] = 0.0;
+            }
+        }
+    }
+    return [[MCMatrix alloc] initWithValues:unpackedValues
+                                       rows:order
+                                    columns:order
+                           leadingDimension:leadingDimension
+                              packingFormat:MCMatrixValuePackingFormatConventional
+                        triangularComponent:triangularComponent];
 }
 
-+ (instancetype)symmetricMatrixWithValues:(double *)values
-                          inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                         leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                  ofOrder:(NSUInteger)order
++ (instancetype)symmetricMatrixWithPackedValues:(double *)values
+                               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                            triangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                        ofOrder:(NSUInteger)order
 {
-    return [[MCMatrix alloc] initSymmetricMatrixWithValues:values
-                                           inPackingFormat:packingFormat
-                                          leadingDimension:leadingDimension
-                                                   ofOrder:order];
+    double *unpackedValues = malloc(order * order * sizeof(double));
+    MCMatrix *matrix = [[MCMatrix alloc] initWithValues:unpackedValues
+                                                   rows:order
+                                                columns:order
+                                       leadingDimension:leadingDimension
+                                          packingFormat:MCMatrixValuePackingFormatConventional
+                                    triangularComponent:triangularComponent];
+    int k = 0;
+    for (int i = 0; i < order; i += 1) {
+        for (int j = i; j < order; j += 1) {
+            double value = values[k++];
+            [matrix setEntryAtRow:j column:i toValue:value];
+            if (i != j) {
+                [matrix setEntryAtRow:i column:j toValue:value];
+            }
+        }
+    }
+    return matrix;
+}
+
++ (instancetype)bandMatrixWithValues:(double *)values
+                                rows:(NSUInteger)rows
+                             columns:(NSUInteger)columns
+                           bandwidth:(NSUInteger)bandwidth
+                 oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
+{
+    return [[MCMatrix alloc] initMatrixWithBandValues:values
+                                                 rows:rows
+                                              columns:columns
+                                            bandwidth:bandwidth
+                                  oddDiagonalLocation:oddDiagonalLocation];
 }
 
 //- (void)dealloc
@@ -704,7 +678,7 @@
 - (void)setPackingFormat:(MCMatrixValuePackingFormat)packingFormat
 {
     @throw kMCUnimplementedMethodException;
-    // TODO: implement
+    // TODO: implement, updating bandwidth if necessary
 }
 
 - (void)setTriangularComponent:(MCMatrixTriangularComponent)triangularComponent

@@ -253,46 +253,12 @@ typedef enum {
 
 #pragma mark - Constructors
 
-/**
- @brief Creates a matrix with the specified number of rows and columns and storage format, but without supplying values.
- @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in the specified format.
- @param rows The number of rows.
- @param columns The number of columns.
- @param leadingDimension The format to store values in; either row- or column-major.
- @return New instance of MCMatrix.
- */
-- (instancetype)initWithRows:(NSUInteger)rows
-                     columns:(NSUInteger)columns
-            leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
-
-/**
- @brief Creates a matrix with the specified values (in the specified storage format) and number of rows and columns.
- @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns and supplied values in the specified format.
- @param values The values to store in this matrix, supplied as a C array.
- @param rows The number of rows.
- @param columns The number of columns.
- @param leadingDimension The format to store values in; either row- or column-major.
- @return New instance of MCMatrix.
- */
 - (instancetype)initWithValues:(double *)values
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
-              leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
-
-- (instancetype)initWithColumnVectors:(NSArray *)columnVectors;
-
-- (instancetype)initWithRowVectors:(NSArray *)rowVectors;
-
-- (instancetype)initTriangularMatrixWithValues:(double *)values
-                         ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                               inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                       ofOrder:(NSUInteger)order;
-
-- (instancetype)initSymmetricMatrixWithValues:(double *)values
-                              inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                             leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                      ofOrder:(NSUInteger)order;
+              leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                 packingFormat:(MCMatrixValuePackingFormat)packingFormat
+           triangularComponent:(MCMatrixTriangularComponent)triangularComponent;
 
 #pragma mark - Class constructors
 
@@ -365,16 +331,21 @@ typedef enum {
 
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
-+ (instancetype)triangularMatrixWithValues:(double *)values
-                     ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                           inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                   ofOrder:(NSUInteger)order;
++ (instancetype)triangularMatrixWithPackedValues:(double *)values
+                           ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                                         ofOrder:(NSUInteger)order;
 
-+ (instancetype)symmetricMatrixWithValues:(double *)values
-                          inPackingFormat:(MCMatrixValuePackingFormat)packingFormat
-                         leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                  ofOrder:(NSUInteger)order;
++ (instancetype)symmetricMatrixWithPackedValues:(double *)values
+                               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                            triangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                        ofOrder:(NSUInteger)order;
+
++ (instancetype)bandMatrixWithValues:(double *)values
+                               order:(NSUInteger)order
+                       packingFormat:(MCMatrixValuePackingFormat)packingFormat
+                    leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                 oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 
 #pragma mark - Operations
 
