@@ -7,6 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4936537318B011060086C243 /* MCQuadratic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537218B011060086C243 /* MCQuadratic.m */; };
+		4936537618B012220086C243 /* MCPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537518B012220086C243 /* MCPair.m */; };
+		4936537818B1C61B0086C243 /* MCMatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537718B1C61B0086C243 /* MCMatrixTests.m */; };
+		4936537A18B1C6360086C243 /* MCVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537918B1C6360086C243 /* MCVectorTests.m */; };
+		494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
+		494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
+		494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4465185B61BB00347096 /* RZBaseCollectionList.m */; };
+		494F44D4185B61BB00347096 /* RZBaseCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4465185B61BB00347096 /* RZBaseCollectionList.m */; };
+		494F44D5185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4468185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m */; };
+		494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4468185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m */; };
+		494F44D7185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446A185B61BB00347096 /* RZCollectionListNotificationWrappers.m */; };
+		494F44D8185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446A185B61BB00347096 /* RZCollectionListNotificationWrappers.m */; };
+		494F44D9185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446D185B61BB00347096 /* RZCollectionListTableViewDataSource.m */; };
+		494F44DA185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446D185B61BB00347096 /* RZCollectionListTableViewDataSource.m */; };
+		494F44DB185B61BB00347096 /* RZCompositeCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446F185B61BB00347096 /* RZCompositeCollectionList.m */; };
+		494F44DC185B61BB00347096 /* RZCompositeCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F446F185B61BB00347096 /* RZCompositeCollectionList.m */; };
+		494F44DF185B61BB00347096 /* RZFilteredCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4473185B61BB00347096 /* RZFilteredCollectionList.m */; };
+		494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4473185B61BB00347096 /* RZFilteredCollectionList.m */; };
+		494F44E1185B61BB00347096 /* RZObserverCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4475185B61BB00347096 /* RZObserverCollection.m */; };
+		494F44E2185B61BB00347096 /* RZObserverCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4475185B61BB00347096 /* RZObserverCollection.m */; };
+		494F44E3185B61BB00347096 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4477185B61BB00347096 /* RZSortedCollectionList.m */; };
+		494F44E4185B61BB00347096 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4477185B61BB00347096 /* RZSortedCollectionList.m */; };
+		494F4543185BDA6200347096 /* MCPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCPolynomial.m */; };
+		494F4544185BDA6200347096 /* MCPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCPolynomial.m */; };
+		494F4547185BDE3000347096 /* NSNumber+MCMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCMath.m */; };
+		494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCMath.m */; };
+		494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
+		494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
+		494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
+		494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
+		494F455B1861565B00347096 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F455A1861565B00347096 /* Accelerate.framework */; };
+		4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2D51877D9030095DE06 /* MCEigendecomposition.m */; };
+		4978F2E4187852330095DE06 /* MCTribool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2E3187852330095DE06 /* MCTribool.m */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -19,7 +52,13 @@
 		49B682AB184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
 		49B682B3184D8342006A61D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49B682B1184D8342006A61D3 /* InfoPlist.strings */; };
 		49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682B4184D8342006A61D3 /* MCNumericsTests.m */; };
-		49B682C0184D8390006A61D3 /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682BF184D8390006A61D3 /* Matrix.m */; };
+		49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682BF184D8390006A61D3 /* MCMatrix.m */; };
+		49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */; };
+		49B682D8184ED2D5006A61D3 /* LinearApproximationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */; };
+		49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682EA1854DEF8006A61D3 /* MCVector.m */; };
+		49BEF2661885978C002F5F41 /* MCQRFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BEF2651885978C002F5F41 /* MCQRFactorization.m */; };
+		49E10B421863F56800308AD2 /* LinearApproximationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */; };
+		49E10B451863F60900308AD2 /* ApproximationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E10B441863F60900308AD2 /* ApproximationView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +72,47 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37AE3C0218735B5200FAE5BC /* MCEquation.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MCEquation.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		4936537118B011060086C243 /* MCQuadratic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCQuadratic.h; sourceTree = "<group>"; };
+		4936537218B011060086C243 /* MCQuadratic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCQuadratic.m; sourceTree = "<group>"; };
+		4936537418B012220086C243 /* MCPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPair.h; sourceTree = "<group>"; };
+		4936537518B012220086C243 /* MCPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPair.m; sourceTree = "<group>"; };
+		4936537718B1C61B0086C243 /* MCMatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrixTests.m; sourceTree = "<group>"; };
+		4936537918B1C6360086C243 /* MCVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVectorTests.m; sourceTree = "<group>"; };
+		494F4462185B61BB00347096 /* RZArrayCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZArrayCollectionList.h; sourceTree = "<group>"; };
+		494F4463185B61BB00347096 /* RZArrayCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZArrayCollectionList.m; sourceTree = "<group>"; };
+		494F4464185B61BB00347096 /* RZBaseCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZBaseCollectionList.h; sourceTree = "<group>"; };
+		494F4465185B61BB00347096 /* RZBaseCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZBaseCollectionList.m; sourceTree = "<group>"; };
+		494F4466185B61BB00347096 /* RZBaseCollectionList_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZBaseCollectionList_Private.h; sourceTree = "<group>"; };
+		494F4467185B61BB00347096 /* RZCollectionListCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionListCollectionViewDataSource.h; sourceTree = "<group>"; };
+		494F4468185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionListCollectionViewDataSource.m; sourceTree = "<group>"; };
+		494F4469185B61BB00347096 /* RZCollectionListNotificationWrappers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionListNotificationWrappers.h; sourceTree = "<group>"; };
+		494F446A185B61BB00347096 /* RZCollectionListNotificationWrappers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionListNotificationWrappers.m; sourceTree = "<group>"; };
+		494F446B185B61BB00347096 /* RZCollectionListProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionListProtocol.h; sourceTree = "<group>"; };
+		494F446C185B61BB00347096 /* RZCollectionListTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionListTableViewDataSource.h; sourceTree = "<group>"; };
+		494F446D185B61BB00347096 /* RZCollectionListTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionListTableViewDataSource.m; sourceTree = "<group>"; };
+		494F446E185B61BB00347096 /* RZCompositeCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCompositeCollectionList.h; sourceTree = "<group>"; };
+		494F446F185B61BB00347096 /* RZCompositeCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCompositeCollectionList.m; sourceTree = "<group>"; };
+		494F4472185B61BB00347096 /* RZFilteredCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZFilteredCollectionList.h; sourceTree = "<group>"; };
+		494F4473185B61BB00347096 /* RZFilteredCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZFilteredCollectionList.m; sourceTree = "<group>"; };
+		494F4474185B61BB00347096 /* RZObserverCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZObserverCollection.h; sourceTree = "<group>"; };
+		494F4475185B61BB00347096 /* RZObserverCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZObserverCollection.m; sourceTree = "<group>"; };
+		494F4476185B61BB00347096 /* RZSortedCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZSortedCollectionList.h; sourceTree = "<group>"; };
+		494F4477185B61BB00347096 /* RZSortedCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZSortedCollectionList.m; sourceTree = "<group>"; };
+		494F4478185B61BB00347096 /* RZCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RZCollectionList.h; path = RZCollectionList/RZCollectionList.h; sourceTree = "<group>"; };
+		494F4541185BDA6200347096 /* MCPolynomial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPolynomial.h; sourceTree = "<group>"; };
+		494F4542185BDA6200347096 /* MCPolynomial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPolynomial.m; sourceTree = "<group>"; };
+		494F4545185BDE3000347096 /* NSNumber+MCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCMath.h"; sourceTree = "<group>"; };
+		494F4546185BDE3000347096 /* NSNumber+MCMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCMath.m"; sourceTree = "<group>"; };
+		494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSingularValueDecomposition.h; sourceTree = "<group>"; };
+		494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSingularValueDecomposition.m; sourceTree = "<group>"; };
+		494F454E185EA9DA00347096 /* MCLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLUFactorization.h; sourceTree = "<group>"; };
+		494F454F185EA9DA00347096 /* MCLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLUFactorization.m; sourceTree = "<group>"; };
+		494F455A1861565B00347096 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4978F2D41877D9030095DE06 /* MCEigendecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCEigendecomposition.h; sourceTree = "<group>"; };
+		4978F2D51877D9030095DE06 /* MCEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEigendecomposition.m; sourceTree = "<group>"; };
+		4978F2E2187852330095DE06 /* MCTribool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTribool.h; sourceTree = "<group>"; };
+		4978F2E3187852330095DE06 /* MCTribool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTribool.m; sourceTree = "<group>"; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -49,8 +129,19 @@
 		49B682B0184D8342006A61D3 /* MCNumericsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCNumericsTests-Info.plist"; sourceTree = "<group>"; };
 		49B682B2184D8342006A61D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		49B682B4184D8342006A61D3 /* MCNumericsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCNumericsTests.m; sourceTree = "<group>"; };
-		49B682BE184D8390006A61D3 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
-		49B682BF184D8390006A61D3 /* Matrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix.m; sourceTree = "<group>"; };
+		49B682BE184D8390006A61D3 /* MCMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMatrix.h; sourceTree = "<group>"; };
+		49B682BF184D8390006A61D3 /* MCMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrix.m; sourceTree = "<group>"; };
+		49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoiceTableViewController.h; sourceTree = "<group>"; };
+		49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoChoiceTableViewController.m; sourceTree = "<group>"; };
+		49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinearApproximationViewController.h; sourceTree = "<group>"; };
+		49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinearApproximationViewController.m; sourceTree = "<group>"; };
+		49B682E91854DEF8006A61D3 /* MCVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCVector.h; sourceTree = "<group>"; };
+		49B682EA1854DEF8006A61D3 /* MCVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVector.m; sourceTree = "<group>"; };
+		49BEF2641885978C002F5F41 /* MCQRFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCQRFactorization.h; sourceTree = "<group>"; };
+		49BEF2651885978C002F5F41 /* MCQRFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCQRFactorization.m; sourceTree = "<group>"; };
+		49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinearApproximationViewController.xib; sourceTree = "<group>"; };
+		49E10B431863F60900308AD2 /* ApproximationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproximationView.h; sourceTree = "<group>"; };
+		49E10B441863F60900308AD2 /* ApproximationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproximationView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				494F455B1861565B00347096 /* Accelerate.framework in Frameworks */,
 				49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */,
 				49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */,
 				49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */,
@@ -77,6 +169,109 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37AE3C0618735D4500FAE5BC /* Equations */ = {
+			isa = PBXGroup;
+			children = (
+				37AE3C0218735B5200FAE5BC /* MCEquation.h */,
+				494F4541185BDA6200347096 /* MCPolynomial.h */,
+				494F4542185BDA6200347096 /* MCPolynomial.m */,
+				4936537118B011060086C243 /* MCQuadratic.h */,
+				4936537218B011060086C243 /* MCQuadratic.m */,
+			);
+			name = Equations;
+			sourceTree = "<group>";
+		};
+		37AE3C0718735D5700FAE5BC /* Matrices */ = {
+			isa = PBXGroup;
+			children = (
+				49B682BE184D8390006A61D3 /* MCMatrix.h */,
+				49B682BF184D8390006A61D3 /* MCMatrix.m */,
+				49BEF2641885978C002F5F41 /* MCQRFactorization.h */,
+				49BEF2651885978C002F5F41 /* MCQRFactorization.m */,
+				494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */,
+				494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */,
+				494F454E185EA9DA00347096 /* MCLUFactorization.h */,
+				494F454F185EA9DA00347096 /* MCLUFactorization.m */,
+				4978F2D41877D9030095DE06 /* MCEigendecomposition.h */,
+				4978F2D51877D9030095DE06 /* MCEigendecomposition.m */,
+			);
+			name = Matrices;
+			sourceTree = "<group>";
+		};
+		37AE3C0818735D6800FAE5BC /* Vectors */ = {
+			isa = PBXGroup;
+			children = (
+				49B682E91854DEF8006A61D3 /* MCVector.h */,
+				49B682EA1854DEF8006A61D3 /* MCVector.m */,
+			);
+			name = Vectors;
+			sourceTree = "<group>";
+		};
+		494F4458185B61BB00347096 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				494F445A185B61BB00347096 /* RZCollectionList */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		494F445A185B61BB00347096 /* RZCollectionList */ = {
+			isa = PBXGroup;
+			children = (
+				494F445F185B61BB00347096 /* Classes */,
+				494F4478185B61BB00347096 /* RZCollectionList.h */,
+			);
+			path = RZCollectionList;
+			sourceTree = "<group>";
+		};
+		494F445F185B61BB00347096 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				494F4462185B61BB00347096 /* RZArrayCollectionList.h */,
+				494F4463185B61BB00347096 /* RZArrayCollectionList.m */,
+				494F4464185B61BB00347096 /* RZBaseCollectionList.h */,
+				494F4465185B61BB00347096 /* RZBaseCollectionList.m */,
+				494F4466185B61BB00347096 /* RZBaseCollectionList_Private.h */,
+				494F4467185B61BB00347096 /* RZCollectionListCollectionViewDataSource.h */,
+				494F4468185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m */,
+				494F4469185B61BB00347096 /* RZCollectionListNotificationWrappers.h */,
+				494F446A185B61BB00347096 /* RZCollectionListNotificationWrappers.m */,
+				494F446B185B61BB00347096 /* RZCollectionListProtocol.h */,
+				494F446C185B61BB00347096 /* RZCollectionListTableViewDataSource.h */,
+				494F446D185B61BB00347096 /* RZCollectionListTableViewDataSource.m */,
+				494F446E185B61BB00347096 /* RZCompositeCollectionList.h */,
+				494F446F185B61BB00347096 /* RZCompositeCollectionList.m */,
+				494F4472185B61BB00347096 /* RZFilteredCollectionList.h */,
+				494F4473185B61BB00347096 /* RZFilteredCollectionList.m */,
+				494F4474185B61BB00347096 /* RZObserverCollection.h */,
+				494F4475185B61BB00347096 /* RZObserverCollection.m */,
+				494F4476185B61BB00347096 /* RZSortedCollectionList.h */,
+				494F4477185B61BB00347096 /* RZSortedCollectionList.m */,
+			);
+			name = Classes;
+			path = RZCollectionList/Classes;
+			sourceTree = "<group>";
+		};
+		494F4549185D041200347096 /* _Categories */ = {
+			isa = PBXGroup;
+			children = (
+				494F4545185BDE3000347096 /* NSNumber+MCMath.h */,
+				494F4546185BDE3000347096 /* NSNumber+MCMath.m */,
+			);
+			name = _Categories;
+			sourceTree = "<group>";
+		};
+		4978F2E1187852230095DE06 /* Data Types */ = {
+			isa = PBXGroup;
+			children = (
+				4978F2E2187852330095DE06 /* MCTribool.h */,
+				4978F2E3187852330095DE06 /* MCTribool.m */,
+				4936537418B012220086C243 /* MCPair.h */,
+				4936537518B012220086C243 /* MCPair.m */,
+			);
+			name = "Data Types";
+			sourceTree = "<group>";
+		};
 		49B68283184D8341006A61D3 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +294,7 @@
 		49B6828E184D8342006A61D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				494F455A1861565B00347096 /* Accelerate.framework */,
 				49B6828F184D8342006A61D3 /* Foundation.framework */,
 				49B68291184D8342006A61D3 /* CoreGraphics.framework */,
 				49B68293184D8342006A61D3 /* UIKit.framework */,
@@ -110,10 +306,8 @@
 		49B68295184D8342006A61D3 /* MCNumerics */ = {
 			isa = PBXGroup;
 			children = (
-				49B6829E184D8342006A61D3 /* AppDelegate.h */,
-				49B6829F184D8342006A61D3 /* AppDelegate.m */,
-				49B682BE184D8390006A61D3 /* Matrix.h */,
-				49B682BF184D8390006A61D3 /* Matrix.m */,
+				49B682E71854DEB8006A61D3 /* Demo */,
+				49B682E81854DEC1006A61D3 /* Library */,
 				49B682A1184D8342006A61D3 /* Images.xcassets */,
 				49B68296184D8342006A61D3 /* Supporting Files */,
 			);
@@ -134,7 +328,9 @@
 		49B682AE184D8342006A61D3 /* MCNumericsTests */ = {
 			isa = PBXGroup;
 			children = (
+				4936537718B1C61B0086C243 /* MCMatrixTests.m */,
 				49B682B4184D8342006A61D3 /* MCNumericsTests.m */,
+				4936537918B1C6360086C243 /* MCVectorTests.m */,
 				49B682AF184D8342006A61D3 /* Supporting Files */,
 			);
 			path = MCNumericsTests;
@@ -147,6 +343,35 @@
 				49B682B1184D8342006A61D3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		49B682E71854DEB8006A61D3 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				494F4458185B61BB00347096 /* External */,
+				49B6829E184D8342006A61D3 /* AppDelegate.h */,
+				49B6829F184D8342006A61D3 /* AppDelegate.m */,
+				49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */,
+				49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */,
+				49B682D4184ED2D5006A61D3 /* LinearApproximationViewController.h */,
+				49B682D5184ED2D5006A61D3 /* LinearApproximationViewController.m */,
+				49E10B411863F56800308AD2 /* LinearApproximationViewController.xib */,
+				49E10B431863F60900308AD2 /* ApproximationView.h */,
+				49E10B441863F60900308AD2 /* ApproximationView.m */,
+			);
+			name = Demo;
+			sourceTree = "<group>";
+		};
+		49B682E81854DEC1006A61D3 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				4978F2E1187852230095DE06 /* Data Types */,
+				494F4549185D041200347096 /* _Categories */,
+				37AE3C0618735D4500FAE5BC /* Equations */,
+				37AE3C0718735D5700FAE5BC /* Matrices */,
+				37AE3C0818735D6800FAE5BC /* Vectors */,
+			);
+			name = Library;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +451,7 @@
 			files = (
 				49B6829A184D8342006A61D3 /* InfoPlist.strings in Resources */,
 				49B682A2184D8342006A61D3 /* Images.xcassets in Resources */,
+				49E10B421863F56800308AD2 /* LinearApproximationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,8 +471,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				49B682A0184D8342006A61D3 /* AppDelegate.m in Sources */,
+				494F44E1185B61BB00347096 /* RZObserverCollection.m in Sources */,
+				49E10B451863F60900308AD2 /* ApproximationView.m in Sources */,
+				49BEF2661885978C002F5F41 /* MCQRFactorization.m in Sources */,
+				4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */,
+				494F44DB185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
+				49B682D8184ED2D5006A61D3 /* LinearApproximationViewController.m in Sources */,
+				494F44D9185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,
+				49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */,
+				494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */,
+				494F44D7185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */,
+				494F44D5185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
 				49B6829C184D8342006A61D3 /* main.m in Sources */,
-				49B682C0184D8390006A61D3 /* Matrix.m in Sources */,
+				494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
+				494F44E3185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
+				494F44DF185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
+				49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */,
+				49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */,
+				4936537618B012220086C243 /* MCPair.m in Sources */,
+				494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
+				494F4543185BDA6200347096 /* MCPolynomial.m in Sources */,
+				494F4547185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
+				4978F2E4187852330095DE06 /* MCTribool.m in Sources */,
+				4936537318B011060086C243 /* MCQuadratic.m in Sources */,
+				494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +502,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4936537A18B1C6360086C243 /* MCVectorTests.m in Sources */,
+				494F44E4185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
+				494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */,
+				494F44D4185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
+				4936537818B1C61B0086C243 /* MCMatrixTests.m in Sources */,
+				494F44E2185B61BB00347096 /* RZObserverCollection.m in Sources */,
+				494F44D8185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */,
+				494F44DA185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,
+				494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
+				494F4544185BDA6200347096 /* MCPolynomial.m in Sources */,
+				494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */,
+				494F44DC185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
+				494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
+				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
+				494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
 				49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,12 +628,18 @@
 		49B682B9184D8342006A61D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCNumerics/MCNumerics-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Developer/Applications/Xcode5.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = "MCNumerics/MCNumerics-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/External/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -378,12 +647,18 @@
 		49B682BA184D8342006A61D3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCNumerics/MCNumerics-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Developer/Applications/Xcode5.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = "MCNumerics/MCNumerics-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/External/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -449,6 +724,7 @@
 				49B682BA184D8342006A61D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		49B682BB184D8342006A61D3 /* Build configuration list for PBXNativeTarget "MCNumericsTests" */ = {
 			isa = XCConfigurationList;
@@ -457,6 +733,7 @@
 				49B682BD184D8342006A61D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

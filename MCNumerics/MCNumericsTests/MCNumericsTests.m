@@ -7,7 +7,14 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "Matrix.h"
+#import <Accelerate/Accelerate.h>
+#import "MCMatrix.h"
+#import "MCVector.h"
+#import "MCSingularValueDecomposition.h"
+#import "MCLUFactorization.h"
+#import "MCTribool.h"
+#import "MCEigendecomposition.h"
+#import "MCQRFactorization.h"
 
 @interface MCNumericsTests : XCTestCase
 
@@ -27,164 +34,7 @@
     [super tearDown];
 }
 
-- (void)testMultiplySquareMatrices
-{
-    double *aVals = malloc(4 * sizeof(double));
-    double *bVals = malloc(4 * sizeof(double));
-    aVals[0] = 1.0;
-    aVals[1] = 3.0;
-    aVals[2] = 2.0;
-    aVals[3] = 5.0;
-    
-    bVals[0] = 6.0;
-    bVals[1] = 8.0;
-    bVals[2] = 7.0;
-    bVals[3] = 9.0;
-    Matrix *a = [Matrix matrixWithValues:aVals rows:2 columns:2];
-    Matrix *b = [Matrix matrixWithValues:bVals rows:2 columns:2];
-    
-    Matrix *p = [Matrix productOfMatrixA:a andMatrixB:b];
-    
-    double *solution = malloc(4 * sizeof(double));
-    solution[0] = 22.0;
-    solution[1] = 58.0;
-    solution[2] = 25.0;
-    solution[3] = 66.0;
-    
-    for (int i = 0; i < 4; i++) {
-        XCTAssertEqual(p.values[i], solution[i], @"Value at index %i incorrect", i);
-    }
-    
-    free(aVals);
-    free(bVals);
-    free(solution);
-}
-
-- (void)testMultiplyRectangularMatrices
-{
-    double *aVals = malloc(6 * sizeof(double));
-    double *bVals = malloc(9 * sizeof(double));
-    aVals[0] = 0.0;
-    aVals[1] = 1.0;
-    aVals[2] = 1.0;
-    aVals[3] = 0.0;
-    aVals[4] = -1.0;
-    aVals[5] = 1.0;
-    
-    bVals[0] = 1.0;
-    bVals[1] = 4.0;
-    bVals[2] = 7.0;
-    bVals[3] = 2.0;
-    bVals[4] = 5.0;
-    bVals[5] = 8.0;
-    bVals[6] = 3.0;
-    bVals[7] = 6.0;
-    bVals[8] = 9.0;
-    Matrix *a = [Matrix matrixWithValues:aVals rows:2 columns:3];
-    Matrix *b = [Matrix matrixWithValues:bVals rows:3 columns:3];
-    
-    Matrix *p = [Matrix productOfMatrixA:a andMatrixB:b];
-    
-    double *solution = malloc(6 * sizeof(double));
-    solution[0] = -3.0;
-    solution[1] = 8.0;
-    solution[2] = -3.0;
-    solution[3] = 10.0;
-    solution[4] = -3.0;
-    solution[5] = 12.0;
-    
-    for (int i = 0; i < 6; i++) {
-        XCTAssertEqual(p.values[i], solution[i], @"Value at index %i incorrect", i);
-    }
-    
-    free(aVals);
-    free(bVals);
-    free(solution);
-}
-
-- (void)firstSVDTest
-{
-    // page 568 example 12.5 from Sauer
-    double *values = malloc(6 * sizeof(double));
-    values[0] = 0.0;
-    values[1] = 3.0;
-    values[2] = 0.0;
-    values[3] = -0.5;
-    values[4] = 0.0;
-    values[5] = 0.0;
-    Matrix *a = [Matrix matrixWithValues:values rows:3 columns:2];
-    
-    SingularValueDecomposition *svd = a.singularValueDecomposition;
-    
-    Matrix *intermediate = [Matrix productOfMatrixA:svd.u andMatrixB:svd.s];
-    Matrix *original = [Matrix productOfMatrixA:intermediate andMatrixB:svd.vT];
-    
-    for (int i = 0; i < 6; i++) {
-        XCTAssertEqualWithAccuracy(values[i], original.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
-    }
-    
-    free(values);
-}
-
-- (void)secondSVDTest
-{
-    // page 574 example 12.9 from Sauer
-    double *values = malloc(8 * sizeof(double));
-    values[0] = 3.0;
-    values[1] = 2.0;
-    values[2] = 2.0;
-    values[3] = 4.0;
-    values[4] = -2.0;
-    values[5] = -1.0;
-    values[6] = -3.0;
-    values[7] = -5.0;
-    Matrix *a = [Matrix matrixWithValues:values rows:2 columns:4];
-    
-    SingularValueDecomposition *svd = a.singularValueDecomposition;
-    
-    Matrix *intermediate = [Matrix productOfMatrixA:svd.u andMatrixB:svd.s];
-    Matrix *original = [Matrix productOfMatrixA:intermediate andMatrixB:svd.vT];
-    
-    for (int i = 0; i < 8; i++) {
-        XCTAssertEqualWithAccuracy(values[i], original.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
-    }
-    
-    free(values);
-}
-
-- (void)testOverdeterminedSystem
-{
-    double *aVals = malloc(6 * sizeof(double));
-    double *bVals = malloc(3 * sizeof(double));
-    aVals[0] = 1.0;
-    aVals[1] = 1.0;
-    aVals[2] = 1.0;
-    aVals[3] = 1.0;
-    aVals[4] = -1.0;
-    aVals[5] = 1.0;
-    
-    bVals[0] = 2.0;
-    bVals[1] = 1.0;
-    bVals[2] = 3.0;
-    Matrix *a = [Matrix matrixWithValues:aVals rows:3 columns:2];
-    Matrix *b = [Matrix matrixWithValues:bVals rows:3 columns:1];
-    
-    Matrix *coefficients = [Matrix solveLinearSystemWithMatrixA:a valuesB:b];
-    
-    double *solution = malloc(2 * sizeof(double));
-    solution[0] = 7.0 / 4.0;
-    solution[1] = 3.0 / 4.0;
-    
-    for (int i = 0; i < 2; i++) {
-        XCTAssertEqualWithAccuracy(solution[i], coefficients.values[i], __DBL_EPSILON__ * 10.0, @"Value at index %i incorrect", i);
-    }
-    
-    free(aVals);
-    free(bVals);
-    free(solution);
-}
-
-- (void)testNormalSystemOfEquations
+- (void)testMultiplyingMatrixByVector
 {
     double *aVals = malloc(16 * sizeof(double));
     double *bVals = malloc(4 * sizeof(double));
@@ -205,29 +55,25 @@
     aVals[14] = 0.0;
     aVals[15] = 4.0;
     
-    bVals[0] = -15.6;
-    bVals[1] = -2.9778;
-    bVals[2] = -10.2376;
-    bVals[3] = 4.5;
-    Matrix *a = [Matrix matrixWithValues:aVals rows:4 columns:4];
-    Matrix *b = [Matrix matrixWithValues:bVals rows:4 columns:1];
+    bVals[0] = -1.95;
+    bVals[1] = -0.7445;
+    bVals[2] = -2.5594;
+    bVals[3] = 1.125;
+    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:4 columns:4];
+    MCVector *b = [MCVector vectorWithValues:bVals length:4];
     
-    Matrix *coefficients = [Matrix solveLinearSystemWithMatrixA:a valuesB:b];
+    MCVector *product = [MCMatrix productOfMatrix:a andVector:b];
     
-    double *solution = malloc(2 * sizeof(double));
-    solution[0] = -1.95;
-    solution[1] = -0.7445;
-    solution[2] = -2.5594;
-    solution[3] = 1.125;
+    double *solution = malloc(4 * sizeof(double));
+    solution[0] = -15.6;
+    solution[1] = -2.9778;
+    solution[2] = -10.2376;
+    solution[3] = 4.5;
+    MCVector *s = [MCVector vectorWithValues:solution length:4];
     
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqualWithAccuracy(solution[i], coefficients.values[i], 0.0005, @"Value at index %i incorrect", i);
+        XCTAssertEqualWithAccuracy([s valueAtIndex:i], [product valueAtIndex:i], 0.0005, @"Coefficient %u incorrect", i);
     }
-    
-    free(aVals);
-    free(bVals);
-    free(solution);
 }
-
 
 @end
