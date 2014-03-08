@@ -105,24 +105,6 @@
     return self;
 }
 
-- (instancetype)initMatrixWithBandValues:(double *)values
-                                    rows:(NSUInteger)rows
-                                 columns:(NSUInteger)columns
-                               bandwidth:(NSUInteger)bandwidth
-                     oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
-{
-    self = [self init];
-    if (self) {
-        _packingFormat = MCMatrixValuePackingFormatBand;
-        _rows = rows;
-        _columns = columns;
-        _bandwidth = bandwidth;
-        _triangularComponent = oddDiagonalLocation;
-        _values = values;
-    }
-    return self;
-}
-
 #pragma mark - Class constructors
 
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors
@@ -288,16 +270,68 @@
 }
 
 + (instancetype)bandMatrixWithValues:(double *)values
-                                rows:(NSUInteger)rows
-                             columns:(NSUInteger)columns
+                               order:(NSUInteger)order
                            bandwidth:(NSUInteger)bandwidth
+                    leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
 {
-    return [[MCMatrix alloc] initMatrixWithBandValues:values
-                                                 rows:rows
-                                              columns:columns
-                                            bandwidth:bandwidth
-                                  oddDiagonalLocation:oddDiagonalLocation];
+    // TODO: store as a band matrix instead of defaulting to conventional storage
+    BOOL evenAmountOfBands = (bandwidth / 2.0) == round(bandwidth / 2.0);
+    double *unpackedValues = calloc(order * order, sizeof(double));
+    
+    NSUInteger numberOfBandValues = order;
+    NSUInteger numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
+    for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
+        numberOfBandValues += 2 * (order - (i + 1));
+    }
+    if (evenAmountOfBands) {
+        numberOfBandValues += order - floor(bandwidth / 2.0) - 1;
+    }
+    
+    /*
+     
+     good documentation at http://www.roguewave.com/Portals/0/products/imsl-numerical-libraries/c-library/docs/6.0/math/default.htm?turl=matrixstoragemodes.htm
+     
+     the band matrix 
+     [ a b 0 0 0
+       c d e 0 0
+       f g h i 0
+       0 j k l m
+       0 0 n o p ]
+     
+     is stored as the 2d array (logically) as
+     
+     [ [ * b e i m ]
+       [ a d h l p ]
+       [ c g k o * ]
+       [ f j n * * ] ]
+     
+     which converts to the 1d array
+     
+     [ * b e i m a d h l p c g k o * f j n * * ]
+     
+     *'s must be present but not set and are not used by lapack
+     
+     */
+    
+    // The values Aij inside the band width are stored in the linear array in positions [(i - j + nuca + 1) * n + j]
+    int numberOfUpperCodiagonals = (evenAmountOfBands && oddDiagonalLocation == MCMatrixTriangularComponentUpper) ? 1 : 0;
+    for (int i = 0; i < order; i += 1) {
+        for (int j = 0; j < order; j += 1) {
+            int indexIntoBandArray = ( i - j + numberOfUpperCodiagonals + 1 ) * order + j;
+            int indexIntoUnpackedArray = leadingDimension == MCMatrixLeadingDimensionColumn ? j * order + i : i * order + j;
+            if (indexIntoBandArray >= 0 && indexIntoBandArray < bandwidth * order) {
+                unpackedValues[indexIntoUnpackedArray] = values[indexIntoBandArray];
+            } else {
+                unpackedValues[indexIntoUnpackedArray] = 0.0;
+            }
+        }
+    }
+    
+    return [MCMatrix matrixWithValues:unpackedValues
+                                 rows:order
+                              columns:order
+                     leadingDimension:leadingDimension];
 }
 
 //- (void)dealloc

@@ -343,7 +343,7 @@ typedef enum {
 
 + (instancetype)bandMatrixWithValues:(double *)values
                                order:(NSUInteger)order
-                       packingFormat:(MCMatrixValuePackingFormat)packingFormat
+                           bandwidth:(NSUInteger)bandwidth
                     leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 

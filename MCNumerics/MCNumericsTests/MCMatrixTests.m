@@ -1562,4 +1562,101 @@
     XCTAssert([matrix isEqualToMatrix:lowerSolution], @"Lower triangular column major matrix incorrectly created.");
 }
 
+- (void)testBandMatrixCreation
+{
+    // balanced codiagonals
+    double balancedBandValues[15] = {
+        0.0,  1.0,  2.0,  3.0,  4.0,
+        10.0, 20.0, 30.0, 40.0, 50.0,
+        5.0,  6.0,  7.0,  8.0,  0.0
+    };
+    MCMatrix *matrix = [MCMatrix bandMatrixWithValues:balancedBandValues
+                                                order:5
+                                            bandwidth:3
+                                     leadingDimension:MCMatrixLeadingDimensionColumn
+                                  oddDiagonalLocation:MCMatrixTriangularComponentBoth];
+    
+    double oddBandwidthSolutionValues[25] = {
+        10.0,  1.0,   0.0,   0.0,   0.0,
+        5.0,   20.0,  2.0,   0.0,   0.0,
+        0.0,   6.0,   30.0,  3.0,   0.0,
+        0.0,   0.0,   7.0,   40.0,  4.0,
+        0.0,   0.0,   0.0,   8.0,   50.0
+    };
+    MCMatrix *solution = [MCMatrix matrixWithValues:oddBandwidthSolutionValues
+                                               rows:5
+                                            columns:5
+                                   leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    for (int row = 0; row < 5; row += 1) {
+        for (int col = 0; col < 5; col += 1) {
+            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with balanced codiagonals.", row, col);
+        }
+    }
+    
+    // extra upper codiagonal
+    double bandValuesWithExtraUpper[20] = {
+        0.0,  0.0,  -1.0, -2.0, -3.0,
+        0.0,  1.0,  2.0,  3.0,  4.0,
+        10.0, 20.0, 30.0, 40.0, 50.0,
+        5.0,  6.0,  7.0,  8.0,  0.0
+    };
+    matrix = [MCMatrix bandMatrixWithValues:bandValuesWithExtraUpper
+                                      order:5
+                                  bandwidth:4
+                           leadingDimension:MCMatrixLeadingDimensionColumn
+                        oddDiagonalLocation:MCMatrixTriangularComponentUpper];
+    NSLog(matrix.description);
+    
+    double solutionValuesWithExtraUpper[25] = {
+        10.0,  1.0,   -1.0,   0.0,   0.0,
+        5.0,   20.0,  2.0,    -2.0,  0.0,
+        0.0,   6.0,   30.0,   3.0,   -3.0,
+        0.0,   0.0,   7.0,    40.0,  4.0,
+        0.0,   0.0,   0.0,    8.0,   50.0
+    };
+    solution = [MCMatrix matrixWithValues:solutionValuesWithExtraUpper
+                                     rows:5
+                                  columns:5
+                         leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    for (int row = 0; row < 5; row += 1) {
+        for (int col = 0; col < 5; col += 1) {
+            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with extra upper codiagonal.", row, col);
+        }
+    }
+    
+    // extra lower codiagonal
+    double bandValuesWithExtraLower[20] = {
+        0.0,  1.0,  2.0,  3.0,  4.0,
+        10.0, 20.0, 30.0, 40.0, 50.0,
+        5.0,  6.0,  7.0,  8.0,  0.0,
+        -1.0, -2.0, -3.0, 0.0,  0.0
+    };
+    matrix = [MCMatrix bandMatrixWithValues:bandValuesWithExtraLower
+                                      order:5
+                                  bandwidth:4
+                           leadingDimension:MCMatrixLeadingDimensionColumn
+                        oddDiagonalLocation:MCMatrixTriangularComponentLower];
+    NSLog(matrix.description);
+    
+    double solutionValuesWithExtraLower[25] = {
+        10.0,  1.0,   0.0,   0.0,   0.0,
+        5.0,   20.0,  2.0,   0.0,   0.0,
+        -1.0,   6.0,   30.0,  3.0,   0.0,
+        0.0,   -2.0,   7.0,   40.0,  4.0,
+        0.0,   0.0,   -3.0,   8.0,   50.0
+    };
+    solution = [MCMatrix matrixWithValues:solutionValuesWithExtraLower
+                                     rows:5
+                                  columns:5
+                         leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    for (int row = 0; row < 5; row += 1) {
+        for (int col = 0; col < 5; col += 1) {
+            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
+        }
+    }
+}
+
 @end
