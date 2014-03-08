@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4936537318B011060086C243 /* MCQuadratic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537218B011060086C243 /* MCQuadratic.m */; };
 		4936537618B012220086C243 /* MCPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537518B012220086C243 /* MCPair.m */; };
-		4936537818B1C61B0086C243 /* MCMatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537718B1C61B0086C243 /* MCMatrixTests.m */; };
 		4936537A18B1C6360086C243 /* MCVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537918B1C6360086C243 /* MCVectorTests.m */; };
 		494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
 		494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
@@ -40,6 +39,20 @@
 		494F455B1861565B00347096 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F455A1861565B00347096 /* Accelerate.framework */; };
 		4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2D51877D9030095DE06 /* MCEigendecomposition.m */; };
 		4978F2E4187852330095DE06 /* MCTribool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2E3187852330095DE06 /* MCTribool.m */; };
+		4996B21218CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21118CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m */; };
+		4996B21518CBA24700C1CEF9 /* SingularValueDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */; };
+		4996B21718CBA29100C1CEF9 /* LeastSquaresSolutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21618CBA29100C1CEF9 /* LeastSquaresSolutionTests.m */; };
+		4996B21918CBA2C600C1CEF9 /* MatrixConstructionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21818CBA2C600C1CEF9 /* MatrixConstructionTests.m */; };
+		4996B21B18CBA33A00C1CEF9 /* LUDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21A18CBA33A00C1CEF9 /* LUDecompositionTests.m */; };
+		4996B21D18CBA37C00C1CEF9 /* MatrixArithmeticTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21C18CBA37C00C1CEF9 /* MatrixArithmeticTests.m */; };
+		4996B21F18CBA3F500C1CEF9 /* EigendecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21E18CBA3F500C1CEF9 /* EigendecompositionTests.m */; };
+		4996B22118CBA43C00C1CEF9 /* QRDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22018CBA43C00C1CEF9 /* QRDecompositionTests.m */; };
+		4996B22318CBA48800C1CEF9 /* MatrixInversionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22218CBA48800C1CEF9 /* MatrixInversionTests.m */; };
+		4996B22518CBA4B600C1CEF9 /* MatrixPropertyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22418CBA4B600C1CEF9 /* MatrixPropertyTests.m */; };
+		4996B22718CBA56300C1CEF9 /* MatrixOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22618CBA56300C1CEF9 /* MatrixOperationTests.m */; };
+		4996B22918CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22818CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m */; };
+		4996B22B18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22A18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m */; };
+		4996B22D18CBA72400C1CEF9 /* Benchmarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22C18CBA72400C1CEF9 /* Benchmarks.m */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -77,7 +90,6 @@
 		4936537218B011060086C243 /* MCQuadratic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCQuadratic.m; sourceTree = "<group>"; };
 		4936537418B012220086C243 /* MCPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPair.h; sourceTree = "<group>"; };
 		4936537518B012220086C243 /* MCPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPair.m; sourceTree = "<group>"; };
-		4936537718B1C61B0086C243 /* MCMatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrixTests.m; sourceTree = "<group>"; };
 		4936537918B1C6360086C243 /* MCVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVectorTests.m; sourceTree = "<group>"; };
 		494F4462185B61BB00347096 /* RZArrayCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZArrayCollectionList.h; sourceTree = "<group>"; };
 		494F4463185B61BB00347096 /* RZArrayCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZArrayCollectionList.m; sourceTree = "<group>"; };
@@ -113,6 +125,20 @@
 		4978F2D51877D9030095DE06 /* MCEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEigendecomposition.m; sourceTree = "<group>"; };
 		4978F2E2187852330095DE06 /* MCTribool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTribool.h; sourceTree = "<group>"; };
 		4978F2E3187852330095DE06 /* MCTribool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTribool.m; sourceTree = "<group>"; };
+		4996B21118CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrixMultiplicationTests.m; sourceTree = "<group>"; };
+		4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingularValueDecompositionTests.m; sourceTree = "<group>"; };
+		4996B21618CBA29100C1CEF9 /* LeastSquaresSolutionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeastSquaresSolutionTests.m; sourceTree = "<group>"; };
+		4996B21818CBA2C600C1CEF9 /* MatrixConstructionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixConstructionTests.m; sourceTree = "<group>"; };
+		4996B21A18CBA33A00C1CEF9 /* LUDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LUDecompositionTests.m; sourceTree = "<group>"; };
+		4996B21C18CBA37C00C1CEF9 /* MatrixArithmeticTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixArithmeticTests.m; sourceTree = "<group>"; };
+		4996B21E18CBA3F500C1CEF9 /* EigendecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EigendecompositionTests.m; sourceTree = "<group>"; };
+		4996B22018CBA43C00C1CEF9 /* QRDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRDecompositionTests.m; sourceTree = "<group>"; };
+		4996B22218CBA48800C1CEF9 /* MatrixInversionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixInversionTests.m; sourceTree = "<group>"; };
+		4996B22418CBA4B600C1CEF9 /* MatrixPropertyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixPropertyTests.m; sourceTree = "<group>"; };
+		4996B22618CBA56300C1CEF9 /* MatrixOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixOperationTests.m; sourceTree = "<group>"; };
+		4996B22818CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixCopyAndEqualityTests.m; sourceTree = "<group>"; };
+		4996B22A18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinorCofactorAdjugateTests.m; sourceTree = "<group>"; };
+		4996B22C18CBA72400C1CEF9 /* Benchmarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Benchmarks.m; sourceTree = "<group>"; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -272,6 +298,34 @@
 			name = "Data Types";
 			sourceTree = "<group>";
 		};
+		4996B21318CBA22000C1CEF9 /* Matrix Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4996B21E18CBA3F500C1CEF9 /* EigendecompositionTests.m */,
+				4996B21618CBA29100C1CEF9 /* LeastSquaresSolutionTests.m */,
+				4996B21A18CBA33A00C1CEF9 /* LUDecompositionTests.m */,
+				4996B21C18CBA37C00C1CEF9 /* MatrixArithmeticTests.m */,
+				4996B21818CBA2C600C1CEF9 /* MatrixConstructionTests.m */,
+				4996B22818CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m */,
+				4996B22218CBA48800C1CEF9 /* MatrixInversionTests.m */,
+				4996B22618CBA56300C1CEF9 /* MatrixOperationTests.m */,
+				4996B22418CBA4B600C1CEF9 /* MatrixPropertyTests.m */,
+				4996B21118CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m */,
+				4996B22A18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m */,
+				4996B22018CBA43C00C1CEF9 /* QRDecompositionTests.m */,
+				4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */,
+			);
+			name = "Matrix Tests";
+			sourceTree = "<group>";
+		};
+		4996B22E18CBA76F00C1CEF9 /* Runtime Benchmarks */ = {
+			isa = PBXGroup;
+			children = (
+				4996B22C18CBA72400C1CEF9 /* Benchmarks.m */,
+			);
+			name = "Runtime Benchmarks";
+			sourceTree = "<group>";
+		};
 		49B68283184D8341006A61D3 = {
 			isa = PBXGroup;
 			children = (
@@ -328,9 +382,10 @@
 		49B682AE184D8342006A61D3 /* MCNumericsTests */ = {
 			isa = PBXGroup;
 			children = (
-				4936537718B1C61B0086C243 /* MCMatrixTests.m */,
+				4996B21318CBA22000C1CEF9 /* Matrix Tests */,
 				49B682B4184D8342006A61D3 /* MCNumericsTests.m */,
 				4936537918B1C6360086C243 /* MCVectorTests.m */,
+				4996B22E18CBA76F00C1CEF9 /* Runtime Benchmarks */,
 				49B682AF184D8342006A61D3 /* Supporting Files */,
 			);
 			path = MCNumericsTests;
@@ -503,21 +558,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				4936537A18B1C6360086C243 /* MCVectorTests.m in Sources */,
+				4996B22518CBA4B600C1CEF9 /* MatrixPropertyTests.m in Sources */,
 				494F44E4185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
 				494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */,
+				4996B21B18CBA33A00C1CEF9 /* LUDecompositionTests.m in Sources */,
+				4996B22118CBA43C00C1CEF9 /* QRDecompositionTests.m in Sources */,
+				4996B21218CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m in Sources */,
+				4996B21518CBA24700C1CEF9 /* SingularValueDecompositionTests.m in Sources */,
 				494F44D4185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
-				4936537818B1C61B0086C243 /* MCMatrixTests.m in Sources */,
 				494F44E2185B61BB00347096 /* RZObserverCollection.m in Sources */,
+				4996B22918CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m in Sources */,
 				494F44D8185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */,
+				4996B22718CBA56300C1CEF9 /* MatrixOperationTests.m in Sources */,
+				4996B21D18CBA37C00C1CEF9 /* MatrixArithmeticTests.m in Sources */,
 				494F44DA185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,
+				4996B22B18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m in Sources */,
 				494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
+				4996B21F18CBA3F500C1CEF9 /* EigendecompositionTests.m in Sources */,
+				4996B21718CBA29100C1CEF9 /* LeastSquaresSolutionTests.m in Sources */,
 				494F4544185BDA6200347096 /* MCPolynomial.m in Sources */,
 				494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */,
 				494F44DC185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
+				4996B22D18CBA72400C1CEF9 /* Benchmarks.m in Sources */,
+				4996B21918CBA2C600C1CEF9 /* MatrixConstructionTests.m in Sources */,
 				494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
 				494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
 				49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */,
+				4996B22318CBA48800C1CEF9 /* MatrixInversionTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
