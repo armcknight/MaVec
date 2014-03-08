@@ -46,7 +46,6 @@
 @synthesize normInfinity = _normInfinity;
 @synthesize normFroebenius = _normFroebenius;
 @synthesize normMax = _normMax;
-@synthesize packingFormat = _packingFormat;
 @synthesize triangularComponent = _triangularComponent;
 
 #pragma mark - Constructors
