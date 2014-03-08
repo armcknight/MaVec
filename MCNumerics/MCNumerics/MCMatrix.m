@@ -222,6 +222,7 @@
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                          ofOrder:(NSUInteger)order
 {
+    // TODO: store as a triangular matrix instead of defaulting to conventional storage
     double *unpackedValues = malloc(order * order * sizeof(double));
     long k = 0; // current index in parameter array
     long z = 0; // current index in ivar array
@@ -248,6 +249,7 @@
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                         ofOrder:(NSUInteger)order
 {
+    // TODO: store as a triangular symmetric matrix instead of defaulting to conventional storage
     double *unpackedValues = malloc(order * order * sizeof(double));
     MCMatrix *matrix = [[MCMatrix alloc] initWithValues:unpackedValues
                                                    rows:order
@@ -872,6 +874,7 @@
 
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column
 {
+    // TODO: implement consideration of triangular, symmetric and band matrices
     if (row >= self.rows) {
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
     } else if (column >= self.columns) {
