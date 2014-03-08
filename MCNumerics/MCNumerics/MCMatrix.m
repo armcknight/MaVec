@@ -715,12 +715,6 @@
     // TODO: implement, updating bandwidth if necessary
 }
 
-- (void)setTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-{
-    @throw kMCUnimplementedMethodException;
-    // TODO: implement
-}
-
 #pragma mark - Matrix operations
 
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
