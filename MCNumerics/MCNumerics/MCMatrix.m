@@ -333,6 +333,70 @@
                               columns:order];
 }
 
++ (instancetype)randomMatrixWithRows:(NSUInteger)rows
+                             columns:(NSUInteger)columns
+{
+    double *values = [self randomArrayOfSize:rows * columns];
+    return [MCMatrix matrixWithValues:values
+                                 rows:rows
+                              columns:columns];
+}
+
++ (instancetype)randomSymmetricMatrixOfOrder:(NSUInteger)order
+{
+    double *values = [self randomArrayOfSize:(order * (order + 1))/2];
+    return [MCMatrix symmetricMatrixWithPackedValues:values
+                                    leadingDimension:MCMatrixLeadingDimensionColumn
+                                 triangularComponent:MCMatrixTriangularComponentUpper
+                                             ofOrder:order];
+}
+
++ (instancetype)randomDiagonalMatrixOfOrder:(NSUInteger)order
+{
+    double *values = [self randomArrayOfSize:order];
+    return [MCMatrix diagonalMatrixWithValues:values size:order];
+}
+
++ (instancetype)randomTriangularMatrixOfOrder:(NSUInteger)order
+                          triangularComponent:(NSUInteger)triangularComponent
+{
+    double *values = [self randomArrayOfSize:(order * (order + 1))/2];
+    return [MCMatrix triangularMatrixWithPackedValues:values
+                                ofTriangularComponent:triangularComponent
+                                     leadingDimension:MCMatrixLeadingDimensionColumn
+                                              ofOrder:order];
+}
+
++ (instancetype)randomBandMatrixOfOrder:(NSUInteger)order
+                              bandwidth:(NSUInteger)bandwidth
+                    oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
+{
+    BOOL evenAmountOfBands = (bandwidth / 2.0) == round(bandwidth / 2.0);
+    
+    NSUInteger numberOfBandValues = order;
+    NSUInteger numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
+    for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
+        numberOfBandValues += 2 * (order - (i + 1));
+    }
+    if (evenAmountOfBands) {
+        numberOfBandValues += order - floor(bandwidth / 2.0) - 1;
+    }
+    double *values = [self randomArrayOfSize:numberOfBandValues];
+    return [MCMatrix bandMatrixWithValues:values
+                                    order:order
+                                bandwidth:bandwidth
+                      oddDiagonalLocation:oddDiagonalLocation];
+}
+
++ (double *)randomArrayOfSize:(NSUInteger)size
+{
+    double *values = malloc(size * sizeof(double));
+    for (int i = 0; i < size; i += 1) {
+        values[i] = drand48();
+    }
+    return values;
+}
+
 //- (void)dealloc
 //{
 //    if (self.values) {

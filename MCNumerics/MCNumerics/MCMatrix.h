@@ -346,6 +346,20 @@ typedef enum {
                            bandwidth:(NSUInteger)bandwidth
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 
++ (instancetype)randomMatrixWithRows:(NSUInteger)rows
+                             columns:(NSUInteger)columns;
+
++ (instancetype)randomSymmetricMatrixOfOrder:(NSUInteger)order;
+
++ (instancetype)randomDiagonalMatrixOfOrder:(NSUInteger)order;
+
++ (instancetype)randomTriangularMatrixOfOrder:(NSUInteger)order
+                          triangularComponent:(NSUInteger)triangularComponent;
+
++ (instancetype)randomBandMatrixOfOrder:(NSUInteger)order
+                              bandwidth:(NSUInteger)bandwidth
+                    oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
+
 #pragma mark - Operations
 
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB;
