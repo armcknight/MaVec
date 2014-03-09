@@ -203,7 +203,6 @@
     MCMatrix *matrix = [MCMatrix bandMatrixWithValues:balancedBandValues
                                                 order:5
                                             bandwidth:3
-                                     leadingDimension:MCMatrixLeadingDimensionColumn
                                   oddDiagonalLocation:MCMatrixTriangularComponentBoth];
     
     double oddBandwidthSolutionValues[25] = {
@@ -234,7 +233,6 @@
     matrix = [MCMatrix bandMatrixWithValues:bandValuesWithExtraUpper
                                       order:5
                                   bandwidth:4
-                           leadingDimension:MCMatrixLeadingDimensionColumn
                         oddDiagonalLocation:MCMatrixTriangularComponentUpper];
     NSLog(matrix.description);
     
@@ -266,7 +264,6 @@
     matrix = [MCMatrix bandMatrixWithValues:bandValuesWithExtraLower
                                       order:5
                                   bandwidth:4
-                           leadingDimension:MCMatrixLeadingDimensionColumn
                         oddDiagonalLocation:MCMatrixTriangularComponentLower];
     NSLog(matrix.description);
     

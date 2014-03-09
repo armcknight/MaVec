@@ -273,7 +273,6 @@
 + (instancetype)bandMatrixWithValues:(double *)values
                                order:(NSUInteger)order
                            bandwidth:(NSUInteger)bandwidth
-                    leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
 {
     // TODO: store as a band matrix instead of defaulting to conventional storage
@@ -320,7 +319,7 @@
     for (int i = 0; i < order; i += 1) {
         for (int j = 0; j < order; j += 1) {
             int indexIntoBandArray = ( i - j + numberOfUpperCodiagonals + 1 ) * order + j;
-            int indexIntoUnpackedArray = leadingDimension == MCMatrixLeadingDimensionColumn ? j * order + i : i * order + j;
+            int indexIntoUnpackedArray = j * order + i;
             if (indexIntoBandArray >= 0 && indexIntoBandArray < bandwidth * order) {
                 unpackedValues[indexIntoUnpackedArray] = values[indexIntoBandArray];
             } else {
@@ -331,8 +330,7 @@
     
     return [MCMatrix matrixWithValues:unpackedValues
                                  rows:order
-                              columns:order
-                     leadingDimension:leadingDimension];
+                              columns:order];
 }
 
 //- (void)dealloc
