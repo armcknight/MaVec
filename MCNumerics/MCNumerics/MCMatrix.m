@@ -245,8 +245,8 @@
 }
 
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
-                               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                         ofOrder:(NSUInteger)order
 {
     // TODO: store as a triangular symmetric matrix instead of defaulting to conventional storage
@@ -346,8 +346,8 @@
 {
     double *values = [self randomArrayOfSize:(order * (order + 1))/2];
     return [MCMatrix symmetricMatrixWithPackedValues:values
-                                    leadingDimension:MCMatrixLeadingDimensionColumn
                                  triangularComponent:MCMatrixTriangularComponentUpper
+                                    leadingDimension:MCMatrixLeadingDimensionColumn
                                              ofOrder:order];
 }
 

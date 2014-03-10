@@ -103,8 +103,8 @@
         12.0
     };
     MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:rowMajorPackedValues
-                                                leadingDimension:MCMatrixLeadingDimensionRow
                                              triangularComponent:MCMatrixTriangularComponentUpper
+                                                leadingDimension:MCMatrixLeadingDimensionRow
                                                          ofOrder:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
     
@@ -115,8 +115,8 @@
         12.0
     };
     matrix = [MCMatrix symmetricMatrixWithPackedValues:columnMajorPackedValues
-                                      leadingDimension:MCMatrixLeadingDimensionColumn
                                    triangularComponent:MCMatrixTriangularComponentLower
+                                      leadingDimension:MCMatrixLeadingDimensionColumn
                                                ofOrder:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
 }

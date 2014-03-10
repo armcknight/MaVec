@@ -337,8 +337,8 @@ typedef enum {
                                          ofOrder:(NSUInteger)order;
 
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
-                               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                         ofOrder:(NSUInteger)order;
 
 + (instancetype)bandMatrixWithValues:(double *)values
