@@ -19,6 +19,32 @@
 
 #import "NSNumber+MCMath.h"
 
+typedef enum : NSUInteger {
+    /**
+     The maximum absolute column sum of the matrix.
+     */
+    MCMatrixNormL1,
+    
+    /**
+     The maximum absolute row sum of the matrix.
+     */
+    MCMatrixNormInfinity,
+    
+    /**
+     The maximum value of all entries in the matrix.
+     */
+    MCMatrixNormMax,
+    
+    /**
+     Square root of the sum of the squared values in the matrix.
+     */
+    MCMatrixNormFroebenius
+}
+/**
+ Constants describing types of matrix norms.
+ */
+MCMatrixNorm;
+
 @interface MCMatrix ()
 
 - (double)normOfType:(MCMatrixNorm)normType;

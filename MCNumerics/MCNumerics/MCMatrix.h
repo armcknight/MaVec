@@ -15,98 +15,115 @@
 @class MCVector;
 @class MCTribool;
 
-typedef NS_ENUM(NSUInteger, MCMatrixNorm) {
-    MCMatrixNormL1,
-    MCMatrixNormInfinity,
-    MCMatrixNormMax,
-    MCMatrixNormFroebenius
-};
-
-/**
- @brief Constants specifying the leading dimension used for storing this matrix' values.
- @constant MCMatrixLeadingDimensionRow Specifies that this matrix' values are stored in row-major order.
- @constant MCMatrixLeadingDimensionColumn Specifies that this matrix' values are stored in column-major order.
- */
-typedef enum {
+typedef enum : NSUInteger {
+    /**
+     Specifies that this matrix' values are stored in row-major order.
+     */
     MCMatrixLeadingDimensionRow,
+    
+    /**
+     Specifies that this matrix' values are stored in column-major order.
+     */
     MCMatrixLeadingDimensionColumn
-} MCMatrixLeadingDimension;
-
-/**
- @brief Constants specifying the triangular portion of a square matrix.
- @constant MCMatrixTriangularComponentLower Specifies that values refer to lower triangular portion.
- @constant MCMatrixTriangularComponentUpper Specifies that values refer to upper triangular portion.
+}
+/** 
+ Constants specifying the leading dimension used for storing this matrix' values.
  */
-typedef enum {
+MCMatrixLeadingDimension;
+
+typedef enum : NSUInteger {
+    /**
+     Specifies that values refer to lower triangular portion.
+     */
     MCMatrixTriangularComponentLower,
+    
+    /**
+     Specifies that values refer to upper triangular portion.
+     */
     MCMatrixTriangularComponentUpper,
+    
+    /**
+     Special case where both or neither triangular components are defined.
+     */
     MCMatrixTriangularComponentBoth
-} MCMatrixTriangularComponent;
-
+}
 /**
- @brief Constants specifying the matrix flattening method used to construct the values array.
- @constant MCMatrixValuePackingFormatConventional All values are flattened using a MCMatrixLeadingDimension.
- 
- [ a b
-   c d ]   =>    [a b c d] or [a c b d]
- 
- @constant MCMatrixValuePackingFormatPacked Exclude triangular matrix' leftover 0 values.
- 
- [ a b c
-   0 d e
-   0 0 f ]  =>  [a b c d e f] or [a b d c e f]
- 
- @constant MCMatrixValuePackingFormatBand Only store the non-zero band values.
- 
- [ a b 0 0
-   c d e 0
-   f g h i
-   0 j k l
-   0 0 m n ]  ->  [* b e i a d h l c g k n f j m *] (* must exist in array but isn't used by the algorithm)
+ Constants specifying the triangular portion of a square matrix.
  */
-typedef enum {
+MCMatrixTriangularComponent;
+
+typedef enum : NSUInteger {
+    /**
+     All values are flattened using a MCMatrixLeadingDimension.
+     
+     @code
+     [ a b
+       c d ]   =>    [a b c d] or [a c b d]
+     */
     MCMatrixValuePackingFormatConventional,
+    
+    /**
+     Exclude triangular matrix' leftover 0 values.
+     
+     @code
+     [ a b c
+       0 d e
+       0 0 f ]  =>  [a b c d e f] or [a b d c e f]
+     */
     MCMatrixValuePackingFormatPacked,
+    
+    /**
+     Only store the non-zero band values. MCMatrixLeadingDimension has no bearing on this packing format.
+     
+     @code
+     [ a b 0 0
+       c d e 0
+       f g h i
+       0 j k l
+       0 0 m n ]  ->  [* b e i a d h l c g k n f j m *] (* must exist in array but isn't used by the algorithm)
+     */
     MCMatrixValuePackingFormatBand
-} MCMatrixValuePackingFormat;
-
-
+}
 /**
- @brief Definiteness of a matrix M.
- 
- @constant MCMatrixDefinitenessPositiveDefinite 
- 
- x^TMx > 0 for all nonzero real x
- 
- @constant MCMatrixDefinitenessPositiveSemidefinite
- 
- x^TMx ≥ 0 for all real x
- 
- @constant MCMatrixDefinitenessNegativeDefinite
- 
- x^TMx < 0 for all nonzero real x
- 
- @constant MCMatrixDefinitenessNegativeSemidefinite
- 
- x^TMx ≤ 0 for all real x
- 
- @constant MCMatrixDefinitenessIndefinite
- 
- x^TMx can be greater than, equal to or lesser than 0 for all real x
- 
- @constant MCMatrixDefinitenessUnknown
- 
- This value has not yet been computed for this matrix.
- 
+ Constants specifying the matrix flattening method used to construct the values array.
  */
-typedef enum {
+MCMatrixValuePackingFormat;
+
+typedef enum : NSUInteger {
+    /**
+     x^TMx > 0 for all nonzero real x
+     */
     MCMatrixDefinitenessPositiveDefinite,
+    
+    /**
+     x^TMx ≥ 0 for all real x
+     */
     MCMatrixDefinitenessPositiveSemidefinite,
+    
+    /**
+     x^TMx < 0 for all nonzero real x
+     */
     MCMatrixDefinitenessNegativeDefinite,
+    
+    /**
+     x^TMx ≤ 0 for all real x
+     */
     MCMatrixDefinitenessNegativeSemidefinite,
+    
+    /**
+     x^TMx can be greater than, equal to or lesser than 0 for all real x
+     */
     MCMatrixDefinitenessIndefinite,
+    
+    /**
+     Definiteness not yet been computed for this matrix.
+     */
     MCMatrixDefinitenessUnknown
-} MCMatrixDefiniteness;
+}
+/**
+ Definiteness of a matrix M.
+ */
+MCMatrixDefiniteness;
 
 /**
  @brief A class providing storage and operations for matrices of double-precision floating point numbers.
