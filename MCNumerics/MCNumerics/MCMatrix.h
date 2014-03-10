@@ -367,26 +367,10 @@ typedef enum {
 - (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB;
 
 /**
- @return An MCQRFactorization object containing matrices representing the QR factorization of this matrix.
  */
-- (MCQRFactorization *)qrFactorization;
 
 /**
- @description Helpful documentation at http://www.netlib.no/netlib/lapack/double/dgetrf.f and https://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_hsgetrf.htm
- @return An MCLUFactorization object contatining matrices representing the LU factorization of this matrix.
  */
-- (MCLUFactorization *)luFactorization;
-
-/**
- @description Uses the Accelerate framework function dgesdd_. Examples of dgesdd_(...) usage found at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/lapacke_dgesdd_row.c.htm and http://stackoverflow.com/questions/5047503/lapack-svd-singular-value-decomposition Good documentation exists at http://www.netlib.org/lapack/lug/node53.html and http://www.nag.com/numeric/FL/nagdoc_fl22/xhtml/F08/f08kdf.xml. See http://www.netlib.org/lapack/lug/node38.html for general documentation.
- @return An MCSingularValueDecomposition object containing matrices representing the singular value decomposition of this matrix, or nil if no such decomposition exists.
- */
-- (MCSingularValueDecomposition *)singularValueDecomposition;
-
-/**
- @description Computes the eigendecomposition (spectral factorization) of this matrix. Documentation found at 
- */
-- (MCEigendecomposition *)eigendecomposition;
 
 #pragma mark - NSObject overrides
 
