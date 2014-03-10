@@ -126,11 +126,7 @@ typedef enum : NSUInteger {
 MCMatrixDefiniteness;
 
 /**
- @brief A class providing storage and operations for matrices of double-precision floating point numbers.
- @description By default (except for objects instantiated using initWithRows:columns:leadingDimension: or initWithValues:rows:columns:leadingDimension:) values must be supplied in column-major format, as this is the format in which the accelerate framework expects them. For example, the following matrix is written in a one-dimensional array with column-major format as 1, 4, 2, 5, 3, 6 and in row-major format as 1, 2, 3, 4, 5, 6.@code
- [ 1  2  3
- 
-   4  5  6 ]
+ @description A class providing storage and operations for matrices of double-precision floating point numbers, where underlying details governing how the two-dimensional structure is reduced to the one-dimensional array containing its values (packing, leading dimension, or other internal value representation method) is abstracted away for any operation or property.
  */
 @interface MCMatrix : NSObject <NSCopying>
 
@@ -154,19 +150,19 @@ MCMatrixDefiniteness;
 
 /**
  @property leadingDimension 
- @brief The leading dimension used to store this matrix' values in a one-dimensional array, either row- or column-major.
+ @brief The leading dimension used to store this matrix' values in a one-dimensional array, either row- or column-major. Setting this property to a new enum value will change the internal representation of values.
  */
 @property (nonatomic, assign) MCMatrixLeadingDimension leadingDimension;
 
 /**
  @property packingFormat
- @brief The packing format used to store this matrix' values in a one-dimensional array, either conventional, packed or band.
+ @brief The packing format used to store this matrix' values in a one-dimensional array, either conventional, packed or band. Setting this property to a new enum value will change the internal representation of values.
  */
 @property (nonatomic, assign) MCMatrixValuePackingFormat packingFormat;
 
 /**
  @property triangularComponent
- @brief The type of triangular matrix represented, either upper or lower, or both if the matrix is not triangular.
+ @brief The type of triangular matrix represented, either upper or lower, or both if the matrix is not strictly triangular.
  */
 @property (nonatomic, readonly, assign) MCMatrixTriangularComponent triangularComponent;
 
@@ -184,25 +180,25 @@ MCMatrixDefiniteness;
 
 /**
  @property inverse
- @brief The (pseudo)inverse of this matrix in a new MCMatrix object. (Lazy-loaded)
+ @brief The (pseudo)inverse of this matrix. (Lazy-loaded)
  */
 @property (nonatomic, readonly, strong) MCMatrix *inverse;
 
 /**
  @property minorMatrix
- @brief Each entry holds the value of the matrix minor from that point (the determinant of the submatrix formed by removing particular rows/columns; e.g. Mij of matrix A is the determinant of the submatrix of A without row i or column j).
+ @brief Each entry holds the value of the matrix minor from that point (the determinant of the submatrix formed by removing particular rows/columns; e.g. Mij of matrix A is the determinant of the submatrix of A without row i or column j). (Lazy-loaded)
  */
 @property (nonatomic, readonly, strong) MCMatrix *minorMatrix;
 
 /**
  @property cofactorMatrix
- @brief Each entry holds the cofactor of the matrix from that point (Cij of matrix A is the cofactor obtained by multiplying the minor at the same point by (-1)^(i+j) ).
+ @brief Each entry holds the cofactor of the matrix from that point (Cij of matrix A is the cofactor obtained by multiplying the minor at the same point by (-1)^(i+j) ). (Lazy-loaded)
  */
 @property (nonatomic, readonly, strong) MCMatrix *cofactorMatrix;
 
 /**
  @property adjugate
- @brief The adjugate matrix is the transpose of cofactorMatrix.
+ @brief The adjugate matrix is the transpose of cofactorMatrix. (Lazy-loaded)
  */
 @property (nonatomic, readonly, strong) MCMatrix *adjugate;
 
@@ -240,7 +236,7 @@ MCMatrixDefiniteness;
 
 /**
  @property isSymmetric
- @brief YES if this matrix is symmetric, NO otherwise. (Lazy-loaded)
+ @brief YES if this matrix is symmetric, NO otherwise. Default value = MCTriboolUnknown. (Lazy-loaded)
  */
 @property (nonatomic, readonly, strong) MCTribool *isSymmetric;
 
@@ -252,7 +248,7 @@ MCMatrixDefiniteness;
 
 /**
  @property diagnoalValues
- @brief A vector containing the value on the main diagonalfrom top to  button. (Lazy-loaded)
+ @brief A vector containing the values on the main diagonalfrom top to bottom. (Lazy-loaded)
  */
 @property (nonatomic, readonly, strong) MCVector *diagonalValues;
 
@@ -262,14 +258,43 @@ MCMatrixDefiniteness;
  */
 @property (nonatomic, readonly, assign) double trace;
 
+/**
+ @property normL1
+ @brief The maximum absolute column sum of the matrix. (Lazy-loaded)
+ */
 @property (nonatomic, readonly, assign) double normL1;
+
+/**
+ @property normInfinity
+ @brief The maximum absolute row sum of the matrix. (Lazy-loaded)
+ */
 @property (nonatomic, readonly, assign) double normInfinity;
+
+/**
+ @property normMax
+ @brief The maximum value of all entries in the matrix. (Lazy-loaded)
+ */
 @property (nonatomic, readonly, assign) double normMax;
+
+/**
+ @property normFroebenius
+ @brief Square root of the sum of the squared values in the matrix. (Lazy-loaded)
+ */
 @property (nonatomic, readonly, assign) double normFroebenius;
 
 
 #pragma mark - Constructors
 
+/**
+ @brief Construct a new MCMatrix object.
+ @param values A one-dimensional array of floating-point values.
+ @param rows The amount of rows the matrix should have.
+ @param columns The amount of columns the matrix should have.
+ @param leadingDimension The leading dimension that should be used when inspecting the supplied values parameter.
+ @param packingFormat Describes how the values are packed in the supplied values parameter.
+ @param triangularComponent Describes the triangular component described by the supplied values parameter.
+ @return A new MCMatrix object.
+ */
 - (instancetype)initWithValues:(double *)values
                           rows:(NSUInteger)rows
                        columns:(NSUInteger)columns
@@ -344,50 +369,117 @@ MCMatrixDefiniteness;
 + (instancetype)diagonalMatrixWithValues:(double *)values
                                     size:(NSUInteger)size;
 
+/**
+ @brief Class convenience method to create a matrix from an array of MCVectors describing the matrix column vectors.
+ @param columnVectors The array of MCVector objects describing the columns of the matrix.
+ @return A new instance of MCMatrix.
+ */
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors;
 
+/**
+ @brief Class convenience method to create a matrix from an array of MCVectors describing the matrix row vectors.
+ @param rowVectors The array of MCVector objects describing the rows of the matrix.
+ @return A new instance of MCMatrix.
+ */
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
+/**
+ @brief Class convenience method to create a matrix from an array of values describing a triangular component of a matrix, either upper or lower.
+ @param values
+ @param triangularComponent
+ @param leadingDimension
+ @param order
+ @return
+ */
 + (instancetype)triangularMatrixWithPackedValues:(double *)values
                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                          ofOrder:(NSUInteger)order;
 
+/**
+ @brief
+ @param values
+ @param triangularComponent
+ @param leadingDimension
+ @param order
+ @return
+ */
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                         ofOrder:(NSUInteger)order;
 
+/**
+ @brief
+ @param values
+ @param order
+ @param bandwidth
+ @param oddDiagonalLocation
+ @return
+ */
 + (instancetype)bandMatrixWithValues:(double *)values
                                order:(NSUInteger)order
                            bandwidth:(NSUInteger)bandwidth
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 
+/**
+ @brief
+ @param rows
+ @param columns
+ @return
+ */
 + (instancetype)randomMatrixWithRows:(NSUInteger)rows
                              columns:(NSUInteger)columns;
 
+/**
+ @brief
+ @param order
+ @return
+ */
 + (instancetype)randomSymmetricMatrixOfOrder:(NSUInteger)order;
 
+/**
+ @brief
+ @param order
+ @return
+ */
 + (instancetype)randomDiagonalMatrixOfOrder:(NSUInteger)order;
 
+/**
+ @brief
+ @param order
+ @param triangularComponent
+ @return
+ */
 + (instancetype)randomTriangularMatrixOfOrder:(NSUInteger)order
                           triangularComponent:(NSUInteger)triangularComponent;
 
+/**
+ @brief
+ @param order
+ @param bandwidth
+ @param oddDiagonalLocation
+ @return
+ */
 + (instancetype)randomBandMatrixOfOrder:(NSUInteger)order
                               bandwidth:(NSUInteger)bandwidth
                     oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 
 #pragma mark - Operations
 
+/**
+ @brief
+ @param rowA
+ @param rowB
+ */
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB;
 
+/**
+ @brief
+ @param columnA
+ @param columnB
+ */
 - (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB;
-
-/**
- */
-
-/**
- */
 
 #pragma mark - NSObject overrides
 
@@ -409,10 +501,19 @@ MCMatrixDefiniteness;
 #pragma mark - Inspection
 
 /**
+ @brief
+ @param leadingDimension
  @return A copy of this matrix' values stored in the specified format (row-major or column-major).
  */
 - (double *)valuesInStorageFormat:(MCMatrixLeadingDimension)leadingDimension;
 
+/**
+ @brief
+ @param triangularComponent
+ @param leadingDimension
+ @param packingFormat
+ @return
+ */
 - (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                     inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
                                   withPackingFormat:(MCMatrixValuePackingFormat)packingFormat;
@@ -425,11 +526,27 @@ MCMatrixDefiniteness;
  */
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column;
 
+/**
+ @brief
+ @param column
+ @return
+ */
 - (MCVector *)columnVectorForColumn:(NSUInteger)column;
+
+/**
+ @brief
+ @param row
+ @return
+ */
 - (MCVector *)rowVectorForRow:(NSUInteger)row;
 
 #pragma mark - Subscripting
 
+/**
+ @brief
+ @param idx
+ @return
+ */
 - (MCVector *)objectAtIndexedSubscript:(NSUInteger)idx;
 
 #pragma mark - Mutation
@@ -469,6 +586,20 @@ MCMatrixDefiniteness;
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
                                  valuesB:(MCMatrix*)B;
 
+/**
+ @brief 
+ @param matrix
+ @param vector
+ @return
+ */
 + (MCVector *)productOfMatrix:(MCMatrix *)matrix andVector:(MCVector *)vector;
+
+/**
+ @brief Raises a given matrix to specified power. If power = 0, returns the identity matrix of the same dimension; otherwise, the matrix is multiplied by itself power number of times, and must therefore be a square matrix. Throws an exception if this requirement is not met.
+ @param matrix The matrix to raise to the specified power.
+ @param power The power to raise the input matrix. Essentially the number of times the matrix will be multiplied by itself.
+ @return A matrix of same dimension as input matrix, representing the product of the matrix multiplied by itself power number of times.
+ */
++ (MCMatrix *)raiseMatrix:(MCMatrix *)matrix toPower:(NSUInteger)power;
 
 @end
