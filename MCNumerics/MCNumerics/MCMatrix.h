@@ -151,7 +151,7 @@ typedef enum {
  @property triangularComponent
  @brief The type of triangular matrix represented, either upper or lower, or both if the matrix is not triangular.
  */
-@property (nonatomic, assign) MCMatrixTriangularComponent triangularComponent;
+@property (nonatomic, readonly, assign) MCMatrixTriangularComponent triangularComponent;
 
 /**
  @property transpose
@@ -343,9 +343,22 @@ typedef enum {
 
 + (instancetype)bandMatrixWithValues:(double *)values
                                order:(NSUInteger)order
-                       packingFormat:(MCMatrixValuePackingFormat)packingFormat
-                    leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                           bandwidth:(NSUInteger)bandwidth
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
+
++ (instancetype)randomMatrixWithRows:(NSUInteger)rows
+                             columns:(NSUInteger)columns;
+
++ (instancetype)randomSymmetricMatrixOfOrder:(NSUInteger)order;
+
++ (instancetype)randomDiagonalMatrixOfOrder:(NSUInteger)order;
+
++ (instancetype)randomTriangularMatrixOfOrder:(NSUInteger)order
+                          triangularComponent:(NSUInteger)triangularComponent;
+
++ (instancetype)randomBandMatrixOfOrder:(NSUInteger)order
+                              bandwidth:(NSUInteger)bandwidth
+                    oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 
 #pragma mark - Operations
 

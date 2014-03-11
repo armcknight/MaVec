@@ -46,7 +46,6 @@
 @synthesize normInfinity = _normInfinity;
 @synthesize normFroebenius = _normFroebenius;
 @synthesize normMax = _normMax;
-@synthesize packingFormat = _packingFormat;
 @synthesize triangularComponent = _triangularComponent;
 
 #pragma mark - Constructors
@@ -101,24 +100,6 @@
         _values = values;
         _rows = rows;
         _columns = columns;
-    }
-    return self;
-}
-
-- (instancetype)initMatrixWithBandValues:(double *)values
-                                    rows:(NSUInteger)rows
-                                 columns:(NSUInteger)columns
-                               bandwidth:(NSUInteger)bandwidth
-                     oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
-{
-    self = [self init];
-    if (self) {
-        _packingFormat = MCMatrixValuePackingFormatBand;
-        _rows = rows;
-        _columns = columns;
-        _bandwidth = bandwidth;
-        _triangularComponent = oddDiagonalLocation;
-        _values = values;
     }
     return self;
 }
@@ -241,6 +222,7 @@
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                          ofOrder:(NSUInteger)order
 {
+    // TODO: store as a triangular matrix instead of defaulting to conventional storage
     double *unpackedValues = malloc(order * order * sizeof(double));
     long k = 0; // current index in parameter array
     long z = 0; // current index in ivar array
@@ -267,6 +249,7 @@
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                         ofOrder:(NSUInteger)order
 {
+    // TODO: store as a triangular symmetric matrix instead of defaulting to conventional storage
     double *unpackedValues = malloc(order * order * sizeof(double));
     MCMatrix *matrix = [[MCMatrix alloc] initWithValues:unpackedValues
                                                    rows:order
@@ -288,16 +271,130 @@
 }
 
 + (instancetype)bandMatrixWithValues:(double *)values
-                                rows:(NSUInteger)rows
-                             columns:(NSUInteger)columns
+                               order:(NSUInteger)order
                            bandwidth:(NSUInteger)bandwidth
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
 {
-    return [[MCMatrix alloc] initMatrixWithBandValues:values
-                                                 rows:rows
-                                              columns:columns
-                                            bandwidth:bandwidth
-                                  oddDiagonalLocation:oddDiagonalLocation];
+    // TODO: store as a band matrix instead of defaulting to conventional storage
+    BOOL evenAmountOfBands = (bandwidth / 2.0) == round(bandwidth / 2.0);
+    double *unpackedValues = calloc(order * order, sizeof(double));
+    
+    NSUInteger numberOfBandValues = order;
+    NSUInteger numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
+    for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
+        numberOfBandValues += 2 * (order - (i + 1));
+    }
+    if (evenAmountOfBands) {
+        numberOfBandValues += order - floor(bandwidth / 2.0) - 1;
+    }
+    
+    /*
+     
+     good documentation at http://www.roguewave.com/Portals/0/products/imsl-numerical-libraries/c-library/docs/6.0/math/default.htm?turl=matrixstoragemodes.htm
+     
+     the band matrix 
+     [ a b 0 0 0
+       c d e 0 0
+       f g h i 0
+       0 j k l m
+       0 0 n o p ]
+     
+     is stored as the 2d array (logically) as
+     
+     [ [ * b e i m ]
+       [ a d h l p ]
+       [ c g k o * ]
+       [ f j n * * ] ]
+     
+     which converts to the 1d array
+     
+     [ * b e i m a d h l p c g k o * f j n * * ]
+     
+     *'s must be present but not set and are not used by lapack
+     
+     */
+    
+    // The values Aij inside the band width are stored in the linear array in positions [(i - j + nuca + 1) * n + j]
+    int numberOfUpperCodiagonals = (evenAmountOfBands && oddDiagonalLocation == MCMatrixTriangularComponentUpper) ? 1 : 0;
+    for (int i = 0; i < order; i += 1) {
+        for (int j = 0; j < order; j += 1) {
+            int indexIntoBandArray = ( i - j + numberOfUpperCodiagonals + 1 ) * order + j;
+            int indexIntoUnpackedArray = j * order + i;
+            if (indexIntoBandArray >= 0 && indexIntoBandArray < bandwidth * order) {
+                unpackedValues[indexIntoUnpackedArray] = values[indexIntoBandArray];
+            } else {
+                unpackedValues[indexIntoUnpackedArray] = 0.0;
+            }
+        }
+    }
+    
+    return [MCMatrix matrixWithValues:unpackedValues
+                                 rows:order
+                              columns:order];
+}
+
++ (instancetype)randomMatrixWithRows:(NSUInteger)rows
+                             columns:(NSUInteger)columns
+{
+    double *values = [self randomArrayOfSize:rows * columns];
+    return [MCMatrix matrixWithValues:values
+                                 rows:rows
+                              columns:columns];
+}
+
++ (instancetype)randomSymmetricMatrixOfOrder:(NSUInteger)order
+{
+    double *values = [self randomArrayOfSize:(order * (order + 1))/2];
+    return [MCMatrix symmetricMatrixWithPackedValues:values
+                                    leadingDimension:MCMatrixLeadingDimensionColumn
+                                 triangularComponent:MCMatrixTriangularComponentUpper
+                                             ofOrder:order];
+}
+
++ (instancetype)randomDiagonalMatrixOfOrder:(NSUInteger)order
+{
+    double *values = [self randomArrayOfSize:order];
+    return [MCMatrix diagonalMatrixWithValues:values size:order];
+}
+
++ (instancetype)randomTriangularMatrixOfOrder:(NSUInteger)order
+                          triangularComponent:(NSUInteger)triangularComponent
+{
+    double *values = [self randomArrayOfSize:(order * (order + 1))/2];
+    return [MCMatrix triangularMatrixWithPackedValues:values
+                                ofTriangularComponent:triangularComponent
+                                     leadingDimension:MCMatrixLeadingDimensionColumn
+                                              ofOrder:order];
+}
+
++ (instancetype)randomBandMatrixOfOrder:(NSUInteger)order
+                              bandwidth:(NSUInteger)bandwidth
+                    oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
+{
+    BOOL evenAmountOfBands = (bandwidth / 2.0) == round(bandwidth / 2.0);
+    
+    NSUInteger numberOfBandValues = order;
+    NSUInteger numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
+    for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
+        numberOfBandValues += 2 * (order - (i + 1));
+    }
+    if (evenAmountOfBands) {
+        numberOfBandValues += order - floor(bandwidth / 2.0) - 1;
+    }
+    double *values = [self randomArrayOfSize:numberOfBandValues];
+    return [MCMatrix bandMatrixWithValues:values
+                                    order:order
+                                bandwidth:bandwidth
+                      oddDiagonalLocation:oddDiagonalLocation];
+}
+
++ (double *)randomArrayOfSize:(NSUInteger)size
+{
+    double *values = malloc(size * sizeof(double));
+    for (int i = 0; i < size; i += 1) {
+        values[i] = drand48();
+    }
+    return values;
 }
 
 //- (void)dealloc
@@ -681,12 +778,6 @@
     // TODO: implement, updating bandwidth if necessary
 }
 
-- (void)setTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-{
-    @throw kMCUnimplementedMethodException;
-    // TODO: implement
-}
-
 #pragma mark - Matrix operations
 
 - (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
@@ -845,6 +936,7 @@
 
 - (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column
 {
+    // TODO: implement consideration of triangular, symmetric and band matrices
     if (row >= self.rows) {
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
     } else if (column >= self.columns) {
