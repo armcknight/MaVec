@@ -50,6 +50,16 @@ typedef enum : NSUInteger {
     return (_triboolValue == MCTriboolValueYes);
 }
 
+- (BOOL)isNo
+{
+    return (_triboolValue == MCTriboolValueNo);
+}
+
+- (BOOL)isKnown
+{
+    return (_triboolValue != MCTriboolValueUnknown);
+}
+
 #pragma mark - Logical operations
 
 - (MCTribool *)andTribool:(MCTribool *)tribool

@@ -42,6 +42,18 @@ typedef enum {
  */
 - (BOOL)isYes;
 
+/**
+ @brief Method to determine if the underlying value evaluates to "no" or "false".
+ @return YES if underlying value is MCTriboolValueNo, or NO if value is MCTriboolValueYes or MCTriboolValueUnknown.
+ */
+- (BOOL)isNo;
+
+/**
+ @brief Method to determine if the underlying value evaluates to "unknown".
+ @return YES if underlying value is either MCTriboolValueYes or MCTriboolValueNo; NO if value is MCTriboolValueUnknown.
+ */
+- (BOOL)isKnown;
+
 #pragma mark - Logical operations
 
 - (MCTribool *)andTribool:(MCTribool *)tribool;
