@@ -49,7 +49,7 @@
     return (_triboolValue != MCTriboolValueUnknown);
 }
 
-#pragma mark - Logical operations
+#pragma mark - Instance operators
 
 - (MCTribool *)andTribool:(MCTribool *)tribool
 {

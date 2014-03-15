@@ -90,12 +90,90 @@ MCTriboolValue;
  */
 - (BOOL)isKnown;
 
-#pragma mark - Logical operations
+#pragma mark - Instance operators
 
+/**
+ @brief Performs ternary logical AND with the supplied values (self ∧ tribool), yielding the results described in the following table:
+ @param tribool The MCTribool object to perform the conjuction with.
+ @return A new MCTribool object representing the result of the conjunction.
+ @code
+ ---------------
+ | ∧ | + | 0 | - |
+ ---------------
+ | + | + | 0 | - |
+ ---------------
+ | 0 | 0 | 0 | - |
+ ---------------
+ | - | - | - | - |
+ ---------------
+ */
 - (MCTribool *)andTribool:(MCTribool *)tribool;
+
+/**
+ @brief Performs ternary logical OR with the supplied values (self v tribool), yielding the results described in the following table:
+ @param tribool The MCTribool object to perform the disjuction with.
+ @return A new MCTribool object representing the result of the disjunction.
+ @code
+ ---------------
+ | v | + | 0 | - |
+ ---------------
+ | + | + | + | + |
+ ---------------
+ | 0 | + | 0 | 0 |
+ ---------------
+ | - | + | 0 | - |
+ ---------------
+ */
 - (MCTribool *)orTribool:(MCTribool *)tribool;
+
+/**
+ @brief Performs ternary logical NOT with the supplied values (¬self), yielding the results described in the following table:
+ @return A new MCTribool object representing the result of the negation.
+ @code
+ -------
+ | ¬ |   |
+ -------
+ | + | - |
+ -------
+ | 0 | 0 |
+ -------
+ | - | + |
+ -------
+ */
 - (MCTribool *)negate;
+
+/**
+ @brief Performs ternary logical Kleene implication with the supplied values (self → tribool), yielding the results described in the following table:
+ @param tribool The MCTribool object to perform the Kleene implication with.
+ @return A new MCTribool object representing the result of the Kleene implication.
+ @code
+ -------------------
+ | a → b | + | 0 | - |
+ -------------------
+ |     + | + | 0 | - |
+ -------------------
+ |     0 | + | 0 | 0 |
+ -------------------
+ |     - | + | + | + |
+ -------------------
+ */
 - (MCTribool *)kleeneImplication:(MCTribool *)tribool;
+
+/**
+ @brief Performs ternary logical Łukasiewicz implication with the supplied values (self → tribool), yielding the results described in the following table:
+ @param tribool The MCTribool object to perform the Łukasiewicz implication with.
+ @return A new MCTribool object representing the result of the Łukasiewicz implication.
+ @code
+ -------------------
+ | a → b | + | 0 | - |
+ -------------------
+ |     + | + | 0 | - |
+ -------------------
+ |     0 | + | + | 0 |
+ -------------------
+ |     - | + | + | + |
+ -------------------
+ */
 - (MCTribool *)lukasiewiczImplication:(MCTribool *)tribool;
 
 #pragma mark - Class operators
@@ -159,7 +237,7 @@ MCTriboolValue;
  @brief Performs ternary logical Kleene implication with the supplied values (triboolValueA → triboolValueB), yielding the results described in the following table:
  @param triboolValueA
  @param triboolValueB
- @return A MCTriboolValue enum constant representing the result of the kleene implication.
+ @return A MCTriboolValue enum constant representing the result of the Kleene implication.
  @code
   -------------------
  | a → b | + | 0 | - |
