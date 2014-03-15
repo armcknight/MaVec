@@ -8,11 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    MCTriboolValueNo = 0,
-    MCTriboolValueYes,
-    MCTriboolValueUnknown
-} MCTriboolValue;
+typedef enum : SInt8 {
+    /**
+     @brief The ternary logical value for "no" or "false", defined in balanced ternary logic as -1.
+     */
+    MCTriboolValueNo        = -1,
+    
+    /**
+     @brief The ternary logical value for "unknown", "unknowable/undecidable", "irrelevant", or "both", defined in balanced ternary logic as 0.
+     */
+    MCTriboolValueUnknown   = 0,
+    
+    /**
+     @brief The ternary logical value for "yes" or "true", defined in balanced ternary logic as +1.
+     */
+    MCTriboolValueYes       = 1
+}
+/**
+ @brief Constants specifying the numeric values of the three possible logical states. Based on assigned values from "balanced ternary logic": -1 for false, 0 for unknown, and +1 for true, or simply -, 0 and +.
+ */
+MCTriboolValue;
 
 @interface MCTribool : NSValue <NSCopying>
 
