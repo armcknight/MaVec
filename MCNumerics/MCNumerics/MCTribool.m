@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
 
 - (BOOL)isYes
 {
-    return (_triboolValue == MCTriboolYes);
+    return (_triboolValue == MCTriboolValueYes);
 }
 
 #pragma mark - Logical operations
@@ -64,8 +64,8 @@ typedef enum : NSUInteger {
 
 - (MCTribool *)negate
 {
-    if (self.triboolValue == MCTriboolIndeterminate) {
-        return [MCTribool triboolWithValue:MCTriboolIndeterminate];
+    if (self.triboolValue == MCTriboolValueUnknown) {
+        return [MCTribool triboolWithValue:MCTriboolValueUnknown];
     } else {
         return [MCTribool triboolWithValue:![self isYes]];
     }
@@ -87,59 +87,59 @@ typedef enum : NSUInteger {
 {
     MCTribool *result;
     
-    if (triboolA.triboolValue == MCTriboolIndeterminate) {
-        if (triboolB.triboolValue == MCTriboolIndeterminate) {
+    if (triboolA.triboolValue == MCTriboolValueUnknown) {
+        if (triboolB.triboolValue == MCTriboolValueUnknown) {
             if (operation == MCTriboolBinaryOperationLukasiewiczImplication) {
-                result = [MCTribool triboolWithValue:MCTriboolYes];
+                result = [MCTribool triboolWithValue:MCTriboolValueYes];
             } else {
-                result = [MCTribool triboolWithValue:MCTriboolIndeterminate];
+                result = [MCTribool triboolWithValue:MCTriboolValueUnknown];
             }
         } else {
             switch (operation) {
                 default: case MCTriboolBinaryOperationAnd:
-                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolIndeterminate : MCTriboolNo];
+                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolValueUnknown : MCTriboolValueNo];
                     break;
                 case MCTriboolBinaryOperationOr:
-                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolYes : MCTriboolIndeterminate];
+                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolValueYes : MCTriboolValueUnknown];
                     break;
                 case MCTriboolBinaryOperationKleeneImplication:
                 case MCTriboolBinaryOperationLukasiewiczImplication:
-                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolYes : MCTriboolIndeterminate];
+                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolValueYes : MCTriboolValueUnknown];
                     break;
             }
         }
-    } else if (triboolB.triboolValue == MCTriboolIndeterminate) {
-        if (triboolA.triboolValue == MCTriboolIndeterminate) {
+    } else if (triboolB.triboolValue == MCTriboolValueUnknown) {
+        if (triboolA.triboolValue == MCTriboolValueUnknown) {
             if (operation == MCTriboolBinaryOperationLukasiewiczImplication) {
-                result = [MCTribool triboolWithValue:MCTriboolYes];
+                result = [MCTribool triboolWithValue:MCTriboolValueYes];
             } else {
-                result = [MCTribool triboolWithValue:MCTriboolIndeterminate];
+                result = [MCTribool triboolWithValue:MCTriboolValueUnknown];
             }
         } else {
             switch (operation) {
                 default: case MCTriboolBinaryOperationAnd:
-                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolIndeterminate : MCTriboolNo];
+                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolValueUnknown : MCTriboolValueNo];
                     break;
                 case MCTriboolBinaryOperationOr:
-                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolYes : MCTriboolIndeterminate];
+                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolValueYes : MCTriboolValueUnknown];
                     break;
                 case MCTriboolBinaryOperationKleeneImplication:
                 case MCTriboolBinaryOperationLukasiewiczImplication:
-                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolIndeterminate : MCTriboolYes];
+                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolValueUnknown : MCTriboolValueYes];
                     break;
             }
         }
     } else {
         switch (operation) {
             default: case MCTriboolBinaryOperationAnd:
-                result = [MCTribool triboolWithValue:([triboolA isYes] && [triboolB isYes]) ? MCTriboolYes : MCTriboolNo];
+                result = [MCTribool triboolWithValue:([triboolA isYes] && [triboolB isYes]) ? MCTriboolValueYes : MCTriboolValueNo];
                 break;
             case MCTriboolBinaryOperationOr:
-                result = [MCTribool triboolWithValue:([triboolA isYes] || [triboolB isYes]) ? MCTriboolYes : MCTriboolNo];
+                result = [MCTribool triboolWithValue:([triboolA isYes] || [triboolB isYes]) ? MCTriboolValueYes : MCTriboolValueNo];
                 break;
             case MCTriboolBinaryOperationKleeneImplication:
             case MCTriboolBinaryOperationLukasiewiczImplication:
-                result = [MCTribool triboolWithValue:(![triboolA isYes] || [triboolB isYes]) ? MCTriboolYes : MCTriboolNo];
+                result = [MCTribool triboolWithValue:(![triboolA isYes] || [triboolB isYes]) ? MCTriboolValueYes : MCTriboolValueNo];
                 break;
         }
     }

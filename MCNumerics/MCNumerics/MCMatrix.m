@@ -106,7 +106,7 @@ MCMatrixNorm;
         _packingFormat = MCMatrixValuePackingFormatConventional;
         _triangularComponent = MCMatrixTriangularComponentBoth;
         
-        _isSymmetric = [MCTribool triboolWithValue:MCTriboolIndeterminate];
+        _isSymmetric = [MCTribool triboolWithValue:MCTriboolValueUnknown];
         _definiteness = MCMatrixDefinitenessUnknown;
         _qrFactorization = nil;
         _luFactorization = nil;
@@ -600,18 +600,18 @@ MCMatrixNorm;
 
 - (MCTribool *)isSymmetric
 {
-    if (_isSymmetric.triboolValue == MCTriboolIndeterminate) {
+    if (_isSymmetric.triboolValue == MCTriboolValueUnknown) {
         if (self.rows != self.columns) {
-            _isSymmetric = [MCTribool triboolWithValue:MCTriboolNo];
+            _isSymmetric = [MCTribool triboolWithValue:MCTriboolValueNo];
             return _isSymmetric;
         } else {
-            _isSymmetric = [MCTribool triboolWithValue:MCTriboolYes];
+            _isSymmetric = [MCTribool triboolWithValue:MCTriboolValueYes];
         }
         
         for (int i = 0; i < self.rows; i++) {
             for (int j = i + 1; j < self.columns; j++) {
                 if ([self valueAtRow:i column:j] != [self valueAtRow:j column:i]) {
-                    _isSymmetric = [MCTribool triboolWithValue:MCTriboolNo];
+                    _isSymmetric = [MCTribool triboolWithValue:MCTriboolValueNo];
                     return _isSymmetric;
                 }
             }

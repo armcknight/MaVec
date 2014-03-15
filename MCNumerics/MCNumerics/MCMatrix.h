@@ -236,7 +236,7 @@ MCMatrixDefiniteness;
 
 /**
  @property isSymmetric
- @brief YES if this matrix is symmetric, NO otherwise. Default value = MCTriboolUnknown. (Lazy-loaded)
+ @brief YES if this matrix is symmetric, NO otherwise. Default value = MCTriboolValueUnknown. (Lazy-loaded)
  */
 @property (nonatomic, readonly, strong) MCTribool *isSymmetric;
 

@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    MCTriboolNo = 0,
-    MCTriboolYes,
-    MCTriboolIndeterminate
+    MCTriboolValueNo = 0,
+    MCTriboolValueYes,
+    MCTriboolValueUnknown
 } MCTriboolValue;
 
 @interface MCTribool : NSValue <NSCopying>
