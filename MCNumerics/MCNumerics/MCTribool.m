@@ -8,18 +8,7 @@
 
 #import "MCTribool.h"
 
-typedef enum : NSUInteger {
-    MCTriboolBinaryOperationAnd,
-    MCTriboolBinaryOperationOr,
-    MCTriboolBinaryOperationKleeneImplication,
-    MCTriboolBinaryOperationLukasiewiczImplication
-} MCTriboolBinaryOperation;
-
 @interface MCTribool ()
-
-- (MCTribool *)performBinaryOperation:(MCTriboolBinaryOperation)operation
-                             triboolA:(MCTribool *)triboolA
-                             triboolB:(MCTribool *)triboolB;
 
 @end
 
@@ -64,98 +53,64 @@ typedef enum : NSUInteger {
 
 - (MCTribool *)andTribool:(MCTribool *)tribool
 {
-    return [self performBinaryOperation:MCTriboolBinaryOperationAnd triboolA:self triboolB:tribool];
+    return [MCTribool triboolWithValue:[MCTribool conjunctionOfTriboolValueA:self.triboolValue
+                                                               triboolValueB:tribool.triboolValue]];
 }
 
 - (MCTribool *)orTribool:(MCTribool *)tribool
 {
-    return [self performBinaryOperation:MCTriboolBinaryOperationOr triboolA:self triboolB:tribool];
+    return [MCTribool triboolWithValue:[MCTribool disjunctionOfTriboolValueA:self.triboolValue
+                                                               triboolValueB:tribool.triboolValue]];
 }
 
 - (MCTribool *)negate
 {
-    if (self.triboolValue == MCTriboolValueUnknown) {
-        return [MCTribool triboolWithValue:MCTriboolValueUnknown];
-    } else {
-        return [MCTribool triboolWithValue:![self isYes]];
-    }
+    return [MCTribool triboolWithValue:[MCTribool negationOfTriboolValue:self.triboolValue]];
 }
 
 - (MCTribool *)kleeneImplication:(MCTribool *)tribool
 {
-    return [self performBinaryOperation:MCTriboolBinaryOperationKleeneImplication triboolA:self triboolB:tribool];
+    return [MCTribool triboolWithValue:[MCTribool kleeneImplicationOfTriboolValueA:self.triboolValue
+                                                                     triboolValueB:tribool.triboolValue]];
 }
 
 - (MCTribool *)lukasiewiczImplication:(MCTribool *)tribool
 {
-    return [self performBinaryOperation:MCTriboolBinaryOperationLukasiewiczImplication triboolA:self triboolB:tribool];
+    return [MCTribool triboolWithValue:[MCTribool lukasiewiczImplicationOfTriboolValueA:self.triboolValue
+                                                                          triboolValueB:tribool.triboolValue]];
 }
 
-- (MCTribool *)performBinaryOperation:(MCTriboolBinaryOperation)operation
-                             triboolA:(MCTribool *)triboolA
-                             triboolB:(MCTribool *)triboolB
+#pragma mark - Class operators
+
++ (MCTriboolValue)conjunctionOfTriboolValueA:(MCTriboolValue)triboolValueA
+                               triboolValueB:(MCTriboolValue)triboolValueB
 {
-    MCTribool *result;
-    
-    if (triboolA.triboolValue == MCTriboolValueUnknown) {
-        if (triboolB.triboolValue == MCTriboolValueUnknown) {
-            if (operation == MCTriboolBinaryOperationLukasiewiczImplication) {
-                result = [MCTribool triboolWithValue:MCTriboolValueYes];
-            } else {
-                result = [MCTribool triboolWithValue:MCTriboolValueUnknown];
-            }
-        } else {
-            switch (operation) {
-                default: case MCTriboolBinaryOperationAnd:
-                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolValueUnknown : MCTriboolValueNo];
-                    break;
-                case MCTriboolBinaryOperationOr:
-                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolValueYes : MCTriboolValueUnknown];
-                    break;
-                case MCTriboolBinaryOperationKleeneImplication:
-                case MCTriboolBinaryOperationLukasiewiczImplication:
-                    result = [MCTribool triboolWithValue:[triboolB isYes] ? MCTriboolValueYes : MCTriboolValueUnknown];
-                    break;
-            }
-        }
-    } else if (triboolB.triboolValue == MCTriboolValueUnknown) {
-        if (triboolA.triboolValue == MCTriboolValueUnknown) {
-            if (operation == MCTriboolBinaryOperationLukasiewiczImplication) {
-                result = [MCTribool triboolWithValue:MCTriboolValueYes];
-            } else {
-                result = [MCTribool triboolWithValue:MCTriboolValueUnknown];
-            }
-        } else {
-            switch (operation) {
-                default: case MCTriboolBinaryOperationAnd:
-                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolValueUnknown : MCTriboolValueNo];
-                    break;
-                case MCTriboolBinaryOperationOr:
-                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolValueYes : MCTriboolValueUnknown];
-                    break;
-                case MCTriboolBinaryOperationKleeneImplication:
-                case MCTriboolBinaryOperationLukasiewiczImplication:
-                    result = [MCTribool triboolWithValue:[triboolA isYes] ? MCTriboolValueUnknown : MCTriboolValueYes];
-                    break;
-            }
-        }
-    } else {
-        switch (operation) {
-            default: case MCTriboolBinaryOperationAnd:
-                result = [MCTribool triboolWithValue:([triboolA isYes] && [triboolB isYes]) ? MCTriboolValueYes : MCTriboolValueNo];
-                break;
-            case MCTriboolBinaryOperationOr:
-                result = [MCTribool triboolWithValue:([triboolA isYes] || [triboolB isYes]) ? MCTriboolValueYes : MCTriboolValueNo];
-                break;
-            case MCTriboolBinaryOperationKleeneImplication:
-            case MCTriboolBinaryOperationLukasiewiczImplication:
-                result = [MCTribool triboolWithValue:(![triboolA isYes] || [triboolB isYes]) ? MCTriboolValueYes : MCTriboolValueNo];
-                break;
-        }
-    }
-    
-    return result;
+    return MIN(triboolValueA, triboolValueB);
 }
+
++ (MCTriboolValue)disjunctionOfTriboolValueA:(MCTriboolValue)triboolValueA
+                               triboolValueB:(MCTriboolValue)triboolValueB
+{
+    return MAX(triboolValueA, triboolValueB);
+}
+
++ (MCTriboolValue)negationOfTriboolValue:(MCTriboolValue)triboolValue
+{
+    return -1 * triboolValue;
+}
+
++ (MCTriboolValue)kleeneImplicationOfTriboolValueA:(MCTriboolValue)triboolValueA
+                                     triboolValueB:(MCTriboolValue)triboolValueB
+{
+    return MAX(-1 * triboolValueA, triboolValueB);
+}
+
++ (MCTriboolValue)lukasiewiczImplicationOfTriboolValueA:(MCTriboolValue)triboolValueA
+                                          triboolValueB:(MCTriboolValue)triboolValueB
+{
+    return MIN(1, 1 - triboolValueA + triboolValueB);
+}
+
 
 #pragma mark - NSCopying
 

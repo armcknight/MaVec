@@ -77,4 +77,99 @@ MCTriboolValue;
 - (MCTribool *)kleeneImplication:(MCTribool *)tribool;
 - (MCTribool *)lukasiewiczImplication:(MCTribool *)tribool;
 
+#pragma mark - Class operators
+
+/**
+ @brief Performs ternary logical AND with the supplied values (triboolValueA ∧ triboolValueB), yielding the results described in the following table:
+ @param triboolValueA
+ @param triboolValueB
+ @return A MCTriboolValue enum constant representing the result of the conjunction.
+ @code
+  ---------------
+ | ∧ | + | 0 | - |
+  ---------------
+ | + | + | 0 | - |
+  ---------------
+ | 0 | 0 | 0 | - |
+  ---------------
+ | - | - | - | - |
+  ---------------
+ */
++ (MCTriboolValue)conjunctionOfTriboolValueA:(MCTriboolValue)triboolValueA
+                               triboolValueB:(MCTriboolValue)triboolValueB;
+
+/**
+ @brief Performs ternary logical OR with the supplied values (triboolValueA v triboolValueB), yielding the results described in the following table:
+ @param triboolValueA
+ @param triboolValueB
+ @return A MCTriboolValue enum constant representing the result of the disjunction.
+ @code
+  ---------------
+ | v | + | 0 | - |
+  ---------------
+ | + | + | + | + |
+  ---------------
+ | 0 | + | 0 | 0 |
+  ---------------
+ | - | + | 0 | - |
+  ---------------
+ */
++ (MCTriboolValue)disjunctionOfTriboolValueA:(MCTriboolValue)triboolValueA
+                               triboolValueB:(MCTriboolValue)triboolValueB;
+
+/**
+ @brief Performs ternary logical NOT with the supplied values (¬triboolValue), yielding the results described in the following table:
+ @param triboolValue
+ @return A MCTriboolValue enum constant representing the result of the negation.
+ @code
+  -------
+ | ¬ |   |
+  -------
+ | + | - |
+  -------
+ | 0 | 0 |
+  -------
+ | - | + |
+  -------
+ */
++ (MCTriboolValue)negationOfTriboolValue:(MCTriboolValue)triboolValue;
+
+/**
+ @brief Performs ternary logical Kleene implication with the supplied values (triboolValueA → triboolValueB), yielding the results described in the following table:
+ @param triboolValueA
+ @param triboolValueB
+ @return A MCTriboolValue enum constant representing the result of the kleene implication.
+ @code
+  -------------------
+ | a → b | + | 0 | - |
+  -------------------
+ |     + | + | 0 | - |
+  -------------------
+ |     0 | + | 0 | 0 |
+  -------------------
+ |     - | + | + | + |
+  -------------------
+ */
++ (MCTriboolValue)kleeneImplicationOfTriboolValueA:(MCTriboolValue)triboolValueA
+                                     triboolValueB:(MCTriboolValue)triboolValueB;
+
+/**
+ @brief Performs ternary logical Łukasiewicz implication with the supplied values (triboolValueA → triboolValueB), yielding the results described in the following table:
+ @param triboolValueA
+ @param triboolValueB
+ @return A MCTriboolValue enum constant representing the result of the Łukasiewicz implication.
+ @code
+  -------------------
+ | a → b | + | 0 | - |
+  -------------------
+ |     + | + | 0 | - |
+  -------------------
+ |     0 | + | + | 0 |
+  -------------------
+ |     - | + | + | + |
+  -------------------
+ */
++ (MCTriboolValue)lukasiewiczImplicationOfTriboolValueA:(MCTriboolValue)triboolValueA
+                                          triboolValueB:(MCTriboolValue)triboolValueB;
+
 @end
