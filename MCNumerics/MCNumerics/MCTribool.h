@@ -29,8 +29,29 @@ typedef enum : SInt8 {
  */
 MCTriboolValue;
 
+/**
+ @description The MCTribool class encapsulates the values and operations of ternary logic. See http://en.wikipedia.org/wiki/Three-valued_logic for an introduction. The truth table for the implemented logic functions follows:
+ @code
+                                   Kleene  Łukasiewicz
+ | p q | ¬p | ¬q | p ∧ q | p v q | p → q | p → q |
+ -------------------------------------------------
+ | - - | +  | +  |   -   |   -   |   +   |   +   |
+ | - 0 | +  | 0  |   -   |   0   |   +   |   +   |
+ | - + | +  | -  |   -   |   +   |   +   |   +   |
+ | 0 - | 0  | +  |   -   |   0   |   0   |   0   |
+ | 0 0 | 0  | 0  |   0   |   0   |   0   |   +   |
+ | 0 + | 0  | -  |   0   |   +   |   +   |   +   |
+ | + - | -  | +  |   -   |   +   |   -   |   -   |
+ | + 0 | -  | 0  |   0   |   +   |   0   |   0   |
+ | + + | -  | -  |   +   |   +   |   +   |   +   |
+ -------------------------------------------------
+ */
 @interface MCTribool : NSValue <NSCopying>
 
+/**
+ @property triboolValue
+ @brief The underlying ternary logical value for this MCTribool object.
+ */
 @property (nonatomic, readonly, assign) MCTriboolValue triboolValue;
 
 #pragma mark - Init
