@@ -20,11 +20,26 @@ typedef enum {
 
 #pragma mark - Init
 
+/**
+ @brief Construct an MCTribool object with specified ternary logic value.
+ @param triboolValue The ternary logic value the MCTribool object should represent.
+ @return A new MCTribool object representing the specified ternary logic value.
+ */
 - (instancetype)initWithTriboolValue:(MCTriboolValue)triboolValue;
 
+/**
+ @brief Convenience class method for initWithTriboolValue:
+ @param triboolValue The ternary logic value the MCTribool object should represent.
+ @return A new MCTribool object representing the specified ternary logic value.
+ */
 + (instancetype)triboolWithValue:(MCTriboolValue)triboolValue;
+
 #pragma mark - Inspection
 
+/**
+ @brief Method to determine if the underlying value evaluates to "yes" or "true".
+ @return YES if underlying value is MCTriboolValueYes, or NO if value is MCTriboolValueNo or MCTriboolValueUnknown.
+ */
 - (BOOL)isYes;
 
 #pragma mark - Logical operations
