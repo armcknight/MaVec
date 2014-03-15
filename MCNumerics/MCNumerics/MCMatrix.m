@@ -7,6 +7,7 @@
 //
 
 #import <Accelerate/Accelerate.h>
+
 #import "MCMatrix.h"
 #import "MCVector.h"
 #import "MCSingularValueDecomposition.h"
@@ -14,10 +15,6 @@
 #import "MCEigendecomposition.h"
 #import "MCQRFactorization.h"
 #import "MCTribool.h"
-#import "MCQuadratic.h"
-#import "MCPair.h"
-
-#import "NSNumber+MCMath.h"
 
 typedef enum : NSUInteger {
     /**
