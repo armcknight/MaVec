@@ -36,13 +36,15 @@
 
 /**
  @brief Instantiates a new MCSingularValueDecomposition object as computed from a supplied matrix.
- @param matrix The matrix to compute the SVD.
- @return A new MCSingularValueDecomposition object.
+ @param matrix The matrix used to compute the SVD.
+ @return A new MCSingularValueDecomposition object containing the U, sigma, and V transpose matrices of the decomposition.
  */
 - (instancetype)initWithMatrix:(MCMatrix *)matrix;
 
 /**
- @brief Class convenience method for initWithMatrix:matrix:.
+ @brief Class convenience method for singularValueDecompositionWithMatrix:
+ @param matrix The matrix used to compute the SVD.
+ @return A new MCSingularValueDecomposition object object containing the U, sigma, and V transpose matrices of the decomposition.
  */
 + (instancetype)singularValueDecompositionWithMatrix:(MCMatrix *)matrix;
 

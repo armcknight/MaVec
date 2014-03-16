@@ -9,9 +9,20 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
+    /**
+     Specifies that the values in the vector form a row with each value in its own column.
+     */
     MCVectorFormatRowVector,
+    
+    /**
+     Specifies that the values in the vector form a column with each value in its own row.
+     */
     MCVectorFormatColumnVector
-} MCVectorFormat;
+}
+/**
+ Constants specifying whether the vector is a row- or column- vector.
+ */
+MCVectorFormat;
 
 @interface MCVector : NSObject<NSCopying>
 

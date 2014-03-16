@@ -384,12 +384,12 @@ MCMatrixDefiniteness;
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors;
 
 /**
- @brief Class convenience method to create a matrix from an array of values describing a triangular component of a matrix, either upper or lower.
- @param values
- @param triangularComponent
- @param leadingDimension
- @param order
- @return
+ @brief Class convenience method to create a square matrix from an array of values describing a triangular component of a matrix, either upper or lower.
+ @param values The array of values in the matrix.
+ @param triangularComponent Which triangular component the provided values belong to. (Cannot be MCMatrixTriangularComponentBoth)
+ @param leadingDimension The leading dimension to use when accessing values in the provided one-dimensional array.
+ @param order The number of rows/columns in the square triangular matrix.
+ @return A new instance of MCMatrix representing the desired triangular matrix.
  */
 + (instancetype)triangularMatrixWithPackedValues:(double *)values
                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
@@ -397,12 +397,12 @@ MCMatrixDefiniteness;
                                          ofOrder:(NSUInteger)order;
 
 /**
- @brief
- @param values
- @param triangularComponent
- @param leadingDimension
- @param order
- @return
+ @brief Class convenience method to create a square symmetric from an array of values describing a triangular component of a matrix, either upper or lower.
+ @param values The array of values in the matrix.
+ @param triangularComponent Which triangular component the provided values belong to. (Cannot be MCMatrixTriangularComponentBoth)
+ @param leadingDimension The leading dimension to use when accessing values in the provided one-dimensional array.
+ @param order The number of rows/columns in the square triangular matrix.
+ @return A new instance of MCMatrix representing the desired triangular matrix.
  */
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent

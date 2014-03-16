@@ -34,11 +34,25 @@
  */
 @property (nonatomic, readonly, strong) MCMatrix *permutationMatrix;
 
+/**
+ @brief The number of row swaps induced by the permutation matrix.
+ */
 @property (nonatomic, readonly, assign) NSUInteger numberOfPermutations;
 
 #pragma mark - Init
 
+/**
+ @brief Create a new MCLUFactorization object by calculating the factorization of the provided matrix.
+ @param matrix The matrix to factorize.
+ @return A new instance of MCLUFactorization containing the resulting L and U matrices of the factorization.
+ */
 - (instancetype)initWithMatrix:(MCMatrix *)matrix;
+
+/**
+ @brief Class convenience method for initWithMatrix:
+ @param matrix The matrix to factorize.
+ @return A new instance of MCLUFactorization containing the resulting L and U matrices of the factorization.
+ */
 + (instancetype)luFactorizationOfMatrix:(MCMatrix *)matrix;
 
 @end
