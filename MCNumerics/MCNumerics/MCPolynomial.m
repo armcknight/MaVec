@@ -98,7 +98,7 @@
         } else if (power == 1) {
             [description appendFormat:@"%.2f*x", coefficient.doubleValue];
         } else {
-            [description appendFormat:@"%.2f*x^%u", coefficient.doubleValue, power];
+            [description appendFormat:@"%.2f*x^%lu", coefficient.doubleValue, (unsigned long)power];
         }
         
         if (power < self.coefficients.count) {
