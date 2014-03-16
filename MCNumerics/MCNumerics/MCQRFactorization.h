@@ -30,11 +30,30 @@
 
 #pragma mark - Init
 
+/**
+ @brief Create a new instance of MCQRFactorization by computing the factorization of the provided matrix.
+ @param matrix The MCMatrix object to compute the factorization from.
+ @return A new MCQRFactorization object containing the results of factorizing the provided matrix.
+ */
 - (instancetype)initWithMatrix:(MCMatrix *)matrix;
+
+/**
+ @brief Convenience class method to create a new instance of MCQRFactorization by computing the factorization of the provided matrix.
+ @param matrix The MCMatrix object to compute the factorization from.
+ @return A new MCQRFactorization object containing the results of factorizing the provided matrix.
+ */
 + (instancetype)qrFactorizationOfMatrix:(MCMatrix *)matrix;
 
 #pragma mark - Operations
 
+/**
+ @brief When factorizing a general m x n matrix (m ≥ n), the resulting Q matrix is m x m and R is m x n upper triangular. The thin factorization takes the first n rows of R and n columns of Q.
+ @code 
+                  [ R1                 [ R1
+ A = Q * R = Q *    0  ] = [Q1, Q2] *    0  ]
+ 
+ A = Q1 * R1 is the thin factorization
+ */
 - (MCQRFactorization *)thinFactorization;
 
 @end
