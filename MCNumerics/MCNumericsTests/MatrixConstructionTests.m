@@ -96,29 +96,80 @@
 
 - (void)testSymmetricMatrixCreation
 {
-    // packed row-major
-    double rowMajorPackedValues[6] = {
+    double solutionValues[9] = {
+        1.0, 2.0, 3.0,
+        2.0, 5.0, 7.0,
+        3.0, 7.0, 12.0
+    };
+    MCMatrix *solutionMatrix = [MCMatrix matrixWithValues:solutionValues rows:3 columns:3];
+    
+    // packed row-major upper triangular
+    double rowMajorPackedUpperValues[6] = {
         1.0, 2.0, 3.0,
         5.0, 7.0,
         12.0
     };
-    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:rowMajorPackedValues
+    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:rowMajorPackedUpperValues
                                              triangularComponent:MCMatrixTriangularComponentUpper
                                                 leadingDimension:MCMatrixLeadingDimensionRow
                                                          ofOrder:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            XCTAssertEqual([solutionMatrix valueAtRow:i column:j], [matrix valueAtRow:i column:j], @"Value at %u, %u incorrect.", i, j);
+        }
+    }
     
-    // packed column-major
-    double columnMajorPackedValues[6] = {
+    // packed row-major lower triangular
+    double rowMajorPackedLowerValues[6] = {
+        1.0,
+        2.0, 5.0,
+        3.0, 7.0, 12.0
+    };
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:rowMajorPackedLowerValues
+                                   triangularComponent:MCMatrixTriangularComponentLower
+                                      leadingDimension:MCMatrixLeadingDimensionRow
+                                               ofOrder:3];
+    XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            XCTAssertEqual([solutionMatrix valueAtRow:i column:j], [matrix valueAtRow:i column:j], @"Value at %u, %u incorrect.", i, j);
+        }
+    }
+    
+    // packed column-major lower triangular
+    double columnMajorPackedLowerValues[6] = {
         1.0, 2.0, 3.0,
         5.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:columnMajorPackedValues
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:columnMajorPackedLowerValues
                                    triangularComponent:MCMatrixTriangularComponentLower
                                       leadingDimension:MCMatrixLeadingDimensionColumn
                                                ofOrder:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            XCTAssertEqual([solutionMatrix valueAtRow:i column:j], [matrix valueAtRow:i column:j], @"Value at %u, %u incorrect.", i, j);
+        }
+    }
+    
+    // packed column-major upper triangular
+    double columnMajorPackedUpperValues[6] = {
+        1.0,
+        2.0, 5.0,
+        3.0, 7.0, 12.0
+    };
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:columnMajorPackedUpperValues
+                                   triangularComponent:MCMatrixTriangularComponentUpper
+                                      leadingDimension:MCMatrixLeadingDimensionColumn
+                                               ofOrder:3];
+    XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            XCTAssertEqual([solutionMatrix valueAtRow:i column:j], [matrix valueAtRow:i column:j], @"Value at %u, %u incorrect.", i, j);
+        }
+    }
 }
 
 - (void)testTriangularMatrixCreation

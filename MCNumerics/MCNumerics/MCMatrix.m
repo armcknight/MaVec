@@ -300,11 +300,17 @@ MCMatrixNorm;
                                     triangularComponent:triangularComponent];
     int k = 0;
     for (int i = 0; i < order; i += 1) {
-        for (int j = i; j < order; j += 1) {
+        int start = (triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionRow ? i : 0) : (leadingDimension == MCMatrixLeadingDimensionRow ? 0 : i));
+        int stop = (triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionRow ? order : i + 1) : (leadingDimension == MCMatrixLeadingDimensionRow ? i + 1 : order));
+        for (int j = start; j < stop; j += 1) {
             double value = values[k++];
-            [matrix setEntryAtRow:j column:i toValue:value];
-            if (i != j) {
-                [matrix setEntryAtRow:i column:j toValue:value];
+            
+            int row = leadingDimension == MCMatrixLeadingDimensionColumn ? j : i;
+            int col = leadingDimension == MCMatrixLeadingDimensionColumn ? i : j;
+            
+            [matrix setEntryAtRow:row column:col toValue:value];
+            if (row != col) {
+                [matrix setEntryAtRow:col column:row toValue:value];
             }
         }
     }
