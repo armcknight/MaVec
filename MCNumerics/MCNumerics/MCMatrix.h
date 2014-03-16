@@ -134,13 +134,13 @@ MCMatrixDefiniteness;
  @property rows 
  @brief The number of rows in the matrix.
  */
-@property (nonatomic, readonly, assign) NSUInteger rows;
+@property (nonatomic, readonly, assign) int rows;
 
 /**
  @property columns
  @brief The number of columns in the matrix.
  */
-@property (nonatomic, readonly, assign) NSUInteger columns;
+@property (nonatomic, readonly, assign) int columns;
 
 /**
  @property values
@@ -296,8 +296,8 @@ MCMatrixDefiniteness;
  @return A new MCMatrix object.
  */
 - (instancetype)initWithValues:(double *)values
-                          rows:(NSUInteger)rows
-                       columns:(NSUInteger)columns
+                          rows:(int)rows
+                       columns:(int)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                  packingFormat:(MCMatrixValuePackingFormat)packingFormat
            triangularComponent:(MCMatrixTriangularComponent)triangularComponent;
@@ -311,8 +311,8 @@ MCMatrixDefiniteness;
  @param columns The number of columns.
  @return New instance of MCMatrix.
  */
-+ (instancetype)matrixWithRows:(NSUInteger)rows
-                       columns:(NSUInteger)columns;
++ (instancetype)matrixWithRows:(int)rows
+                       columns:(int)columns;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns and storage format, but without supplying values.
@@ -322,8 +322,8 @@ MCMatrixDefiniteness;
  @param leadingDimension The format to store values in; either row- or column-major.
  @return New instance of MCMatrix.
  */
-+ (instancetype)matrixWithRows:(NSUInteger)rows
-                       columns:(NSUInteger)columns
++ (instancetype)matrixWithRows:(int)rows
+                       columns:(int)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
@@ -335,8 +335,8 @@ MCMatrixDefiniteness;
  @return New instance of MCMatrix.
  */
 + (instancetype)matrixWithValues:(double *)values
-                            rows:(NSUInteger)rows
-                         columns:(NSUInteger)columns;
+                            rows:(int)rows
+                         columns:(int)columns;
 
 /**
  @brief Class convenience method to create a matrix with the specified values (in the specified storage format) and number of rows and columns.
@@ -348,8 +348,8 @@ MCMatrixDefiniteness;
  @return New instance of MCMatrix.
  */
 + (instancetype)matrixWithValues:(double *)values
-                            rows:(NSUInteger)rows
-                         columns:(NSUInteger)columns
+                            rows:(int)rows
+                         columns:(int)columns
                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
@@ -358,7 +358,7 @@ MCMatrixDefiniteness;
  @param size The square dimension in which to create this identity matrix.
  @return New instance of MCMatrix representing the identity matrix of dimension size x size.
  */
-+ (instancetype)identityMatrixWithSize:(NSUInteger)size;
++ (instancetype)identityMatrixWithSize:(int)size;
 
 /**
  @brief Class convenience method to create a square matrix with the specified diagonal values.
@@ -367,7 +367,7 @@ MCMatrixDefiniteness;
  @return New instance of MCMatrix representing the square matrix of dimension size x size with specified diagonal values.
  */
 + (instancetype)diagonalMatrixWithValues:(double *)values
-                                    size:(NSUInteger)size;
+                                    size:(int)size;
 
 /**
  @brief Class convenience method to create a matrix from an array of MCVectors describing the matrix column vectors.
@@ -394,7 +394,7 @@ MCMatrixDefiniteness;
 + (instancetype)triangularMatrixWithPackedValues:(double *)values
                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                         ofOrder:(NSUInteger)order;
+                                         ofOrder:(int)order;
 
 /**
  @brief Class convenience method to create a square symmetric from an array of values describing a triangular component of a matrix, either upper or lower.
@@ -407,7 +407,7 @@ MCMatrixDefiniteness;
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                        ofOrder:(NSUInteger)order;
+                                        ofOrder:(int)order;
 
 /**
  @brief
@@ -418,8 +418,8 @@ MCMatrixDefiniteness;
  @return
  */
 + (instancetype)bandMatrixWithValues:(double *)values
-                               order:(NSUInteger)order
-                           bandwidth:(NSUInteger)bandwidth
+                               order:(int)order
+                           bandwidth:(int)bandwidth
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 
 /**
@@ -428,22 +428,22 @@ MCMatrixDefiniteness;
  @param columns
  @return
  */
-+ (instancetype)randomMatrixWithRows:(NSUInteger)rows
-                             columns:(NSUInteger)columns;
++ (instancetype)randomMatrixWithRows:(int)rows
+                             columns:(int)columns;
 
 /**
  @brief
  @param order
  @return
  */
-+ (instancetype)randomSymmetricMatrixOfOrder:(NSUInteger)order;
++ (instancetype)randomSymmetricMatrixOfOrder:(int)order;
 
 /**
  @brief
  @param order
  @return
  */
-+ (instancetype)randomDiagonalMatrixOfOrder:(NSUInteger)order;
++ (instancetype)randomDiagonalMatrixOfOrder:(int)order;
 
 /**
  @brief
@@ -451,8 +451,8 @@ MCMatrixDefiniteness;
  @param triangularComponent
  @return
  */
-+ (instancetype)randomTriangularMatrixOfOrder:(NSUInteger)order
-                          triangularComponent:(NSUInteger)triangularComponent;
++ (instancetype)randomTriangularMatrixOfOrder:(int)order
+                          triangularComponent:(int)triangularComponent;
 
 /**
  @brief
@@ -461,8 +461,8 @@ MCMatrixDefiniteness;
  @param oddDiagonalLocation
  @return
  */
-+ (instancetype)randomBandMatrixOfOrder:(NSUInteger)order
-                              bandwidth:(NSUInteger)bandwidth
++ (instancetype)randomBandMatrixOfOrder:(int)order
+                              bandwidth:(int)bandwidth
                     oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 
 #pragma mark - Operations
@@ -472,14 +472,14 @@ MCMatrixDefiniteness;
  @param rowA
  @param rowB
  */
-- (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB;
+- (void)swapRowA:(int)rowA withRowB:(int)rowB;
 
 /**
  @brief
  @param columnA
  @param columnB
  */
-- (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB;
+- (void)swapColumnA:(int)columnA withColumnB:(int)columnB;
 
 #pragma mark - NSObject overrides
 
@@ -524,21 +524,21 @@ MCMatrixDefiniteness;
  @param column The column in which the desired value resides.
  @return The value at the specified row and column.
  */
-- (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column;
+- (double)valueAtRow:(int)row column:(int)column;
 
 /**
  @brief
  @param column
  @return
  */
-- (MCVector *)columnVectorForColumn:(NSUInteger)column;
+- (MCVector *)columnVectorForColumn:(int)column;
 
 /**
  @brief
  @param row
  @return
  */
-- (MCVector *)rowVectorForRow:(NSUInteger)row;
+- (MCVector *)rowVectorForRow:(int)row;
 
 #pragma mark - Subscripting
 
@@ -547,7 +547,7 @@ MCMatrixDefiniteness;
  @param idx
  @return
  */
-- (MCVector *)objectAtIndexedSubscript:(NSUInteger)idx;
+- (MCVector *)objectAtIndexedSubscript:(int)idx;
 
 #pragma mark - Mutation
 
@@ -557,7 +557,7 @@ MCMatrixDefiniteness;
  @param column The column in which the value will be set.
  @param value The value to set at the specified position.
  */
-- (void)setEntryAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(double)value;
+- (void)setEntryAtRow:(int)row column:(int)column toValue:(double)value;
 
 #pragma mark - Class-level operations
 

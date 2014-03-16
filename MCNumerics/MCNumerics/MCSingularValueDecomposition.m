@@ -19,13 +19,13 @@
     if (self) {
         double workSize;
         double *work = &workSize;
-        long lwork = -1;
-        long m = matrix.rows;
-        long n = matrix.columns;
-        long numSingularValues = MIN(m, n);
+        int lwork = -1;
+        int m = matrix.rows;
+        int n = matrix.columns;
+        int numSingularValues = MIN(m, n);
         double *singularValues = malloc(numSingularValues * sizeof(double));
-        long *iwork = malloc(8 * numSingularValues);
-        long info = 0;
+        int *iwork = malloc(8 * numSingularValues);
+        int info = 0;
         
         double *values = malloc(m * n * sizeof(double));
         for (int i = 0; i < m * n; i++) {

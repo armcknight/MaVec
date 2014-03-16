@@ -13,8 +13,8 @@
 
 @interface MCQRFactorization ()
 
-@property (assign, nonatomic) NSUInteger rows;
-@property (assign, nonatomic) NSUInteger columns;
+@property (assign, nonatomic) int rows;
+@property (assign, nonatomic) int columns;
 
 @end
 
@@ -27,8 +27,8 @@
     // usage can be found at http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_hdgeqrf.htm
     self = [super init];
     if (self) {
-        long m = matrix.rows;
-        long n = matrix.columns;
+        int m = matrix.rows;
+        int n = matrix.columns;
         _rows = m;
         _columns = n;
         double *a = malloc(m * m * sizeof(double));
@@ -36,11 +36,11 @@
         for (int i = 0; i < m * n; i += 1) {
             a[i] = values[i];
         }
-        long lda = m;
+        int lda = m;
         double *tau = malloc(MIN(m, n) * sizeof(double));
         double wkopt;
-        long lwork = -1;
-        long info;
+        int lwork = -1;
+        int info;
         
         // query the optimal workspace size
         dgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);

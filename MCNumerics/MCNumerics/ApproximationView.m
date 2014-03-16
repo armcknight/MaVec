@@ -86,8 +86,8 @@
             bVals[i] = ((MCPoint *)self.points[i]).y;
         }
         
-        MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:self.points.count columns:self.order leadingDimension:MCMatrixLeadingDimensionRow];
-        MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:self.points.count columns:1];
+        MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:(int)self.points.count columns:self.order leadingDimension:MCMatrixLeadingDimensionRow];
+        MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:(int)self.points.count columns:1];
         
         MCMatrix *coefficients = [MCMatrix solveLinearSystemWithMatrixA:a valuesB:b];
         

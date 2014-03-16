@@ -20,23 +20,23 @@
     self = [super init];
     if (self) {
         if (matrix.isSymmetric.isYes) {
-            long n = matrix.rows;
-            long lda = n;
+            int n = matrix.rows;
+            int lda = n;
             double *w = malloc(n * sizeof(double));
             double *a = [matrix triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                         inStorageFormat:MCMatrixLeadingDimensionColumn
                                                       withPackingFormat:MCMatrixValuePackingFormatConventional];
             double wkopt;
-            long lwork = -1;
-            long iwkopt;
-            long liwork = -1;
-            long info;
+            int lwork = -1;
+            int iwkopt;
+            int liwork = -1;
+            int info;
             dsyevd_("V", "L", &n, a, &lda, w, &wkopt, &lwork, &iwkopt, &liwork, &info);
             
-            lwork = (long)wkopt;
+            lwork = (int)wkopt;
             double *work = malloc(lwork * sizeof(double));
             liwork = iwkopt;
-            long *iwork = malloc(liwork * sizeof(long));
+            int *iwork = malloc(liwork * sizeof(int));
             dsyevd_("V", "L", &n, a, &lda, w, work, &lwork, iwork, &liwork, &info);
             
             if (info == 0) {
@@ -44,21 +44,21 @@
                 _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
             }
         } else {
-            long n = matrix.rows;
+            int n = matrix.rows;
             double *a = [matrix valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
-            long lda = n;
+            int lda = n;
             double *wr= malloc(n * sizeof(double));
             double *wi= malloc(n * sizeof(double));
             double *vl= malloc(n * sizeof(double));
-            long ldvl = n;
+            int ldvl = n;
             double *vr= malloc(n * sizeof(double));
-            long ldvr = n;
-            long lwork = -1;
+            int ldvr = n;
+            int lwork = -1;
             double wkopt;
-            long info;
+            int info;
             dgeev_("V", "V", &n, a, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
             
-            lwork = (long)wkopt;
+            lwork = (int)wkopt;
             double *work = malloc(lwork * sizeof(double));
             dgeev_("V", "V", &n, a, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
             

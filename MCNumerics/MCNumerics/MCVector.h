@@ -27,7 +27,7 @@ MCVectorFormat;
 @interface MCVector : NSObject<NSCopying>
 
 @property (assign, readonly, nonatomic) MCVectorFormat vectorFormat;
-@property (assign, readonly, nonatomic) NSUInteger length;
+@property (assign, readonly, nonatomic) int length;
 @property (assign, readonly, nonatomic) double *values;
 
 @property (assign, readonly, nonatomic) double sumOfValues;
@@ -57,12 +57,12 @@ MCVectorFormat;
 
 #pragma mark - Inspection
 
-- (NSUInteger)length;
-- (double)valueAtIndex:(NSUInteger)index;
+- (int)length;
+- (double)valueAtIndex:(int)index;
 - (double)maximumValue;
 - (double)minimumValue;
-- (NSUInteger)indexOfMaximumValue;
-- (NSUInteger)indexOfMinimumValue;
+- (int)indexOfMaximumValue;
+- (int)indexOfMinimumValue;
 
 #pragma mark - Subscripting
 

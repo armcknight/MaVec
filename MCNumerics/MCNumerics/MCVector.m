@@ -66,7 +66,7 @@
 
 - (void)commonInitWithValuesInArray:(NSArray *)values
 {
-    _length = values.count;
+    _length = (int)values.count;
     _values = malloc(values.count * sizeof(double));
     [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
         _values[idx] = value.doubleValue;
@@ -219,7 +219,7 @@
 
 #pragma mark - Inspection
 
-- (double)valueAtIndex:(NSUInteger)index
+- (double)valueAtIndex:(int)index
 {
     return self.values[index];
 }
@@ -246,10 +246,10 @@
     return min;
 }
 
-- (NSUInteger)indexOfMaximumValue
+- (int)indexOfMaximumValue
 {
     double max = DBL_MIN;
-    NSUInteger idx = -1;
+    int idx = -1;
     for (int i = 0; i < self.length; i++) {
         if (self.values[i] > max) {
             idx = i;
@@ -258,10 +258,10 @@
     return max;
 }
 
-- (NSUInteger)indexOfMinimumValue
+- (int)indexOfMinimumValue
 {
     double min = DBL_MAX;
-    NSUInteger idx = -1;
+    int idx = -1;
     for (int i = 0; i < self.length; i++) {
         if (self.values[i] < min) {
             idx = i;

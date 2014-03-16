@@ -49,7 +49,7 @@ MCMatrixNorm;
  @param size Amount of random values to generate.
  @return C array point containing specified number of random values.
  */
-+ (double *)randomArrayOfSize:(NSUInteger)size;
++ (double *)randomArrayOfSize:(int)size;
 
 /**
  @brief Sets all properties to default states.
@@ -127,8 +127,8 @@ MCMatrixNorm;
 }
 
 - (instancetype)initWithValues:(double *)values
-                          rows:(NSUInteger)rows
-                       columns:(NSUInteger)columns
+                          rows:(int)rows
+                       columns:(int)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                  packingFormat:(MCMatrixValuePackingFormat)packingFormat
            triangularComponent:(MCMatrixTriangularComponent)triangularComponent
@@ -149,8 +149,8 @@ MCMatrixNorm;
 
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors
 {
-    NSUInteger columns = columnVectors.count;
-    NSUInteger rows = ((MCVector *)columnVectors.firstObject).length;
+    int columns = (int)columnVectors.count;
+    int rows = ((MCVector *)columnVectors.firstObject).length;
     double *values = malloc(rows * columns * sizeof(double));
     [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
         for(int i = 0; i < rows; i++) {
@@ -167,8 +167,8 @@ MCMatrixNorm;
 
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors
 {
-    NSUInteger rows = rowVectors.count;
-    NSUInteger columns = ((MCVector *)rowVectors.firstObject).length;
+    int rows = (int)rowVectors.count;
+    int columns = ((MCVector *)rowVectors.firstObject).length;
     double *values = malloc(rows * columns * sizeof(double));
     [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
         for(int i = 0; i < rows; i++) {
@@ -183,8 +183,8 @@ MCMatrixNorm;
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
-+ (instancetype)matrixWithRows:(NSUInteger)rows
-                       columns:(NSUInteger)columns
++ (instancetype)matrixWithRows:(int)rows
+                       columns:(int)columns
 {
     return [[MCMatrix alloc] initWithValues:malloc(rows * columns * sizeof(double))
                                        rows:rows
@@ -194,8 +194,8 @@ MCMatrixNorm;
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
-+ (instancetype)matrixWithRows:(NSUInteger)rows
-                       columns:(NSUInteger)columns
++ (instancetype)matrixWithRows:(int)rows
+                       columns:(int)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initWithValues:malloc(rows * columns * sizeof(double))
@@ -207,8 +207,8 @@ MCMatrixNorm;
 }
 
 + (instancetype)matrixWithValues:(double *)values
-                            rows:(NSUInteger)rows
-                         columns:(NSUInteger)columns
+                            rows:(int)rows
+                         columns:(int)columns
 {
     return [[MCMatrix alloc] initWithValues:values
                                        rows:rows
@@ -219,8 +219,8 @@ MCMatrixNorm;
 }
 
 + (instancetype)matrixWithValues:(double *)values
-                            rows:(NSUInteger)rows
-                         columns:(NSUInteger)columns
+                            rows:(int)rows
+                         columns:(int)columns
                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     return [[MCMatrix alloc] initWithValues:values
@@ -231,7 +231,7 @@ MCMatrixNorm;
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
-+ (instancetype)identityMatrixWithSize:(NSUInteger)size
++ (instancetype)identityMatrixWithSize:(int)size
 {
     double *values = malloc(size * size * sizeof(double));
     for (int i = 0; i < size; i++) {
@@ -245,7 +245,7 @@ MCMatrixNorm;
 }
 
 + (instancetype)diagonalMatrixWithValues:(double *)values
-                                    size:(NSUInteger)size
+                                    size:(int)size
 {
     double *allValues = malloc(size * size * sizeof(double));
     for (int i = 0; i < size; i++) {
@@ -261,12 +261,12 @@ MCMatrixNorm;
 + (instancetype)triangularMatrixWithPackedValues:(double *)values
                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                         ofOrder:(NSUInteger)order
+                                         ofOrder:(int)order
 {
     // TODO: store as a triangular matrix instead of defaulting to conventional storage
     double *unpackedValues = malloc(order * order * sizeof(double));
-    long k = 0; // current index in parameter array
-    long z = 0; // current index in ivar array
+    int k = 0; // current index in parameter array
+    int z = 0; // current index in ivar array
     for (int i = 0; i < order; i += 1) {
         for (int j = 0; j < order; j += 1) {
             BOOL shouldTakeValue = triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j) : (leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
@@ -288,7 +288,7 @@ MCMatrixNorm;
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                        ofOrder:(NSUInteger)order
+                                        ofOrder:(int)order
 {
     // TODO: store as a triangular symmetric matrix instead of defaulting to conventional storage
     double *unpackedValues = malloc(order * order * sizeof(double));
@@ -318,16 +318,16 @@ MCMatrixNorm;
 }
 
 + (instancetype)bandMatrixWithValues:(double *)values
-                               order:(NSUInteger)order
-                           bandwidth:(NSUInteger)bandwidth
+                               order:(int)order
+                           bandwidth:(int)bandwidth
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
 {
     // TODO: store as a band matrix instead of defaulting to conventional storage
     BOOL evenAmountOfBands = (bandwidth / 2.0) == round(bandwidth / 2.0);
     double *unpackedValues = calloc(order * order, sizeof(double));
     
-    NSUInteger numberOfBandValues = order;
-    NSUInteger numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
+    int numberOfBandValues = order;
+    int numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
     for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
         numberOfBandValues += 2 * (order - (i + 1));
     }
@@ -380,8 +380,8 @@ MCMatrixNorm;
                               columns:order];
 }
 
-+ (instancetype)randomMatrixWithRows:(NSUInteger)rows
-                             columns:(NSUInteger)columns
++ (instancetype)randomMatrixWithRows:(int)rows
+                             columns:(int)columns
 {
     double *values = [self randomArrayOfSize:rows * columns];
     return [MCMatrix matrixWithValues:values
@@ -389,7 +389,7 @@ MCMatrixNorm;
                               columns:columns];
 }
 
-+ (instancetype)randomSymmetricMatrixOfOrder:(NSUInteger)order
++ (instancetype)randomSymmetricMatrixOfOrder:(int)order
 {
     double *values = [self randomArrayOfSize:(order * (order + 1))/2];
     return [MCMatrix symmetricMatrixWithPackedValues:values
@@ -398,14 +398,14 @@ MCMatrixNorm;
                                              ofOrder:order];
 }
 
-+ (instancetype)randomDiagonalMatrixOfOrder:(NSUInteger)order
++ (instancetype)randomDiagonalMatrixOfOrder:(int)order
 {
     double *values = [self randomArrayOfSize:order];
     return [MCMatrix diagonalMatrixWithValues:values size:order];
 }
 
-+ (instancetype)randomTriangularMatrixOfOrder:(NSUInteger)order
-                          triangularComponent:(NSUInteger)triangularComponent
++ (instancetype)randomTriangularMatrixOfOrder:(int)order
+                          triangularComponent:(int)triangularComponent
 {
     double *values = [self randomArrayOfSize:(order * (order + 1))/2];
     return [MCMatrix triangularMatrixWithPackedValues:values
@@ -414,14 +414,14 @@ MCMatrixNorm;
                                               ofOrder:order];
 }
 
-+ (instancetype)randomBandMatrixOfOrder:(NSUInteger)order
-                              bandwidth:(NSUInteger)bandwidth
++ (instancetype)randomBandMatrixOfOrder:(int)order
+                              bandwidth:(int)bandwidth
                     oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
 {
     BOOL evenAmountOfBands = (bandwidth / 2.0) == round(bandwidth / 2.0);
     
-    NSUInteger numberOfBandValues = order;
-    NSUInteger numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
+    int numberOfBandValues = order;
+    int numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
     for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
         numberOfBandValues += 2 * (order - (i + 1));
     }
@@ -435,7 +435,7 @@ MCMatrixNorm;
                       oddDiagonalLocation:oddDiagonalLocation];
 }
 
-+ (double *)randomArrayOfSize:(NSUInteger)size
++ (double *)randomArrayOfSize:(int)size
 {
     double *values = malloc(size * sizeof(double));
     for (int i = 0; i < size; i += 1) {
@@ -503,20 +503,20 @@ MCMatrixNorm;
         if (_rows == _columns) {
             double *a = [self valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
             
-            long m = _rows;
-            long n = _columns;
+            int m = _rows;
+            int n = _columns;
             
-            long lda = m;
+            int lda = m;
             
-            long *ipiv = malloc(MIN(m, n) * sizeof(long));
+            int *ipiv = malloc(MIN(m, n) * sizeof(int));
             
-            long info = 0;
+            int info = 0;
             
             // compute factorization
             dgetrf_(&m, &n, a, &lda, ipiv, &info);
         
             double wkopt;
-            long lwork = -1;
+            int lwork = -1;
             
             // query optimal workspace size
             dgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
@@ -541,18 +541,18 @@ MCMatrixNorm;
 {
     if (_conditionNumber == -1.0) {
         double *values = [self valuesInStorageFormat:MCMatrixLeadingDimensionRow];
-        long m = self.rows;
-        long n = self.columns;
+        int m = self.rows;
+        int n = self.columns;
         double norm = dlange_("1", &m, &n, values, &m, nil);
         
-        long lda = self.rows;
-        long *ipiv = malloc(m * sizeof(long));
-        long info;
+        int lda = self.rows;
+        int *ipiv = malloc(m * sizeof(int));
+        int info;
         dgetrf_(&m, &n, values, &lda, ipiv, &info);
         
         double conditionReciprocal;
         double *work = malloc(4 * m * sizeof(double));
-        long *iwork = malloc(m * sizeof(long));
+        int *iwork = malloc(m * sizeof(int));
         dgecon_("1", &m, values, &lda, &norm, &conditionReciprocal, work, iwork, &info);
         
         _conditionNumber = 1.0 / conditionReciprocal;
@@ -669,7 +669,7 @@ MCMatrixNorm;
 - (MCVector *)diagonalValues
 {
     if (!_diagonalValues) {
-        long length = MIN(self.rows, self.columns);
+        int length = MIN(self.rows, self.columns);
         double *values = malloc(length * sizeof(double));
         for (int i = 0; i < length; i += 1) {
             values[i] = [self valueAtRow:i column:i];
@@ -724,8 +724,8 @@ MCMatrixNorm;
     double normResult = NAN;
     
     double *values = [self valuesInStorageFormat:MCMatrixLeadingDimensionRow];
-    long m = self.rows;
-    long n = self.columns;
+    int m = self.rows;
+    int n = self.columns;
     char *norm = "";
     if (normType == MCMatrixNormL1) {
         norm = "1";
@@ -827,7 +827,7 @@ MCMatrixNorm;
 
 #pragma mark - Matrix operations
 
-- (void)swapRowA:(NSUInteger)rowA withRowB:(NSUInteger)rowB
+- (void)swapRowA:(int)rowA withRowB:(int)rowB
 {
     if (rowA >= self.rows) {
         @throw [NSException exceptionWithName:NSRangeException reason:@"rowA is outside the range of possible rows." userInfo:nil];
@@ -850,7 +850,7 @@ MCMatrixNorm;
     }
 }
 
-- (void)swapColumnA:(NSUInteger)columnA withColumnB:(NSUInteger)columnB
+- (void)swapColumnA:(int)columnA withColumnB:(int)columnB
 {
     if (columnA >= self.columns) {
         @throw [NSException exceptionWithName:NSRangeException reason:@"columnA is outside the range of possible columns." userInfo:nil];
@@ -981,7 +981,7 @@ MCMatrixNorm;
     return values;
 }
 
-- (double)valueAtRow:(NSUInteger)row column:(NSUInteger)column
+- (double)valueAtRow:(int)row column:(int)column
 {
     // TODO: implement consideration of triangular, symmetric and band matrices
     if (row >= self.rows) {
@@ -997,7 +997,7 @@ MCMatrixNorm;
     }
 }
 
-- (MCVector *)rowVectorForRow:(NSUInteger)row
+- (MCVector *)rowVectorForRow:(int)row
 {
     double *values = malloc(self.columns * sizeof(double));
     for (int col = 0; col < self.columns; col += 1) {
@@ -1007,7 +1007,7 @@ MCMatrixNorm;
     return [MCVector vectorWithValues:values length:self.columns inVectorFormat:MCVectorFormatRowVector];
 }
 
-- (MCVector *)columnVectorForColumn:(NSUInteger)column
+- (MCVector *)columnVectorForColumn:(int)column
 {
     double *values = malloc(self.rows * sizeof(double));
     for (int row = 0; row < self.rows; row += 1) {
@@ -1019,13 +1019,13 @@ MCMatrixNorm;
 
 #pragma mark - Subscripting
 
-- (MCVector *)objectAtIndexedSubscript:(NSUInteger)idx
+- (MCVector *)objectAtIndexedSubscript:(int)idx
 {
     return [self rowVectorForRow:idx];
 }
 
 #pragma mark - Mutation
-- (void)setEntryAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(double)value
+- (void)setEntryAtRow:(int)row column:(int)column toValue:(double)value
 {
     if (row >= self.rows) {
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
@@ -1101,12 +1101,12 @@ MCMatrixNorm;
     if (A.rows == A.columns) {
         // solve for square matrix A
         
-        long n = A.rows;
-        long nrhs = 1;
-        long lda = n;
-        long ldb = n;
-        long info;
-        long *ipiv = malloc(n * sizeof(long));
+        int n = A.rows;
+        int nrhs = 1;
+        int lda = n;
+        int ldb = n;
+        int info;
+        int *ipiv = malloc(n * sizeof(int));
         double *a = malloc(n * n * sizeof(double));
         for (int i = 0; i < n * n; i++) {
             a[i] = aVals[i];
@@ -1133,13 +1133,13 @@ MCMatrixNorm;
     } else {
         // solve for general m x n rectangular matrix A
         
-        long m = A.rows;
-        long n = A.columns;
-        long nrhs = 1;
-        long lda = A.rows;
-        long ldb = A.rows;
-        long info;
-        long lwork = -1;
+        int m = A.rows;
+        int n = A.columns;
+        int nrhs = 1;
+        int lda = A.rows;
+        int ldb = A.rows;
+        int info;
+        int lwork = -1;
         double wkopt;
         double* work;
         double *a = malloc(m * n * sizeof(double));

@@ -43,8 +43,8 @@
     
     MCMatrix *qrProduct = [MCMatrix productOfMatrixA:qrFactorization.q andMatrixB:qrFactorization.r];
     
-    for(NSUInteger row = 0; row < qrProduct.rows; row += 1) {
-        for(NSUInteger col = 0; col < qrProduct.columns; col += 1) {
+    for(int row = 0; row < qrProduct.rows; row += 1) {
+        for(int col = 0; col < qrProduct.columns; col += 1) {
             double a = [source valueAtRow:row column:col];
             double b = [qrProduct valueAtRow:row column:col];
             double accuracy = 1.0e-10;
@@ -69,8 +69,8 @@
     // need to take the 'thin QR factorization' of the general rectangular matrix
     MCMatrix *qrProduct = [MCMatrix productOfMatrixA:qrFactorization.q andMatrixB:qrFactorization.r];
     
-    for(NSUInteger row = 0; row < qrProduct.rows; row += 1) {
-        for(NSUInteger col = 0; col < qrProduct.columns; col += 1) {
+    for(int row = 0; row < qrProduct.rows; row += 1) {
+        for(int col = 0; col < qrProduct.columns; col += 1) {
             double a = [source valueAtRow:row column:col];
             double b = [qrProduct valueAtRow:row column:col];
             double accuracy = 1.0e-10;

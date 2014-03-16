@@ -23,14 +23,14 @@
     if (self) {
         double *columnMajorValues = [matrix valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
         
-        long m = matrix.rows;
-        long n = matrix.columns;
+        int m = matrix.rows;
+        int n = matrix.columns;
         
-        long lda = m;
+        int lda = m;
         
-        long *ipiv = malloc(MIN(m, n) * sizeof(long));
+        int *ipiv = malloc(MIN(m, n) * sizeof(int));
         
-        long info = 0;
+        int info = 0;
         
         dgetrf_(&m, &n, columnMajorValues, &lda, ipiv, &info);
         
