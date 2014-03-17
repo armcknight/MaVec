@@ -514,9 +514,9 @@ MCMatrixDefiniteness;
  @param packingMethod The packing format to consider when flattening the values into the array.
  @return A copy of this matrix' values from the specified triangular component, flattened and packed into a one-dimensional according to specified parameters.
  */
-- (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                                    inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
-                                  packingMethod:(MCMatrixValuePackingMethod)packingMethod;
+- (double *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                          inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
+                            packingMethod:(MCMatrixValuePackingMethod)packingMethod;
 
 /**
  @description Get the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.

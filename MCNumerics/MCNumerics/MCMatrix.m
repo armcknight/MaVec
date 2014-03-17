@@ -945,9 +945,9 @@ MCMatrixNorm;
     return tVals;
 }
 
-- (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                                    inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
-                                  packingMethod:(MCMatrixValuePackingMethod)packingMethod
+- (double *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                          inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
+                            packingMethod:(MCMatrixValuePackingMethod)packingMethod
 {
     if (self.rows != self.columns) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot extract triangular components from non-square matrices" userInfo:nil];

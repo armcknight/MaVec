@@ -23,9 +23,9 @@
             int n = matrix.rows;
             int lda = n;
             double *w = malloc(n * sizeof(double));
-            double *a = [matrix triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                        inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                      packingMethod:MCMatrixValuePackingMethodConventional];
+            double *a = [matrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower
+                                              inStorageFormat:MCMatrixLeadingDimensionColumn
+                                                packingMethod:MCMatrixValuePackingMethodConventional];
             double wkopt;
             int lwork = -1;
             int iwkopt;
