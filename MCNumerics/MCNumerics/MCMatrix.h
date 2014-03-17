@@ -410,12 +410,12 @@ MCMatrixDefiniteness;
                                         ofOrder:(int)order;
 
 /**
- @brief
- @param values
- @param order
- @param bandwidth
- @param oddDiagonalLocation
- @return
+ @brief Class convenience method to create a square band matrix with supplied (co)diagonal values in band matrix format (see http://www.roguewave.com/Portals/0/products/imsl-numerical-libraries/c-library/docs/6.0/math/default.htm?turl=matrixstoragemodes.htm for a good explanation).
+ @param values Values in the bands of the matrix supplied in the band format.
+ @param order Number of rows/columns in the matrix.
+ @param bandwidth Number of diagonals and codiagonals in the band matrix.
+ @param oddDiagonalLocation If there is an extra codiagonal, specifies whether it appears in the upper or lower triangular component of the matrix; disregarded otherwise. (Cannot be MCMatrixTriangularComponentBoth if bandwidth is even).
+ @return A new instance of MCMatrix representing the band matrix.
  */
 + (instancetype)bandMatrixWithValues:(double *)values
                                order:(int)order
@@ -423,43 +423,43 @@ MCMatrixDefiniteness;
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
 
 /**
- @brief
- @param rows
- @param columns
- @return
+ @brief Class convenience method to create a matrix with the specified size containing random double-precision floating-point values.
+ @param rows The number of rows desired in the random matrix.
+ @param columns The number of columns desired in the random matrix.
+ @return A new instance of MCMatrix containing rows * columns random values.
  */
 + (instancetype)randomMatrixWithRows:(int)rows
                              columns:(int)columns;
 
 /**
- @brief
- @param order
- @return
+ @brief Class convenience method to create a square symmetric matrix with the specified order containing random double-precision floating-point values.
+ @param order The amount of rows/columns desired in the matrix.
+ @return A new square symmetric instance of MCMatrix containing random values.
  */
 + (instancetype)randomSymmetricMatrixOfOrder:(int)order;
 
 /**
- @brief
- @param order
- @return
+ @brief Class convenience method to create a square diagonal matrix with the specified order containing random double-precision floating-point values.
+ @param order The amount of rows/columns desired in the matrix.
+ @return A new square diagonal instance of MCMatrix containing random values.
  */
 + (instancetype)randomDiagonalMatrixOfOrder:(int)order;
 
 /**
- @brief
- @param order
- @param triangularComponent
- @return
+ @brief Class convenience method to create a square triangular matrix with the specified order containing random double-precision floating-point values.
+ @param order The amount of rows/columns desired in the matrix.
+ @param triangularComponent The triangular component the values should reside in, either upper or lower (cannot be MCMatrixTriangularComponentBoth).
+ @return A new square triangular instance of MCMatrix containing random values.
  */
 + (instancetype)randomTriangularMatrixOfOrder:(int)order
-                          triangularComponent:(int)triangularComponent;
+                          triangularComponent:(MCMatrixTriangularComponent)triangularComponent;
 
 /**
- @brief
- @param order
- @param bandwidth
- @param oddDiagonalLocation
- @return
+ @brief Class convenience method to create a square band matrix with the specified order containing random double-precision floating-point values.
+ @param order The amount of rows/columns desired in the matrix.
+ @param bandwidth Number of diagonals and codiagonals in the band matrix.
+ @param oddDiagonalLocation If there is an extra codiagonal, specifies whether it appears in the upper or lower triangular component of the matrix; disregarded otherwise. (Cannot be MCMatrixTriangularComponentBoth if bandwidth is even).
+ @return A new square band instance of MCMatrix containing random values.
  */
 + (instancetype)randomBandMatrixOfOrder:(int)order
                               bandwidth:(int)bandwidth
@@ -468,23 +468,23 @@ MCMatrixDefiniteness;
 #pragma mark - Operations
 
 /**
- @brief
- @param rowA
- @param rowB
+ @brief Exchanges the values in the specified rows.
+ @param rowA The index of the first row to exchange.
+ @param rowB The index of the first second to exchange.
  */
 - (void)swapRowA:(int)rowA withRowB:(int)rowB;
 
 /**
- @brief
- @param columnA
- @param columnB
+ @brief Exchanges the values in the specified columns.
+ @param columnA  The index of the first column to exchange.
+ @param columnB  The index of the second column to exchange.
  */
 - (void)swapColumnA:(int)columnA withColumnB:(int)columnB;
 
 #pragma mark - NSObject overrides
 
 /**
- @return YES if object is either this MCMatrix instance or is identical in dimension and contains identical values at all positions, NO otherwise.
+ @return YES if otherMatrix is either this MCMatrix instance or is identical in dimension and contains identical values at all positions, NO otherwise.
  */
 - (BOOL)isEqualToMatrix:(MCMatrix *)otherMatrix;
 
@@ -501,18 +501,18 @@ MCMatrixDefiniteness;
 #pragma mark - Inspection
 
 /**
- @brief
- @param leadingDimension
+ @brief Return the values in this matrix represented in a one-dimensional array flattened using the specified leading dimension.
+ @param leadingDimension Dimension to use when flattening the values into a one-dimensional array.
  @return A copy of this matrix' values stored in the specified format (row-major or column-major).
  */
 - (double *)valuesInStorageFormat:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
- @brief
- @param triangularComponent
- @param leadingDimension
- @param packingFormat
- @return
+ @brief Return values from the specified triangular component of the matrix, flattened into a one-dimensional array using the specified leading dimension and packing format.
+ @param triangularComponent The desired triangular component to extract values from (cannot be MCMatrixTriangularComponentBoth).
+ @param leadingDimension The leading dimension to consider when flattening the values into the array.
+ @param packingFormat The packing format to consider when flattening the values into the array.
+ @return A copy of this matrix' values from the specified triangular component, flattened and packed into a one-dimensional according to specified parameters.
  */
 - (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                     inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
@@ -527,25 +527,25 @@ MCMatrixDefiniteness;
 - (double)valueAtRow:(int)row column:(int)column;
 
 /**
- @brief
- @param column
- @return
+ @brief Extract the values of a column of this matrix.
+ @param column The index of the column to extract.
+ @return An MCVector object contaning the values in the specified column.
  */
 - (MCVector *)columnVectorForColumn:(int)column;
 
 /**
- @brief
- @param row
- @return
+ @brief Extract the values of a row of this matrix.
+ @param column The index of the row to extract.
+ @return An MCVector object contaning the values in the specified row.
  */
 - (MCVector *)rowVectorForRow:(int)row;
 
 #pragma mark - Subscripting
 
 /**
- @brief
- @param idx
- @return
+ @brief Extract the values of a row of this matrix, using overridden bracket operators.
+ @param column The index of the row to extract.
+ @return An MCVector object contaning the values in the specified row.
  */
 - (MCVector *)objectAtIndexedSubscript:(int)idx;
 
@@ -587,10 +587,10 @@ MCMatrixDefiniteness;
                                  valuesB:(MCMatrix*)B;
 
 /**
- @brief 
- @param matrix
- @param vector
- @return
+ @brief Performs a multiplication with the supplied matrix and vector, whose dimensions must agree according to the rules of matrix-vector multiplication: for A * b = c, A: m x p, b: p x 1 and C: m x 1.
+ @param matrix The matrix to multiply with the vector.
+ @param vector The vector to multiply with the matrix.
+ @return A new MCVector object representing the product of the matrix-vector multiplication.
  */
 + (MCVector *)productOfMatrix:(MCMatrix *)matrix andVector:(MCVector *)vector;
 

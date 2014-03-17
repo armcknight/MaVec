@@ -337,31 +337,30 @@ MCMatrixNorm;
     
     /*
      
-     good documentation at http://www.roguewave.com/Portals/0/products/imsl-numerical-libraries/c-library/docs/6.0/math/default.htm?turl=matrixstoragemodes.htm
+     the band matrix
      
-     the band matrix 
      [ a b 0 0 0
-       c d e 0 0
-       f g h i 0
-       0 j k l m
-       0 0 n o p ]
+     c d e 0 0
+     f g h i 0
+     0 j k l m
+     0 0 n o p ]
      
      is stored as the 2d array (logically) as
      
      [ [ * b e i m ]
-       [ a d h l p ]
-       [ c g k o * ]
-       [ f j n * * ] ]
+     [ a d h l p ]
+     [ c g k o * ]
+     [ f j n * * ] ]
      
      which converts to the 1d array
      
      [ * b e i m a d h l p c g k o * f j n * * ]
      
-     *'s must be present but not set and are not used by lapack
+     *'s must be present but are not used and need not set to particular values
+     
+     The values Aij inside the band width are stored in the linear array in positions [(i - j + nuca + 1) * n + j]
      
      */
-    
-    // The values Aij inside the band width are stored in the linear array in positions [(i - j + nuca + 1) * n + j]
     int numberOfUpperCodiagonals = (evenAmountOfBands && oddDiagonalLocation == MCMatrixTriangularComponentUpper) ? 1 : 0;
     for (int i = 0; i < order; i += 1) {
         for (int j = 0; j < order; j += 1) {
