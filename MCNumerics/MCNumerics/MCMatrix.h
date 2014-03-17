@@ -60,7 +60,7 @@ typedef enum : UInt8 {
      [ a b
        c d ]   =>    [a b c d] or [a c b d]
      */
-    MCMatrixValuePackingFormatConventional,
+    MCMatrixValuePackingMethodConventional,
     
     /**
      Exclude triangular matrix' leftover 0 values.
@@ -70,7 +70,7 @@ typedef enum : UInt8 {
        0 d e
        0 0 f ]  =>  [a b c d e f] or [a b d c e f]
      */
-    MCMatrixValuePackingFormatPacked,
+    MCMatrixValuePackingMethodPacked,
     
     /**
      Only store the non-zero band values. MCMatrixLeadingDimension has no bearing on this packing format.
@@ -82,12 +82,12 @@ typedef enum : UInt8 {
        0 j k l
        0 0 m n ]  ->  [* b e i a d h l c g k n f j m *] (* must exist in array but isn't used by the algorithm)
      */
-    MCMatrixValuePackingFormatBand
+    MCMatrixValuePackingMethodBand
 }
 /**
  Constants specifying the matrix flattening method used to construct the values array.
  */
-MCMatrixValuePackingFormat;
+MCMatrixValuePackingMethod;
 
 typedef enum : UInt8 {
     /**
@@ -155,10 +155,10 @@ MCMatrixDefiniteness;
 @property (nonatomic, assign) MCMatrixLeadingDimension leadingDimension;
 
 /**
- @property packingFormat
+ @property packingMethod
  @brief The packing format used to store this matrix' values in a one-dimensional array, either conventional, packed or band. Setting this property to a new enum value will change the internal representation of values.
  */
-@property (nonatomic, assign) MCMatrixValuePackingFormat packingFormat;
+@property (nonatomic, assign) MCMatrixValuePackingMethod packingMethod;
 
 /**
  @property triangularComponent
@@ -291,7 +291,7 @@ MCMatrixDefiniteness;
  @param rows The amount of rows the matrix should have.
  @param columns The amount of columns the matrix should have.
  @param leadingDimension The leading dimension that should be used when inspecting the supplied values parameter.
- @param packingFormat Describes how the values are packed in the supplied values parameter.
+ @param packingMethod Describes how the values are packed in the supplied values parameter.
  @param triangularComponent Describes the triangular component described by the supplied values parameter.
  @return A new MCMatrix object.
  */
@@ -299,7 +299,7 @@ MCMatrixDefiniteness;
                           rows:(int)rows
                        columns:(int)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                 packingFormat:(MCMatrixValuePackingFormat)packingFormat
+                 packingMethod:(MCMatrixValuePackingMethod)packingMethod
            triangularComponent:(MCMatrixTriangularComponent)triangularComponent;
 
 #pragma mark - Class constructors
@@ -511,12 +511,12 @@ MCMatrixDefiniteness;
  @brief Return values from the specified triangular component of the matrix, flattened into a one-dimensional array using the specified leading dimension and packing format.
  @param triangularComponent The desired triangular component to extract values from (cannot be MCMatrixTriangularComponentBoth).
  @param leadingDimension The leading dimension to consider when flattening the values into the array.
- @param packingFormat The packing format to consider when flattening the values into the array.
+ @param packingMethod The packing format to consider when flattening the values into the array.
  @return A copy of this matrix' values from the specified triangular component, flattened and packed into a one-dimensional according to specified parameters.
  */
 - (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                     inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
-                                  withPackingFormat:(MCMatrixValuePackingFormat)packingFormat;
+                                  packingMethod:(MCMatrixValuePackingMethod)packingMethod;
 
 /**
  @description Get the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.

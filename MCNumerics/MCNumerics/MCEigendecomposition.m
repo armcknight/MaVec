@@ -25,7 +25,7 @@
             double *w = malloc(n * sizeof(double));
             double *a = [matrix triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                         inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                      withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                      packingMethod:MCMatrixValuePackingMethodConventional];
             double wkopt;
             int lwork = -1;
             int iwkopt;

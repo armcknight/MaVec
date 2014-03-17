@@ -100,7 +100,7 @@ MCMatrixNorm;
         _values = nil;
         
         _leadingDimension = MCMatrixLeadingDimensionColumn;
-        _packingFormat = MCMatrixValuePackingFormatConventional;
+        _packingMethod = MCMatrixValuePackingMethodConventional;
         _triangularComponent = MCMatrixTriangularComponentBoth;
         
         _isSymmetric = [MCTribool triboolWithValue:MCTriboolValueUnknown];
@@ -130,13 +130,13 @@ MCMatrixNorm;
                           rows:(int)rows
                        columns:(int)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                 packingFormat:(MCMatrixValuePackingFormat)packingFormat
+                 packingMethod:(MCMatrixValuePackingMethod)packingMethod
            triangularComponent:(MCMatrixTriangularComponent)triangularComponent
 {
     self = [self init];
     if (self) {
         _leadingDimension = leadingDimension;
-        _packingFormat = packingFormat;
+        _packingMethod = packingMethod;
         _triangularComponent = triangularComponent;
         _values = values;
         _rows = rows;
@@ -161,7 +161,7 @@ MCMatrixNorm;
                                        rows:rows
                                     columns:columns
                            leadingDimension:MCMatrixLeadingDimensionColumn
-                              packingFormat:MCMatrixValuePackingFormatConventional
+                              packingMethod:MCMatrixValuePackingMethodConventional
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
@@ -179,7 +179,7 @@ MCMatrixNorm;
                                        rows:rows
                                     columns:columns
                            leadingDimension:MCMatrixLeadingDimensionRow
-                              packingFormat:MCMatrixValuePackingFormatConventional
+                              packingMethod:MCMatrixValuePackingMethodConventional
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
@@ -190,7 +190,7 @@ MCMatrixNorm;
                                        rows:rows
                                     columns:columns
                            leadingDimension:MCMatrixLeadingDimensionColumn
-                              packingFormat:MCMatrixValuePackingFormatConventional
+                              packingMethod:MCMatrixValuePackingMethodConventional
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
@@ -202,7 +202,7 @@ MCMatrixNorm;
                                        rows:rows
                                     columns:columns
                            leadingDimension:leadingDimension
-                              packingFormat:MCMatrixValuePackingFormatConventional
+                              packingMethod:MCMatrixValuePackingMethodConventional
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
@@ -214,7 +214,7 @@ MCMatrixNorm;
                                        rows:rows
                                     columns:columns
                            leadingDimension:MCMatrixLeadingDimensionColumn
-                              packingFormat:MCMatrixValuePackingFormatConventional
+                              packingMethod:MCMatrixValuePackingMethodConventional
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
@@ -227,7 +227,7 @@ MCMatrixNorm;
                                        rows:rows
                                     columns:columns
                            leadingDimension:leadingDimension
-                              packingFormat:MCMatrixValuePackingFormatConventional
+                              packingMethod:MCMatrixValuePackingMethodConventional
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
@@ -281,7 +281,7 @@ MCMatrixNorm;
                                        rows:order
                                     columns:order
                            leadingDimension:leadingDimension
-                              packingFormat:MCMatrixValuePackingFormatConventional
+                              packingMethod:MCMatrixValuePackingMethodConventional
                         triangularComponent:triangularComponent];
 }
 
@@ -296,7 +296,7 @@ MCMatrixNorm;
                                                    rows:order
                                                 columns:order
                                        leadingDimension:leadingDimension
-                                          packingFormat:MCMatrixValuePackingFormatConventional
+                                          packingMethod:MCMatrixValuePackingMethodConventional
                                     triangularComponent:triangularComponent];
     int k = 0;
     for (int i = 0; i < order; i += 1) {
@@ -818,7 +818,7 @@ MCMatrixNorm;
     }
 }
 
-- (void)setPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+- (void)setPackingFormat:(MCMatrixValuePackingMethod)packingMethod
 {
     @throw kMCUnimplementedMethodException;
     // TODO: implement, updating bandwidth if necessary
@@ -947,13 +947,13 @@ MCMatrixNorm;
 
 - (double *)triangularValuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                     inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
-                                  withPackingFormat:(MCMatrixValuePackingFormat)packingFormat
+                                  packingMethod:(MCMatrixValuePackingMethod)packingMethod
 {
     if (self.rows != self.columns) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot extract triangular components from non-square matrices" userInfo:nil];
     }
     
-    int numberOfValues = packingFormat == MCMatrixValuePackingFormatPacked ? ((self.rows * (self.rows + 1)) / 2) : self.rows * self.rows;
+    int numberOfValues = packingMethod == MCMatrixValuePackingMethodPacked ? ((self.rows * (self.rows + 1)) / 2) : self.rows * self.rows;
     double *values = malloc(numberOfValues * sizeof(double));
     
     int i = 0;
@@ -971,7 +971,7 @@ MCMatrixNorm;
             if (shouldStoreValueForLowerTriangle || shouldStoreValueForUpperTriangle) {
                 double value = [self valueAtRow:row column:col];
                 values[i++] = value;
-            } else if (packingFormat == MCMatrixValuePackingFormatConventional) {
+            } else if (packingMethod == MCMatrixValuePackingMethodConventional) {
                 values[i++] = 0.0;
             }
         }
@@ -1213,7 +1213,7 @@ MCMatrixNorm;
     
     matrixCopy->_leadingDimension = _leadingDimension;
     matrixCopy->_triangularComponent = _triangularComponent;
-    matrixCopy->_packingFormat = _packingFormat;
+    matrixCopy->_packingMethod = _packingMethod;
     
     matrixCopy->_values = malloc(self.rows * self.columns * sizeof(double));
     for (int i = 0; i < self.rows * self.columns; i += 1) {

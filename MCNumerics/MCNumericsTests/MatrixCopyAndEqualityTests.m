@@ -200,7 +200,7 @@
      */
     double *packedUpperTriangularValuesRowMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentUpper
                                                                              inStorageFormat:MCMatrixLeadingDimensionRow
-                                                                           withPackingFormat:MCMatrixValuePackingFormatPacked];
+                                                                           packingMethod:MCMatrixValuePackingMethodPacked];
     XCTAssertEqual(values[0], packedUpperTriangularValuesRowMajor[0], @"Value incorrect");
     XCTAssertEqual(values[1], packedUpperTriangularValuesRowMajor[1], @"Value incorrect");
     XCTAssertEqual(values[2], packedUpperTriangularValuesRowMajor[2], @"Value incorrect");
@@ -211,7 +211,7 @@
     
     double *packedUpperTriangularValuesColumnMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentUpper
                                                                                 inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                                              withPackingFormat:MCMatrixValuePackingFormatPacked];
+                                                                              packingMethod:MCMatrixValuePackingMethodPacked];
     XCTAssertEqual(values[0], packedUpperTriangularValuesColumnMajor[0], @"Value incorrect");
     XCTAssertEqual(values[1], packedUpperTriangularValuesColumnMajor[1], @"Value incorrect");
     XCTAssertEqual(values[4], packedUpperTriangularValuesColumnMajor[2], @"Value incorrect");
@@ -222,7 +222,7 @@
     
     double *unpackedUpperTriangularValuesRowMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentUpper
                                                                                inStorageFormat:MCMatrixLeadingDimensionRow
-                                                                             withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                                             packingMethod:MCMatrixValuePackingMethodConventional];
     XCTAssertEqual(values[0], unpackedUpperTriangularValuesRowMajor[0], @"Value incorrect");
     XCTAssertEqual(values[1], unpackedUpperTriangularValuesRowMajor[1], @"Value incorrect");
     XCTAssertEqual(values[2], unpackedUpperTriangularValuesRowMajor[2], @"Value incorrect");
@@ -236,7 +236,7 @@
     
     double *unpackedUpperTriangularValuesColumnMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentUpper
                                                                                   inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                                                withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                                                packingMethod:MCMatrixValuePackingMethodConventional];
     XCTAssertEqual(values[0], unpackedUpperTriangularValuesColumnMajor[0], @"Value incorrect");
     XCTAssertEqual(0.0, unpackedUpperTriangularValuesColumnMajor[1], @"Value incorrect");
     XCTAssertEqual(0.0, unpackedUpperTriangularValuesColumnMajor[2], @"Value incorrect");
@@ -255,7 +255,7 @@
      */
     double *packedLowerTriangularValuesRowMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                                              inStorageFormat:MCMatrixLeadingDimensionRow
-                                                                           withPackingFormat:MCMatrixValuePackingFormatPacked];
+                                                                           packingMethod:MCMatrixValuePackingMethodPacked];
     XCTAssertEqual(values[0], packedLowerTriangularValuesRowMajor[0], @"Value incorrect");
     XCTAssertEqual(values[3], packedLowerTriangularValuesRowMajor[1], @"Value incorrect");
     XCTAssertEqual(values[4], packedLowerTriangularValuesRowMajor[2], @"Value incorrect");
@@ -266,7 +266,7 @@
     
     double *packedLowerTriangularValuesColumnMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                                                 inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                                              withPackingFormat:MCMatrixValuePackingFormatPacked];
+                                                                              packingMethod:MCMatrixValuePackingMethodPacked];
     XCTAssertEqual(values[0], packedLowerTriangularValuesColumnMajor[0], @"Value incorrect");
     XCTAssertEqual(values[3], packedLowerTriangularValuesColumnMajor[1], @"Value incorrect");
     XCTAssertEqual(values[6], packedLowerTriangularValuesColumnMajor[2], @"Value incorrect");
@@ -277,7 +277,7 @@
     
     double *unpackedLowerTriangularValuesRowMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                                                inStorageFormat:MCMatrixLeadingDimensionRow
-                                                                             withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                                             packingMethod:MCMatrixValuePackingMethodConventional];
     XCTAssertEqual(values[0], unpackedLowerTriangularValuesRowMajor[0], @"Value incorrect");
     XCTAssertEqual(0.0, unpackedLowerTriangularValuesRowMajor[1], @"Value incorrect");
     XCTAssertEqual(0.0, unpackedLowerTriangularValuesRowMajor[2], @"Value incorrect");
@@ -291,7 +291,7 @@
     
     double *unpackedLowerTriangularValuesColumnMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                                                   inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                                                withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                                                packingMethod:MCMatrixValuePackingMethodConventional];
     XCTAssertEqual(values[0], unpackedLowerTriangularValuesColumnMajor[0], @"Value incorrect");
     XCTAssertEqual(values[3], unpackedLowerTriangularValuesColumnMajor[1], @"Value incorrect");
     XCTAssertEqual(values[6], unpackedLowerTriangularValuesColumnMajor[2], @"Value incorrect");
@@ -333,7 +333,7 @@
      */
     double *packedUpperTriangularValuesRowMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentUpper
                                                                              inStorageFormat:MCMatrixLeadingDimensionRow
-                                                                           withPackingFormat:MCMatrixValuePackingFormatPacked];
+                                                                           packingMethod:MCMatrixValuePackingMethodPacked];
     XCTAssertEqual(values[0], packedUpperTriangularValuesRowMajor[0], @"Value incorrect");
     XCTAssertEqual(values[3], packedUpperTriangularValuesRowMajor[1], @"Value incorrect");
     XCTAssertEqual(values[6], packedUpperTriangularValuesRowMajor[2], @"Value incorrect");
@@ -344,7 +344,7 @@
     
     double *packedUpperTriangularValuesColumnMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentUpper
                                                                                 inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                                              withPackingFormat:MCMatrixValuePackingFormatPacked];
+                                                                              packingMethod:MCMatrixValuePackingMethodPacked];
     XCTAssertEqual(values[0], packedUpperTriangularValuesColumnMajor[0], @"Value incorrect");
     XCTAssertEqual(values[3], packedUpperTriangularValuesColumnMajor[1], @"Value incorrect");
     XCTAssertEqual(values[4], packedUpperTriangularValuesColumnMajor[2], @"Value incorrect");
@@ -355,7 +355,7 @@
     
     double *unpackedUpperTriangularValuesRowMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentUpper
                                                                                inStorageFormat:MCMatrixLeadingDimensionRow
-                                                                             withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                                             packingMethod:MCMatrixValuePackingMethodConventional];
     XCTAssertEqual(values[0], unpackedUpperTriangularValuesRowMajor[0], @"Value incorrect");
     XCTAssertEqual(values[3], unpackedUpperTriangularValuesRowMajor[1], @"Value incorrect");
     XCTAssertEqual(values[6], unpackedUpperTriangularValuesRowMajor[2], @"Value incorrect");
@@ -369,7 +369,7 @@
     
     double *unpackedUpperTriangularValuesColumnMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentUpper
                                                                                   inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                                                withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                                                packingMethod:MCMatrixValuePackingMethodConventional];
     XCTAssertEqual(values[0], unpackedUpperTriangularValuesColumnMajor[0], @"Value incorrect");
     XCTAssertEqual(0.0, unpackedUpperTriangularValuesColumnMajor[1], @"Value incorrect");
     XCTAssertEqual(0.0, unpackedUpperTriangularValuesColumnMajor[2], @"Value incorrect");
@@ -388,7 +388,7 @@
      */
     double *packedLowerTriangularValuesRowMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                                              inStorageFormat:MCMatrixLeadingDimensionRow
-                                                                           withPackingFormat:MCMatrixValuePackingFormatPacked];
+                                                                           packingMethod:MCMatrixValuePackingMethodPacked];
     XCTAssertEqual(values[0], packedLowerTriangularValuesRowMajor[0], @"Value incorrect");
     XCTAssertEqual(values[1], packedLowerTriangularValuesRowMajor[1], @"Value incorrect");
     XCTAssertEqual(values[4], packedLowerTriangularValuesRowMajor[2], @"Value incorrect");
@@ -399,7 +399,7 @@
     
     double *packedLowerTriangularValuesColumnMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                                                 inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                                              withPackingFormat:MCMatrixValuePackingFormatPacked];
+                                                                              packingMethod:MCMatrixValuePackingMethodPacked];
     XCTAssertEqual(values[0], packedLowerTriangularValuesColumnMajor[0], @"Value incorrect");
     XCTAssertEqual(values[1], packedLowerTriangularValuesColumnMajor[1], @"Value incorrect");
     XCTAssertEqual(values[2], packedLowerTriangularValuesColumnMajor[2], @"Value incorrect");
@@ -410,7 +410,7 @@
     
     double *unpackedLowerTriangularValuesRowMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                                                inStorageFormat:MCMatrixLeadingDimensionRow
-                                                                             withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                                             packingMethod:MCMatrixValuePackingMethodConventional];
     XCTAssertEqual(values[0], unpackedLowerTriangularValuesRowMajor[0], @"Value incorrect");
     XCTAssertEqual(0.0, unpackedLowerTriangularValuesRowMajor[1], @"Value incorrect");
     XCTAssertEqual(0.0, unpackedLowerTriangularValuesRowMajor[2], @"Value incorrect");
@@ -424,7 +424,7 @@
     
     double *unpackedLowerTriangularValuesColumnMajor = [a triangularValuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                                                                   inStorageFormat:MCMatrixLeadingDimensionColumn
-                                                                                withPackingFormat:MCMatrixValuePackingFormatConventional];
+                                                                                packingMethod:MCMatrixValuePackingMethodConventional];
     XCTAssertEqual(values[0], unpackedLowerTriangularValuesColumnMajor[0], @"Value incorrect");
     XCTAssertEqual(values[1], unpackedLowerTriangularValuesColumnMajor[1], @"Value incorrect");
     XCTAssertEqual(values[2], unpackedLowerTriangularValuesColumnMajor[2], @"Value incorrect");
