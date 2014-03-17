@@ -32,7 +32,7 @@
         _rows = m;
         _columns = n;
         double *a = malloc(m * m * sizeof(double));
-        double *values = [matrix valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
+        double *values = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
         for (int i = 0; i < m * n; i += 1) {
             a[i] = values[i];
         }

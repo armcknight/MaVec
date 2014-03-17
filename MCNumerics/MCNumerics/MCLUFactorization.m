@@ -21,7 +21,7 @@
 {
     self = [super init];
     if (self) {
-        double *columnMajorValues = [matrix valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
+        double *columnMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
         
         int m = matrix.rows;
         int n = matrix.columns;

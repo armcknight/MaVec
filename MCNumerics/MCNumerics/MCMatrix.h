@@ -505,7 +505,7 @@ MCMatrixDefiniteness;
  @param leadingDimension Dimension to use when flattening the values into a one-dimensional array.
  @return A copy of this matrix' values stored in the specified format (row-major or column-major).
  */
-- (double *)valuesInStorageFormat:(MCMatrixLeadingDimension)leadingDimension;
+- (double *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
  @brief Return values from the specified triangular component of the matrix, flattened into a one-dimensional array using the specified leading dimension and packing format.
@@ -515,7 +515,7 @@ MCMatrixDefiniteness;
  @return A copy of this matrix' values from the specified triangular component, flattened and packed into a one-dimensional according to specified parameters.
  */
 - (double *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                          inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
+                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             packingMethod:(MCMatrixValuePackingMethod)packingMethod;
 
 /**

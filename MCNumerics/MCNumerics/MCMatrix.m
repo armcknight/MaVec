@@ -455,7 +455,7 @@ MCMatrixNorm;
 - (MCMatrix *)transpose
 {
     if (!_transpose) {
-        double *aVals = [self valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
+        double *aVals = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
         double *tVals = malloc(self.rows * self.columns * sizeof(double));
         
         vDSP_mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
@@ -500,7 +500,7 @@ MCMatrixNorm;
 {
     if (!_inverse) {
         if (_rows == _columns) {
-            double *a = [self valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
+            double *a = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
             
             int m = _rows;
             int n = _columns;
@@ -539,7 +539,7 @@ MCMatrixNorm;
 - (double)conditionNumber
 {
     if (_conditionNumber == -1.0) {
-        double *values = [self valuesInStorageFormat:MCMatrixLeadingDimensionRow];
+        double *values = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
         int m = self.rows;
         int n = self.columns;
         double norm = dlange_("1", &m, &n, values, &m, nil);
@@ -722,7 +722,7 @@ MCMatrixNorm;
 {
     double normResult = NAN;
     
-    double *values = [self valuesInStorageFormat:MCMatrixLeadingDimensionRow];
+    double *values = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
     int m = self.rows;
     int n = self.columns;
     char *norm = "";
@@ -813,7 +813,7 @@ MCMatrixNorm;
 - (void)setLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     if (self.leadingDimension != leadingDimension) {
-        _values = [self valuesInStorageFormat:leadingDimension];
+        _values = [self valuesWithLeadingDimension:leadingDimension];
         _leadingDimension = leadingDimension;
     }
 }
@@ -920,7 +920,7 @@ MCMatrixNorm;
 
 #pragma mark - Inspection
 
-- (double *)valuesInStorageFormat:(MCMatrixLeadingDimension)leadingDimension
+- (double *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
     double *copiedValues = malloc(self.rows * self.columns * sizeof(double));
     
@@ -946,7 +946,7 @@ MCMatrixNorm;
 }
 
 - (double *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                          inStorageFormat:(MCMatrixLeadingDimension)leadingDimension
+                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             packingMethod:(MCMatrixValuePackingMethod)packingMethod
 {
     if (self.rows != self.columns) {
@@ -1047,8 +1047,8 @@ MCMatrixNorm;
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"matrixA does not have an equal amount of columns as rows in matrixB" userInfo:nil];
     }
     
-    double *aVals = [matrixA valuesInStorageFormat:MCMatrixLeadingDimensionRow];
-    double *bVals = [matrixB valuesInStorageFormat:MCMatrixLeadingDimensionRow];
+    double *aVals = [matrixA valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    double *bVals = [matrixB valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
     double *cVals = malloc(matrixA.rows * matrixB.columns * sizeof(double));
     
     vDSP_mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
@@ -1095,7 +1095,7 @@ MCMatrixNorm;
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
                                  valuesB:(MCMatrix*)B
 {
-    double *aVals = [A valuesInStorageFormat:MCMatrixLeadingDimensionColumn];
+    double *aVals = [A valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
     
     if (A.rows == A.columns) {
         // solve for square matrix A
