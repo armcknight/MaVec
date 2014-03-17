@@ -946,7 +946,7 @@ MCMatrixNorm;
 }
 
 - (double *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                         leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             packingMethod:(MCMatrixValuePackingMethod)packingMethod
 {
     if (self.rows != self.columns) {
@@ -1093,7 +1093,7 @@ MCMatrixNorm;
 }
 
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
-                                 valuesB:(MCMatrix*)B
+                                   valuesB:(MCMatrix*)B
 {
     double *aVals = [A valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
     

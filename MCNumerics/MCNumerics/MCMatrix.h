@@ -515,7 +515,7 @@ MCMatrixDefiniteness;
  @return A copy of this matrix' values from the specified triangular component, flattened and packed into a one-dimensional according to specified parameters.
  */
 - (double *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
-                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
+                         leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             packingMethod:(MCMatrixValuePackingMethod)packingMethod;
 
 /**
@@ -584,7 +584,7 @@ MCMatrixDefiniteness;
  @return A column vector containing coefficients for unknows to solve a linear system Ax=B, or nil if the system cannot be solved. Raises an NSInvalidArgumentException if A and B are of incompatible dimension.
  */
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
-                                 valuesB:(MCMatrix*)B;
+                                   valuesB:(MCMatrix*)B;
 
 /**
  @brief Performs a multiplication with the supplied matrix and vector, whose dimensions must agree according to the rules of matrix-vector multiplication: for A * b = c, A: m x p, b: p x 1 and C: m x 1.
