@@ -394,7 +394,7 @@ MCMatrixDefiniteness;
 + (instancetype)triangularMatrixWithPackedValues:(double *)values
                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                         ofOrder:(int)order;
+                                           order:(int)order;
 
 /**
  @brief Class convenience method to create a square symmetric from an array of values describing a triangular component of a matrix, either upper or lower.
@@ -407,7 +407,7 @@ MCMatrixDefiniteness;
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                        ofOrder:(int)order;
+                                          order:(int)order;
 
 /**
  @brief Class convenience method to create a square band matrix with supplied (co)diagonal values in band matrix format (see http://www.roguewave.com/Portals/0/products/imsl-numerical-libraries/c-library/docs/6.0/math/default.htm?turl=matrixstoragemodes.htm for a good explanation).

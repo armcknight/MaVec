@@ -261,7 +261,7 @@ MCMatrixNorm;
 + (instancetype)triangularMatrixWithPackedValues:(double *)values
                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                         ofOrder:(int)order
+                                           order:(int)order
 {
     // TODO: store as a triangular matrix instead of defaulting to conventional storage
     double *unpackedValues = malloc(order * order * sizeof(double));
@@ -288,7 +288,7 @@ MCMatrixNorm;
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
-                                        ofOrder:(int)order
+                                          order:(int)order
 {
     // TODO: store as a triangular symmetric matrix instead of defaulting to conventional storage
     double *unpackedValues = malloc(order * order * sizeof(double));
@@ -394,7 +394,7 @@ MCMatrixNorm;
     return [MCMatrix symmetricMatrixWithPackedValues:values
                                  triangularComponent:MCMatrixTriangularComponentUpper
                                     leadingDimension:MCMatrixLeadingDimensionColumn
-                                             ofOrder:order];
+                                               order:order];
 }
 
 + (instancetype)randomDiagonalMatrixOfOrder:(int)order
@@ -410,7 +410,7 @@ MCMatrixNorm;
     return [MCMatrix triangularMatrixWithPackedValues:values
                                 ofTriangularComponent:triangularComponent
                                      leadingDimension:MCMatrixLeadingDimensionColumn
-                                              ofOrder:order];
+                                                order:order];
 }
 
 + (instancetype)randomBandMatrixOfOrder:(int)order

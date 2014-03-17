@@ -112,7 +112,7 @@
     MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:rowMajorPackedUpperValues
                                              triangularComponent:MCMatrixTriangularComponentUpper
                                                 leadingDimension:MCMatrixLeadingDimensionRow
-                                                         ofOrder:3];
+                                                           order:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -129,7 +129,7 @@
     matrix = [MCMatrix symmetricMatrixWithPackedValues:rowMajorPackedLowerValues
                                    triangularComponent:MCMatrixTriangularComponentLower
                                       leadingDimension:MCMatrixLeadingDimensionRow
-                                               ofOrder:3];
+                                                 order:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -146,7 +146,7 @@
     matrix = [MCMatrix symmetricMatrixWithPackedValues:columnMajorPackedLowerValues
                                    triangularComponent:MCMatrixTriangularComponentLower
                                       leadingDimension:MCMatrixLeadingDimensionColumn
-                                               ofOrder:3];
+                                                 order:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -163,7 +163,7 @@
     matrix = [MCMatrix symmetricMatrixWithPackedValues:columnMajorPackedUpperValues
                                    triangularComponent:MCMatrixTriangularComponentUpper
                                       leadingDimension:MCMatrixLeadingDimensionColumn
-                                               ofOrder:3];
+                                                 order:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -193,7 +193,7 @@
     MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:rowMajorUpperValues
                                             ofTriangularComponent:MCMatrixTriangularComponentUpper
                                                  leadingDimension:MCMatrixLeadingDimensionRow
-                                                          ofOrder:3];
+                                                            order:3];
     XCTAssert([matrix isEqualToMatrix:upperSolution], @"Upper triangular row major matrix incorrectly created.");
     
     // upper column-major
@@ -205,7 +205,7 @@
     matrix = [MCMatrix triangularMatrixWithPackedValues:columnMajorUpperValues
                                   ofTriangularComponent:MCMatrixTriangularComponentUpper
                                        leadingDimension:MCMatrixLeadingDimensionColumn
-                                                ofOrder:3];
+                                                  order:3];
     XCTAssert([matrix isEqualToMatrix:upperSolution], @"Upper triangular column major matrix incorrectly created.");
     
     double lowerSolutionValues[9] = {
@@ -227,7 +227,7 @@
     matrix = [MCMatrix triangularMatrixWithPackedValues:rowMajorLowerValues
                                   ofTriangularComponent:MCMatrixTriangularComponentLower
                                        leadingDimension:MCMatrixLeadingDimensionRow
-                                                ofOrder:3];
+                                                  order:3];
     XCTAssert([matrix isEqualToMatrix:lowerSolution], @"Lower triangular row major matrix incorrectly created.");
     
     // lower column-major
@@ -239,7 +239,7 @@
     matrix = [MCMatrix triangularMatrixWithPackedValues:columnMajorLowerValues
                                   ofTriangularComponent:MCMatrixTriangularComponentLower
                                        leadingDimension:MCMatrixLeadingDimensionColumn
-                                                ofOrder:3];
+                                                  order:3];
     XCTAssert([matrix isEqualToMatrix:lowerSolution], @"Lower triangular column major matrix incorrectly created.");
 }
 
