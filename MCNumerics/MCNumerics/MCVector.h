@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
+typedef enum : UInt8 {
     /**
      Specifies that the values in the vector form a row with each value in its own column.
      */

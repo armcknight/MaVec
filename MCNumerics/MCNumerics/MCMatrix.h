@@ -15,7 +15,7 @@
 @class MCVector;
 @class MCTribool;
 
-typedef enum : NSUInteger {
+typedef enum : UInt8 {
     /**
      Specifies that this matrix' values are stored in row-major order.
      */
@@ -31,7 +31,7 @@ typedef enum : NSUInteger {
  */
 MCMatrixLeadingDimension;
 
-typedef enum : NSUInteger {
+typedef enum : UInt8 {
     /**
      Specifies that values refer to lower triangular portion.
      */
@@ -52,7 +52,7 @@ typedef enum : NSUInteger {
  */
 MCMatrixTriangularComponent;
 
-typedef enum : NSUInteger {
+typedef enum : UInt8 {
     /**
      All values are flattened using a MCMatrixLeadingDimension.
      
@@ -89,7 +89,7 @@ typedef enum : NSUInteger {
  */
 MCMatrixValuePackingFormat;
 
-typedef enum : NSUInteger {
+typedef enum : UInt8 {
     /**
      x^TMx > 0 for all nonzero real x
      */

@@ -16,7 +16,7 @@
 #import "MCQRFactorization.h"
 #import "MCTribool.h"
 
-typedef enum : NSUInteger {
+typedef enum : UInt8 {
     /**
      The maximum absolute column sum of the matrix.
      */
