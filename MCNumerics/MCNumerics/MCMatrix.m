@@ -404,7 +404,7 @@ MCMatrixNorm;
 }
 
 + (instancetype)randomTriangularMatrixOfOrder:(int)order
-                          triangularComponent:(int)triangularComponent
+                          triangularComponent:(MCMatrixTriangularComponent)triangularComponent
 {
     double *values = [self randomArrayOfSize:(order * (order + 1))/2];
     return [MCMatrix triangularMatrixWithPackedValues:values
