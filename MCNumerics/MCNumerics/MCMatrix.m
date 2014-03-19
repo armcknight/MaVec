@@ -673,7 +673,7 @@ MCMatrixNorm;
         for (int i = 0; i < length; i += 1) {
             values[i] = [self valueAtRow:i column:i];
         }
-        _diagonalValues = [MCVector vectorWithValues:values length:length inVectorFormat:MCVectorFormatRowVector];
+        _diagonalValues = [MCVector vectorWithValues:values length:length vectorFormat:MCVectorFormatRowVector];
     }
     return _diagonalValues;
 }
@@ -1003,7 +1003,7 @@ MCMatrixNorm;
         values[col] = [self valueAtRow:row column:col];
     }
     
-    return [MCVector vectorWithValues:values length:self.columns inVectorFormat:MCVectorFormatRowVector];
+    return [MCVector vectorWithValues:values length:self.columns vectorFormat:MCVectorFormatRowVector];
 }
 
 - (MCVector *)columnVectorForColumn:(int)column
@@ -1013,7 +1013,7 @@ MCMatrixNorm;
         values[row] = [self valueAtRow:row column:column];
     }
     
-    return [MCVector vectorWithValues:values length:self.rows inVectorFormat:MCVectorFormatColumnVector];
+    return [MCVector vectorWithValues:values length:self.rows vectorFormat:MCVectorFormatColumnVector];
 }
 
 #pragma mark - Subscripting

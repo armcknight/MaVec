@@ -37,15 +37,15 @@ MCVectorFormat;
 
 /**
  @description Initializes a new MCVector with supplied values in column format.
+- (instancetype)initWithValues:(double *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat;
  */
-- (instancetype)initWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat;
 + (instancetype)vectorWithValues:(double *)values length:(int)length;
-+ (instancetype)vectorWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat;
 
-- (instancetype)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
++ (instancetype)vectorWithValues:(double *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat;
+- (instancetype)initWithValuesInArray:(NSArray *)values vectorFormat:(MCVectorFormat)vectorFormat;
 + (instancetype)vectorWithValuesInArray:(NSArray *)values;
-+ (instancetype)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
 
++ (instancetype)vectorWithValuesInArray:(NSArray *)values vectorFormat:(MCVectorFormat)vectorFormat;
 #pragma mark - NSObject overrides
 
 - (BOOL)isEqualToVector:(MCVector *)otherVector;

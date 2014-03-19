@@ -35,7 +35,7 @@
 {
 }
 
-- (instancetype)initWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat
+- (instancetype)initWithValues:(double *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat
 {
     self = [super init];
     if (self) {
@@ -48,17 +48,15 @@
 
 + (instancetype)vectorWithValues:(double *)values length:(int)length
 {
-+ (instancetype)vectorWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat
+    return [[MCVector alloc] initWithValues:values length:length vectorFormat:MCVectorFormatColumnVector];
+}
+
++ (instancetype)vectorWithValues:(double *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat
 {
-    return [[MCVector alloc] initWithValues:values length:length inVectorFormat:vectorFormat];
+    return [[MCVector alloc] initWithValues:values length:length vectorFormat:vectorFormat];
 }
 
-}
-
-{
-}
-
-- (instancetype)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
+- (instancetype)initWithValuesInArray:(NSArray *)values vectorFormat:(MCVectorFormat)vectorFormat
 {
     self = [super init];
     if (self) {
@@ -74,9 +72,9 @@
     return [[MCVector alloc] initWithValuesInArray:values vectorFormat:MCVectorFormatColumnVector];
 }
 
-+ (instancetype)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
++ (instancetype)vectorWithValuesInArray:(NSArray *)values vectorFormat:(MCVectorFormat)vectorFormat
 {
-    return [[MCVector alloc] initWithValuesInArray:values inVectorFormat:vectorFormat];
+    return [[MCVector alloc] initWithValuesInArray:values vectorFormat:vectorFormat];
 }
 
 #pragma mark - Lazy loaded properties
@@ -259,7 +257,7 @@
     for (int i = 0; i < self.length; i++) {
         newValues[i] = scalar * self.values[i];
     }
-    return [MCVector vectorWithValues:newValues length:self.length inVectorFormat:self.vectorFormat];
+    return [MCVector vectorWithValues:newValues length:self.length vectorFormat:self.vectorFormat];
 }
 
 - (MCVector *)vectorByAddingVector:(MCVector *)addend
