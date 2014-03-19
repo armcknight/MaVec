@@ -32,15 +32,7 @@
     _length = length;
 }
 
-- (instancetype)initWithValues:(double *)values length:(int)length
 {
-    self = [super init];
-    if (self) {
-        [self commonInitWithValues:values length:length];
-        _vectorFormat = MCVectorFormatColumnVector;
-        [self commonInit];
-    }
-    return self;
 }
 
 - (instancetype)initWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat
@@ -56,32 +48,14 @@
 
 + (instancetype)vectorWithValues:(double *)values length:(int)length
 {
-    return [[MCVector alloc] initWithValues:values length:length];
-}
-
 + (instancetype)vectorWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat
 {
     return [[MCVector alloc] initWithValues:values length:length inVectorFormat:vectorFormat];
 }
 
-- (void)commonInitWithValuesInArray:(NSArray *)values
-{
-    _length = (int)values.count;
-    _values = malloc(values.count * sizeof(double));
-    [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
-        _values[idx] = value.doubleValue;
-    }];
 }
 
-- (instancetype)initWithValuesInArray:(NSArray *)values
 {
-    self = [super init];
-    if (self) {
-        [self commonInitWithValuesInArray:values];
-        _vectorFormat = MCVectorFormatColumnVector;
-        [self commonInit];
-    }
-    return self;
 }
 
 - (instancetype)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat
@@ -97,7 +71,7 @@
 
 + (instancetype)vectorWithValuesInArray:(NSArray *)values
 {
-    return [[MCVector alloc] initWithValuesInArray:values];
+    return [[MCVector alloc] initWithValuesInArray:values vectorFormat:MCVectorFormatColumnVector];
 }
 
 + (instancetype)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat

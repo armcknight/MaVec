@@ -38,12 +38,10 @@ MCVectorFormat;
 /**
  @description Initializes a new MCVector with supplied values in column format.
  */
-- (instancetype)initWithValues:(double *)values length:(int)length;
 - (instancetype)initWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat;
 + (instancetype)vectorWithValues:(double *)values length:(int)length;
 + (instancetype)vectorWithValues:(double *)values length:(int)length inVectorFormat:(MCVectorFormat)vectorFormat;
 
-- (instancetype)initWithValuesInArray:(NSArray *)values;
 - (instancetype)initWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
 + (instancetype)vectorWithValuesInArray:(NSArray *)values;
 + (instancetype)vectorWithValuesInArray:(NSArray *)values inVectorFormat:(MCVectorFormat)vectorFormat;
