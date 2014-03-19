@@ -11,6 +11,10 @@
 
 @interface MCVector()
 
+- (void)commonInit;
+- (void)commonInitWithValues:(double *)values length:(int)length;
+- (void)commonInitWithValuesInArray:(NSArray *)values;
+
 @end
 
 @implementation MCVector
@@ -18,7 +22,7 @@
 @synthesize sumOfValues = _sumOfValues;
 @synthesize productOfValues = _productOfValues;
 
-#pragma mark - Constructors
+#pragma mark - Private constructor helpers
 
 - (void)commonInit
 {
@@ -32,8 +36,16 @@
     _length = length;
 }
 
+- (void)commonInitWithValuesInArray:(NSArray *)values
 {
+    _length = (int)values.count;
+    _values = malloc(values.count * sizeof(double));
+    [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
+        _values[idx] = value.doubleValue;
+    }];
 }
+
+#pragma mark - Constructors
 
 - (instancetype)initWithValues:(double *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat
 {
