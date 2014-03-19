@@ -126,6 +126,7 @@ typedef enum : UInt8 {
 MCMatrixDefiniteness;
 
 /**
+ @class MCMatrix
  @description A class providing storage and operations for matrices of double-precision floating point numbers, where underlying details governing how the two-dimensional structure is reduced to the one-dimensional array containing its values (packing, leading dimension, or other internal value representation method) is abstracted away for any operation or property.
  */
 @interface MCMatrix : NSObject <NSCopying>
@@ -545,7 +546,7 @@ MCMatrixDefiniteness;
 /**
  @brief Extract the values of a row of this matrix, using overridden bracket operators.
  @param column The index of the row to extract.
- @return An MCVector object contaning the values in the specified row.
+ @return An MCVector object containing the values in the specified row.
  */
 - (MCVector *)objectAtIndexedSubscript:(int)idx;
 
