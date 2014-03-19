@@ -55,7 +55,6 @@ MCVectorFormat;
 
 #pragma mark - Inspection
 
-- (int)length;
 - (double)valueAtIndex:(int)index;
 - (double)maximumValue;
 - (double)minimumValue;
