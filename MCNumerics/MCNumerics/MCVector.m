@@ -261,48 +261,16 @@
     return @(self.values[idx]);
 }
 
-#pragma mark - Instance Operations
-
-- (MCVector *)vectorByMultiplyingByScalar:(double)scalar
-{
-    double *newValues = malloc(self.length * sizeof(double));
-    for (int i = 0; i < self.length; i++) {
-        newValues[i] = scalar * self.values[i];
-    }
-    return [MCVector vectorWithValues:newValues length:self.length vectorFormat:self.vectorFormat];
-}
-
-- (MCVector *)vectorByAddingVector:(MCVector *)addend
-{
-    return [MCVector sumOfVectorA:self andVectorB:addend];
-}
-
-- (MCVector *)vectorBySubtractingVector:(MCVector *)subtrahend
-{
-    return [MCVector differenceOfVectorA:self andVectorB:subtrahend];
-}
-
-- (MCVector *)vectorByMultiplyingByVector:(MCVector *)multiplier
-{
-    return [MCVector productOfVectorA:self andVectorB:multiplier];
-}
-
-- (MCVector *)vectorByDividingByVector:(MCVector *)divisor
-{
-    return [MCVector quotientOfVectorA:self andVectorB:divisor];
-}
-
-- (double)dotProductWithVector:(MCVector *)otherVector
-{
-    return [MCVector dotProductOfVectorA:self andVectorB:otherVector];
-}
-
-- (MCVector *)crossProductWithVector:(MCVector *)otherVector
-{
-    return [MCVector crossProductOfVectorA:self andVectorB:otherVector];
-}
-
 #pragma mark - Class Operations
+
++ (MCVector *)productOfVector:(MCVector *)vector scalar:(double)scalar
+{
+    double *newValues = malloc(vector.length * sizeof(double));
+    for (int i = 0; i < vector.length; i++) {
+        newValues[i] = scalar * vector.values[i];
+    }
+    return [MCVector vectorWithValues:newValues length:vector.length vectorFormat:vector.vectorFormat];
+}
 
 + (MCVector *)sumOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
 {

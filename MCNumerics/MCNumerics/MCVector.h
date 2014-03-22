@@ -166,16 +166,6 @@ MCVectorFormat;
  */
 - (NSNumber *)objectAtIndexedSubscript:(NSUInteger)idx;
 
-#pragma mark - Instance Operations
-
-- (MCVector *)vectorByMultiplyingByScalar:(double)scalar;
-- (MCVector *)vectorByAddingVector:(MCVector *)addend;
-- (MCVector *)vectorBySubtractingVector:(MCVector *)subtrahend;
-- (MCVector *)vectorByMultiplyingByVector:(MCVector *)multiplier;
-- (MCVector *)vectorByDividingByVector:(MCVector *)divisor;
-- (double)dotProductWithVector:(MCVector *)otherVector;
-- (MCVector *)crossProductWithVector:(MCVector *)otherVector;
-
 #pragma mark - Class Operations
 
 + (MCVector *)sumOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
@@ -186,5 +176,6 @@ MCVectorFormat;
 + (MCVector *)crossProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
 + (double)scalarTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c;
 + (MCVector *)vectorTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c;
++ (MCVector *)productOfVector:(MCVector *)vector scalar:(double)scalar;
 
 @end

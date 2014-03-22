@@ -48,7 +48,7 @@
         MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         double eigenvalue = [e.eigenvalues valueAtIndex:i];
         MCVector *left = [MCMatrix productOfMatrix:o andVector:eigenvector];
-        MCVector *right = [eigenvector vectorByMultiplyingByScalar:eigenvalue];
+        MCVector *right = [MCVector productOfVector:eigenvector scalar:eigenvalue];
         for (int j = 0; j < 5; j += 1) {
             double a = [left valueAtIndex:j];
             double b = [right valueAtIndex:j];
@@ -75,7 +75,7 @@
         MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         double eigenvalue = [e.eigenvalues valueAtIndex:i];
         MCVector *left = [MCMatrix productOfMatrix:source andVector:eigenvector];
-        MCVector *right = [eigenvector vectorByMultiplyingByScalar:eigenvalue];
+        MCVector *right = [MCVector productOfVector:eigenvector scalar:eigenvalue];
         NSLog(left.description);
         NSLog(right.description);
         for (int j = 0; j < 4; j += 1) {
