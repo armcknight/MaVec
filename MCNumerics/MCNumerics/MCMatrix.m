@@ -53,6 +53,7 @@ MCMatrixNorm;
 
 /**
  @brief Sets all properties to default states.
+ @return A new instance of MCMatrix in a default state with no values or row/column counts.
  */
 - (instancetype)init;
 
