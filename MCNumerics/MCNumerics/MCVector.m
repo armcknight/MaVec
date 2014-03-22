@@ -21,6 +21,10 @@
 
 @synthesize sumOfValues = _sumOfValues;
 @synthesize productOfValues = _productOfValues;
+@synthesize l1Norm = _l1Norm;
+@synthesize l2Norm = _l2Norm;
+@synthesize l3Norm = _l3Norm;
+@synthesize infinityNorm = _infinityNorm;
 @synthesize minimumValue = _minimumValue;
 @synthesize maximumValue = _maximumValue;
 @synthesize minimumValueIndex = _minimumValueIndex;
@@ -33,6 +37,10 @@
 {
     _sumOfValues = NAN;
     _productOfValues = NAN;
+    _l1Norm = NAN;
+    _l2Norm = NAN;
+    _l3Norm = NAN;
+    _infinityNorm = NAN;
     _minimumValue = NAN;
     _maximumValue = NAN;
     _minimumValueIndex = -1;
@@ -111,6 +119,43 @@
         _sumOfValues = sum;
     }
     return _sumOfValues;
+}
+
+- (double)l1Norm
+{
+    if (isnan(_l1Norm)) {
+        vDSP_svemgD(self.values, 1, &_l1Norm, self.length);
+    }
+    return _l1Norm;
+}
+
+- (double)l2Norm
+{
+    if (isnan(_l2Norm)) {
+        double squaredSum;
+        vDSP_svesqD(self.values, 1, &squaredSum, self.length);
+        _l2Norm = sqrt(squaredSum);
+    }
+    return _l2Norm;
+}
+
+- (double)l3Norm
+{
+    if (isnan(_l3Norm)) {
+        MCVector *cubedVector = [MCVector vectorByRaisingVector:self power:3];
+        double cubedSum;
+        vDSP_svemgD(cubedVector.values, 1, &cubedSum, self.length);
+        _l3Norm = cbrt(cubedSum);
+    }
+    return _l3Norm;
+}
+
+- (double)infinityNorm
+{
+    if (isnan(_infinityNorm)) {
+        _infinityNorm = self.absoluteVector.maximumValue;
+    }
+    return _infinityNorm;
 }
 
 - (double)productOfValues
@@ -272,6 +317,10 @@
         vectorCopy->_values[i] = _values[i];
     }
     
+    vectorCopy->_l1Norm = _l1Norm;
+    vectorCopy->_l2Norm = _l2Norm;
+    vectorCopy->_l3Norm = _l3Norm;
+    vectorCopy->_infinityNorm = _infinityNorm;
     vectorCopy->_minimumValue = _minimumValue;
     vectorCopy->_maximumValue = _maximumValue;
     vectorCopy->_minimumValueIndex = _minimumValueIndex;

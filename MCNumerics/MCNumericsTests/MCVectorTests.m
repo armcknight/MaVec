@@ -144,4 +144,19 @@
     XCTAssertTrue([a isEqualToVector:aCopy], @"Vector copy is not equal to its source.");
 }
 
+- (void)testVectorNorms
+{
+    MCVector *vector = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
+    
+    double l1NormSolution = 6.0;
+    double l2NormSolution = 3.74165738677;
+    double l3NormSolution = 3.30192724889;
+    double infinityNormSolution = 3.0;
+    
+    XCTAssertEqual(vector.l1Norm, l1NormSolution, @"L1 norm incorrect.");
+    XCTAssertEqualWithAccuracy(vector.l2Norm, l2NormSolution, 1e-10, @"L2 norm incorrect.");
+    XCTAssertEqualWithAccuracy(vector.l3Norm, l3NormSolution, 1e-10, @"L3 norm incorrect.");
+    XCTAssertEqual(vector.infinityNorm, infinityNormSolution, @"Infinity norm incorrect.");
+}
+
 @end

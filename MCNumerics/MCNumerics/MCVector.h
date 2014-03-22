@@ -61,6 +61,29 @@ MCVectorFormat;
 @property (assign, readonly, nonatomic) double productOfValues;
 
 /**
+ @property l1Norm
+ @brief The L1 norm of a vector is the sum of the absolute values of it's values: |x|_1 = ∑_i(|x_i|) (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) double l1Norm;
+
+/**
+ @property l2Norm
+ @brief The L2 norm of a vector is the square root of the sum of the squares of the absolute values of it's values: |x|_2 = √( ∑_i(|x_i|^2) ) (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) double l2Norm;
+
+/**
+ @property l3Norm
+ @brief The L3 norm of a vector is the cube root of the sum of the cubes of the absolute values of it's values: |x|_1 = ( ∑_i(|x_i|^3) )^(1/3) (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) double l3Norm;
+
+/**
+ @property infinityNorm
+ @brief The L∞ norm of a vector is the maximum absolute value of it's values: |x|_∞ = max_i( |x_i| ) (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) double infinityNorm;
+
 /**
  @property maximumValue
  @brief The maximum value in the vector. (Lazy-loaded)
