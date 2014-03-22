@@ -11,9 +11,26 @@
 
 @interface MCVector()
 
-- (void)commonInit;
-- (void)commonInitWithValues:(double *)values length:(int)length;
-- (void)commonInitWithValuesInArray:(NSArray *)values;
+/**
+ @brief Sets all properties to default states.
+ @return A new instance of MCVector in a default state with no values or length.
+ */
+- (instancetype)init;
+
+/**
+ @brief Constructs new instance by calling [self init] and sets the supplied values and length.
+ @param values C array of floating-point values.
+ @param length The length of the C array.
+ @return A new instance of MCVector in a default state.
+ */
+- (instancetype)initWithValues:(double *)values length:(int)length;
+
+/**
+ @brief Constructs new instance by calling [self init] and sets the supplied values and inferred length.
+ @param values An NSArray of NSNumbers.
+ @return A new instance of MCVector in a default state.
+ */
+- (instancetype)initWithValuesInArray:(NSArray *)values;
 
 @end
 
@@ -33,45 +50,55 @@
 
 #pragma mark - Private constructor helpers
 
-- (void)commonInit
+- (instancetype)init
 {
-    _sumOfValues = NAN;
-    _productOfValues = NAN;
-    _l1Norm = NAN;
-    _l2Norm = NAN;
-    _l3Norm = NAN;
-    _infinityNorm = NAN;
-    _minimumValue = NAN;
-    _maximumValue = NAN;
-    _minimumValueIndex = -1;
-    _maximumValueIndex = -1;
-    _absoluteVector = nil;
+    self = [super init];
+    if (self) {
+        _sumOfValues = NAN;
+        _productOfValues = NAN;
+        _l1Norm = NAN;
+        _l2Norm = NAN;
+        _l3Norm = NAN;
+        _infinityNorm = NAN;
+        _minimumValue = NAN;
+        _maximumValue = NAN;
+        _minimumValueIndex = -1;
+        _maximumValueIndex = -1;
+        _absoluteVector = nil;
+    }
+    return self;
 }
 
-- (void)commonInitWithValues:(double *)values length:(int)length
+- (instancetype)initWithValues:(double *)values length:(int)length
 {
-    _values = values;
-    _length = length;
+    self = [self init];
+    if (self) {
+        _values = values;
+        _length = length;
+    }
+    return self;
 }
 
-- (void)commonInitWithValuesInArray:(NSArray *)values
+- (instancetype)initWithValuesInArray:(NSArray *)values
 {
-    _length = (int)values.count;
-    _values = malloc(values.count * sizeof(double));
-    [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
-        _values[idx] = value.doubleValue;
-    }];
+    self = [self init];
+    if (self) {
+        _length = (int)values.count;
+        _values = malloc(values.count * sizeof(double));
+        [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
+            _values[idx] = value.doubleValue;
+        }];
+    }
+    return self;
 }
 
 #pragma mark - Constructors
 
 - (instancetype)initWithValues:(double *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat
 {
-    self = [super init];
+    self = [self initWithValues:values length:length];
     if (self) {
-        [self commonInitWithValues:values length:length];
         _vectorFormat = vectorFormat;
-        [self commonInit];
     }
     return self;
 }
@@ -88,11 +115,9 @@
 
 - (instancetype)initWithValuesInArray:(NSArray *)values vectorFormat:(MCVectorFormat)vectorFormat
 {
-    self = [super init];
+    self = [self initWithValuesInArray:values];
     if (self) {
-        [self commonInitWithValuesInArray:values];
         _vectorFormat = vectorFormat;
-        [self commonInit];
     }
     return self;
 }
