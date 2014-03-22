@@ -50,13 +50,13 @@ MCVectorFormat;
 
 /**
  @property sumOfValues
- @brief The value obtained by adding together all values in the vector.
+ @brief The value obtained by adding together all values in the vector. (Lazy-loaded)
  */
 @property (assign, readonly, nonatomic) double sumOfValues;
 
 /**
  @property productOfValues
- @brief The value obtained by multiplying together all values in the vector.
+ @brief The value obtained by multiplying together all values in the vector. (Lazy-loaded)
  */
 @property (assign, readonly, nonatomic) double productOfValues;
 
