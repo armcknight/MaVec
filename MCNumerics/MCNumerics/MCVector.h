@@ -168,14 +168,14 @@ MCVectorFormat;
 
 #pragma mark - Class Operations
 
-+ (MCVector *)sumOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
-+ (MCVector *)differenceOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
-+ (MCVector *)productOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
-+ (MCVector *)quotientOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
-+ (double)dotProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
-+ (MCVector *)crossProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b;
-+ (double)scalarTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c;
-+ (MCVector *)vectorTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c;
 + (MCVector *)productOfVector:(MCVector *)vector scalar:(double)scalar;
++ (MCVector *)sumOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB;
++ (MCVector *)differenceOfVectorMinuend:(MCVector *)vectorMinuend vectorSubtrahend:(MCVector *)vectorSubtrahend;
++ (MCVector *)productOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB;
++ (MCVector *)quotientOfVectorDividend:(MCVector *)vectorDividend vectorDivisor:(MCVector *)vectorDivisor;
++ (double)dotProductOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB;
++ (MCVector *)crossProductOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB;
++ (double)scalarTripleProductWithVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB vectorC:(MCVector *)vectorC;
++ (MCVector *)vectorTripleProductWithVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB vectorC:(MCVector *)vectorC;
 
 @end

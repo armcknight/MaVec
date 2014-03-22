@@ -272,92 +272,90 @@
     return [MCVector vectorWithValues:newValues length:vector.length vectorFormat:vector.vectorFormat];
 }
 
-+ (MCVector *)sumOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
++ (MCVector *)sumOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB
 {
-    if (a.length != b.length) {
+    if (vectorA.length != vectorB.length) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
     }
     
-    double *sum = malloc(a.length * sizeof(double));
-    vDSP_vaddD(a.values, 1, b.values, 1, sum, 1, a.length);
+    double *sum = malloc(vectorA.length * sizeof(double));
+    vDSP_vaddD(vectorA.values, 1, vectorB.values, 1, sum, 1, vectorA.length);
     
-    return [MCVector vectorWithValues:sum length:a.length];
+    return [MCVector vectorWithValues:sum length:vectorA.length];
 }
 
-+ (MCVector *)differenceOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
++ (MCVector *)differenceOfVectorMinuend:(MCVector *)vectorMinuend vectorSubtrahend:(MCVector *)vectorSubtrahend
 {
-    if (a.length != b.length) {
+    if (vectorMinuend.length != vectorSubtrahend.length) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
     }
     
-    double *diff = malloc(a.length * sizeof(double));
-    vDSP_vsubD(b.values, 1, a.values, 1, diff, 1, a.length);
+    double *diff = malloc(vectorMinuend.length * sizeof(double));
+    vDSP_vsubD(vectorSubtrahend.values, 1, vectorMinuend.values, 1, diff, 1, vectorMinuend.length);
     
-    return [MCVector vectorWithValues:diff length:a.length];
+    return [MCVector vectorWithValues:diff length:vectorMinuend.length];
 }
 
-+ (MCVector *)productOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
++ (MCVector *)productOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB
 {
-    if (a.length != b.length) {
+    if (vectorA.length != vectorB.length) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
     }
     
-    double *product = malloc(a.length * sizeof(double));
-    vDSP_vmulD(a.values, 1, b.values, 1, product, 1, a.length);
+    double *product = malloc(vectorA.length * sizeof(double));
+    vDSP_vmulD(vectorA.values, 1, vectorB.values, 1, product, 1, vectorA.length);
     
-    return [MCVector vectorWithValues:product length:a.length];
+    return [MCVector vectorWithValues:product length:vectorA.length];
 }
 
-+ (MCVector *)quotientOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
++ (MCVector *)quotientOfVectorDividend:(MCVector *)vectorDividend vectorDivisor:(MCVector *)vectorDivisor
 {
-    if (a.length != b.length) {
+    if (vectorDividend.length != vectorDivisor.length) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
     }
     
-    double *quotient = malloc(a.length * sizeof(double));
-    vDSP_vdivD(b.values, 1, a.values, 1, quotient, 1, a.length);
+    double *quotient = malloc(vectorDividend.length * sizeof(double));
+    vDSP_vdivD(vectorDivisor.values, 1, vectorDividend.values, 1, quotient, 1, vectorDividend.length);
     
-    return [MCVector vectorWithValues:quotient length:a.length];
+    return [MCVector vectorWithValues:quotient length:vectorDividend.length];
 }
 
-+ (double)dotProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
++ (double)dotProductOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB
 {
-    if (a.length != b.length) {
+    if (vectorA.length != vectorB.length) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
     }
     
     double dotProduct;
-    vDSP_dotprD(a.values, 1, b.values, 1, &dotProduct, a.length);
+    vDSP_dotprD(vectorA.values, 1,vectorB.values, 1, &dotProduct, vectorA.length);
     
     return dotProduct;
 }
 
-+ (MCVector *)crossProductOfVectorA:(MCVector *)a andVectorB:(MCVector *)b
++ (MCVector *)crossProductOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB
 {
-    if (!(a.length == 3 && b.length == 3)) {
+    if (!(vectorA.length == 3 && vectorB.length == 3)) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vectors must both be of length 3 to perform cross products" userInfo:nil];
     }
     
-    double *values = malloc(a.length * sizeof(double));
-    values[0] = [a valueAtIndex:1] * [b valueAtIndex:2] - [a valueAtIndex:2] * [b valueAtIndex:1];
-    values[1] = [a valueAtIndex:2] * [b valueAtIndex:0] - [a valueAtIndex:0] * [b valueAtIndex:2];
-    values[2] = [a valueAtIndex:0] * [b valueAtIndex:1] - [a valueAtIndex:1] * [b valueAtIndex:0];
+    double *values = malloc(vectorA.length * sizeof(double));
+    values[0] = [vectorA valueAtIndex:1] * [vectorB valueAtIndex:2] - [vectorA valueAtIndex:2] * [vectorB valueAtIndex:1];
+    values[1] = [vectorA valueAtIndex:2] * [vectorB valueAtIndex:0] - [vectorA valueAtIndex:0] * [vectorB valueAtIndex:2];
+    values[2] = [vectorA valueAtIndex:0] * [vectorB valueAtIndex:1] - [vectorA valueAtIndex:1] * [vectorB valueAtIndex:0];
     
-    return [MCVector vectorWithValues:values length:a.length];
+    return [MCVector vectorWithValues:values length:vectorA.length];
 }
 
-+ (double)scalarTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c
++ (double)scalarTripleProductWithVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB vectorC:(MCVector *)vectorC
 {
-    return [MCVector dotProductOfVectorA:[MCVector crossProductOfVectorA:a
-                                                              andVectorB:b]
-                              andVectorB:c];
+    MCVector *crossProduct = [MCVector crossProductOfVectorA:vectorA vectorB:vectorB];
+    return [MCVector dotProductOfVectorA:crossProduct vectorB:vectorC];
 }
 
-+ (MCVector *)vectorTripleProductWithVectorA:(MCVector *)a vectorB:(MCVector *)b vectorC:(MCVector *)c
++ (MCVector *)vectorTripleProductWithVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB vectorC:(MCVector *)vectorC
 {
-    return [MCVector crossProductOfVectorA:a
-                                andVectorB:[MCVector crossProductOfVectorA:b
-                                                                andVectorB:c]];
+    MCVector *crossProduct = [MCVector crossProductOfVectorA:vectorB vectorB:vectorC];
+    return [MCVector crossProductOfVectorA:vectorA vectorB:crossProduct];
 }
 
 @end

@@ -34,7 +34,7 @@
                                                                                           @1,
                                                                                           @3,
                                                                                           @(-5)]]
-                                           andVectorB:[MCVector vectorWithValuesInArray:@[
+                                           vectorB:[MCVector vectorWithValuesInArray:@[
                                                                                           @4,
                                                                                           @(-2),
                                                                                           @(-1)]]];
@@ -44,7 +44,7 @@
                                                                                    @0,
                                                                                    @0,
                                                                                    @1]]
-                                    andVectorB:[MCVector vectorWithValuesInArray:@[
+                                    vectorB:[MCVector vectorWithValuesInArray:@[
                                                                                    @0,
                                                                                    @1,
                                                                                    @0]]];
@@ -55,7 +55,7 @@
                                                                                        @0,
                                                                                        @0,
                                                                                        @1]]
-                                        andVectorB:[MCVector vectorWithValuesInArray:@[
+                                        vectorB:[MCVector vectorWithValuesInArray:@[
                                                                                        @0,
                                                                                        @1,
                                                                                        @0,
@@ -72,13 +72,13 @@
     MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
     MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     
-    MCVector *sum = [MCVector sumOfVectorA:a andVectorB:b];
+    MCVector *sum = [MCVector sumOfVectorA:a vectorB:b];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@6, @8, @10, @12]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([sum valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not added correctly", i);
     }
     
-    XCTAssertThrows([MCVector sumOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+    XCTAssertThrows([MCVector sumOfVectorA:a vectorB:c], @"Should throw a mismatched dimension exception");
 }
 
 - (void)testVectorSubtraction
@@ -87,13 +87,13 @@
     MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
     MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     
-    MCVector *diff = [MCVector differenceOfVectorA:b andVectorB:a];
+    MCVector *diff = [MCVector differenceOfVectorMinuend:b vectorSubtrahend:a];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@4, @4, @4, @4]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([diff valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not subtracted correctly", i);
     }
     
-    XCTAssertThrows([MCVector differenceOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+    XCTAssertThrows([MCVector differenceOfVectorMinuend:a vectorSubtrahend:c], @"Should throw a mismatched dimension exception");
 }
 
 - (void)testVectorMultiplication
@@ -102,13 +102,13 @@
     MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
     MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     
-    MCVector *prod = [MCVector productOfVectorA:a andVectorB:b];
+    MCVector *prod = [MCVector productOfVectorA:a vectorB:b];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@5, @12, @21, @32]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([prod valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not multiplied correctly", i);
     }
     
-    XCTAssertThrows([MCVector productOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+    XCTAssertThrows([MCVector productOfVectorA:a vectorB:c], @"Should throw a mismatched dimension exception");
 }
 
 - (void)testVectorDivision
@@ -117,20 +117,20 @@
     MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @9, @8]];
     MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     
-    MCVector *quotient = [MCVector quotientOfVectorA:b andVectorB:a];
+    MCVector *quotient = [MCVector quotientOfVectorDividend:b vectorDivisor:a];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@5, @3, @3, @2]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([quotient valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not divided correctly", i);
     }
     
-    XCTAssertThrows([MCVector quotientOfVectorA:a andVectorB:c], @"Should throw a mismatched dimension exception");
+    XCTAssertThrows([MCVector quotientOfVectorDividend:a vectorDivisor:c], @"Should throw a mismatched dimension exception");
 }
 
 - (void)testVectorCrossProduct
 {
     MCVector *a = [MCVector vectorWithValuesInArray:@[@3, @(-3), @1]];
     MCVector *b = [MCVector vectorWithValuesInArray:@[@4, @9, @2]];
-    MCVector *c = [MCVector crossProductOfVectorA:a andVectorB:b];
+    MCVector *c = [MCVector crossProductOfVectorA:a vectorB:b];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@(-15), @(-2), @39]];
     XCTAssertTrue([c isEqualToVector:solution], @"Cross product not computed correctly.");
 }
