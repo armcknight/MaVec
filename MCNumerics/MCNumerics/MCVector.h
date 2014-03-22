@@ -61,6 +61,31 @@ MCVectorFormat;
 @property (assign, readonly, nonatomic) double productOfValues;
 
 /**
+/**
+ @property maximumValue
+ @brief The maximum value in the vector. (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) double maximumValue;
+
+/**
+ @property minimumValue
+ @brief The minimum value in the vector. (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) double minimumValue;
+
+/**
+ @property maximumValueIndex
+ @brief The index of the maximum value in the vector. (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) int maximumValueIndex;
+
+/**
+ @property minimumValueIndex
+ @brief The index of the minimum value in the vector. (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) int minimumValueIndex;
+
+/**
  @property absoluteVector
  @brief A vector whose values are the absolute values of the values in this vector, with the same vector format.  (Lazy-loaded)
  */
@@ -142,26 +167,6 @@ MCVectorFormat;
  @return The double-precision floating-point value at position index.
  */
 - (double)valueAtIndex:(int)index;
-
-/**
- @return The maximum value in the vector.
- */
-- (double)maximumValue;
-
-/**
- @return The minimum value in the vector.
- */
-- (double)minimumValue;
-
-/**
- @return The index of the maximum value in the vector.
- */
-- (int)indexOfMaximumValue;
-
-/**
- @return The index of the minimum value in the vector.
- */
-- (int)indexOfMinimumValue;
 
 #pragma mark - Subscripting
 

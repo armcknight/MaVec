@@ -21,6 +21,10 @@
 
 @synthesize sumOfValues = _sumOfValues;
 @synthesize productOfValues = _productOfValues;
+@synthesize minimumValue = _minimumValue;
+@synthesize maximumValue = _maximumValue;
+@synthesize minimumValueIndex = _minimumValueIndex;
+@synthesize maximumValueIndex = _maximumValueIndex;
 @synthesize absoluteVector = _absoluteVector;
 
 #pragma mark - Private constructor helpers
@@ -29,6 +33,10 @@
 {
     _sumOfValues = NAN;
     _productOfValues = NAN;
+    _minimumValue = NAN;
+    _maximumValue = NAN;
+    _minimumValueIndex = -1;
+    _maximumValueIndex = -1;
     _absoluteVector = nil;
 }
 
@@ -115,6 +123,58 @@
         _productOfValues = product;
     }
     return _productOfValues;
+}
+
+- (double)maximumValue
+{
+    if (isnan(_maximumValue)) {
+        _maximumValue = DBL_MIN;
+        for (int i = 0; i < self.length; i++) {
+            if (self.values[i] > _maximumValue) {
+                _maximumValue = self.values[i];
+            }
+        }
+    }
+    return _maximumValue;
+}
+
+- (double)minimumValue
+{
+    if (isnan(_minimumValue)) {
+        _minimumValue = DBL_MAX;
+        for (int i = 0; i < self.length; i++) {
+            if (self.values[i] < _minimumValue) {
+                _minimumValue = self.values[i];
+            }
+        }
+    }
+    return _minimumValue;
+}
+
+- (int)maximumValueIndex
+{
+    if (_maximumValueIndex == -1) {
+        double max = DBL_MIN;
+        for (int i = 0; i < self.length; i++) {
+            if (self.values[i] > max) {
+                _maximumValueIndex = i;
+            }
+        }
+    }
+    return _maximumValueIndex;
+}
+
+- (int)minimumValueIndex
+{
+    if (_minimumValueIndex == -1) {
+        double min = DBL_MAX;
+        for (int i = 0; i < self.length; i++) {
+            if (self.values[i] < min) {
+                _minimumValueIndex = i;
+            }
+        }
+    }
+    return _minimumValueIndex;
 }
 
 - (MCVector *)absoluteVector
@@ -212,6 +272,10 @@
         vectorCopy->_values[i] = _values[i];
     }
     
+    vectorCopy->_minimumValue = _minimumValue;
+    vectorCopy->_maximumValue = _maximumValue;
+    vectorCopy->_minimumValueIndex = _minimumValueIndex;
+    vectorCopy->_maximumValueIndex = _maximumValueIndex;
     vectorCopy->_absoluteVector = _absoluteVector;
     
     return vectorCopy;
@@ -222,52 +286,6 @@
 - (double)valueAtIndex:(int)index
 {
     return self.values[index];
-}
-
-- (double)maximumValue
-{
-    double max = DBL_MIN;
-    for (int i = 0; i < self.length; i++) {
-        if (self.values[i] > max) {
-            max = self.values[i];
-        }
-    }
-    return max;
-}
-
-- (double)minimumValue
-{
-    double min = DBL_MAX;
-    for (int i = 0; i < self.length; i++) {
-        if (self.values[i] < min) {
-            min = self.values[i];
-        }
-    }
-    return min;
-}
-
-- (int)indexOfMaximumValue
-{
-    double max = DBL_MIN;
-    int idx = -1;
-    for (int i = 0; i < self.length; i++) {
-        if (self.values[i] > max) {
-            idx = i;
-        }
-    }
-    return max;
-}
-
-- (int)indexOfMinimumValue
-{
-    double min = DBL_MAX;
-    int idx = -1;
-    for (int i = 0; i < self.length; i++) {
-        if (self.values[i] < min) {
-            idx = i;
-        }
-    }
-    return min;
 }
 
 #pragma mark - Subscripting
