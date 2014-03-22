@@ -21,6 +21,7 @@
 
 @synthesize sumOfValues = _sumOfValues;
 @synthesize productOfValues = _productOfValues;
+@synthesize absoluteVector = _absoluteVector;
 
 #pragma mark - Private constructor helpers
 
@@ -28,6 +29,7 @@
 {
     _sumOfValues = NAN;
     _productOfValues = NAN;
+    _absoluteVector = nil;
 }
 
 - (void)commonInitWithValues:(double *)values length:(int)length
@@ -115,6 +117,18 @@
     return _productOfValues;
 }
 
+- (MCVector *)absoluteVector
+{
+    if (_absoluteVector == nil) {
+        double *absoluteValues = malloc(self.length * sizeof(double));
+        vDSP_vabsD(self.values, 1, absoluteValues, 1, self.length);
+        _absoluteVector = [MCVector vectorWithValues:absoluteValues
+                                              length:self.length
+                                        vectorFormat:self.vectorFormat];
+    }
+    return _absoluteVector;
+}
+
 #pragma mark - NSObject overrides
 
 - (BOOL)isEqualToVector:(MCVector *)otherVector
@@ -197,6 +211,8 @@
     for (int i = 0; i < _length; i += 1) {
         vectorCopy->_values[i] = _values[i];
     }
+    
+    vectorCopy->_absoluteVector = _absoluteVector;
     
     return vectorCopy;
 }

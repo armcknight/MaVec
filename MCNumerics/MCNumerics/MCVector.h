@@ -60,6 +60,12 @@ MCVectorFormat;
  */
 @property (assign, readonly, nonatomic) double productOfValues;
 
+/**
+ @property absoluteVector
+ @brief A vector whose values are the absolute values of the values in this vector, with the same vector format.  (Lazy-loaded)
+ */
+@property (assign, readonly, nonatomic) MCVector *absoluteVector;
+
 #pragma mark - Constructors
 
 /**
