@@ -392,4 +392,15 @@
     return [MCVector crossProductOfVectorA:vectorA vectorB:crossProduct];
 }
 
++ (MCVector *)vectorByRaisingVector:(MCVector *)vector power:(NSUInteger)power
+{
+    double *powerValues = malloc(vector.length * sizeof(double));
+    for (int i = 0; i < vector.length; i++) {
+        powerValues[i] = pow([vector valueAtIndex:i], power);
+    }
+    return [MCVector vectorWithValues:powerValues
+                               length:vector.length
+                         vectorFormat:vector.vectorFormat];
+}
+
 @end

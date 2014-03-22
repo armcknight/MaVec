@@ -253,4 +253,12 @@ MCVectorFormat;
  */
 + (MCVector *)vectorTripleProductWithVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB vectorC:(MCVector *)vectorC;
 
+/**
+ @brief Raise a vector to an integer power. Effectively multiplies a vector by itself power number of times.
+ @param vector The vector to raise to the power.
+ @param power An integer value for the exponent of the vector.
+ @return A new instance of MCVector holding the result of the power computation.
+ */
++ (MCVector *)vectorByRaisingVector:(MCVector *)vector power:(NSUInteger)power;
+
 @end
