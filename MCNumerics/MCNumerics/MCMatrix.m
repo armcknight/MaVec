@@ -919,11 +919,6 @@ MCMatrixNorm;
     return description;
 }
 
-- (id)debugQuickLookObject
-{
-    return self.description;
-}
-
 #pragma mark - Inspection
 
 - (double *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
