@@ -44,6 +44,27 @@ MCMatrixNorm;
 
 @interface MCMatrix ()
 
+@property (strong, readwrite, nonatomic) MCMatrix *transpose;
+@property (strong, readwrite, nonatomic) MCQRFactorization *qrFactorization;
+@property (strong, readwrite, nonatomic) MCLUFactorization *luFactorization;
+@property (strong, readwrite, nonatomic) MCSingularValueDecomposition *singularValueDecomposition;
+@property (strong, readwrite, nonatomic) MCEigendecomposition *eigendecomposition;
+@property (strong, readwrite, nonatomic) MCMatrix *inverse;
+@property (assign, readwrite, nonatomic) double determinant;
+@property (assign, readwrite, nonatomic) double conditionNumber;
+@property (assign, readwrite, nonatomic) MCMatrixDefiniteness definiteness;
+@property (strong, readwrite, nonatomic) MCTribool *isSymmetric;
+@property (strong, readwrite, nonatomic) MCVector *diagonalValues;
+@property (assign, readwrite, nonatomic) double trace;
+@property (strong, readwrite, nonatomic) MCMatrix *adjugate;
+@property (strong, readwrite, nonatomic) MCMatrix *minorMatrix;
+@property (strong, readwrite, nonatomic) MCMatrix *cofactorMatrix;
+@property (assign, readwrite, nonatomic) double normL1;
+@property (assign, readwrite, nonatomic) double normInfinity;
+@property (assign, readwrite, nonatomic) double normFroebenius;
+@property (assign, readwrite, nonatomic) double normMax;
+@property (assign, readwrite, nonatomic) MCMatrixTriangularComponent triangularComponent;
+
 /**
  @brief Generates specified number of floating-point values.
  @param size Amount of random values to generate.
@@ -68,27 +89,6 @@ MCMatrixNorm;
 @end
 
 @implementation MCMatrix
-
-@synthesize transpose = _transpose;
-@synthesize qrFactorization = _qrFactorization;
-@synthesize luFactorization = _luFactorization;
-@synthesize singularValueDecomposition = _singularValueDecomposition;
-@synthesize eigendecomposition = _eigendecomposition;
-@synthesize inverse = _inverse;
-@synthesize determinant = _determinant;
-@synthesize conditionNumber = _conditionNumber;
-@synthesize definiteness = _definiteness;
-@synthesize isSymmetric = _isSymmetric;
-@synthesize diagonalValues = _diagonalValues;
-@synthesize trace = _trace;
-@synthesize adjugate = _adjugate;
-@synthesize minorMatrix = _minorMatrix;
-@synthesize cofactorMatrix = _cofactorMatrix;
-@synthesize normL1 = _normL1;
-@synthesize normInfinity = _normInfinity;
-@synthesize normFroebenius = _normFroebenius;
-@synthesize normMax = _normMax;
-@synthesize triangularComponent = _triangularComponent;
 
 #pragma mark - Constructors
 

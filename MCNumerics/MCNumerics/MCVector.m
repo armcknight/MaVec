@@ -11,6 +11,18 @@
 
 @interface MCVector()
 
+@property (assign, readwrite, nonatomic) double sumOfValues;
+@property (assign, readwrite, nonatomic) double productOfValues;
+@property (assign, readwrite, nonatomic) double l1Norm;
+@property (assign, readwrite, nonatomic) double l2Norm;
+@property (assign, readwrite, nonatomic) double l3Norm;
+@property (assign, readwrite, nonatomic) double infinityNorm;
+@property (assign, readwrite, nonatomic) double minimumValue;
+@property (assign, readwrite, nonatomic) double maximumValue;
+@property (assign, readwrite, nonatomic) int minimumValueIndex;
+@property (assign, readwrite, nonatomic) int maximumValueIndex;
+@property (strong, readwrite, nonatomic) MCVector *absoluteVector;
+
 /**
  @brief Sets all properties to default states.
  @return A new instance of MCVector in a default state with no values or length.
@@ -35,18 +47,6 @@
 @end
 
 @implementation MCVector
-
-@synthesize sumOfValues = _sumOfValues;
-@synthesize productOfValues = _productOfValues;
-@synthesize l1Norm = _l1Norm;
-@synthesize l2Norm = _l2Norm;
-@synthesize l3Norm = _l3Norm;
-@synthesize infinityNorm = _infinityNorm;
-@synthesize minimumValue = _minimumValue;
-@synthesize maximumValue = _maximumValue;
-@synthesize minimumValueIndex = _minimumValueIndex;
-@synthesize maximumValueIndex = _maximumValueIndex;
-@synthesize absoluteVector = _absoluteVector;
 
 #pragma mark - Private constructor helpers
 
