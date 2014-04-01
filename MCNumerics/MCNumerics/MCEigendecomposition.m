@@ -39,6 +39,9 @@
             int *iwork = malloc(liwork * sizeof(int));
             dsyevd_("V", "L", &n, a, &lda, w, work, &lwork, iwork, &liwork, &info);
             
+            free(work);
+            free(iwork);
+            
             if (info == 0) {
                 _eigenvalues = [MCVector vectorWithValues:w length:n];
                 _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
@@ -61,6 +64,10 @@
             lwork = (int)wkopt;
             double *work = malloc(lwork * sizeof(double));
             dgeev_("V", "V", &n, a, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
+            
+            free(wi);
+            free(vl);
+            free(work);
             
             if (info == 0) {
                 _eigenvalues = [MCVector vectorWithValues:wr length:n];

@@ -72,6 +72,8 @@
             }
         }
         
+        free(ipiv);
+        
         _lowerTriangularMatrix = l;
         _upperTriangularMatrix = u;
         _permutationMatrix = p;

@@ -59,8 +59,12 @@
         
         // extract the matrix
         lwork = wkopt;
+        free(work);
         work = malloc(lwork * sizeof(double));
         dorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
+        
+        free(tau);
+        free(work);
         
         // use output from dorgqr to build the q mcmatrix object
         _q = [MCMatrix matrixWithValues:a rows:m columns:m leadingDimension:MCMatrixLeadingDimensionColumn];

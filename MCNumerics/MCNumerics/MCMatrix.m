@@ -437,6 +437,9 @@ MCMatrixNorm;
             // calculate the inverse
             dgetri_(&m, a, &lda, ipiv, work, &lwork, &info);
             
+            free(ipiv);
+            free(work);
+            
             _inverse = [MCMatrix matrixWithValues:a
                                              rows:_rows
                                           columns:_columns
@@ -464,6 +467,10 @@ MCMatrixNorm;
         double *work = malloc(4 * m * sizeof(double));
         int *iwork = malloc(m * sizeof(int));
         dgecon_("1", &m, values, &lda, &norm, &conditionReciprocal, work, iwork, &info);
+        
+        free(ipiv);
+        free(work);
+        free(iwork);
         
         _conditionNumber = 1.0 / conditionReciprocal;
     }
@@ -810,9 +817,8 @@ MCMatrixNorm;
 
 - (double *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
-    double *copiedValues = malloc(self.rows * self.columns * sizeof(double));
-    
     if (self.leadingDimension == leadingDimension) {
+        double *copiedValues = malloc(self.rows * self.columns * sizeof(double));
         for (int i = 0; i < self.rows * self.columns; i += 1) {
             copiedValues[i] = self.values[i];
         }

@@ -105,7 +105,6 @@
     CGImageRef imageRef = [image CGImage];
     NSUInteger width = CGImageGetWidth(imageRef);
     NSUInteger height = CGImageGetHeight(imageRef);
-    CGColorSpaceCreateDeviceGray();
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     unsigned char *rawData = (unsigned char*) calloc(height * width * 4, sizeof(unsigned char));
     NSUInteger bytesPerPixel = 4;
@@ -193,12 +192,13 @@
     }
     
     CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, pixelValues, size * 4, NULL);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGImageRef imageRef = CGImageCreate(sum.columns,
                                         sum.rows,
                                         8,
                                         32,
                                         4 * sum.columns,
-                                        CGColorSpaceCreateDeviceRGB(),
+                                        colorSpace,
                                         kCGBitmapByteOrderDefault,
                                         provider,
                                         NULL,
@@ -206,7 +206,11 @@
                                         kCGRenderingIntentDefault);
     
     UIImage *compressedImage = [UIImage imageWithCGImage:imageRef];
+    
+    free(pixelValues);
     CGImageRelease(imageRef);
+    CGDataProviderRelease(provider);
+    CGColorSpaceRelease(colorSpace);
     
     return compressedImage;
 }

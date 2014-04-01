@@ -141,6 +141,11 @@
     return [MCVector vectorWithValues:values length:length vectorFormat:vectorFormat];
 }
 
+- (void)dealloc
+{
+    free(_values);
+}
+
 #pragma mark - Lazy loaded properties
 
 - (double)sumOfValues
@@ -308,7 +313,7 @@
 
 - (NSString *)description
 {
-    int padding;
+    int padding = 0;
     if (self.vectorFormat == MCVectorFormatColumnVector) {
         double max = DBL_MIN;
         for (int i = 0; i < self.length; i++) {
