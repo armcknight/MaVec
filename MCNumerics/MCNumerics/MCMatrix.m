@@ -109,41 +109,6 @@ MCMatrixNorm;
 
 #pragma mark - Constructors
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _rows = 0;
-        _columns = 0;
-        _values = nil;
-        
-        _leadingDimension = MCMatrixLeadingDimensionColumn;
-        _packingMethod = MCMatrixValuePackingMethodConventional;
-        _triangularComponent = MCMatrixTriangularComponentBoth;
-        
-        _isSymmetric = [MCTribool triboolWithValue:MCTriboolValueUnknown];
-        _definiteness = MCMatrixDefinitenessUnknown;
-        _qrFactorization = nil;
-        _luFactorization = nil;
-        _singularValueDecomposition = nil;
-        _eigendecomposition = nil;
-        _inverse = nil;
-        _transpose = nil;
-        _conditionNumber = -1.0;
-        _determinant = NAN;
-        _diagonalValues = nil;
-        _trace = NAN;
-        _adjugate = nil;
-        _minorMatrix = nil;
-        _cofactorMatrix = nil;
-        _normInfinity = NAN;
-        _normL1 = NAN;
-        _normMax = NAN;
-        _normFroebenius = NAN;
-    }
-    return self;
-}
-
 - (instancetype)initWithValues:(double *)values
                           rows:(int)rows
                        columns:(int)columns
@@ -390,13 +355,7 @@ MCMatrixNorm;
                       oddDiagonalLocation:oddDiagonalLocation];
 }
 
-+ (double *)randomArrayOfSize:(int)size
 {
-    double *values = malloc(size * sizeof(double));
-    for (int i = 0; i < size; i += 1) {
-        values[i] = drand48();
-    }
-    return values;
 }
 
 //- (void)dealloc
@@ -672,29 +631,6 @@ MCMatrixNorm;
         _normFroebenius = [self normOfType:MCMatrixNormFroebenius];
     }
     return _normFroebenius;
-}
-
-- (double)normOfType:(MCMatrixNorm)normType
-{
-    double normResult = NAN;
-    
-    double *values = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
-    int m = self.rows;
-    int n = self.columns;
-    char *norm = "";
-    if (normType == MCMatrixNormL1) {
-        norm = "1";
-    } else if (normType == MCMatrixNormInfinity) {
-        norm = "I";
-    } else if (normType == MCMatrixNormMax) {
-        norm = "M";
-    } else /* if (normType == MCMatrixNormFroebenius) */ {
-        norm = "F";
-    }
-    
-    normResult = dlange_(norm, &m, &n, values, &m, nil);
-    
-    return normResult;
 }
 
 - (MCMatrix *)minorMatrix
@@ -1295,6 +1231,75 @@ MCMatrixNorm;
     matrixCopy->_normFroebenius = _normMax;
     
     return matrixCopy;
+}
+
+#pragma mark - Private interface
+
++ (double *)randomArrayOfSize:(int)size
+{
+    double *values = malloc(size * sizeof(double));
+    for (int i = 0; i < size; i += 1) {
+        values[i] = drand48();
+    }
+    return values;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _rows = 0;
+        _columns = 0;
+        _values = nil;
+        
+        _leadingDimension = MCMatrixLeadingDimensionColumn;
+        _packingMethod = MCMatrixValuePackingMethodConventional;
+        _triangularComponent = MCMatrixTriangularComponentBoth;
+        
+        _isSymmetric = [MCTribool triboolWithValue:MCTriboolValueUnknown];
+        _definiteness = MCMatrixDefinitenessUnknown;
+        _qrFactorization = nil;
+        _luFactorization = nil;
+        _singularValueDecomposition = nil;
+        _eigendecomposition = nil;
+        _inverse = nil;
+        _transpose = nil;
+        _conditionNumber = -1.0;
+        _determinant = NAN;
+        _diagonalValues = nil;
+        _trace = NAN;
+        _adjugate = nil;
+        _minorMatrix = nil;
+        _cofactorMatrix = nil;
+        _normInfinity = NAN;
+        _normL1 = NAN;
+        _normMax = NAN;
+        _normFroebenius = NAN;
+    }
+    return self;
+}
+
+- (double)normOfType:(MCMatrixNorm)normType
+{
+    double normResult = NAN;
+    
+    double *values = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    int m = self.rows;
+    int n = self.columns;
+    char *norm = "";
+    if (normType == MCMatrixNormL1) {
+        norm = "1";
+    } else if (normType == MCMatrixNormInfinity) {
+        norm = "I";
+    } else if (normType == MCMatrixNormMax) {
+        norm = "M";
+    } else /* if (normType == MCMatrixNormFroebenius) */ {
+        norm = "F";
+    }
+    
+    normResult = dlange_(norm, &m, &n, values, &m, nil);
+    
+    return normResult;
 }
 
 - (double *)unpackedValuesFromBandValues
