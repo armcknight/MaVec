@@ -10,6 +10,8 @@
 
 #import "MCMatrix.h"
 
+#import "DynamicArrayUtility.h"
+
 @interface MatrixInversionTests : XCTestCase
 
 @end
@@ -43,7 +45,7 @@
         0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  10.0,  11.0,  12.0
     };
     
-    MCMatrix *original = [MCMatrix matrixWithValues:values rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
+    MCMatrix *original = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:values size:81] rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
     
     MCMatrix *inverse = original.inverse;
     
@@ -62,7 +64,7 @@
         -325.000,  305.000,   5.000,  3.000,  2.000,  1.429, -39.554,  3.125,  3.000
     };
     
-    MCMatrix *solution = [MCMatrix matrixWithValues:inverseValues rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
+    MCMatrix *solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:inverseValues size:81] rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 9; row += 1) {
         for (int col = 0; col < 9; col += 1) {

@@ -12,6 +12,8 @@
 #import "MCQRFactorization.h"
 #import "MCVector.h"
 
+#import "DynamicArrayUtility.h"
+
 @interface QRDecompositionTests : XCTestCase
 
 @end
@@ -59,7 +61,7 @@
         0.0, 2.0, 2.0, 0.0, 2.0, 2.0,
         2.0, -1.0, -1.0, 1.5, -1.0, -1.0
     };
-    MCMatrix *source = [MCMatrix matrixWithValues:values
+    MCMatrix *source = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:values size:12]
                                              rows:6
                                           columns:2
                                  leadingDimension:MCMatrixLeadingDimensionColumn];

@@ -10,6 +10,8 @@
 
 #import "MCMatrix.h"
 
+#import "DynamicArrayUtility.h"
+
 @interface MinorCofactorAdjugateTests : XCTestCase
 
 @end
@@ -57,7 +59,7 @@
         -6.0, -12.0, -6.0,
         -3.0, -6.0, -3.0
     };
-    MCMatrix *minorSolutions = [MCMatrix matrixWithValues:minorSolutionValues
+    MCMatrix *minorSolutions = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:minorSolutionValues size:9]
                                                      rows:3
                                                   columns:3
                                          leadingDimension:MCMatrixLeadingDimensionRow];
@@ -95,7 +97,7 @@
         6.0, -12.0, 6.0,
         -3.0, 6.0, -3.0
     };
-    MCMatrix *cofactorSolutions = [MCMatrix matrixWithValues:cofactorSolutionValues
+    MCMatrix *cofactorSolutions = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:cofactorSolutionValues size:9]
                                                         rows:3
                                                      columns:3
                                             leadingDimension:MCMatrixLeadingDimensionRow];
@@ -117,7 +119,7 @@
         6.0, 9.0, 2.0,
         -6.0, 9.0, -2.0
     };
-    MCMatrix *original = [MCMatrix matrixWithValues:values
+    MCMatrix *original = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:values size:9]
                                                rows:3
                                             columns:3
                                    leadingDimension:MCMatrixLeadingDimensionRow];
@@ -129,7 +131,7 @@
         -0.0, 26.0, 26.0,
         108.0, -114.0, 30.0
     };
-    MCMatrix *adjugateSolutions = [MCMatrix matrixWithValues:adjugateSolutionValues
+    MCMatrix *adjugateSolutions = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:adjugateSolutionValues size:9]
                                                         rows:3
                                                      columns:3
                                             leadingDimension:MCMatrixLeadingDimensionRow];

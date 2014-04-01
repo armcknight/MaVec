@@ -72,6 +72,7 @@
 		49BEF2661885978C002F5F41 /* MCQRFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BEF2651885978C002F5F41 /* MCQRFactorization.m */; };
 		49D15C3F18E8B3EC00CFD621 /* SVDImageCompressionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D15C3D18E8B3EC00CFD621 /* SVDImageCompressionViewController.m */; };
 		49D15C4018E8B3EC00CFD621 /* SVDImageCompressionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49D15C3E18E8B3EC00CFD621 /* SVDImageCompressionViewController.xib */; };
+		49D15C4318EA5F1200CFD621 /* DynamicArrayUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D15C4218EA5F1200CFD621 /* DynamicArrayUtility.m */; };
 		49E0486318D48AEF00F4AA76 /* MCTriboolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E0486218D48AEF00F4AA76 /* MCTriboolTests.m */; };
 		49E10B421863F56800308AD2 /* LeastSquaresApproximationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49E10B411863F56800308AD2 /* LeastSquaresApproximationViewController.xib */; };
 		49E10B451863F60900308AD2 /* ApproximationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E10B441863F60900308AD2 /* ApproximationView.m */; };
@@ -171,6 +172,8 @@
 		49D15C3C18E8B3EC00CFD621 /* SVDImageCompressionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDImageCompressionViewController.h; sourceTree = "<group>"; };
 		49D15C3D18E8B3EC00CFD621 /* SVDImageCompressionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDImageCompressionViewController.m; sourceTree = "<group>"; };
 		49D15C3E18E8B3EC00CFD621 /* SVDImageCompressionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SVDImageCompressionViewController.xib; sourceTree = "<group>"; };
+		49D15C4118EA5E9E00CFD621 /* DynamicArrayUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicArrayUtility.h; sourceTree = "<group>"; };
+		49D15C4218EA5F1200CFD621 /* DynamicArrayUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DynamicArrayUtility.m; path = MCNumericsTests/DynamicArrayUtility.m; sourceTree = "<group>"; };
 		49E0486218D48AEF00F4AA76 /* MCTriboolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTriboolTests.m; sourceTree = "<group>"; };
 		49E10B411863F56800308AD2 /* LeastSquaresApproximationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeastSquaresApproximationViewController.xib; sourceTree = "<group>"; };
 		49E10B431863F60900308AD2 /* ApproximationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproximationView.h; sourceTree = "<group>"; };
@@ -321,6 +324,7 @@
 				4996B22A18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m */,
 				4996B22018CBA43C00C1CEF9 /* QRDecompositionTests.m */,
 				4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */,
+				49D15C4118EA5E9E00CFD621 /* DynamicArrayUtility.h */,
 			);
 			name = "Matrix Tests";
 			sourceTree = "<group>";
@@ -336,6 +340,7 @@
 		49B68283184D8341006A61D3 = {
 			isa = PBXGroup;
 			children = (
+				49D15C4218EA5F1200CFD621 /* DynamicArrayUtility.m */,
 				49B68295184D8342006A61D3 /* MCNumerics */,
 				49B682AE184D8342006A61D3 /* MCNumericsTests */,
 				49B6828E184D8342006A61D3 /* Frameworks */,
@@ -555,6 +560,7 @@
 				494F44E3185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
 				494F44DF185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */,
+				49D15C4318EA5F1200CFD621 /* DynamicArrayUtility.m in Sources */,
 				49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */,
 				4936537618B012220086C243 /* MCPair.m in Sources */,
 				494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */,

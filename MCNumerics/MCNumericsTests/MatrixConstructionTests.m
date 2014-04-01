@@ -11,6 +11,8 @@
 #import "MCMatrix.h"
 #import "MCVector.h"
 
+#import "DynamicArrayUtility.h"
+
 @interface MatrixConstructionTests : XCTestCase
 
 @end
@@ -101,7 +103,7 @@
         2.0, 5.0, 7.0,
         3.0, 7.0, 12.0
     };
-    MCMatrix *solutionMatrix = [MCMatrix matrixWithValues:solutionValues rows:3 columns:3];
+    MCMatrix *solutionMatrix = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValues size:9] rows:3 columns:3];
     
     // packed row-major upper triangular
     double rowMajorPackedUpperValues[6] = {
@@ -109,7 +111,7 @@
         5.0, 7.0,
         12.0
     };
-    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:rowMajorPackedUpperValues
+    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:rowMajorPackedUpperValues size:6]
                                              triangularComponent:MCMatrixTriangularComponentUpper
                                                 leadingDimension:MCMatrixLeadingDimensionRow
                                                            order:3];
@@ -126,7 +128,7 @@
         2.0, 5.0,
         3.0, 7.0, 12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:rowMajorPackedLowerValues
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:rowMajorPackedLowerValues size:6]
                                    triangularComponent:MCMatrixTriangularComponentLower
                                       leadingDimension:MCMatrixLeadingDimensionRow
                                                  order:3];
@@ -143,7 +145,7 @@
         5.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:columnMajorPackedLowerValues
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:columnMajorPackedLowerValues size:6]
                                    triangularComponent:MCMatrixTriangularComponentLower
                                       leadingDimension:MCMatrixLeadingDimensionColumn
                                                  order:3];
@@ -160,7 +162,7 @@
         2.0, 5.0,
         3.0, 7.0, 12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:columnMajorPackedUpperValues
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:columnMajorPackedUpperValues size:6]
                                    triangularComponent:MCMatrixTriangularComponentUpper
                                       leadingDimension:MCMatrixLeadingDimensionColumn
                                                  order:3];
@@ -179,7 +181,7 @@
         0.0,   5.0,   7.0,
         0.0,   0.0,   12.0
     };
-    MCMatrix *upperSolution = [MCMatrix matrixWithValues:upperSolutionValues
+    MCMatrix *upperSolution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:upperSolutionValues size:9]
                                                     rows:3
                                                  columns:3
                                         leadingDimension:MCMatrixLeadingDimensionRow];
@@ -190,7 +192,7 @@
         5.0, 7.0,
         12.0
     };
-    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:rowMajorUpperValues
+    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:rowMajorUpperValues size:6]
                                             ofTriangularComponent:MCMatrixTriangularComponentUpper
                                                  leadingDimension:MCMatrixLeadingDimensionRow
                                                             order:3];
@@ -202,7 +204,7 @@
         3.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:columnMajorUpperValues
+    matrix = [MCMatrix triangularMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:columnMajorUpperValues size:6]
                                   ofTriangularComponent:MCMatrixTriangularComponentUpper
                                        leadingDimension:MCMatrixLeadingDimensionColumn
                                                   order:3];
@@ -213,7 +215,7 @@
         2.0,   5.0,   0.0,
         3.0,   7.0,   12.0
     };
-    MCMatrix *lowerSolution = [MCMatrix matrixWithValues:lowerSolutionValues
+    MCMatrix *lowerSolution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:lowerSolutionValues size:9]
                                                     rows:3
                                                  columns:3
                                         leadingDimension:MCMatrixLeadingDimensionRow];
@@ -224,7 +226,7 @@
         3.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:rowMajorLowerValues
+    matrix = [MCMatrix triangularMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:rowMajorLowerValues size:6]
                                   ofTriangularComponent:MCMatrixTriangularComponentLower
                                        leadingDimension:MCMatrixLeadingDimensionRow
                                                   order:3];
@@ -236,7 +238,7 @@
         5.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:columnMajorLowerValues
+    matrix = [MCMatrix triangularMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:columnMajorLowerValues size:6]
                                   ofTriangularComponent:MCMatrixTriangularComponentLower
                                        leadingDimension:MCMatrixLeadingDimensionColumn
                                                   order:3];
@@ -251,7 +253,7 @@
         10.0, 20.0, 30.0, 40.0, 50.0,
         5.0,  6.0,  7.0,  8.0,  0.0
     };
-    MCMatrix *matrix = [MCMatrix bandMatrixWithValues:balancedBandValues
+    MCMatrix *matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:balancedBandValues size:15]
                                                 order:5
                                             bandwidth:3
                                   oddDiagonalLocation:MCMatrixTriangularComponentBoth];
@@ -263,7 +265,7 @@
         0.0,   0.0,   7.0,   40.0,  4.0,
         0.0,   0.0,   0.0,   8.0,   50.0
     };
-    MCMatrix *solution = [MCMatrix matrixWithValues:oddBandwidthSolutionValues
+    MCMatrix *solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:oddBandwidthSolutionValues size:25]
                                                rows:5
                                             columns:5
                                    leadingDimension:MCMatrixLeadingDimensionRow];
@@ -281,7 +283,7 @@
         10.0, 20.0, 30.0, 40.0, 50.0,
         5.0,  6.0,  7.0,  8.0,  0.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:bandValuesWithExtraUpper
+    matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithExtraUpper size:20]
                                       order:5
                                   bandwidth:4
                         oddDiagonalLocation:MCMatrixTriangularComponentUpper];
@@ -294,7 +296,7 @@
         0.0,   0.0,   7.0,    40.0,  4.0,
         0.0,   0.0,   0.0,    8.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:solutionValuesWithExtraUpper
+    solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithExtraUpper size:25]
                                      rows:5
                                   columns:5
                          leadingDimension:MCMatrixLeadingDimensionRow];
@@ -312,7 +314,7 @@
         5.0,  6.0,  7.0,  8.0,  0.0,
         -1.0, -2.0, -3.0, 0.0,  0.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:bandValuesWithExtraLower
+    matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithExtraLower size:20]
                                       order:5
                                   bandwidth:4
                         oddDiagonalLocation:MCMatrixTriangularComponentLower];
@@ -325,7 +327,7 @@
         0.0,   -2.0,   7.0,   40.0,  4.0,
         0.0,   0.0,   -3.0,   8.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:solutionValuesWithExtraLower
+    solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithExtraLower size:25]
                                      rows:5
                                   columns:5
                          leadingDimension:MCMatrixLeadingDimensionRow];
@@ -348,7 +350,7 @@
      2  5  8
      3  6  9 ]
      */
-    MCMatrix *a = [MCMatrix matrixWithColumnVectors:@[v1,v2, v3]];
+    MCMatrix *a = [MCMatrix matrixWithColumnVectors:@[v1, v2, v3]];
     NSLog(a.description);
     
     /* create the matrix

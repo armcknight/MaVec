@@ -156,6 +156,19 @@
     XCTAssertEqual(values[7], rowMajorValues[5], @"Value at 7, 5 incorrect");
     XCTAssertEqual(values[8], rowMajorValues[8], @"Value at 8, 8 incorrect");
     
+    values = malloc(9 * sizeof(double));
+    values[0] = 1.0;
+    values[1] = 2.0;
+    values[2] = -3.0;
+    
+    values[3] = 2.0;
+    values[4] = 1.0;
+    values[5] = 1.0;
+    
+    values[6] = -1.0;
+    values[7] = -2.0;
+    values[8] = 1.0;
+    
     MCMatrix *b = [MCMatrix matrixWithValues:values rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     
     double *columnMajorValues = [b valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
