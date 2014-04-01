@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 andrew mcknight. All rights reserved.
 //
 
-#import "LinearApproximationViewController.h"
+#import "LeastSquaresApproximationViewController.h"
 #import "ApproximationView.h"
 
-@interface LinearApproximationViewController ()
+@interface LeastSquaresApproximationViewController ()
 
 @property (strong, nonatomic) IBOutlet ApproximationView *approximationView;
 @property (strong, nonatomic) IBOutlet UISlider *orderSlider;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation LinearApproximationViewController
+@implementation LeastSquaresApproximationViewController
 
 - (id)init
 {

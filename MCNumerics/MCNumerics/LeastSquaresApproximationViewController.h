@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LinearApproximationViewController : UIViewController
+@interface LeastSquaresApproximationViewController : UIViewController
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "DemoChoiceTableViewController.h"
-#import "LinearApproximationViewController.h"
+#import "LeastSquaresApproximationViewController.h"
 
 #import "RZCollectionListTableViewDataSource.h"
 #import "RZArrayCollectionList.h"
@@ -63,9 +63,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        [self.navigationController pushViewController:[[LinearApproximationViewController alloc] initWithNibName:@"LinearApproximationViewController" bundle:[NSBundle mainBundle]] animated:YES];
     } else {
         
+        [self.navigationController pushViewController:[[LeastSquaresApproximationViewController alloc] initWithNibName:@"LinearApproximationViewController" bundle:[NSBundle mainBundle]] animated:YES];
     }
 }
 
