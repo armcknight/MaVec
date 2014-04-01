@@ -66,6 +66,9 @@
             _vT = [MCMatrix matrixWithValues:vTValues rows:n columns:n];
             _s = [MCMatrix matrixWithValues:sValues rows:m columns:n];
         }
+        
+        free(singularValues);
+        free(values);
     }
     return self;
 }

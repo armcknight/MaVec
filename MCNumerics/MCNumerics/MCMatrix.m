@@ -355,15 +355,10 @@ MCMatrixNorm;
                       oddDiagonalLocation:oddDiagonalLocation];
 }
 
+- (void)dealloc
 {
+    free(_values);
 }
-
-//- (void)dealloc
-//{
-//    if (self.values) {
-//        free(self.values);
-//    }
-//}
 
 #pragma mark - Lazy-loaded properties
 
@@ -1008,6 +1003,9 @@ MCMatrixNorm;
     
     vDSP_mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
     
+    free(aVals);
+    free(bVals);
+    
     return [MCMatrix matrixWithValues:cVals rows:matrixA.rows columns:matrixB.columns leadingDimension:MCMatrixLeadingDimensionRow];
 }
 
@@ -1074,12 +1072,18 @@ MCMatrixNorm;
         dgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info);
         
         if (info != 0) {
+            free(ipiv);
+            free(a);
+            free(b);
             return nil;
         } else {
             double *solutionValues = malloc(n * sizeof(double));
             for (int i = 0; i < n; i++) {
                 solutionValues[i] = b[i];
             }
+            free(ipiv);
+            free(a);
+            free(b);
             return [MCMatrix matrixWithValues:solutionValues
                                          rows:n
                                       columns:1];
@@ -1123,12 +1127,18 @@ MCMatrixNorm;
             minimum norm solution vectors;
          */
         if (info != 0) {
+            free(a);
+            free(b);
+            free(work);
             return nil;
         } else {
             double *solutionValues = malloc(n * sizeof(double));
             for (int i = 0; i < n; i++) {
                 solutionValues[i] = b[i];
             }
+            free(a);
+            free(b);
+            free(work);
             return [MCMatrix matrixWithValues:solutionValues rows:n columns:1];
         }
     }
