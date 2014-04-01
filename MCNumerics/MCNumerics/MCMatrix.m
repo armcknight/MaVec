@@ -65,6 +65,11 @@ MCMatrixNorm;
 @property (assign, readwrite, nonatomic) double normMax;
 @property (assign, readwrite, nonatomic) MCMatrixTriangularComponent triangularComponent;
 
+// private properties for band matrices
+@property (assign, nonatomic) int bandwidth;
+@property (assign, nonatomic) int numberOfBandValues;
+@property (assign, nonatomic) BOOL evenAmountOfCodiagonals;
+
 /**
  @brief Generates specified number of floating-point values.
  @param size Amount of random values to generate.
@@ -85,6 +90,18 @@ MCMatrixNorm;
  @return The calculated norm of desired type of this matrix as a floating-point value.
  */
 - (double)normOfType:(MCMatrixNorm)normType;
+
+/**
+ @return The array representation of this band matrix in conventional packing format (all values including out-of-band zeroes). (Currently only returns column-major format.)
+ */
+// TODO: accept a parameter for leading dimension
+- (double *)unpackedValuesFromBandValues;
+
+/**
+ @brief Get the array representation of this triangular or symmetric matrix in conventional packing format (all values including opposite triangular component's zeroes).
+ @param leadingDimension The leading dimension the returned array should be flattened with.
+ */
+- (double *)unpackedArrayFromPackedArrayWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 @end
 
@@ -264,26 +281,14 @@ MCMatrixNorm;
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                            order:(int)order
 {
-    // TODO: store as a triangular matrix instead of defaulting to conventional storage
-    double *unpackedValues = malloc(order * order * sizeof(double));
-    int k = 0; // current index in parameter array
-    int z = 0; // current index in ivar array
-    for (int i = 0; i < order; i += 1) {
-        for (int j = 0; j < order; j += 1) {
-            BOOL shouldTakeValue = triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j) : (leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
-            if (shouldTakeValue) {
-                unpackedValues[z++] = values[k++];
-            } else {
-                unpackedValues[z++] = 0.0;
-            }
-        }
-    }
-    return [[MCMatrix alloc] initWithValues:unpackedValues
-                                       rows:order
-                                    columns:order
-                           leadingDimension:leadingDimension
-                              packingMethod:MCMatrixValuePackingMethodConventional
-                        triangularComponent:triangularComponent];
+    MCMatrix *matrix = [[MCMatrix alloc] initWithValues:values
+                                                   rows:order
+                                                columns:order
+                                       leadingDimension:leadingDimension
+                                          packingMethod:MCMatrixValuePackingMethodPacked
+                                    triangularComponent:triangularComponent];
+    matrix.isSymmetric = [MCTribool triboolWithValue:MCTriboolValueNo];
+    return matrix;
 }
 
 + (instancetype)symmetricMatrixWithPackedValues:(double *)values
@@ -291,30 +296,13 @@ MCMatrixNorm;
                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                           order:(int)order
 {
-    // TODO: store as a triangular symmetric matrix instead of defaulting to conventional storage
-    double *unpackedValues = malloc(order * order * sizeof(double));
-    MCMatrix *matrix = [[MCMatrix alloc] initWithValues:unpackedValues
+    MCMatrix *matrix = [[MCMatrix alloc] initWithValues:values
                                                    rows:order
                                                 columns:order
                                        leadingDimension:leadingDimension
-                                          packingMethod:MCMatrixValuePackingMethodConventional
+                                          packingMethod:MCMatrixValuePackingMethodPacked
                                     triangularComponent:triangularComponent];
-    int k = 0;
-    for (int i = 0; i < order; i += 1) {
-        int start = (triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionRow ? i : 0) : (leadingDimension == MCMatrixLeadingDimensionRow ? 0 : i));
-        int stop = (triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionRow ? order : i + 1) : (leadingDimension == MCMatrixLeadingDimensionRow ? i + 1 : order));
-        for (int j = start; j < stop; j += 1) {
-            double value = values[k++];
-            
-            int row = leadingDimension == MCMatrixLeadingDimensionColumn ? j : i;
-            int col = leadingDimension == MCMatrixLeadingDimensionColumn ? i : j;
-            
-            [matrix setEntryAtRow:row column:col toValue:value];
-            if (row != col) {
-                [matrix setEntryAtRow:col column:row toValue:value];
-            }
-        }
-    }
+    matrix.isSymmetric = [MCTribool triboolWithValue:MCTriboolValueYes];
     return matrix;
 }
 
@@ -323,61 +311,28 @@ MCMatrixNorm;
                            bandwidth:(int)bandwidth
                  oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
 {
-    // TODO: store as a band matrix instead of defaulting to conventional storage
-    BOOL evenAmountOfBands = (bandwidth / 2.0) == round(bandwidth / 2.0);
-    double *unpackedValues = calloc(order * order, sizeof(double));
+    MCMatrix *matrix = [[MCMatrix alloc] initWithValues:values
+                                                   rows:order
+                                                columns:order
+                                       leadingDimension:MCMatrixLeadingDimensionColumn
+                                          packingMethod:MCMatrixValuePackingMethodBand
+                                    triangularComponent:oddDiagonalLocation];
+    
+    BOOL evenAmountOfCodiagonals = (bandwidth / 2.0) == round(bandwidth / 2.0);
     
     int numberOfBandValues = order;
-    int numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
+    int numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfCodiagonals ? 1 : 0) ) / 2;
     for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
         numberOfBandValues += 2 * (order - (i + 1));
     }
-    if (evenAmountOfBands) {
+    if (evenAmountOfCodiagonals) {
         numberOfBandValues += order - floor(bandwidth / 2.0) - 1;
     }
     
-    /*
-     
-     the band matrix
-     
-     [ a b 0 0 0
-     c d e 0 0
-     f g h i 0
-     0 j k l m
-     0 0 n o p ]
-     
-     is stored as the 2d array (logically) as
-     
-     [ [ * b e i m ]
-     [ a d h l p ]
-     [ c g k o * ]
-     [ f j n * * ] ]
-     
-     which converts to the 1d array
-     
-     [ * b e i m a d h l p c g k o * f j n * * ]
-     
-     *'s must be present but are not used and need not set to particular values
-     
-     The values Aij inside the band width are stored in the linear array in positions [(i - j + nuca + 1) * n + j]
-     
-     */
-    int numberOfUpperCodiagonals = (evenAmountOfBands && oddDiagonalLocation == MCMatrixTriangularComponentUpper) ? 1 : 0;
-    for (int i = 0; i < order; i += 1) {
-        for (int j = 0; j < order; j += 1) {
-            int indexIntoBandArray = ( i - j + numberOfUpperCodiagonals + 1 ) * order + j;
-            int indexIntoUnpackedArray = j * order + i;
-            if (indexIntoBandArray >= 0 && indexIntoBandArray < bandwidth * order) {
-                unpackedValues[indexIntoUnpackedArray] = values[indexIntoBandArray];
-            } else {
-                unpackedValues[indexIntoUnpackedArray] = 0.0;
-            }
-        }
-    }
-    
-    return [MCMatrix matrixWithValues:unpackedValues
-                                 rows:order
-                              columns:order];
+    matrix.bandwidth = bandwidth;
+    matrix.numberOfBandValues = numberOfBandValues;
+    matrix.evenAmountOfCodiagonals = evenAmountOfCodiagonals;
+    return matrix;
 }
 
 + (instancetype)randomMatrixWithRows:(int)rows
@@ -983,18 +938,81 @@ MCMatrixNorm;
 
 - (double)valueAtRow:(int)row column:(int)column
 {
-    // TODO: implement consideration of triangular, symmetric and band matrices
     if (row >= self.rows) {
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
     } else if (column >= self.columns) {
         @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
     }
     
-    if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
-        return self.values[row * self.columns + column];
-    } else {
-        return self.values[column * self.rows + row];
+    switch (self.packingMethod) {
+        default:
+        case MCMatrixValuePackingMethodConventional: {
+            if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
+                return self.values[row * self.columns + column];
+            } else {
+                return self.values[column * self.rows + row];
+            }
+        } break;
+            
+        case MCMatrixValuePackingMethodPacked: {
+            if (self.triangularComponent == MCMatrixTriangularComponentLower) {
+                if (column <= row || self.isSymmetric.isYes) {
+                    if (column > row && self.isSymmetric.isYes) {
+                        int temp = row;
+                        row = column;
+                        column = temp;
+                    }
+                    if (self.leadingDimension == MCMatrixLeadingDimensionColumn) {
+                        // number of values in columns before desired column
+                        int valuesInSummedColumns = ((self.rows * (self.rows + 1)) - ((self.rows - column) * (self.rows - column + 1))) / 2;
+                        int index = valuesInSummedColumns + row - column;
+                        return self.values[index];
+                    } else {
+                        // number of values in rows before desired row
+                        int summedRows = row ;
+                        int valuesInSummedRows = summedRows * (summedRows + 1) / 2;
+                        int index = valuesInSummedRows + column;
+                        return self.values[index];
+                    }
+                } else {
+                    return 0.0;
+                }
+            } else /* if (self.triangularComponent == MCMatrixTriangularComponentUpper) */ {
+                if (row <= column || self.isSymmetric.isYes) {
+                    if (row > column && self.isSymmetric.isYes) {
+                        int temp = row;
+                        row = column;
+                        column = temp;
+                    }
+                    if (self.leadingDimension == MCMatrixLeadingDimensionColumn) {
+                        // number of values in columns before desired column
+                        int summedColumns = column;
+                        int valuesInSummedColumns = summedColumns * (summedColumns + 1) / 2;
+                        int index = valuesInSummedColumns + row;
+                        return self.values[index];
+                    } else {
+                        // number of values in rows before desired row
+                        int valuesInSummedRows = ((self.columns * (self.columns + 1)) - ((self.columns - row) * (self.columns - row + 1))) / 2;
+                        int index = valuesInSummedRows + column - row;
+                        return self.values[index];
+                    }
+                } else {
+                    return 0.0;
+                }
+            }
+        } break;
+            
+        case MCMatrixValuePackingMethodBand: {
+            int numberOfUpperCodiagonals = (self.evenAmountOfCodiagonals && self.triangularComponent == MCMatrixTriangularComponentUpper) ? 1 : 0;
+            int indexIntoBandArray = ( row - column + numberOfUpperCodiagonals + 1 ) * self.columns + column;
+            if (indexIntoBandArray >= 0 && indexIntoBandArray < self.bandwidth * self.columns) {
+                return self.values[indexIntoBandArray];
+            } else {
+                return 0.0;
+            }
+        } break;
     }
+    
 }
 
 - (MCVector *)rowVectorForRow:(int)row
@@ -1277,6 +1295,69 @@ MCMatrixNorm;
     matrixCopy->_normFroebenius = _normMax;
     
     return matrixCopy;
+}
+
+- (double *)unpackedValuesFromBandValues
+{
+    // TODO: accept a leading dimension parameter
+    /*
+     
+     the band matrix
+     
+     [ a b 0 0 0
+     c d e 0 0
+     f g h i 0
+     0 j k l m
+     0 0 n o p ]
+     
+     is stored as the 2d array (logically) as
+     
+     [ [ * b e i m ]
+     [ a d h l p ]
+     [ c g k o * ]
+     [ f j n * * ] ]
+     
+     which converts to the 1d array
+     
+     [ * b e i m a d h l p c g k o * f j n * * ]
+     
+     *'s must be present but are not used and need not set to particular values
+     
+     The values Aij inside the band width are stored in the linear array in positions [(i - j + nuca + 1) * n + j]
+     
+     */
+    double *unpackedValues = calloc(self.columns * self.columns, sizeof(double));
+    int numberOfUpperCodiagonals = (self.evenAmountOfCodiagonals && self.triangularComponent == MCMatrixTriangularComponentUpper) ? 1 : 0;
+    for (int i = 0; i < self.columns; i += 1) {
+        for (int j = 0; j < self.columns; j += 1) {
+            int indexIntoBandArray = ( i - j + numberOfUpperCodiagonals + 1 ) * self.columns + j;
+            int indexIntoUnpackedArray = j * self.columns + i;
+            if (indexIntoBandArray >= 0 && indexIntoBandArray < self.bandwidth * self.columns) {
+                unpackedValues[indexIntoUnpackedArray] = self.values[indexIntoBandArray];
+            } else {
+                unpackedValues[indexIntoUnpackedArray] = 0.0;
+            }
+        }
+    }
+    return unpackedValues;
+}
+
+- (double *)unpackedArrayFromPackedArrayWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
+{
+    double *unpackedValues = malloc(self.columns * self.columns * sizeof(double));
+    int k = 0; // current index in parameter array
+    int z = 0; // current index in ivar array
+    for (int i = 0; i < self.columns; i += 1) {
+        for (int j = 0; j < self.columns; j += 1) {
+            BOOL shouldTakeValue = self.triangularComponent == MCMatrixTriangularComponentUpper ? (leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j) : (leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
+            if (shouldTakeValue) {
+                unpackedValues[z++] = self.values[k++];
+            } else {
+                unpackedValues[z++] = 0.0;
+            }
+        }
+    }
+    return unpackedValues;
 }
 
 @end
