@@ -8,6 +8,7 @@
 
 #import "DemoChoiceTableViewController.h"
 #import "LeastSquaresApproximationViewController.h"
+#import "SVDImageCompressionViewController.h"
 
 #import "RZCollectionListTableViewDataSource.h"
 #import "RZArrayCollectionList.h"
@@ -32,7 +33,7 @@
     self.tableView.delegate = self;
     [self.view addSubview:self.tableView];
     
-    self.demosACL = [[RZArrayCollectionList alloc] initWithSectionTitlesAndSectionArrays:@"Approximations", @[@"Linear Approximation"], nil];
+    self.demosACL = [[RZArrayCollectionList alloc] initWithSectionTitlesAndSectionArrays:@"Demos", @[@"Least Squares Approximation", @"SVD Image Compression"], nil];
     
     self.tableViewDataSource = [[RZCollectionListTableViewDataSource alloc] initWithTableView:self.tableView collectionList:self.demosACL delegate:self];
 }
@@ -62,10 +63,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-    } else {
-        
+    if (indexPath.row == 0) {
         [self.navigationController pushViewController:[[LeastSquaresApproximationViewController alloc] initWithNibName:@"LinearApproximationViewController" bundle:[NSBundle mainBundle]] animated:YES];
+    } else if (indexPath.row == 1) {
+        [self.navigationController pushViewController:[[SVDImageCompressionViewController alloc] initWithNibName:@"SVDImageCompressionViewController" bundle:[NSBundle mainBundle]] animated:YES];
     }
 }
 
