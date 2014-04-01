@@ -165,6 +165,8 @@ MCVectorFormat;
  */
 + (instancetype)vectorWithValuesInArray:(NSArray *)values vectorFormat:(MCVectorFormat)vectorFormat;
 
++ (instancetype)randomVectorOfLength:(int)length vectorFormat:(MCVectorFormat)vectorFormat;
+
 #pragma mark - NSObject overrides
 
 /**

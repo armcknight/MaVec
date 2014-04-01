@@ -132,6 +132,15 @@
     return [[MCVector alloc] initWithValuesInArray:values vectorFormat:vectorFormat];
 }
 
++ (instancetype)randomVectorOfLength:(int)length vectorFormat:(MCVectorFormat)vectorFormat
+{
+    double *values = malloc(length * sizeof(double));
+    for (int i = 0; i < length; i++) {
+        values[i] = drand48();
+    }
+    return [MCVector vectorWithValues:values length:length vectorFormat:vectorFormat];
+}
+
 #pragma mark - Lazy loaded properties
 
 - (double)sumOfValues
