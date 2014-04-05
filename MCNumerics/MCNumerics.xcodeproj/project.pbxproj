@@ -53,7 +53,6 @@
 		4996B22718CBA56300C1CEF9 /* MatrixOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22618CBA56300C1CEF9 /* MatrixOperationTests.m */; };
 		4996B22918CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22818CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m */; };
 		4996B22B18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22A18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m */; };
-		4996B22D18CBA72400C1CEF9 /* Benchmarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22C18CBA72400C1CEF9 /* Benchmarks.m */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -144,7 +143,6 @@
 		4996B22618CBA56300C1CEF9 /* MatrixOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixOperationTests.m; sourceTree = "<group>"; };
 		4996B22818CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixCopyAndEqualityTests.m; sourceTree = "<group>"; };
 		4996B22A18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinorCofactorAdjugateTests.m; sourceTree = "<group>"; };
-		4996B22C18CBA72400C1CEF9 /* Benchmarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Benchmarks.m; sourceTree = "<group>"; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -339,14 +337,6 @@
 			name = "Matrix Tests";
 			sourceTree = "<group>";
 		};
-		4996B22E18CBA76F00C1CEF9 /* Runtime Benchmarks */ = {
-			isa = PBXGroup;
-			children = (
-				4996B22C18CBA72400C1CEF9 /* Benchmarks.m */,
-			);
-			name = "Runtime Benchmarks";
-			sourceTree = "<group>";
-		};
 		49B68283184D8341006A61D3 = {
 			isa = PBXGroup;
 			children = (
@@ -408,7 +398,6 @@
 				4996B21318CBA22000C1CEF9 /* Matrix Tests */,
 				49B682B4184D8342006A61D3 /* MCNumericsTests.m */,
 				4936537918B1C6360086C243 /* MCVectorTests.m */,
-				4996B22E18CBA76F00C1CEF9 /* Runtime Benchmarks */,
 				49B682AF184D8342006A61D3 /* Supporting Files */,
 				49E0486218D48AEF00F4AA76 /* MCTriboolTests.m */,
 			);
@@ -610,7 +599,6 @@
 				494F4544185BDA6200347096 /* MCPolynomial.m in Sources */,
 				494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */,
 				494F44DC185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
-				4996B22D18CBA72400C1CEF9 /* Benchmarks.m in Sources */,
 				4996B21918CBA2C600C1CEF9 /* MatrixConstructionTests.m in Sources */,
 				494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
