@@ -113,10 +113,8 @@
     CGContextRef context = CGBitmapContextCreate(rawData, width, height,
                                                  bitsPerComponent, bytesPerRow, colorSpace,
                                                  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    CGColorSpaceRelease(colorSpace);
     
     CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
-    CGContextRelease(context);
     
     // Now your rawData contains the image data in the RGBA8888 pixel format.
     NSUInteger numberOfPixels = height * width;
@@ -127,6 +125,9 @@
         z += 4;
     }
     
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    CGImageRelease(imageRef);
     free(rawData);
     
     MCMatrix *grayscaleMatrix = [MCMatrix matrixWithValues:grayscaleValues rows:(int)height columns:(int)width];
@@ -207,10 +208,10 @@
     
     UIImage *compressedImage = [UIImage imageWithCGImage:imageRef];
     
-    free(pixelValues);
     CGImageRelease(imageRef);
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
+//    free(pixelValues);
     
     return compressedImage;
 }
