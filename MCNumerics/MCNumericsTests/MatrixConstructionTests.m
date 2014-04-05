@@ -337,7 +337,7 @@
     }
 }
 
-- (void)testMatrixCreationFromRowVectors
+- (void)testMatrixCreationFromVectors
 {
     MCVector *v1 = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
     MCVector *v2 = [MCVector vectorWithValuesInArray:@[@4, @5, @6]];
