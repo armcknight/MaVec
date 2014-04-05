@@ -62,7 +62,7 @@
                                                                                        @1]]];
     }
     @catch (NSException *exception) {
-        XCTAssert([exception.name isEqualToString:NSInvalidArgumentException], @"Did not detect dimension mismatch in MCVector dot product method");
+        XCTAssert([exception.name isEqualToString:NSInternalInconsistencyException], @"Did not detect dimension mismatch in MCVector dot product method");
     }
 }
 

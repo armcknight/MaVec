@@ -507,10 +507,6 @@ MCMatrixNorm;
 
 - (MCEigendecomposition *)eigendecomposition
 {
-    if (self.rows != self.columns) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"Matrix must be square to derive eigendecomposition." userInfo:nil];
-    }
-    
     if (!_eigendecomposition) {
         _eigendecomposition = [MCEigendecomposition eigendecompositionOfMatrix:self];
     }
@@ -723,11 +719,8 @@ MCMatrixNorm;
 
 - (void)swapRowA:(int)rowA withRowB:(int)rowB
 {
-    if (rowA >= self.rows) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"rowA is outside the range of possible rows." userInfo:nil];
-    } else if (rowB >= self.rows) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"rowB is outside the range of possible rows." userInfo:nil];
-    }
+    NSAssert1(rowA < self.rows, @"rowA = %u is outside the range of possible rows.", rowA);
+    NSAssert1(rowB < self.rows, @"rowB = %u is outside the range of possible rows.", rowB);
     
     // TODO: implement using cblas_dswap
     
@@ -746,11 +739,8 @@ MCMatrixNorm;
 
 - (void)swapColumnA:(int)columnA withColumnB:(int)columnB
 {
-    if (columnA >= self.columns) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"columnA is outside the range of possible columns." userInfo:nil];
-    } else if (columnB >= self.columns) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"columnB is outside the range of possible columns." userInfo:nil];
-    }
+    NSAssert1(columnA < self.columns, @"columnA = %u is outside the range of possible columns.", columnA);
+    NSAssert1(columnB < self.columns, @"columnB = %u is outside the range of possible columns.", columnB);
     
     // TODO: implement using cblas_dswap
     
@@ -843,9 +833,7 @@ MCMatrixNorm;
                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             packingMethod:(MCMatrixValuePackingMethod)packingMethod
 {
-    if (self.rows != self.columns) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Cannot extract triangular components from non-square matrices" userInfo:nil];
-    }
+    NSAssert(self.rows == self.columns, @"Cannot extract triangular components from non-square matrices");
     
     int numberOfValues = packingMethod == MCMatrixValuePackingMethodPacked ? ((self.rows * (self.rows + 1)) / 2) : self.rows * self.rows;
     double *values = malloc(numberOfValues * sizeof(double));
@@ -876,11 +864,8 @@ MCMatrixNorm;
 
 - (double)valueAtRow:(int)row column:(int)column
 {
-    if (row >= self.rows) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
-    } else if (column >= self.columns) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
-    }
+    NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
+    NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
     
     switch (self.packingMethod) {
         default:
@@ -955,6 +940,8 @@ MCMatrixNorm;
 
 - (MCVector *)rowVectorForRow:(int)row
 {
+    NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
+    
     double *values = malloc(self.columns * sizeof(double));
     for (int col = 0; col < self.columns; col += 1) {
         values[col] = [self valueAtRow:row column:col];
@@ -965,6 +952,8 @@ MCMatrixNorm;
 
 - (MCVector *)columnVectorForColumn:(int)column
 {
+    NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
+    
     double *values = malloc(self.rows * sizeof(double));
     for (int row = 0; row < self.rows; row += 1) {
         values[row] = [self valueAtRow:row column:column];
@@ -977,17 +966,16 @@ MCMatrixNorm;
 
 - (MCVector *)objectAtIndexedSubscript:(int)idx
 {
+    NSAssert1(idx >= 0 && idx < self.rows, @"idx = %u is outside the range of possible rows.", idx);
+    
     return [self rowVectorForRow:idx];
 }
 
 #pragma mark - Mutation
 - (void)setEntryAtRow:(int)row column:(int)column toValue:(double)value
 {
-    if (row >= self.rows) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified row is outside the range of possible rows." userInfo:nil];
-    } else if (column >= self.columns) {
-        @throw [NSException exceptionWithName:NSRangeException reason:@"Specified column is outside the range of possible columns." userInfo:nil];
-    }
+    NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
+    NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
     
     if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
         self.values[row * self.columns + column] = value;
@@ -1000,9 +988,7 @@ MCMatrixNorm;
 
 + (MCMatrix *)productOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
-    if (matrixA.columns != matrixB.rows) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"matrixA does not have an equal amount of columns as rows in matrixB" userInfo:nil];
-    }
+    NSAssert(matrixA.columns == matrixB.rows, @"matrixA does not have an equal amount of columns as rows in matrixB");
     
     double *aVals = [matrixA valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
     double *bVals = [matrixB valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
@@ -1018,11 +1004,8 @@ MCMatrixNorm;
 
 + (MCMatrix *)sumOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
-    if (matrixA.rows != matrixB.rows) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of rows." userInfo:nil];
-    } else if (matrixA.columns != matrixB.columns) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of columns." userInfo:nil];
-    }
+    NSAssert(matrixA.rows == matrixB.rows, @"Matrices have mismatched amounts of rows.");
+    NSAssert(matrixA.columns == matrixB.columns, @"Matrices have mismatched amounts of columns.");
     
     MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns];
     for (int i = 0; i < matrixA.rows; i++) {
@@ -1036,11 +1019,8 @@ MCMatrixNorm;
 
 + (MCMatrix *)differenceOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
-    if (matrixA.rows != matrixB.rows) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of rows." userInfo:nil];
-    } else if (matrixA.columns != matrixB.columns) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Matrices have mismatched amounts of columns." userInfo:nil];
-    }
+    NSAssert(matrixA.rows == matrixB.rows, @"Matrices have mismatched amounts of rows.");
+    NSAssert(matrixA.columns == matrixB.columns, @"Matrices have mismatched amounts of columns.");
     
     MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns];
     for (int i = 0; i < matrixA.rows; i++) {
@@ -1153,6 +1133,8 @@ MCMatrixNorm;
 
 + (MCVector *)productOfMatrix:(MCMatrix *)matrix andVector:(MCVector *)vector
 {
+    NSAssert(matrix.columns == vector.length, @"Matrix must have same amount of columns as vector length.");
+    
     short order = matrix.leadingDimension == MCMatrixLeadingDimensionColumn ? CblasColMajor : CblasRowMajor;
     short transpose = CblasNoTrans;
     int rows = matrix.rows;
@@ -1167,6 +1149,8 @@ MCMatrixNorm;
 
 + (MCMatrix *)raiseMatrix:(MCMatrix *)matrix toPower:(NSUInteger)power
 {
+    NSAssert(matrix.rows == matrix.columns, @"Cannot raise a non-square matrix to exponents.");
+    
     MCMatrix *product = [MCMatrix productOfMatrixA:matrix andMatrixB:matrix];
     for (int i = 0; i < power - 1; i += 1) {
         product = [MCMatrix productOfMatrixA:product andMatrixB:matrix];

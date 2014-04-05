@@ -396,9 +396,7 @@
 
 + (MCVector *)sumOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB
 {
-    if (vectorA.length != vectorB.length) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
-    }
+    NSAssert(vectorA.length == vectorB.length, @"Vector dimensions do not match");
     
     double *sum = malloc(vectorA.length * sizeof(double));
     vDSP_vaddD(vectorA.values, 1, vectorB.values, 1, sum, 1, vectorA.length);
@@ -408,9 +406,7 @@
 
 + (MCVector *)differenceOfVectorMinuend:(MCVector *)vectorMinuend vectorSubtrahend:(MCVector *)vectorSubtrahend
 {
-    if (vectorMinuend.length != vectorSubtrahend.length) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
-    }
+    NSAssert(vectorMinuend.length == vectorSubtrahend.length, @"Vector dimensions do not match");
     
     double *diff = malloc(vectorMinuend.length * sizeof(double));
     vDSP_vsubD(vectorSubtrahend.values, 1, vectorMinuend.values, 1, diff, 1, vectorMinuend.length);
@@ -420,9 +416,7 @@
 
 + (MCVector *)productOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB
 {
-    if (vectorA.length != vectorB.length) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
-    }
+    NSAssert(vectorA.length == vectorB.length, @"Vector dimensions do not match");
     
     double *product = malloc(vectorA.length * sizeof(double));
     vDSP_vmulD(vectorA.values, 1, vectorB.values, 1, product, 1, vectorA.length);
@@ -432,9 +426,7 @@
 
 + (MCVector *)quotientOfVectorDividend:(MCVector *)vectorDividend vectorDivisor:(MCVector *)vectorDivisor
 {
-    if (vectorDividend.length != vectorDivisor.length) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
-    }
+    NSAssert(vectorDividend.length == vectorDivisor.length, @"Vector dimensions do not match");
     
     double *quotient = malloc(vectorDividend.length * sizeof(double));
     vDSP_vdivD(vectorDivisor.values, 1, vectorDividend.values, 1, quotient, 1, vectorDividend.length);
@@ -444,9 +436,7 @@
 
 + (double)dotProductOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB
 {
-    if (vectorA.length != vectorB.length) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vector dimensions do not match" userInfo:nil];
-    }
+    NSAssert(vectorA.length == vectorB.length, @"Vector dimensions do not match");
     
     double dotProduct;
     vDSP_dotprD(vectorA.values, 1,vectorB.values, 1, &dotProduct, vectorA.length);
@@ -456,9 +446,7 @@
 
 + (MCVector *)crossProductOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB
 {
-    if (!(vectorA.length == 3 && vectorB.length == 3)) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Vectors must both be of length 3 to perform cross products" userInfo:nil];
-    }
+    NSAssert(vectorA.length == 3 && vectorB.length == 3, @"Vectors must both be of length 3 to perform cross products");
     
     double *values = malloc(vectorA.length * sizeof(double));
     values[0] = [vectorA valueAtIndex:1] * [vectorB valueAtIndex:2] - [vectorA valueAtIndex:2] * [vectorB valueAtIndex:1];
