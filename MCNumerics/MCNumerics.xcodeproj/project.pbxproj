@@ -10,6 +10,7 @@
 		4936537318B011060086C243 /* MCQuadratic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537218B011060086C243 /* MCQuadratic.m */; };
 		4936537618B012220086C243 /* MCPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537518B012220086C243 /* MCPair.m */; };
 		4936537A18B1C6360086C243 /* MCVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537918B1C6360086C243 /* MCVectorTests.m */; };
+		493E8B5B18ECB81800021A5F /* Demos.m in Sources */ = {isa = PBXBuildFile; fileRef = 493E8B5A18ECB81800021A5F /* Demos.m */; };
 		494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
 		494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
 		494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4465185B61BB00347096 /* RZBaseCollectionList.m */; };
@@ -95,6 +96,7 @@
 		4936537418B012220086C243 /* MCPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPair.h; sourceTree = "<group>"; };
 		4936537518B012220086C243 /* MCPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPair.m; sourceTree = "<group>"; };
 		4936537918B1C6360086C243 /* MCVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVectorTests.m; sourceTree = "<group>"; };
+		493E8B5A18ECB81800021A5F /* Demos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demos.m; sourceTree = "<group>"; };
 		494F4462185B61BB00347096 /* RZArrayCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZArrayCollectionList.h; sourceTree = "<group>"; };
 		494F4463185B61BB00347096 /* RZArrayCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZArrayCollectionList.m; sourceTree = "<group>"; };
 		494F4464185B61BB00347096 /* RZBaseCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZBaseCollectionList.h; sourceTree = "<group>"; };
@@ -241,6 +243,14 @@
 				49B682EA1854DEF8006A61D3 /* MCVector.m */,
 			);
 			name = Vectors;
+			sourceTree = "<group>";
+		};
+		493E8B5918ECB80200021A5F /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				493E8B5A18ECB81800021A5F /* Demos.m */,
+			);
+			name = Demo;
 			sourceTree = "<group>";
 		};
 		494F4458185B61BB00347096 /* External */ = {
@@ -394,6 +404,7 @@
 		49B682AE184D8342006A61D3 /* MCNumericsTests */ = {
 			isa = PBXGroup;
 			children = (
+				493E8B5918ECB80200021A5F /* Demo */,
 				4996B21318CBA22000C1CEF9 /* Matrix Tests */,
 				49B682B4184D8342006A61D3 /* MCNumericsTests.m */,
 				4936537918B1C6360086C243 /* MCVectorTests.m */,
@@ -603,6 +614,7 @@
 				4996B21918CBA2C600C1CEF9 /* MatrixConstructionTests.m in Sources */,
 				494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
+				493E8B5B18ECB81800021A5F /* Demos.m in Sources */,
 				494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
 				49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */,
 				4996B22318CBA48800C1CEF9 /* MatrixInversionTests.m in Sources */,
