@@ -699,22 +699,6 @@ MCMatrixNorm;
     return _adjugate;
 }
 
-#pragma mark - Property overrides
-
-- (void)setLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
-{
-    if (self.leadingDimension != leadingDimension) {
-        _values = [self valuesWithLeadingDimension:leadingDimension];
-        _leadingDimension = leadingDimension;
-    }
-}
-
-- (void)setPackingFormat:(MCMatrixValuePackingMethod)packingMethod
-{
-    @throw kMCUnimplementedMethodException;
-    // TODO: implement, updating bandwidth if necessary
-}
-
 #pragma mark - Matrix operations
 
 - (void)swapRowA:(int)rowA withRowB:(int)rowB

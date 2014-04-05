@@ -55,8 +55,8 @@
         cValues[i] = i;
     }
     MCMatrix *c = [MCMatrix matrixWithValues:cValues rows:4 columns:4];
-    MCMatrix *cr = c.copy;
-    cr.leadingDimension = MCMatrixLeadingDimensionRow;
+    MCMatrix *cr = [MCMatrix matrixWithValues:[c valuesWithLeadingDimension:MCMatrixLeadingDimensionRow] rows:c.rows columns:c.columns leadingDimension:MCMatrixLeadingDimensionRow];
+    
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             double oldCValue = [c valueAtRow:i column:j];
@@ -97,7 +97,7 @@
     XCTAssertEqual([a isEqual:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and columns are unequal using isEqual:");
     XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and  columns are unequal using isEqualToMatrix:");
     
-    MCMatrix *r = b.copy;
+    MCMatrix *r = [MCMatrix matrixWithValues:[b valuesWithLeadingDimension:MCMatrixLeadingDimensionRow] rows:b.rows columns:b.columns leadingDimension:MCMatrixLeadingDimensionRow];
     r.leadingDimension = MCMatrixLeadingDimensionRow;
     XCTAssertEqual([a isEqual:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqual:");
     XCTAssertEqual([a isEqualToMatrix:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
