@@ -287,7 +287,6 @@
                                       order:5
                                   bandwidth:4
                         oddDiagonalLocation:MCMatrixTriangularComponentUpper];
-    NSLog(matrix.description);
     
     double solutionValuesWithExtraUpper[25] = {
         10.0,  1.0,   -1.0,   0.0,   0.0,
@@ -318,7 +317,6 @@
                                       order:5
                                   bandwidth:4
                         oddDiagonalLocation:MCMatrixTriangularComponentLower];
-    NSLog(matrix.description);
     
     double solutionValuesWithExtraLower[25] = {
         10.0,  1.0,   0.0,   0.0,   0.0,
@@ -351,7 +349,6 @@
      3  6  9 ]
      */
     MCMatrix *a = [MCMatrix matrixWithColumnVectors:@[v1, v2, v3]];
-    NSLog(a.description);
     
     /* create the matrix
      [ 1  2  3
@@ -359,7 +356,6 @@
      7  8  9 ]
      */
     MCMatrix *b = [MCMatrix matrixWithRowVectors:@[v1, v2, v3]];
-    NSLog(b.description);
 }
 
 @end
