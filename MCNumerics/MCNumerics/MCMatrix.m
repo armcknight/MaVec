@@ -1017,7 +1017,7 @@ MCMatrixNorm;
 }
 
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
-                                   valuesB:(MCMatrix*)B
+                                   valuesB:(MCMatrix *)B
 {
     double *aVals = [A valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
     
