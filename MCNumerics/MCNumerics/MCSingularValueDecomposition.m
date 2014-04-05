@@ -37,13 +37,13 @@
         double *sValues = malloc(m * n * sizeof(double));
         
         // call first with lwork = -1 to determine optimal size of working array
-        dgesdd_("A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, iwork, &info);
+        dgesvd_("A", "A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, &info);
         
         lwork = workSize;
         work = malloc(lwork * sizeof(double));
         
         // now run the actual decomposition
-        dgesdd_("A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, iwork, &info);
+        dgesvd_("A", "A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, &info);
         
         free(work);
         free(iwork);
