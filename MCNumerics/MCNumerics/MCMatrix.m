@@ -155,7 +155,7 @@ MCMatrixNorm;
     int columns = ((MCVector *)rowVectors.firstObject).length;
     double *values = malloc(rows * columns * sizeof(double));
     [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
-        for(int i = 0; i < rows; i++) {
+        for(int i = 0; i < columns; i++) {
             values[row * columns + i] = [rowVector valueAtIndex:i];
         }
     }];
