@@ -255,8 +255,8 @@
     };
     MCMatrix *matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:balancedBandValues size:15]
                                                 order:5
-                                            bandwidth:3
-                                  oddDiagonalLocation:MCMatrixTriangularComponentBoth];
+                                     upperCodiagonals:1
+                                     lowerCodiagonals:1];
     
     double oddBandwidthSolutionValues[25] = {
         10.0,  1.0,   0.0,   0.0,   0.0,
@@ -285,8 +285,8 @@
     };
     matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithExtraUpper size:20]
                                       order:5
-                                  bandwidth:4
-                        oddDiagonalLocation:MCMatrixTriangularComponentUpper];
+                           upperCodiagonals:2
+                           lowerCodiagonals:1];
     
     double solutionValuesWithExtraUpper[25] = {
         10.0,  1.0,   -1.0,   0.0,   0.0,
@@ -315,9 +315,9 @@
     };
     matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithExtraLower size:20]
                                       order:5
-                                  bandwidth:4
-                        oddDiagonalLocation:MCMatrixTriangularComponentLower];
-    
+                           upperCodiagonals:1
+                           lowerCodiagonals:2];
+
     double solutionValuesWithExtraLower[25] = {
         10.0,  1.0,   0.0,   0.0,   0.0,
         5.0,   20.0,  2.0,   0.0,   0.0,
@@ -326,6 +326,64 @@
         0.0,   0.0,   -3.0,   8.0,   50.0
     };
     solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithExtraLower size:25]
+                                     rows:5
+                                  columns:5
+                         leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    for (int row = 0; row < 5; row += 1) {
+        for (int col = 0; col < 5; col += 1) {
+            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
+        }
+    }
+    
+    // two upper, no lower
+    double bandValuesWithTwoUpper[15] = {
+        0.0,  0.0,  -1.0, -2.0, -3.0,
+        0.0,  1.0,  2.0,  3.0,  4.0,
+        10.0, 20.0, 30.0, 40.0, 50.0
+    };
+    matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithTwoUpper size:15]
+                                      order:5
+                           upperCodiagonals:2
+                           lowerCodiagonals:0];
+    
+    double solutionValuesWithTwoUpper[25] = {
+        10.0,  1.0,   -1.0,   0.0,   0.0,
+        0.0,   20.0,  2.0,    -2.0,  0.0,
+        0.0,   0.0,   30.0,   3.0,   -3.0,
+        0.0,   0.0,   0.0,    40.0,  4.0,
+        0.0,   0.0,   0.0,    0.0,   50.0
+    };
+    solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithTwoUpper size:25]
+                                     rows:5
+                                  columns:5
+                         leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    for (int row = 0; row < 5; row += 1) {
+        for (int col = 0; col < 5; col += 1) {
+            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
+        }
+    }
+    
+    // two lower, no upper
+    double bandValuesWithTwoLower[15] = {
+        10.0, 20.0, 30.0, 40.0, 50.0,
+        5.0,  6.0,  7.0,  8.0,  0.0,
+        -1.0, -2.0, -3.0, 0.0,  0.0
+    };
+    matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithTwoLower size:15]
+                                      order:5
+                           upperCodiagonals:0
+                           lowerCodiagonals:2];
+    
+    double solutionValuesWithTwoLower[25] = {
+        10.0,  0.0,   0.0,   0.0,   0.0,
+        5.0,   20.0,  0.0,   0.0,   0.0,
+        -1.0,  6.0,   30.0,  0.0,   0.0,
+        0.0,   -2.0,  7.0,   40.0,  0.0,
+        0.0,   0.0,   -3.0,  8.0,   50.0
+    };
+    solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithTwoLower size:25]
                                      rows:5
                                   columns:5
                          leadingDimension:MCMatrixLeadingDimensionRow];

@@ -420,8 +420,8 @@ MCMatrixDefiniteness;
  */
 + (instancetype)bandMatrixWithValues:(double *)values
                                order:(int)order
-                           bandwidth:(int)bandwidth
-                 oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
+                    upperCodiagonals:(int)upperCodiagonals
+                    lowerCodiagonals:(int)lowerCodiagonals;
 
 /**
  @brief Class convenience method to create a matrix with the specified size containing random double-precision floating-point values.
@@ -463,8 +463,8 @@ MCMatrixDefiniteness;
  @return A new square band instance of MCMatrix containing random values.
  */
 + (instancetype)randomBandMatrixOfOrder:(int)order
-                              bandwidth:(int)bandwidth
-                    oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation;
+                       upperCodiagonals:(int)upperCodiagonals
+                       lowerCodiagonals:(int)lowerCodiagonals;
 
 #pragma mark - Operations
 

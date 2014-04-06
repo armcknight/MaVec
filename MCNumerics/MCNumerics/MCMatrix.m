@@ -69,7 +69,7 @@ MCMatrixNorm;
 // private properties for band matrices
 @property (assign, nonatomic) int bandwidth;
 @property (assign, nonatomic) int numberOfBandValues;
-@property (assign, nonatomic) BOOL evenAmountOfCodiagonals;
+@property (assign, nonatomic) int upperCodiagonals;
 
 /**
  @brief Generates specified number of floating-point values.
@@ -77,6 +77,17 @@ MCMatrixNorm;
  @return C array point containing specified number of random values.
  */
 + (double *)randomArrayOfSize:(int)size;
+
+/**
+ @brief Calculate the number of values in a band matrix given the order and number of upper and lower codiagonals in the band.
+ @param upperCodiagonals The number of codiagonals above the main diagonal.
+ @param lowerCodiagonals The number of codiagonals below the main diagonal.
+ @param order
+ @return The number of values in the band.
+ */
++ (int)numberOfBandValuesWithUpperCodiagonals:(int)upperCodiagonals
+                             lowerCodiagonals:(int)lowerCodiagonals
+                                        order:(int)order;
 
 /**
  @brief Sets all properties to default states.
@@ -274,30 +285,28 @@ MCMatrixNorm;
 
 + (instancetype)bandMatrixWithValues:(double *)values
                                order:(int)order
-                           bandwidth:(int)bandwidth
-                 oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
+                    upperCodiagonals:(int)upperCodiagonals
+                    lowerCodiagonals:(int)lowerCodiagonals
 {
     MCMatrix *matrix = [[MCMatrix alloc] initWithValues:values
                                                    rows:order
                                                 columns:order
                                        leadingDimension:MCMatrixLeadingDimensionColumn
                                           packingMethod:MCMatrixValuePackingMethodBand
-                                    triangularComponent:oddDiagonalLocation];
+                                    triangularComponent:upperCodiagonals == 0
+                                                        ? (lowerCodiagonals == 0
+                                                           ? MCMatrixTriangularComponentBoth
+                                                           : MCMatrixTriangularComponentLower)
+                                                        : (lowerCodiagonals == 0
+                                                           ? MCMatrixTriangularComponentBoth
+                                                           : MCMatrixTriangularComponentUpper)];
     
-    BOOL evenAmountOfCodiagonals = (bandwidth / 2.0) == round(bandwidth / 2.0);
+    matrix.upperCodiagonals = upperCodiagonals;
+    matrix.bandwidth = lowerCodiagonals + upperCodiagonals + 1;
+    matrix.numberOfBandValues = [self numberOfBandValuesWithUpperCodiagonals:upperCodiagonals
+                                                            lowerCodiagonals:lowerCodiagonals
+                                                                       order:order];
     
-    int numberOfBandValues = order;
-    int numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfCodiagonals ? 1 : 0) ) / 2;
-    for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
-        numberOfBandValues += 2 * (order - (i + 1));
-    }
-    if (evenAmountOfCodiagonals) {
-        numberOfBandValues += order - floor(bandwidth / 2.0) - 1;
-    }
-    
-    matrix.bandwidth = bandwidth;
-    matrix.numberOfBandValues = numberOfBandValues;
-    matrix.evenAmountOfCodiagonals = evenAmountOfCodiagonals;
     return matrix;
 }
 
@@ -336,24 +345,17 @@ MCMatrixNorm;
 }
 
 + (instancetype)randomBandMatrixOfOrder:(int)order
-                              bandwidth:(int)bandwidth
-                    oddDiagonalLocation:(MCMatrixTriangularComponent)oddDiagonalLocation
+                       upperCodiagonals:(int)upperCodiagonals
+                       lowerCodiagonals:(int)lowerCodiagonals
 {
-    BOOL evenAmountOfBands = (bandwidth / 2.0) == round(bandwidth / 2.0);
-    
-    int numberOfBandValues = order;
-    int numberOfBalancedUpperCodiagonals = ( bandwidth - 1 - (evenAmountOfBands ? 1 : 0) ) / 2;
-    for (int i = 0; i < numberOfBalancedUpperCodiagonals; i += 1) {
-        numberOfBandValues += 2 * (order - (i + 1));
-    }
-    if (evenAmountOfBands) {
-        numberOfBandValues += order - floor(bandwidth / 2.0) - 1;
-    }
+    int numberOfBandValues = [self numberOfBandValuesWithUpperCodiagonals:upperCodiagonals
+                                                         lowerCodiagonals:lowerCodiagonals
+                                                                    order:order];
     double *values = [self randomArrayOfSize:numberOfBandValues];
     return [MCMatrix bandMatrixWithValues:values
                                     order:order
-                                bandwidth:bandwidth
-                      oddDiagonalLocation:oddDiagonalLocation];
+                         upperCodiagonals:upperCodiagonals
+                         lowerCodiagonals:lowerCodiagonals];
 }
 
 - (void)dealloc
@@ -910,8 +912,7 @@ MCMatrixNorm;
         } break;
             
         case MCMatrixValuePackingMethodBand: {
-            int numberOfUpperCodiagonals = (self.evenAmountOfCodiagonals && self.triangularComponent == MCMatrixTriangularComponentUpper) ? 1 : 0;
-            int indexIntoBandArray = ( row - column + numberOfUpperCodiagonals + 1 ) * self.columns + column;
+            int indexIntoBandArray = ( row - column + self.upperCodiagonals ) * self.columns + column;
             if (indexIntoBandArray >= 0 && indexIntoBandArray < self.bandwidth * self.columns) {
                 return self.values[indexIntoBandArray];
             } else {
@@ -1229,6 +1230,20 @@ MCMatrixNorm;
     return values;
 }
 
++ (int)numberOfBandValuesWithUpperCodiagonals:(int)upperCodiagonals
+                             lowerCodiagonals:(int)lowerCodiagonals
+                                        order:(int)order
+{
+    int numberOfBandValues = order;
+    for (int i = 1; i <= lowerCodiagonals; i++) {
+        numberOfBandValues += order - i;
+    }
+    for (int i = 1; i <= upperCodiagonals; i++) {
+        numberOfBandValues += order - i;
+    }
+    return numberOfBandValues;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -1292,6 +1307,8 @@ MCMatrixNorm;
     // TODO: accept a leading dimension parameter
     /*
      
+     found at http://www.roguewave.com/Portals/0/products/imsl-numerical-libraries/c-library/docs/6.0/math/default.htm?turl=matrixstoragemodes.htm
+     
      the band matrix
      
      [ a b 0 0 0
@@ -1317,10 +1334,9 @@ MCMatrixNorm;
      
      */
     double *unpackedValues = calloc(self.columns * self.columns, sizeof(double));
-    int numberOfUpperCodiagonals = (self.evenAmountOfCodiagonals && self.triangularComponent == MCMatrixTriangularComponentUpper) ? 1 : 0;
     for (int i = 0; i < self.columns; i += 1) {
         for (int j = 0; j < self.columns; j += 1) {
-            int indexIntoBandArray = ( i - j + numberOfUpperCodiagonals + 1 ) * self.columns + j;
+            int indexIntoBandArray = ( i - j + self.upperCodiagonals ) * self.columns + j;
             int indexIntoUnpackedArray = j * self.columns + i;
             if (indexIntoBandArray >= 0 && indexIntoBandArray < self.bandwidth * self.columns) {
                 unpackedValues[indexIntoUnpackedArray] = self.values[indexIntoBandArray];
