@@ -520,6 +520,15 @@ MCMatrixDefiniteness;
                             packingMethod:(MCMatrixValuePackingMethod)packingMethod;
 
 /**
+ @brief Return the values in the band between a specified upper and lower codiagonal.
+ @param upperCodiagonal The codiagonal above the main diagonal to use as a boundary for the band.
+ @param lowerCodiagonal The codiagonal below the main diagonal to use as a boundary for the band.
+ @return Pointer to an array of band-format values.
+ */
+- (double *)valuesInBandBetweenUpperCodiagonal:(int)upperCodiagonal
+                               lowerCodiagonal:(int)lowerCodiagonal;
+
+/**
  @description Get the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.
  @param row The row in which the desired value resides.
  @param column The column in which the desired value resides.

@@ -53,6 +53,7 @@
 		4996B22718CBA56300C1CEF9 /* MatrixOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22618CBA56300C1CEF9 /* MatrixOperationTests.m */; };
 		4996B22918CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22818CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m */; };
 		4996B22B18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B22A18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m */; };
+		49AEC1C418F18B3700A4175F /* MatrixValueRepresentationConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AEC1C318F18B3700A4175F /* MatrixValueRepresentationConversion.m */; };
 		49B68290184D8342006A61D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B6828F184D8342006A61D3 /* Foundation.framework */; };
 		49B68292184D8342006A61D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68291184D8342006A61D3 /* CoreGraphics.framework */; };
 		49B68294184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
@@ -143,6 +144,7 @@
 		4996B22618CBA56300C1CEF9 /* MatrixOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixOperationTests.m; sourceTree = "<group>"; };
 		4996B22818CBA64700C1CEF9 /* MatrixCopyAndEqualityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixCopyAndEqualityTests.m; sourceTree = "<group>"; };
 		4996B22A18CBA6C600C1CEF9 /* MinorCofactorAdjugateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MinorCofactorAdjugateTests.m; sourceTree = "<group>"; };
+		49AEC1C318F18B3700A4175F /* MatrixValueRepresentationConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatrixValueRepresentationConversion.m; sourceTree = "<group>"; };
 		49B6828C184D8342006A61D3 /* MCNumerics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNumerics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B6828F184D8342006A61D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		49B68291184D8342006A61D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -333,6 +335,7 @@
 				4996B22018CBA43C00C1CEF9 /* QRDecompositionTests.m */,
 				4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */,
 				49D15C4118EA5E9E00CFD621 /* DynamicArrayUtility.h */,
+				49AEC1C318F18B3700A4175F /* MatrixValueRepresentationConversion.m */,
 			);
 			name = "Matrix Tests";
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				4996B21918CBA2C600C1CEF9 /* MatrixConstructionTests.m in Sources */,
 				494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
+				49AEC1C418F18B3700A4175F /* MatrixValueRepresentationConversion.m in Sources */,
 				493E8B5B18ECB81800021A5F /* Demos.m in Sources */,
 				494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
 				49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */,
