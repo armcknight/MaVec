@@ -79,17 +79,6 @@ MCMatrixNorm;
 + (double *)randomArrayOfSize:(int)size;
 
 /**
- @brief Calculate the number of values in a band matrix given the order and number of upper and lower codiagonals in the band.
- @param upperCodiagonals The number of codiagonals above the main diagonal.
- @param lowerCodiagonals The number of codiagonals below the main diagonal.
- @param order
- @return The number of values in the band.
- */
-+ (int)numberOfBandValuesWithUpperCodiagonals:(int)upperCodiagonals
-                             lowerCodiagonals:(int)lowerCodiagonals
-                                        order:(int)order;
-
-/**
  @brief Sets all properties to default states.
  @return A new instance of MCMatrix in a default state with no values or row/column counts.
  */
@@ -291,9 +280,7 @@ MCMatrixNorm;
     
     matrix.upperCodiagonals = upperCodiagonals;
     matrix.bandwidth = lowerCodiagonals + upperCodiagonals + 1;
-    matrix.numberOfBandValues = [self numberOfBandValuesWithUpperCodiagonals:upperCodiagonals
-                                                            lowerCodiagonals:lowerCodiagonals
-                                                                       order:order];
+    matrix.numberOfBandValues = matrix.bandwidth * order;
     
     return matrix;
 }
@@ -336,9 +323,7 @@ MCMatrixNorm;
                        upperCodiagonals:(int)upperCodiagonals
                        lowerCodiagonals:(int)lowerCodiagonals
 {
-    int numberOfBandValues = [self numberOfBandValuesWithUpperCodiagonals:upperCodiagonals
-                                                         lowerCodiagonals:lowerCodiagonals
-                                                                    order:order];
+    int numberOfBandValues = (upperCodiagonals + lowerCodiagonals + 1) * order;
     double *values = [self randomArrayOfSize:numberOfBandValues];
     return [MCMatrix bandMatrixWithValues:values
                                     order:order
@@ -1354,20 +1339,6 @@ MCMatrixNorm;
         values[i] = drand48();
     }
     return values;
-}
-
-+ (int)numberOfBandValuesWithUpperCodiagonals:(int)upperCodiagonals
-                             lowerCodiagonals:(int)lowerCodiagonals
-                                        order:(int)order
-{
-    int numberOfBandValues = order;
-    for (int i = 1; i <= lowerCodiagonals; i++) {
-        numberOfBandValues += order - i;
-    }
-    for (int i = 1; i <= upperCodiagonals; i++) {
-        numberOfBandValues += order - i;
-    }
-    return numberOfBandValues;
 }
 
 - (instancetype)init
