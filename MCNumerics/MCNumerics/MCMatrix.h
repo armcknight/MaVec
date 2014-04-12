@@ -612,4 +612,11 @@ MCMatrixDefiniteness;
  */
 + (MCMatrix *)raiseMatrix:(MCMatrix *)matrix toPower:(NSUInteger)power;
 
+/**
+ @brief Multiplies an array of matrices together. Uses the Hu-Shing polygon partitioning method to determine the optimum order of multiplication to minimize the amount of operations. http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0213017.pdf
+ @param matrices An NSArray of MCMatrix objects.
+ @return A new MCMatrix object holding the result of the multiplication.
+ */
++ (MCMatrix *)productOfMatrices:(NSArray *)matrices;
+
 @end

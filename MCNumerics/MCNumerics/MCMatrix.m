@@ -1254,6 +1254,13 @@ MCMatrixNorm;
     return product;
 }
 
++ (MCMatrix *)productOfMatrices:(NSArray *)matrices
+{
+    // TODO: implement hu-shing partitioning algorithm
+    
+    return nil;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
