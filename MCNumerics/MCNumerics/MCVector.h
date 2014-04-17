@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MCNumberFormats.h"
+
 typedef enum : UInt8 {
     /**
      Specifies that the values in the vector form a row with each value in its own column.
@@ -46,55 +48,55 @@ MCVectorFormat;
  @property values
  @brief An array containing the values as double precision floating-point numbers.
  */
-@property (assign, readonly, nonatomic) double *values;
+@property (strong, readonly, nonatomic) NSData *values;
 
 /**
  @property sumOfValues
  @brief The value obtained by adding together all values in the vector. (Lazy-loaded)
  */
-@property (assign, readonly, nonatomic) double sumOfValues;
+@property (strong, readonly, nonatomic) NSNumber *sumOfValues;
 
 /**
  @property productOfValues
  @brief The value obtained by multiplying together all values in the vector. (Lazy-loaded)
  */
-@property (assign, readonly, nonatomic) double productOfValues;
+@property (strong, readonly, nonatomic) NSNumber *productOfValues;
 
 /**
  @property l1Norm
  @brief The L1 norm of a vector is the sum of the absolute values of it's values: |x|_1 = ∑_i(|x_i|) (Lazy-loaded)
  */
-@property (assign, readonly, nonatomic) double l1Norm;
+@property (strong, readonly, nonatomic) NSNumber *l1Norm;
 
 /**
  @property l2Norm
  @brief The L2 norm of a vector is the square root of the sum of the squares of the absolute values of it's values: |x|_2 = √( ∑_i(|x_i|^2) ) (Lazy-loaded)
  */
-@property (assign, readonly, nonatomic) double l2Norm;
+@property (strong, readonly, nonatomic) NSNumber *l2Norm;
 
 /**
  @property l3Norm
  @brief The L3 norm of a vector is the cube root of the sum of the cubes of the absolute values of it's values: |x|_1 = ( ∑_i(|x_i|^3) )^(1/3) (Lazy-loaded)
  */
-@property (assign, readonly, nonatomic) double l3Norm;
+@property (strong, readonly, nonatomic) NSNumber *l3Norm;
 
 /**
  @property infinityNorm
  @brief The L∞ norm of a vector is the maximum absolute value of it's values: |x|_∞ = max_i( |x_i| ) (Lazy-loaded)
  */
-@property (assign, readonly, nonatomic) double infinityNorm;
+@property (strong, readonly, nonatomic) NSNumber *infinityNorm;
 
 /**
  @property maximumValue
  @brief The maximum value in the vector. (Lazy-loaded)
  */
-@property (assign, readonly, nonatomic) double maximumValue;
+@property (strong, readonly, nonatomic) NSNumber *maximumValue;
 
 /**
  @property minimumValue
  @brief The minimum value in the vector. (Lazy-loaded)
  */
-@property (assign, readonly, nonatomic) double minimumValue;
+@property (strong, readonly, nonatomic) NSNumber *minimumValue;
 
 /**
  @property maximumValueIndex
@@ -114,6 +116,8 @@ MCVectorFormat;
  */
 @property (strong, readonly, nonatomic) MCVector *absoluteVector;
 
+@property (assign, readonly, nonatomic) MCValuePrecision precision;
+
 #pragma mark - Constructors
 
 /**
@@ -123,7 +127,7 @@ MCVectorFormat;
  @param vectorFormat The vector representation of the values, either MCVectorFormatRow or MCVectorFormatColumn.
  @return A new instance of MCVector representing the specified vector.
  */
-- (instancetype)initWithValues:(double *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat;
+- (instancetype)initWithValues:(NSData *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat;
 
 /**
  @brief Class convenience method to create a new MCVector with supplied values in column vector format.
@@ -131,7 +135,7 @@ MCVectorFormat;
  @param length The number of values being stored in the vector.
  @return A new instance of MCVector representing the specified vector.
  */
-+ (instancetype)vectorWithValues:(double *)values length:(int)length;
++ (instancetype)vectorWithValues:(NSData *)values length:(int)length;
 
 /**
  @brief Class convenience method to create a new MCVector with supplied values in the specified vector format.
@@ -140,7 +144,7 @@ MCVectorFormat;
  @param vectorFormat The vector representation of the values, either MCVectorFormatRow or MCVectorFormatColumn.
  @return A new instance of MCVector representing the specified vector.
  */
-+ (instancetype)vectorWithValues:(double *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat;
++ (instancetype)vectorWithValues:(NSData *)values length:(int)length vectorFormat:(MCVectorFormat)vectorFormat;
 
 /**
  @brief Initializes a new MCVector with supplied values in the specified vector format.
@@ -165,7 +169,7 @@ MCVectorFormat;
  */
 + (instancetype)vectorWithValuesInArray:(NSArray *)values vectorFormat:(MCVectorFormat)vectorFormat;
 
-+ (instancetype)randomVectorOfLength:(int)length vectorFormat:(MCVectorFormat)vectorFormat;
++ (instancetype)randomVectorOfLength:(int)length vectorFormat:(MCVectorFormat)vectorFormat precision:(MCValuePrecision)precision;
 
 #pragma mark - NSObject overrides
 
@@ -191,7 +195,7 @@ MCVectorFormat;
  @param index The index of the value to retrieve.
  @return The double-precision floating-point value at position index.
  */
-- (double)valueAtIndex:(int)index;
+- (NSNumber *)valueAtIndex:(int)index;
 
 #pragma mark - Subscripting
 
@@ -210,7 +214,7 @@ MCVectorFormat;
  @param scalar Value to multiply each element of the vector by.
  @return New instance of MCVector holding the result of the scalar multiplication with the same vector format as the provided vector.
  */
-+ (MCVector *)productOfVector:(MCVector *)vector scalar:(double)scalar;
++ (MCVector *)productOfVector:(MCVector *)vector scalar:(NSNumber *)scalar;
 
 /**
  @brief Add two vectors together. Effectively adds elements in identical positions and stores the sums in a new vector.
@@ -250,7 +254,7 @@ MCVectorFormat;
  @param vectorB The second vector of the dot product.
  @return A scalar value representing the dot product of the vectors.
  */
-+ (double)dotProductOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB;
++ (NSNumber *)dotProductOfVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB;
 
 /**
  @brief Compute the cross product of the vectors, which is orthogonal to both input vectors. Currently only computes the cross product of two 3-dimensional vectors.
@@ -267,7 +271,7 @@ MCVectorFormat;
  @param vectorC The vector on the right side of the dot product.
  @return A scalar value containing the value of the dot product between the third vector and the cross product of the first two vectors.
  */
-+ (double)scalarTripleProductWithVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB vectorC:(MCVector *)vectorC;
++ (NSNumber *)scalarTripleProductWithVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB vectorC:(MCVector *)vectorC;
 
 /**
  @brief Computes the cross product of the first vector and the cross product of the remaining two vectors. ( A x (B x C) )

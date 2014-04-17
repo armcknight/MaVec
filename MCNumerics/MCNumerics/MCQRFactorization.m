@@ -10,6 +10,7 @@
 
 #import "MCQRFactorization.h"
 #import "MCMatrix.h"
+#import "MCNumberFormats.h"
 
 @interface MCQRFactorization ()
 
@@ -31,43 +32,86 @@
         int n = matrix.columns;
         _rows = m;
         _columns = n;
-        double *a = malloc(m * m * sizeof(double));
-        double *values = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
-        for (int i = 0; i < m * n; i += 1) {
-            a[i] = values[i];
-        }
-        int lda = m;
-        double *tau = malloc(MIN(m, n) * sizeof(double));
-        double wkopt;
         int lwork = -1;
         int info;
+        NSData *values = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
         
-        // query the optimal workspace size
-        dgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
+        NSData *data;
         
-        lwork = wkopt;
-        double *work = malloc(lwork * sizeof(double));
-        
-        // perform the factorization
-        dgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);
-        
-        // extract the q matrix using dorgqr funtion - see http://www.nag.com/numeric/fl/nagdoc_fl22/xhtml/F08/f08aff.xml and http://www.netlib.org/lapack/explore-html/d9/d1d/dorgqr_8f.html
-        
-        // query the optimal workspace size
-        lwork = -1;
-        dorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
-        
-        // extract the matrix
-        lwork = wkopt;
-        free(work);
-        work = malloc(lwork * sizeof(double));
-        dorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
-        
-        free(tau);
-        free(work);
+        if (matrix.precision == MCValuePrecisionDouble) {
+            size_t size = m * m * sizeof(double);
+            double *a = malloc(size);
+            for (int i = 0; i < m * n; i += 1) {
+                a[i] = ((double *)values.bytes)[i];
+            }
+            int lda = m;
+            double *tau = malloc(MIN(m, n) * sizeof(double));
+            double wkopt;
+            
+            // query the optimal workspace size
+            dgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
+            
+            lwork = wkopt;
+            double *work = malloc(lwork * sizeof(double));
+            
+            // perform the factorization
+            dgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);
+            
+            // extract the q matrix using dorgqr funtion - see http://www.nag.com/numeric/fl/nagdoc_fl22/xhtml/F08/f08aff.xml and http://www.netlib.org/lapack/explore-html/d9/d1d/dorgqr_8f.html
+            
+            // query the optimal workspace size
+            lwork = -1;
+            dorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
+            
+            // extract the matrix
+            lwork = wkopt;
+            free(work);
+            work = malloc(lwork * sizeof(double));
+            dorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
+            
+            free(tau);
+            free(work);
+            
+            data = [NSData dataWithBytes:a length:size];
+        } else {
+            size_t size = m * m * sizeof(float);
+            float *a = malloc(size);
+            for (int i = 0; i < m * n; i += 1) {
+                a[i] = ((float *)values.bytes)[i];
+            }
+            int lda = m;
+            float *tau = malloc(MIN(m, n) * sizeof(float));
+            float wkopt;
+            
+            // query the optimal workspace size
+            sgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
+            
+            lwork = wkopt;
+            float *work = malloc(lwork * sizeof(float));
+            
+            // perform the factorization
+            sgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);
+            
+            // extract the q matrix
+            
+            // query the optimal workspace size
+            lwork = -1;
+            sorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
+            
+            // extract the matrix
+            lwork = wkopt;
+            free(work);
+            work = malloc(lwork * sizeof(float));
+            sorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
+            
+            free(tau);
+            free(work);
+            
+            data = [NSData dataWithBytes:a length:size];
+        }
         
         // use output from dorgqr to build the q mcmatrix object
-        _q = [MCMatrix matrixWithValues:a rows:m columns:m leadingDimension:MCMatrixLeadingDimensionColumn];
+        _q = [MCMatrix matrixWithValues:data rows:m columns:m leadingDimension:MCMatrixLeadingDimensionColumn];
         
         // compute r by multiplying the transpose of q by the input matrix
         _r = [MCMatrix productOfMatrixA:_q.transpose andMatrixB:matrix];
@@ -88,6 +132,8 @@
     
     qrCopy->_q = _q;
     qrCopy->_r = _r;
+    qrCopy->_columns = _columns;
+    qrCopy->_rows = _rows;
     
     return qrCopy;
 }

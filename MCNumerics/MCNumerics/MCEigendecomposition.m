@@ -12,6 +12,7 @@
 #import "MCMatrix.h"
 #import "MCVector.h"
 #import "MCTribool.h"
+#import "MCNumberFormats.h"
 
 @implementation MCEigendecomposition
 
@@ -22,57 +23,106 @@
         if (matrix.isSymmetric.isYes) {
             int n = matrix.rows;
             int lda = n;
-            double *w = malloc(n * sizeof(double));
-            double *a = [matrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                              leadingDimension:MCMatrixLeadingDimensionColumn
-                                                packingMethod:MCMatrixValuePackingMethodConventional];
-            double wkopt;
             int lwork = -1;
             int iwkopt;
             int liwork = -1;
             int info;
-            dsyevd_("V", "L", &n, a, &lda, w, &wkopt, &lwork, &iwkopt, &liwork, &info);
-            
-            lwork = (int)wkopt;
-            double *work = malloc(lwork * sizeof(double));
-            liwork = iwkopt;
             int *iwork = malloc(liwork * sizeof(int));
-            dsyevd_("V", "L", &n, a, &lda, w, work, &lwork, iwork, &liwork, &info);
+            NSData *a = [matrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower
+                                             leadingDimension:MCMatrixLeadingDimensionColumn
+                                                packingMethod:MCMatrixValuePackingMethodConventional];
             
-            free(work);
-            free(iwork);
-            
-            if (info == 0) {
-                _eigenvalues = [MCVector vectorWithValues:w length:n];
-                _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
+            if (matrix.precision == MCValuePrecisionDouble) {
+                size_t size = n * sizeof(double);
+                double *w = malloc(size);
+                double wkopt;
+                dsyevd_("V", "L", &n, (double*)a.bytes, &lda, w, &wkopt, &lwork, &iwkopt, &liwork, &info);
+                
+                lwork = (int)wkopt;
+                double *work = malloc(lwork * sizeof(double));
+                liwork = iwkopt;
+                dsyevd_("V", "L", &n, (double *)a.bytes, &lda, w, work, &lwork, iwork, &liwork, &info);
+                
+                free(work);
+                free(iwork);
+                
+                if (info == 0) {
+                    _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:w length:size] length:n];
+                    _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
+                }
+            } else {
+                size_t size = n * sizeof(float);
+                float *w = malloc(size);
+                float wkopt;
+                ssyevd_("V", "L", &n, (float*)a.bytes, &lda, w, &wkopt, &lwork, &iwkopt, &liwork, &info);
+                
+                lwork = (int)wkopt;
+                float *work = malloc(lwork * sizeof(float));
+                liwork = iwkopt;
+                ssyevd_("V", "L", &n, (float *)a.bytes, &lda, w, work, &lwork, iwork, &liwork, &info);
+                
+                free(work);
+                free(iwork);
+                
+                if (info == 0) {
+                    _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:w length:size] length:n];
+                    _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
+                }
             }
         } else {
             int n = matrix.rows;
-            double *a = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
             int lda = n;
-            double *wr= malloc(n * sizeof(double));
-            double *wi= malloc(n * sizeof(double));
-            double *vl= malloc(n * sizeof(double));
             int ldvl = n;
-            double *vr= malloc(n * sizeof(double));
             int ldvr = n;
             int lwork = -1;
-            double wkopt;
             int info;
-            dgeev_("V", "V", &n, a, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
             
-            lwork = (int)wkopt;
-            double *work = malloc(lwork * sizeof(double));
-            dgeev_("V", "V", &n, a, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
+            NSData *a = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
             
-            free(wi);
-            free(vl);
-            free(work);
-            
-            if (info == 0) {
-                _eigenvalues = [MCVector vectorWithValues:wr length:n];
-                _eigenvectors = [MCMatrix matrixWithValues:vr rows:n columns:n];
+            if (matrix.precision == MCValuePrecisionDouble) {
+                size_t size = n * sizeof(double);
+                double *wr= malloc(size);
+                double *wi= malloc(size);
+                double *vl= malloc(size);
+                double *vr= malloc(size);
+                double wkopt;
+                dgeev_("V", "V", &n, (double *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
+                
+                lwork = (int)wkopt;
+                double *work = malloc(lwork * sizeof(double));
+                dgeev_("V", "V", &n, (double *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
+                
+                free(wi);
+                free(vl);
+                free(work);
+                
+                if (info == 0) {
+                    _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
+                    _eigenvectors = [MCMatrix matrixWithValues:[NSData dataWithBytes:vr length:size] rows:n columns:n];
+                }
+            } else {
+                size_t size = n * sizeof(float);
+                float *wr= malloc(size);
+                float *wi= malloc(size);
+                float *vl= malloc(size);
+                float *vr= malloc(size);
+                float wkopt;
+                sgeev_("V", "V", &n, (float *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
+                
+                lwork = (int)wkopt;
+                float *work = malloc(lwork * sizeof(float));
+                sgeev_("V", "V", &n, (float *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
+                
+                free(wi);
+                free(vl);
+                free(work);
+                
+                if (info == 0) {
+                    _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
+                    _eigenvectors = [MCMatrix matrixWithValues:[NSData dataWithBytes:vr length:size] rows:n columns:n];
+                }
             }
+            
         }
     }
     return self;

@@ -51,20 +51,21 @@ MCMatrixNorm;
 @property (strong, readwrite, nonatomic) MCSingularValueDecomposition *singularValueDecomposition;
 @property (strong, readwrite, nonatomic) MCEigendecomposition *eigendecomposition;
 @property (strong, readwrite, nonatomic) MCMatrix *inverse;
-@property (assign, readwrite, nonatomic) double determinant;
-@property (assign, readwrite, nonatomic) double conditionNumber;
+@property (strong, readwrite, nonatomic) NSNumber *determinant;
+@property (strong, readwrite, nonatomic) NSNumber *conditionNumber;
 @property (assign, readwrite, nonatomic) MCMatrixDefiniteness definiteness;
 @property (strong, readwrite, nonatomic) MCTribool *isSymmetric;
 @property (strong, readwrite, nonatomic) MCVector *diagonalValues;
-@property (assign, readwrite, nonatomic) double trace;
+@property (strong, readwrite, nonatomic) NSNumber *trace;
 @property (strong, readwrite, nonatomic) MCMatrix *adjugate;
 @property (strong, readwrite, nonatomic) MCMatrix *minorMatrix;
 @property (strong, readwrite, nonatomic) MCMatrix *cofactorMatrix;
-@property (assign, readwrite, nonatomic) double normL1;
-@property (assign, readwrite, nonatomic) double normInfinity;
-@property (assign, readwrite, nonatomic) double normFroebenius;
-@property (assign, readwrite, nonatomic) double normMax;
+@property (strong, readwrite, nonatomic) NSNumber *normL1;
+@property (strong, readwrite, nonatomic) NSNumber *normInfinity;
+@property (strong, readwrite, nonatomic) NSNumber *normFroebenius;
+@property (strong, readwrite, nonatomic) NSNumber *normMax;
 @property (assign, readwrite, nonatomic) MCMatrixTriangularComponent triangularComponent;
+@property (assign, readwrite, nonatomic) MCValuePrecision precision;
 
 // private properties for band matrices
 @property (assign, nonatomic) int bandwidth;
@@ -76,7 +77,8 @@ MCMatrixNorm;
  @param size Amount of random values to generate.
  @return C array point containing specified number of random values.
  */
-+ (double *)randomArrayOfSize:(int)size;
++ (NSData *)randomArrayOfSize:(int)size
+                    precision:(MCValuePrecision)precision;
 
 /**
  @brief Sets all properties to default states.
@@ -90,7 +92,7 @@ MCMatrixNorm;
  @param normType The type of norm to compute.
  @return The calculated norm of desired type of this matrix as a floating-point value.
  */
-- (double)normOfType:(MCMatrixNorm)normType;
+- (NSNumber *)normOfType:(MCMatrixNorm)normType;
 
 @end
 
@@ -98,7 +100,7 @@ MCMatrixNorm;
 
 #pragma mark - Constructors
 
-- (instancetype)initWithValues:(double *)values
+- (instancetype)initWithValues:(NSData *)values
                           rows:(int)rows
                        columns:(int)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
@@ -113,6 +115,7 @@ MCMatrixNorm;
         _values = values;
         _rows = rows;
         _columns = columns;
+        _precision = kMCIsDoubleType(values.length / (rows * columns)) ? MCValuePrecisionDouble : MCValuePrecisionSingle;
     }
     return self;
 }
@@ -123,62 +126,122 @@ MCMatrixNorm;
 {
     int columns = (int)columnVectors.count;
     int rows = ((MCVector *)columnVectors.firstObject).length;
-    double *values = malloc(rows * columns * sizeof(double));
-    [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
-        for(int i = 0; i < rows; i++) {
-            values[column * rows + i] = [columnVector valueAtIndex:i];
-        }
-    }];
-    return [[MCMatrix alloc] initWithValues:values
-                                       rows:rows
-                                    columns:columns
-                           leadingDimension:MCMatrixLeadingDimensionColumn
-                              packingMethod:MCMatrixValuePackingMethodConventional
-                        triangularComponent:MCMatrixTriangularComponentBoth];
+    
+    MCMatrix *matrix;
+    
+    if (kMCIsDoubleEncoding(((MCVector *)columnVectors[0])[0].objCType)) {
+        size_t size = rows * columns * sizeof(double);
+        double *values = malloc(size);
+        [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
+            for(int i = 0; i < rows; i++) {
+                values[column * rows + i] = columnVector[i].doubleValue;
+            }
+        }];
+        matrix = [[MCMatrix alloc] initWithValues:[NSData dataWithBytes:values length:size]
+                                             rows:rows
+                                          columns:columns
+                                 leadingDimension:MCMatrixLeadingDimensionColumn
+                                    packingMethod:MCMatrixValuePackingMethodConventional
+                              triangularComponent:MCMatrixTriangularComponentBoth];
+    } else {
+        size_t size = rows * columns * sizeof(float);
+        float *values = malloc(size);
+        [columnVectors enumerateObjectsUsingBlock:^(MCVector *columnVector, NSUInteger column, BOOL *stop) {
+            for(int i = 0; i < rows; i++) {
+                values[column * rows + i] = columnVector[i].floatValue;
+            }
+        }];
+        matrix = [[MCMatrix alloc] initWithValues:[NSData dataWithBytes:values length:size]
+                                             rows:rows
+                                          columns:columns
+                                 leadingDimension:MCMatrixLeadingDimensionColumn
+                                    packingMethod:MCMatrixValuePackingMethodConventional
+                              triangularComponent:MCMatrixTriangularComponentBoth];
+    }
+    
+    return matrix;
 }
 
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors
 {
     int rows = (int)rowVectors.count;
     int columns = ((MCVector *)rowVectors.firstObject).length;
-    double *values = malloc(rows * columns * sizeof(double));
-    [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
-        for(int i = 0; i < columns; i++) {
-            values[row * columns + i] = [rowVector valueAtIndex:i];
-        }
-    }];
-    return [[MCMatrix alloc] initWithValues:values
-                                       rows:rows
-                                    columns:columns
-                           leadingDimension:MCMatrixLeadingDimensionRow
-                              packingMethod:MCMatrixValuePackingMethodConventional
-                        triangularComponent:MCMatrixTriangularComponentBoth];
+    
+    MCMatrix *matrix;
+    
+    if (kMCIsDoubleEncoding(((MCVector *)rowVectors[0])[0].objCType)) {
+        size_t size = rows * columns * sizeof(double);
+        double *values = malloc(size);
+        [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
+            for(int i = 0; i < columns; i++) {
+                NSNumber *value = [rowVector valueAtIndex:i];
+                values[row * columns + i] = value.doubleValue;
+            }
+        }];
+        matrix = [[MCMatrix alloc] initWithValues:[NSData dataWithBytes:values length:size]
+                                             rows:rows
+                                          columns:columns
+                                 leadingDimension:MCMatrixLeadingDimensionRow
+                                    packingMethod:MCMatrixValuePackingMethodConventional
+                              triangularComponent:MCMatrixTriangularComponentBoth];
+    } else {
+        size_t size = rows * columns * sizeof(float);
+        float *values = malloc(size);
+        [rowVectors enumerateObjectsUsingBlock:^(MCVector *rowVector, NSUInteger row, BOOL *stop) {
+            for(int i = 0; i < columns; i++) {
+                NSNumber *value = [rowVector valueAtIndex:i];
+                values[row * columns + i] = value.floatValue;
+            }
+        }];
+        matrix = [[MCMatrix alloc] initWithValues:[NSData dataWithBytes:values length:size]
+                                             rows:rows
+                                          columns:columns
+                                 leadingDimension:MCMatrixLeadingDimensionRow
+                                    packingMethod:MCMatrixValuePackingMethodConventional
+                              triangularComponent:MCMatrixTriangularComponentBoth];
+    }
+    
+    return matrix;
 }
 
 + (instancetype)matrixWithRows:(int)rows
                        columns:(int)columns
+                     precision:(MCValuePrecision)precision
 {
-    return [[MCMatrix alloc] initWithValues:malloc(rows * columns * sizeof(double))
-                                       rows:rows
-                                    columns:columns
-                           leadingDimension:MCMatrixLeadingDimensionColumn
-                              packingMethod:MCMatrixValuePackingMethodConventional
-                        triangularComponent:MCMatrixTriangularComponentBoth];
+    MCMatrix *matrix;
+    
+    if (precision == MCValuePrecisionDouble) {
+        NSUInteger size = rows * columns * sizeof(double);
+        matrix = [[MCMatrix alloc] initWithValues:[NSData dataWithBytes:malloc(size) length:size]
+                                             rows:rows
+                                          columns:columns
+                                 leadingDimension:MCMatrixLeadingDimensionColumn
+                                    packingMethod:MCMatrixValuePackingMethodConventional
+                              triangularComponent:MCMatrixTriangularComponentBoth];
+    } else {
+        NSUInteger size = rows * columns * sizeof(float);
+        matrix = [[MCMatrix alloc] initWithValues:[NSData dataWithBytes:malloc(size) length:size]
+                                             rows:rows
+                                          columns:columns
+                                 leadingDimension:MCMatrixLeadingDimensionColumn
+                                    packingMethod:MCMatrixValuePackingMethodConventional
+                              triangularComponent:MCMatrixTriangularComponentBoth];
+    }
+    
+    return matrix;
 }
 
 + (instancetype)matrixWithRows:(int)rows
                        columns:(int)columns
+                     precision:(MCValuePrecision)precision
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
-    return [[MCMatrix alloc] initWithValues:malloc(rows * columns * sizeof(double))
-                                       rows:rows
-                                    columns:columns
-                           leadingDimension:leadingDimension
-                              packingMethod:MCMatrixValuePackingMethodConventional
-                        triangularComponent:MCMatrixTriangularComponentBoth];
+    MCMatrix *matrix = [self matrixWithRows:rows columns:columns precision:precision];
+    matrix.leadingDimension = leadingDimension;
+    return matrix;
 }
 
-+ (instancetype)matrixWithValues:(double *)values
++ (instancetype)matrixWithValues:(NSData *)values
                             rows:(int)rows
                          columns:(int)columns
 {
@@ -190,7 +253,7 @@ MCMatrixNorm;
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
-+ (instancetype)matrixWithValues:(double *)values
++ (instancetype)matrixWithValues:(NSData *)values
                             rows:(int)rows
                          columns:(int)columns
                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
@@ -203,34 +266,45 @@ MCMatrixNorm;
                         triangularComponent:MCMatrixTriangularComponentBoth];
 }
 
-+ (instancetype)identityMatrixWithSize:(int)size
++ (instancetype)identityMatrixOfOrder:(int)order
+                            precision:(MCValuePrecision)precision
 {
-    double *values = malloc(size * size * sizeof(double));
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            values[i * size + j] = i == j ? 1.0 : 0.0;
+    MCMatrix *matrix;
+    
+    if (precision == MCValuePrecisionDouble) {
+        NSUInteger size = order * order * sizeof(double);
+        double *values = malloc(size);
+        for (int i = 0; i < order; i++) {
+            for (int j = 0; j < order; j++) {
+                values[i * order + j] = i == j ? 1.0 : 0.0;
+            }
         }
+        matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
+                                       rows:order
+                                    columns:order];
+    } else {
+        NSUInteger size = order * order * sizeof(float);
+        float *values = malloc(size);
+        for (int i = 0; i < order; i++) {
+            for (int j = 0; j < order; j++) {
+                values[i * order + j] = i == j ? 1.0 : 0.0;
+            }
+        }
+        matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
+                                       rows:order
+                                    columns:order];
     }
-    return [MCMatrix matrixWithValues:values
-                                 rows:size
-                              columns:size];
+    
+    return matrix;
 }
 
-+ (instancetype)diagonalMatrixWithValues:(double *)values
-                                    size:(int)size
++ (instancetype)diagonalMatrixWithValues:(NSData *)values
+                                   order:(int)order
 {
-    double *allValues = malloc(size * size * sizeof(double));
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            allValues[i * size + j] = i == j ? values[i] : 0.0;
-        }
-    }
-    return [MCMatrix matrixWithValues:allValues
-                                 rows:size
-                              columns:size];
+    return [MCMatrix bandMatrixWithValues:values order:order upperCodiagonals:0 lowerCodiagonals:0];
 }
 
-+ (instancetype)triangularMatrixWithPackedValues:(double *)values
++ (instancetype)triangularMatrixWithPackedValues:(NSData *)values
                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                            order:(int)order
@@ -245,7 +319,7 @@ MCMatrixNorm;
     return matrix;
 }
 
-+ (instancetype)symmetricMatrixWithPackedValues:(double *)values
++ (instancetype)symmetricMatrixWithPackedValues:(NSData *)values
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                           order:(int)order
@@ -260,7 +334,7 @@ MCMatrixNorm;
     return matrix;
 }
 
-+ (instancetype)bandMatrixWithValues:(double *)values
++ (instancetype)bandMatrixWithValues:(NSData *)values
                                order:(int)order
                     upperCodiagonals:(int)upperCodiagonals
                     lowerCodiagonals:(int)lowerCodiagonals
@@ -276,7 +350,8 @@ MCMatrixNorm;
                                                            : MCMatrixTriangularComponentLower)
                                                         : (lowerCodiagonals == 0
                                                            ? MCMatrixTriangularComponentBoth
-                                                           : MCMatrixTriangularComponentUpper)];
+                                                           : MCMatrixTriangularComponentUpper)]; // TODO: need to swap ...Both and ...Upper in the else branch of the outer ternary expression
+    
     
     matrix.upperCodiagonals = upperCodiagonals;
     matrix.bandwidth = lowerCodiagonals + upperCodiagonals + 1;
@@ -287,33 +362,34 @@ MCMatrixNorm;
 
 + (instancetype)randomMatrixWithRows:(int)rows
                              columns:(int)columns
+                           precision:(MCValuePrecision)precision
 {
-    double *values = [self randomArrayOfSize:rows * columns];
-    return [MCMatrix matrixWithValues:values
+    return [MCMatrix matrixWithValues:[self randomArrayOfSize:rows * columns precision:precision]
                                  rows:rows
                               columns:columns];
 }
 
 + (instancetype)randomSymmetricMatrixOfOrder:(int)order
+                                   precision:(MCValuePrecision)precision
 {
-    double *values = [self randomArrayOfSize:(order * (order + 1))/2];
-    return [MCMatrix symmetricMatrixWithPackedValues:values
+    return [MCMatrix symmetricMatrixWithPackedValues:[self randomArrayOfSize:(order * (order + 1))/2 precision:precision]
                                  triangularComponent:MCMatrixTriangularComponentUpper
                                     leadingDimension:MCMatrixLeadingDimensionColumn
                                                order:order];
 }
 
 + (instancetype)randomDiagonalMatrixOfOrder:(int)order
+                                  precision:(MCValuePrecision)precision
 {
-    double *values = [self randomArrayOfSize:order];
-    return [MCMatrix diagonalMatrixWithValues:values size:order];
+    return [MCMatrix diagonalMatrixWithValues:[self randomArrayOfSize:order precision:precision]
+                                        order:order];
 }
 
 + (instancetype)randomTriangularMatrixOfOrder:(int)order
+                                    precision:(MCValuePrecision)precision
                           triangularComponent:(MCMatrixTriangularComponent)triangularComponent
 {
-    double *values = [self randomArrayOfSize:(order * (order + 1))/2];
-    return [MCMatrix triangularMatrixWithPackedValues:values
+    return [MCMatrix triangularMatrixWithPackedValues:[self randomArrayOfSize:(order * (order + 1))/2 precision:precision]
                                 ofTriangularComponent:triangularComponent
                                      leadingDimension:MCMatrixLeadingDimensionColumn
                                                 order:order];
@@ -322,60 +398,89 @@ MCMatrixNorm;
 + (instancetype)randomBandMatrixOfOrder:(int)order
                        upperCodiagonals:(int)upperCodiagonals
                        lowerCodiagonals:(int)lowerCodiagonals
+                              precision:(MCValuePrecision)precision
 {
     int numberOfBandValues = (upperCodiagonals + lowerCodiagonals + 1) * order;
-    double *values = [self randomArrayOfSize:numberOfBandValues];
-    return [MCMatrix bandMatrixWithValues:values
+    return [MCMatrix bandMatrixWithValues:[self randomArrayOfSize:numberOfBandValues precision:precision]
                                     order:order
                          upperCodiagonals:upperCodiagonals
                          lowerCodiagonals:lowerCodiagonals];
-}
-
-- (void)dealloc
-{
-    free(_values);
 }
 
 #pragma mark - Lazy-loaded properties
 
 - (MCMatrix *)transpose
 {
-    if (!_transpose) {
-        double *aVals = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
-        double *tVals = malloc(self.rows * self.columns * sizeof(double));
+    if (_transpose == nil) {
+        NSData *aVals = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+        size_t elementSize = aVals.length / (self.rows * self.columns);
+        void *tVals;
+        if (kMCIsFloatType(elementSize)) {
+            tVals = malloc(self.rows * self.columns * sizeof(float));
+            vDSP_mtrans(aVals.bytes, 1, tVals, 1, self.columns, self.rows);
+        } else  {
+            tVals = malloc(self.rows * self.columns * sizeof(double));
+            vDSP_mtransD(aVals.bytes, 1, tVals, 1, self.columns, self.rows);
+        }
         
-        vDSP_mtransD(aVals, 1, tVals, 1, self.columns, self.rows);
-        
-        _transpose = [MCMatrix matrixWithValues:tVals rows:self.columns columns:self.rows];
+        _transpose = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:elementSize] rows:self.columns columns:self.rows];
     }
     
     return _transpose;
 }
 
-- (double)determinant
+- (NSNumber *)determinant
 {
-    if (isnan(_determinant)) {
+    if (_determinant == nil) {
         if (_rows == 2 && _columns == 2) {
-            double a = self[0][0].doubleValue;
-            double b = self[0][1].doubleValue;
-            double c = self[1][0].doubleValue;
-            double d = self[1][1].doubleValue;
-            
-            _determinant = a * d - b * c;
+            if (kMCIsDoubleEncoding(self[0][0].objCType)) {
+                double a = self[0][0].doubleValue;
+                double b = self[0][1].doubleValue;
+                double c = self[1][0].doubleValue;
+                double d = self[1][1].doubleValue;
+                
+                _determinant = @(a * d - b * c);
+            } else {
+                float a = self[0][0].floatValue;
+                float b = self[0][1].floatValue;
+                float c = self[1][0].floatValue;
+                float d = self[1][1].floatValue;
+                
+                _determinant = @(a * d - b * c);
+            }
         } else if (_rows == 3 && _columns == 3) {
-            double a = self[0][0].doubleValue;
-            double b = self[0][1].doubleValue;
-            double c = self[0][2].doubleValue;
-            double d = self[1][0].doubleValue;
-            double e = self[1][1].doubleValue;
-            double f = self[1][2].doubleValue;
-            double g = self[2][0].doubleValue;
-            double h = self[2][1].doubleValue;
-            double i = self[2][2].doubleValue;
-            
-            _determinant = a * e * i + b * f * g + c * d * h - g * e * c - h * f * a - i * d * b;
+            if (kMCIsDoubleEncoding(self[0][0].objCType)) {
+                double a = self[0][0].doubleValue;
+                double b = self[0][1].doubleValue;
+                double c = self[0][2].doubleValue;
+                double d = self[1][0].doubleValue;
+                double e = self[1][1].doubleValue;
+                double f = self[1][2].doubleValue;
+                double g = self[2][0].doubleValue;
+                double h = self[2][1].doubleValue;
+                double i = self[2][2].doubleValue;
+                
+                _determinant = @(a * e * i + b * f * g + c * d * h - g * e * c - h * f * a - i * d * b);
+            } else {
+                float a = self[0][0].floatValue;
+                float b = self[0][1].floatValue;
+                float c = self[0][2].floatValue;
+                float d = self[1][0].floatValue;
+                float e = self[1][1].floatValue;
+                float f = self[1][2].floatValue;
+                float g = self[2][0].floatValue;
+                float h = self[2][1].floatValue;
+                float i = self[2][2].floatValue;
+                
+                _determinant = @(a * e * i + b * f * g + c * d * h - g * e * c - h * f * a - i * d * b);
+            }
         } else {
-            _determinant = self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues * pow(-1.0, self.luFactorization.numberOfPermutations);
+            NSNumber *product = self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues;
+            if (kMCIsDoubleEncoding(product.objCType)) {
+                _determinant = @(self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues.doubleValue * pow(-1.0, self.luFactorization.numberOfPermutations));
+            } else {
+                _determinant = @(self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues.floatValue * powf(-1.f, self.luFactorization.numberOfPermutations));
+            }
         }
     }
     
@@ -384,9 +489,9 @@ MCMatrixNorm;
 
 - (MCMatrix *)inverse
 {
-    if (!_inverse) {
+    if (_inverse == nil) {
         if (_rows == _columns) {
-            double *a = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+            NSData *columnMajorData = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
             
             int m = _rows;
             int n = _columns;
@@ -397,25 +502,51 @@ MCMatrixNorm;
             
             int info = 0;
             
-            // compute factorization
-            dgetrf_(&m, &n, a, &lda, ipiv, &info);
-        
-            double wkopt;
-            int lwork = -1;
+            size_t valueType = columnMajorData.length / (m * n);
+            void *a;
+            if (kMCIsDoubleType(valueType)) {
+                a = (double *)columnMajorData.bytes;
+                
+                // compute factorization
+                dgetrf_(&m, &n, a, &lda, ipiv, &info);
+                
+                double wkopt;
+                int lwork = -1;
+                
+                // query optimal workspace size
+                dgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
+                
+                lwork = wkopt;
+                double *work = malloc(lwork * sizeof(double));
+                
+                // calculate the inverse
+                dgetri_(&m, a, &lda, ipiv, work, &lwork, &info);
+                
+                free(ipiv);
+                free(work);
+            } else {
+                a = (float *)columnMajorData.bytes;
+                
+                // compute factorization
+                sgetrf_(&m, &n, a, &lda, ipiv, &info);
+                
+                float wkopt;
+                int lwork = -1;
+                
+                // query optimal workspace size
+                sgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
+                
+                lwork = wkopt;
+                float *work = malloc(lwork * sizeof(float));
+                
+                // calculate the inverse
+                sgetri_(&m, a, &lda, ipiv, work, &lwork, &info);
+                
+                free(ipiv);
+                free(work);
+            }
             
-            // query optimal workspace size
-            dgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
-            
-            lwork = wkopt;
-            double *work = malloc(lwork * sizeof(double));
-            
-            // calculate the inverse
-            dgetri_(&m, a, &lda, ipiv, work, &lwork, &info);
-            
-            free(ipiv);
-            free(work);
-            
-            _inverse = [MCMatrix matrixWithValues:a
+            _inverse = [MCMatrix matrixWithValues:[NSData dataWithBytes:a length:columnMajorData.length]
                                              rows:_rows
                                           columns:_columns
                                leadingDimension:MCMatrixLeadingDimensionColumn];
@@ -425,29 +556,54 @@ MCMatrixNorm;
     return _inverse;
 }
 
-- (double)conditionNumber
+- (NSNumber *)conditionNumber
 {
-    if (_conditionNumber == -1.0) {
-        double *values = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    if (_conditionNumber == nil) {
+        NSData *rowMajorValues = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
         int m = self.rows;
         int n = self.columns;
-        double norm = dlange_("1", &m, &n, values, &m, nil);
-        
-        int lda = self.rows;
-        int *ipiv = malloc(m * sizeof(int));
-        int info;
-        dgetrf_(&m, &n, values, &lda, ipiv, &info);
-        
-        double conditionReciprocal;
-        double *work = malloc(4 * m * sizeof(double));
-        int *iwork = malloc(m * sizeof(int));
-        dgecon_("1", &m, values, &lda, &norm, &conditionReciprocal, work, iwork, &info);
-        
-        free(ipiv);
-        free(work);
-        free(iwork);
-        
-        _conditionNumber = 1.0 / conditionReciprocal;
+        size_t valueType = rowMajorValues.length / (m * n);
+        if (kMCIsDoubleType(valueType)) {
+            double *values = (double *)rowMajorValues.bytes;
+            
+            double norm = dlange_("1", &m, &n, values, &m, nil);
+            
+            int lda = self.rows;
+            int *ipiv = malloc(m * sizeof(int));
+            int info;
+            dgetrf_(&m, &n, values, &lda, ipiv, &info);
+            
+            double conditionReciprocal;
+            double *work = malloc(4 * m * sizeof(double));
+            int *iwork = malloc(m * sizeof(int));
+            dgecon_("1", &m, values, &lda, &norm, &conditionReciprocal, work, iwork, &info);
+            
+            free(ipiv);
+            free(work);
+            free(iwork);
+            
+            _conditionNumber = @(1.0 / conditionReciprocal);
+        } else {
+            float *values = (float *)rowMajorValues.bytes;
+            
+            float norm = slange_("1", &m, &n, values, &m, nil);
+            
+            int lda = self.rows;
+            int *ipiv = malloc(m * sizeof(int));
+            int info;
+            sgetrf_(&m, &n, values, &lda, ipiv, &info);
+            
+            float conditionReciprocal;
+            float *work = malloc(4 * m * sizeof(float));
+            int *iwork = malloc(m * sizeof(int));
+            sgecon_("1", &m, values, &lda, &norm, &conditionReciprocal, work, iwork, &info);
+            
+            free(ipiv);
+            free(work);
+            free(iwork);
+            
+            _conditionNumber = @(1.f / conditionReciprocal);
+        }
     }
     
     return _conditionNumber;
@@ -455,7 +611,7 @@ MCMatrixNorm;
 
 - (MCQRFactorization *)qrFactorization
 {
-    if (!_qrFactorization) {
+    if (_qrFactorization == nil) {
         _qrFactorization = [MCQRFactorization qrFactorizationOfMatrix:self];
     }
     
@@ -464,7 +620,7 @@ MCMatrixNorm;
 
 - (MCLUFactorization *)luFactorization
 {
-    if (!_luFactorization) {
+    if (_luFactorization == nil) {
         _luFactorization = [MCLUFactorization luFactorizationOfMatrix:self];
     }
     
@@ -473,7 +629,7 @@ MCMatrixNorm;
 
 - (MCSingularValueDecomposition *)singularValueDecomposition
 {
-    if (!_singularValueDecomposition) {
+    if (_singularValueDecomposition == nil) {
         _singularValueDecomposition = [MCSingularValueDecomposition singularValueDecompositionWithMatrix:self];
     }
     
@@ -482,7 +638,7 @@ MCMatrixNorm;
 
 - (MCEigendecomposition *)eigendecomposition
 {
-    if (!_eigendecomposition) {
+    if (_eigendecomposition == nil) {
         _eigendecomposition = [MCEigendecomposition eigendecompositionOfMatrix:self];
     }
     
@@ -501,7 +657,7 @@ MCMatrixNorm;
         
         for (int i = 0; i < self.rows; i++) {
             for (int j = i + 1; j < self.columns; j++) {
-                if ([self valueAtRow:i column:j] != [self valueAtRow:j column:i]) {
+                if ([[self valueAtRow:i column:j] compare:[self valueAtRow:j column:i]] != NSOrderedSame) {
                     _isSymmetric = [MCTribool triboolWithValue:MCTriboolValueNo];
                     return _isSymmetric;
                 }
@@ -520,11 +676,11 @@ MCMatrixNorm;
     if (self.isSymmetric && _definiteness == MCMatrixDefinitenessUnknown) {
         MCVector *eigenvalues = self.eigendecomposition.eigenvalues;
         for (int i = 0; i < eigenvalues.length; i += 1) {
-            double eigenvalue = [eigenvalues valueAtIndex:i];
-            if (eigenvalue > 0) {
+            NSNumber *eigenvalue = [eigenvalues valueAtIndex:i];
+            if ([eigenvalue compare:@0] == NSOrderedDescending) {
                 hasFoundEigenvalueStrictlyGreaterThanZero = YES;
             }
-            else if (eigenvalue < 0) {
+            else if ([eigenvalue compare:@0] == NSOrderedAscending) {
                 hasFoundEigenvalueStrictlyLesserThanZero = YES;
             }
             else {
@@ -556,52 +712,61 @@ MCMatrixNorm;
 
 - (MCVector *)diagonalValues
 {
-    if (!_diagonalValues) {
+    if (_diagonalValues == nil) {
         int length = MIN(self.rows, self.columns);
-        double *values = malloc(length * sizeof(double));
-        for (int i = 0; i < length; i += 1) {
-            values[i] = [self valueAtRow:i column:i];
+        
+        if (kMCIsDoubleEncoding(self[0][0].objCType)) {
+            double *values = malloc(length * sizeof(double));
+            for (int i = 0; i < length; i += 1) {
+                values[i] = [self valueAtRow:i column:i].doubleValue;
+            }
+            _diagonalValues = [MCVector vectorWithValues:[NSData dataWithBytes:values length:length * sizeof(double)] length:length vectorFormat:MCVectorFormatRowVector];
+        } else {
+            float *values = malloc(length * sizeof(float));
+            for (int i = 0; i < length; i += 1) {
+                values[i] = [self valueAtRow:i column:i].floatValue;
+            }
+            _diagonalValues = [MCVector vectorWithValues:[NSData dataWithBytes:values length:length * sizeof(float)] length:length vectorFormat:MCVectorFormatRowVector];
         }
-        _diagonalValues = [MCVector vectorWithValues:values length:length vectorFormat:MCVectorFormatRowVector];
     }
     return _diagonalValues;
 }
 
-- (double)trace
+- (NSNumber *)trace
 {
-    if (isnan(_trace)) {
+    if (_trace == nil) {
         _trace = self.diagonalValues.sumOfValues;
     }
     return _trace;
 }
 
-- (double)normInfinity
+- (NSNumber *)normInfinity
 {
-    if (isnan(_normInfinity)) {
+    if (_normInfinity == nil) {
         _normInfinity = [self normOfType:MCMatrixNormInfinity];
     }
     return _normInfinity;
 }
 
-- (double)normL1
+- (NSNumber *)normL1
 {
-    if (isnan(_normL1)) {
+    if (_normL1 == nil) {
         _normL1 = [self normOfType:MCMatrixNormL1];
     }
     return _normL1;
 }
 
-- (double)normMax
+- (NSNumber *)normMax
 {
-    if (isnan(_normMax)) {
+    if (_normMax == nil) {
         _normMax = [self normOfType:MCMatrixNormMax];
     }
     return _normMax;
 }
 
-- (double)normFroebenius
+- (NSNumber *)normFroebenius
 {
-    if (isnan(_normFroebenius)) {
+    if (_normFroebenius == nil) {
         _normFroebenius = [self normOfType:MCMatrixNormFroebenius];
     }
     return _normFroebenius;
@@ -609,34 +774,68 @@ MCMatrixNorm;
 
 - (MCMatrix *)minorMatrix
 {
-    if (!_minorMatrix) {
-        double *minorValues = malloc(self.rows * self.columns * sizeof(double));
-        
-        int minorIdx = 0;
-        for (int row = 0; row < self.rows; row += 1) {
-            for (int col = 0; col < self.columns; col += 1) {
-                MCMatrix *submatrix = [MCMatrix matrixWithRows:self.rows - 1
-                                                       columns:self.columns - 1
-                                            leadingDimension:self.leadingDimension];
-                
-                for (int i = 0; i < self.rows; i++) {
-                    for (int j = 0; j < self.rows; j++) {
-                        if (i != row && j != col) {
-                            [submatrix setEntryAtRow:i > row ? i - 1 : i
-                                              column:j > col ? j - 1 : j
-                                             toValue:[self valueAtRow:i column:j]];
+    if (_minorMatrix == nil) {
+        size_t valueType = self.values.length / (self.rows * self.columns);
+        if (kMCIsDoubleType(valueType)) {
+            double *minorValues = malloc(self.rows * self.columns * sizeof(double));
+            
+            int minorIdx = 0;
+            for (int row = 0; row < self.rows; row += 1) {
+                for (int col = 0; col < self.columns; col += 1) {
+                    MCMatrix *submatrix = [MCMatrix matrixWithRows:self.rows - 1
+                                                           columns:self.columns - 1
+                                                         precision:MCValuePrecisionDouble
+                                                  leadingDimension:self.leadingDimension];
+                    
+                    for (int i = 0; i < self.rows; i++) {
+                        for (int j = 0; j < self.rows; j++) {
+                            if (i != row && j != col) {
+                                [submatrix setEntryAtRow:i > row ? i - 1 : i
+                                                  column:j > col ? j - 1 : j
+                                                 toValue:[self valueAtRow:i column:j]];
+                            }
                         }
                     }
+                    
+                    minorValues[minorIdx++] = submatrix.determinant.doubleValue;
                 }
-                
-                minorValues[minorIdx++] = submatrix.determinant;
             }
+            
+            _minorMatrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:minorValues length:self.values.length]
+                                                 rows:self.rows
+                                              columns:self.columns
+                                     leadingDimension:MCMatrixLeadingDimensionRow];
+        } else if (kMCIsFloatType(valueType)) {
+            float *minorValues = malloc(self.rows * self.columns * sizeof(float));
+            
+            int minorIdx = 0;
+            for (int row = 0; row < self.rows; row += 1) {
+                for (int col = 0; col < self.columns; col += 1) {
+                    MCMatrix *submatrix = [MCMatrix matrixWithRows:self.rows - 1
+                                                           columns:self.columns - 1
+                                                         precision:MCValuePrecisionSingle
+                                                  leadingDimension:self.leadingDimension];
+                    
+                    for (int i = 0; i < self.rows; i++) {
+                        for (int j = 0; j < self.rows; j++) {
+                            if (i != row && j != col) {
+                                [submatrix setEntryAtRow:i > row ? i - 1 : i
+                                                  column:j > col ? j - 1 : j
+                                                 toValue:[self valueAtRow:i column:j]];
+                            }
+                        }
+                    }
+                    
+                    minorValues[minorIdx++] = submatrix.determinant.floatValue;
+                }
+            }
+            
+            _minorMatrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:minorValues length:self.values.length]
+                                                 rows:self.rows
+                                              columns:self.columns
+                                     leadingDimension:MCMatrixLeadingDimensionRow];
         }
         
-        _minorMatrix = [MCMatrix matrixWithValues:minorValues
-                                             rows:self.rows
-                                          columns:self.columns
-                               leadingDimension:MCMatrixLeadingDimensionRow];
     }
     
     return _minorMatrix;
@@ -644,22 +843,42 @@ MCMatrixNorm;
 
 - (MCMatrix *)cofactorMatrix
 {
-    if (!_cofactorMatrix) {
-        double *cofactors = malloc(self.rows * self.columns * sizeof(double));
-        
-        int cofactorIdx = 0;
-        for (int row = 0; row < self.rows; row += 1) {
-            for (int col = 0; col < self.columns; col += 1) {
-                double minor = self.minorMatrix[row][col].doubleValue;
-                double multiplier = pow(-1.0, row + col + 2.0);
-                cofactors[cofactorIdx++] = minor * multiplier;
+    if (_cofactorMatrix == nil) {
+        if (self.precision == MCValuePrecisionDouble) {
+            size_t size = self.rows * self.columns * sizeof(double);
+            double *cofactors = malloc(size);
+            
+            int cofactorIdx = 0;
+            for (int row = 0; row < self.rows; row += 1) {
+                for (int col = 0; col < self.columns; col += 1) {
+                    double minor = self.minorMatrix[row][col].doubleValue;
+                    double multiplier = pow(-1.0, row + col + 2.0);
+                    cofactors[cofactorIdx++] = minor * multiplier;
+                }
             }
+            
+            _cofactorMatrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:cofactors length:size]
+                                                    rows:self.rows
+                                                 columns:self.columns
+                                        leadingDimension:MCMatrixLeadingDimensionRow];
+        } else {
+            size_t size = self.rows * self.columns * sizeof(float);
+            float *cofactors = malloc(size);
+            
+            int cofactorIdx = 0;
+            for (int row = 0; row < self.rows; row += 1) {
+                for (int col = 0; col < self.columns; col += 1) {
+                    float minor = self.minorMatrix[row][col].floatValue;
+                    float multiplier = powf(-1.f, row + col + 2.f);
+                    cofactors[cofactorIdx++] = minor * multiplier;
+                }
+            }
+            
+            _cofactorMatrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:cofactors length:size]
+                                                    rows:self.rows
+                                                 columns:self.columns
+                                        leadingDimension:MCMatrixLeadingDimensionRow];
         }
-        
-        _cofactorMatrix = [MCMatrix matrixWithValues:cofactors
-                                                rows:self.rows
-                                             columns:self.columns
-                                  leadingDimension:MCMatrixLeadingDimensionRow];
     }
     
     return _cofactorMatrix;
@@ -667,7 +886,7 @@ MCMatrixNorm;
 
 - (MCMatrix *)adjugate
 {
-    if (!_adjugate) {
+    if (_adjugate == nil) {
         _adjugate = self.cofactorMatrix.transpose;
     }
     
@@ -684,15 +903,9 @@ MCMatrixNorm;
     // TODO: implement using cblas_dswap
     
     for (int i = 0; i < self.columns; i++) {
-        double temp = [self valueAtRow:rowA
-                                column:i];
-        [self setEntryAtRow:rowA
-                     column:i
-                    toValue:[self valueAtRow:rowB
-                                      column:i]];
-        [self setEntryAtRow:rowB
-                     column:i
-                    toValue:temp];
+        NSNumber *temp = [self valueAtRow:rowA column:i];
+        [self setEntryAtRow:rowA column:i toValue:[self valueAtRow:rowB column:i]];
+        [self setEntryAtRow:rowB column:i toValue:temp];
     }
 }
 
@@ -704,7 +917,7 @@ MCMatrixNorm;
     // TODO: implement using cblas_dswap
     
     for (int i = 0; i < self.rows; i++) {
-        double temp = [self valueAtRow:i column:columnA];
+        NSNumber *temp = [self valueAtRow:i column:columnA];
         [self setEntryAtRow:i column:columnA toValue:[self valueAtRow:i column:columnB]];
         [self setEntryAtRow:i column:columnB toValue:temp];
     }
@@ -719,7 +932,7 @@ MCMatrixNorm;
     } else {
         for (int row = 0; row < self.rows; row += 1) {
             for (int col = 0; col < self.columns; col += 1) {
-                if ([self valueAtRow:row column:col] != [otherMatrix valueAtRow:row column:col]) {
+                if ([[self valueAtRow:row column:col] compare:[otherMatrix valueAtRow:row column:col]] != NSOrderedSame) {
                     return NO;
                 }
             }
@@ -741,19 +954,28 @@ MCMatrixNorm;
 
 - (NSString *)description
 {
-    double max = DBL_MIN;
-    for (int i = 0; i < self.rows * self.columns; i++) {
-        max = MAX(max, fabs(self.values[i]));
+    int padding;
+    
+    if (self.precision == MCValuePrecisionDouble) {
+        double max = DBL_MIN;
+        for (int i = 0; i < self.rows * self.columns; i++) {
+            max = MAX(max, fabs(((double *)self.values.bytes)[i]));
+        }
+        padding = floor(log10(max)) + 5;
+    } else {
+        float max = DBL_MIN;
+        for (int i = 0; i < self.rows * self.columns; i++) {
+            max = MAX(max, fabs(((float *)self.values.bytes)[i]));
+        }
+        padding = floorf(log10f(max)) + 5;
     }
-    int padding = floor(log10(max)) + 5;
     
     NSMutableString *description = [@"\n" mutableCopy];
     
     for (int j = 0; j < self.rows; j++) {
         NSMutableString *line = [NSMutableString string];
         for (int k = 0; k < self.columns; k++) {
-            double value = [self valueAtRow:j column:k];
-            NSString *string = [NSString stringWithFormat:@"%.1f", value];
+            NSString *string = [NSString stringWithFormat:@"%.1f", self.precision == MCValuePrecisionDouble ? [self valueAtRow:j column:k].doubleValue : [self valueAtRow:j column:k].floatValue];
             [line appendString:[string stringByPaddingToLength:padding withString:@" " startingAtIndex:0]];
         }
         [description appendFormat:@"%@\n", line];
@@ -764,26 +986,49 @@ MCMatrixNorm;
 
 #pragma mark - Inspection
 
-- (double *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
+- (NSData *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension
 {
-    double *values = malloc(self.rows * self.columns * sizeof(double));
+    NSData *data;
     
     switch (self.packingMethod) {
             
         case MCMatrixValuePackingMethodConventional: {
-            if (self.leadingDimension == leadingDimension) {
-                for (int i = 0; i < self.rows * self.columns; i += 1) {
-                    values[i] = self.values[i];
-                }
-            } else {
-                int i = 0;
-                for (int j = 0; j < (leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
-                    for (int k = 0; k < (leadingDimension == MCMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
-                        int idx = ((i * (leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
-                        values[i] = self.values[idx];
-                        i++;
+            if (self.precision == MCValuePrecisionDouble) {
+                size_t size = self.rows * self.columns * sizeof(double);
+                double *values = malloc(size);
+                if (self.leadingDimension == leadingDimension) {
+                    for (int i = 0; i < self.rows * self.columns; i += 1) {
+                        values[i] = ((double *)self.values.bytes)[i];
+                    }
+                } else {
+                    int i = 0;
+                    for (int j = 0; j < (leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
+                        for (int k = 0; k < (leadingDimension == MCMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
+                            int idx = ((i * (leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
+                            values[i] = ((double *)self.values.bytes)[idx];
+                            i++;
+                        }
                     }
                 }
+                data = [NSData dataWithBytes:values length:size];
+            } else {
+                size_t size = self.rows * self.columns * sizeof(float);
+                float *values = malloc(size);
+                if (self.leadingDimension == leadingDimension) {
+                    for (int i = 0; i < self.rows * self.columns; i += 1) {
+                        values[i] = ((float *)self.values.bytes)[i];
+                    }
+                } else {
+                    int i = 0;
+                    for (int j = 0; j < (leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
+                        for (int k = 0; k < (leadingDimension == MCMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
+                            int idx = ((i * (leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
+                            values[i] = ((float *)self.values.bytes)[idx];
+                            i++;
+                        }
+                    }
+                }
+                data = [NSData dataWithBytes:values length:size];
             }
         } break;
             
@@ -806,35 +1051,74 @@ MCMatrixNorm;
              */
             
         case MCMatrixValuePackingMethodPacked: {
-            int k = 0; // current index in ivar array
-            int z = 0; // current index in constructing array
-            for (int i = 0; i < self.columns; i += 1) {
-                for (int j = 0; j < self.columns; j += 1) {
-                    BOOL shouldTakePackedValue = (self.triangularComponent == MCMatrixTriangularComponentUpper)
-                                            ? (self.leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j)
-                                            : (self.leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
-                    if (shouldTakePackedValue) {
-                        double value = self.values[k++];
-                        values[z++] = value;
-                    } else if (self.isSymmetric.isYes) {
-                        double value = [self valueAtRow:i column:j];
-                        values[z++] = value;
-                    } else {
-                        values[z++] = 0.0;
+            if (self.precision == MCValuePrecisionDouble) {
+                size_t size = self.rows * self.columns * sizeof(double);
+                double *values = malloc(size);
+                int k = 0; // current index in ivar array
+                int z = 0; // current index in constructing array
+                for (int i = 0; i < self.columns; i += 1) {
+                    for (int j = 0; j < self.columns; j += 1) {
+                        BOOL shouldTakePackedValue = (self.triangularComponent == MCMatrixTriangularComponentUpper)
+                        ? (self.leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j)
+                        : (self.leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
+                        if (shouldTakePackedValue) {
+                            double value = ((double *)self.values.bytes)[k++];
+                            values[z++] = value;
+                        } else if (self.isSymmetric.isYes) {
+                            double value = [self valueAtRow:i column:j].doubleValue;
+                            values[z++] = value;
+                        } else {
+                            values[z++] = 0.0;
+                        }
                     }
                 }
-            }
-            if (self.leadingDimension != leadingDimension) {
-                double *cvalues = malloc(self.rows * self.columns * sizeof(double));
-                int i = 0;
-                for (int j = 0; j < self.columns; j++) {
-                    for (int k = 0; k < self.rows; k++) {
-                        int idx = ((i * self.columns) % (self.columns * self.rows)) + j;
-                        cvalues[i] = values[idx];
-                        i++;
+                if (self.leadingDimension != leadingDimension) {
+                    double *cvalues = malloc(self.rows * self.columns * sizeof(double));
+                    int i = 0;
+                    for (int j = 0; j < self.columns; j++) {
+                        for (int k = 0; k < self.rows; k++) {
+                            int idx = ((i * self.columns) % (self.columns * self.rows)) + j;
+                            cvalues[i] = values[idx];
+                            i++;
+                        }
+                    }
+                    values = cvalues;
+                }
+                data = [NSData dataWithBytes:values length:size];
+            } else {
+                size_t size = self.rows * self.columns * sizeof(float);
+                float *values = malloc(size);
+                int k = 0; // current index in ivar array
+                int z = 0; // current index in constructing array
+                for (int i = 0; i < self.columns; i += 1) {
+                    for (int j = 0; j < self.columns; j += 1) {
+                        BOOL shouldTakePackedValue = (self.triangularComponent == MCMatrixTriangularComponentUpper)
+                        ? (self.leadingDimension == MCMatrixLeadingDimensionColumn ? j <= i : i <= j)
+                        : (self.leadingDimension == MCMatrixLeadingDimensionColumn ? i <= j : j <= i);
+                        if (shouldTakePackedValue) {
+                            float value = ((float *)self.values.bytes)[k++];
+                            values[z++] = value;
+                        } else if (self.isSymmetric.isYes) {
+                            float value = [self valueAtRow:i column:j].floatValue;
+                            values[z++] = value;
+                        } else {
+                            values[z++] = 0.f;
+                        }
                     }
                 }
-                values = cvalues;
+                if (self.leadingDimension != leadingDimension) {
+                    float *cvalues = malloc(self.rows * self.columns * sizeof(float));
+                    int i = 0;
+                    for (int j = 0; j < self.columns; j++) {
+                        for (int k = 0; k < self.rows; k++) {
+                            int idx = ((i * self.columns) % (self.columns * self.rows)) + j;
+                            cvalues[i] = values[idx];
+                            i++;
+                        }
+                    }
+                    values = cvalues;
+                }
+                data = [NSData dataWithBytes:values length:size];
             }
         } break;
             
@@ -867,97 +1151,172 @@ MCMatrixNorm;
              The values Aij inside the band width are stored in the linear array in positions [(i - j + nuca + 1) * n + j]
              
              */
-            for (int i = 0; i < self.columns; i += 1) {
-                for (int j = 0; j < self.columns; j += 1) {
-                    int indexIntoBandArray = ( i - j + self.upperCodiagonals ) * self.columns + j;
-                    int indexIntoUnpackedArray = (leadingDimension == MCMatrixLeadingDimensionColumn ? j : i) * self.columns + (leadingDimension == MCMatrixLeadingDimensionColumn ? i : j);
-                    if (indexIntoBandArray >= 0 && indexIntoBandArray < self.bandwidth * self.columns) {
-                        double value = self.values[indexIntoBandArray];
-                        values[indexIntoUnpackedArray] = self.values[indexIntoBandArray];
-                    } else {
-                        values[indexIntoUnpackedArray] = 0.0;
+            if (self.precision == MCValuePrecisionDouble) {
+                size_t size = self.rows * self.columns * sizeof(double);
+                double *values = malloc(size);
+                for (int i = 0; i < self.columns; i += 1) {
+                    for (int j = 0; j < self.columns; j += 1) {
+                        int indexIntoBandArray = ( i - j + self.upperCodiagonals ) * self.columns + j;
+                        int indexIntoUnpackedArray = (leadingDimension == MCMatrixLeadingDimensionColumn ? j : i) * self.columns + (leadingDimension == MCMatrixLeadingDimensionColumn ? i : j);
+                        if (indexIntoBandArray >= 0 && indexIntoBandArray < self.bandwidth * self.columns) {
+                            values[indexIntoUnpackedArray] = ((double *)self.values.bytes)[indexIntoBandArray];
+                        } else {
+                            values[indexIntoUnpackedArray] = 0.0;
+                        }
                     }
                 }
+                data = [NSData dataWithBytes:values length:size];
+            } else {
+                size_t size = self.rows * self.columns * sizeof(float);
+                float *values = malloc(size);
+                for (int i = 0; i < self.columns; i += 1) {
+                    for (int j = 0; j < self.columns; j += 1) {
+                        int indexIntoBandArray = ( i - j + self.upperCodiagonals ) * self.columns + j;
+                        int indexIntoUnpackedArray = (leadingDimension == MCMatrixLeadingDimensionColumn ? j : i) * self.columns + (leadingDimension == MCMatrixLeadingDimensionColumn ? i : j);
+                        if (indexIntoBandArray >= 0 && indexIntoBandArray < self.bandwidth * self.columns) {
+                            values[indexIntoUnpackedArray] = ((float *)self.values.bytes)[indexIntoBandArray];
+                        } else {
+                            values[indexIntoUnpackedArray] = 0.0f;
+                        }
+                    }
+                }
+                data = [NSData dataWithBytes:values length:size];
             }
         } break;
             
         default: break;
     }
     
-    return values;
+    return data;
 }
 
-- (double *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+- (NSData *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             packingMethod:(MCMatrixValuePackingMethod)packingMethod
 {
     NSAssert(self.rows == self.columns, @"Cannot extract triangular components from non-square matrices");
     
-    int numberOfValues = packingMethod == MCMatrixValuePackingMethodPacked ? ((self.rows * (self.rows + 1)) / 2) : self.rows * self.rows;
-    double *values = malloc(numberOfValues * sizeof(double));
+    NSData *data;
     
+    int numberOfValues = packingMethod == MCMatrixValuePackingMethodPacked ? ((self.rows * (self.rows + 1)) / 2) : self.rows * self.rows;
     int i = 0;
     int outerLimit = self.leadingDimension == MCMatrixLeadingDimensionRow ? self.rows : self.columns;
     int innerLimit = self.leadingDimension == MCMatrixLeadingDimensionRow ? self.columns : self.rows;
     
-    for (int j = 0; j < outerLimit; j++) {
-        for (int k = 0; k < innerLimit; k++) {
-            int row = leadingDimension == MCMatrixLeadingDimensionRow ? j : k;
-            int col = leadingDimension == MCMatrixLeadingDimensionRow ? k : j;
-            
-            BOOL shouldStoreValueForLowerTriangle = triangularComponent == MCMatrixTriangularComponentLower && col <= row;
-            BOOL shouldStoreValueForUpperTriangle = triangularComponent == MCMatrixTriangularComponentUpper && row <= col;
-            
-            if (shouldStoreValueForLowerTriangle || shouldStoreValueForUpperTriangle) {
-                double value = [self valueAtRow:row column:col];
-                values[i++] = value;
-            } else if (packingMethod == MCMatrixValuePackingMethodConventional) {
-                values[i++] = 0.0;
+    if (self.precision == MCValuePrecisionDouble) {
+        size_t size = numberOfValues * sizeof(double);
+        double *values = malloc(size);
+        for (int j = 0; j < outerLimit; j++) {
+            for (int k = 0; k < innerLimit; k++) {
+                int row = leadingDimension == MCMatrixLeadingDimensionRow ? j : k;
+                int col = leadingDimension == MCMatrixLeadingDimensionRow ? k : j;
+                
+                BOOL shouldStoreValueForLowerTriangle = triangularComponent == MCMatrixTriangularComponentLower && col <= row;
+                BOOL shouldStoreValueForUpperTriangle = triangularComponent == MCMatrixTriangularComponentUpper && row <= col;
+                
+                if (shouldStoreValueForLowerTriangle || shouldStoreValueForUpperTriangle) {
+                    double value = [self valueAtRow:row column:col].doubleValue;
+                    values[i++] = value;
+                } else if (packingMethod == MCMatrixValuePackingMethodConventional) {
+                    values[i++] = 0.0;
+                }
             }
         }
+        data = [NSData dataWithBytes:values length:size];
+    } else {
+        size_t size = numberOfValues * sizeof(float);
+        float *values = malloc(size);
+        for (int j = 0; j < outerLimit; j++) {
+            for (int k = 0; k < innerLimit; k++) {
+                int row = leadingDimension == MCMatrixLeadingDimensionRow ? j : k;
+                int col = leadingDimension == MCMatrixLeadingDimensionRow ? k : j;
+                
+                BOOL shouldStoreValueForLowerTriangle = triangularComponent == MCMatrixTriangularComponentLower && col <= row;
+                BOOL shouldStoreValueForUpperTriangle = triangularComponent == MCMatrixTriangularComponentUpper && row <= col;
+                
+                if (shouldStoreValueForLowerTriangle || shouldStoreValueForUpperTriangle) {
+                    float value = [self valueAtRow:row column:col].floatValue;
+                    values[i++] = value;
+                } else if (packingMethod == MCMatrixValuePackingMethodConventional) {
+                    values[i++] = 0.0f;
+                }
+            }
+        }
+        data = [NSData dataWithBytes:values length:size];
     }
     
-    return values;
+    return data;
 }
 
-- (double *)valuesInBandBetweenUpperCodiagonal:(int)upperCodiagonal
+- (NSData *)valuesInBandBetweenUpperCodiagonal:(int)upperCodiagonal
                                lowerCodiagonal:(int)lowerCodiagonal
 {
     NSAssert(self.rows == self.columns, @"Cannot extract bands from rectangular matrices.");
     
     // TODO: handle rectangular matrices
     
+    NSData *data;
+    
     int bandwidth = upperCodiagonal + lowerCodiagonal + 1;
     int numberOfValues = bandwidth * self.columns;
-    double *values = malloc(numberOfValues * sizeof(double));
-    
     int i = 0;
-    for (int col = upperCodiagonal; col >= 0; col--) {
-        for (int row = -col; row < self.rows - col; row++) {
-            if (row < 0) {
-                values[i++] = 0.0;
-            } else {
-                double value = [self valueAtRow:row column:col + row];
-                values[i++] = value;
+    
+    if (self.precision == MCValuePrecisionDouble) {
+        size_t size = numberOfValues * sizeof(double);
+        double *values = malloc(size);
+        for (int col = upperCodiagonal; col >= 0; col--) {
+            for (int row = -col; row < self.rows - col; row++) {
+                if (row < 0) {
+                    values[i++] = 0.0;
+                } else {
+                    double value = [self valueAtRow:row column:col + row].doubleValue;
+                    values[i++] = value;
+                }
             }
         }
-    }
-    
-    for (int row = 1; row <= lowerCodiagonal; row++) {
-        for (int col = 0; col < self.columns; col++) {
-            if (col < self.columns - row) {
-                double value = [self valueAtRow:row + col column:col];
-                values[i++] = value;
-            } else {
-                values[i++] = 0.0;
+        
+        for (int row = 1; row <= lowerCodiagonal; row++) {
+            for (int col = 0; col < self.columns; col++) {
+                if (col < self.columns - row) {
+                    double value = [self valueAtRow:row + col column:col].doubleValue;
+                    values[i++] = value;
+                } else {
+                    values[i++] = 0.0;
+                }
             }
         }
+        data = [NSData dataWithBytes:values length:size];
+    } else {
+        size_t size = numberOfValues * sizeof(float);
+        float *values = malloc(size);
+        for (int col = upperCodiagonal; col >= 0; col--) {
+            for (int row = -col; row < self.rows - col; row++) {
+                if (row < 0) {
+                    values[i++] = 0.0f;
+                } else {
+                    float value = [self valueAtRow:row column:col + row].floatValue;
+                    values[i++] = value;
+                }
+            }
+        }
+        
+        for (int row = 1; row <= lowerCodiagonal; row++) {
+            for (int col = 0; col < self.columns; col++) {
+                if (col < self.columns - row) {
+                    float value = [self valueAtRow:row + col column:col].floatValue;
+                    values[i++] = value;
+                } else {
+                    values[i++] = 0.0f;
+                }
+            }
+        }
+        data = [NSData dataWithBytes:values length:size];
     }
     
-    return values;
+    return data;
 }
 
-- (double)valueAtRow:(int)row column:(int)column
+- (NSNumber *)valueAtRow:(int)row column:(int)column
 {
     NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
@@ -966,9 +1325,9 @@ MCMatrixNorm;
             
         case MCMatrixValuePackingMethodConventional: {
             if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
-                return self.values[row * self.columns + column];
+                return @(self.precision == MCValuePrecisionDouble ? ((double *)self.values.bytes)[row * self.columns + column] : ((float *)self.values.bytes)[row * self.columns + column]);
             } else {
-                return self.values[column * self.rows + row];
+                return @(self.precision == MCValuePrecisionDouble ? ((double *)self.values.bytes)[column * self.rows + row] : ((float *)self.values.bytes)[column * self.rows + row]);
             }
         } break;
             
@@ -984,16 +1343,16 @@ MCMatrixNorm;
                         // number of values in columns before desired column
                         int valuesInSummedColumns = ((self.rows * (self.rows + 1)) - ((self.rows - column) * (self.rows - column + 1))) / 2;
                         int index = valuesInSummedColumns + row - column;
-                        return self.values[index];
+                        return @(self.precision == MCValuePrecisionDouble ? ((double *)self.values.bytes)[index] : ((float *)self.values.bytes)[index]);
                     } else {
                         // number of values in rows before desired row
                         int summedRows = row ;
                         int valuesInSummedRows = summedRows * (summedRows + 1) / 2;
                         int index = valuesInSummedRows + column;
-                        return self.values[index];
+                        return @(self.precision == MCValuePrecisionDouble ? ((double *)self.values.bytes)[index] : ((float *)self.values.bytes)[index]);
                     }
                 } else {
-                    return 0.0;
+                    return self.precision == MCValuePrecisionDouble ? @0.0 : @0.0f;
                 }
             } else /* if (self.triangularComponent == MCMatrixTriangularComponentUpper) */ {
                 if (row <= column || self.isSymmetric.isYes) {
@@ -1007,15 +1366,15 @@ MCMatrixNorm;
                         int summedColumns = column;
                         int valuesInSummedColumns = summedColumns * (summedColumns + 1) / 2;
                         int index = valuesInSummedColumns + row;
-                        return self.values[index];
+                        return @(self.precision == MCValuePrecisionDouble ? ((double *)self.values.bytes)[index] : ((float *)self.values.bytes)[index]);
                     } else {
                         // number of values in rows before desired row
                         int valuesInSummedRows = ((self.columns * (self.columns + 1)) - ((self.columns - row) * (self.columns - row + 1))) / 2;
                         int index = valuesInSummedRows + column - row;
-                        return self.values[index];
+                        return @(self.precision == MCValuePrecisionDouble ? ((double *)self.values.bytes)[index] : ((float *)self.values.bytes)[index]);
                     }
                 } else {
-                    return 0.0;
+                    return self.precision == MCValuePrecisionDouble ? @0.0 : @0.0f;
                 }
             }
         } break;
@@ -1023,39 +1382,64 @@ MCMatrixNorm;
         case MCMatrixValuePackingMethodBand: {
             int indexIntoBandArray = ( row - column + self.upperCodiagonals ) * self.columns + column;
             if (indexIntoBandArray >= 0 && indexIntoBandArray < self.bandwidth * self.columns) {
-                return self.values[indexIntoBandArray];
+                return @(self.precision == MCValuePrecisionDouble ? ((double *)self.values.bytes)[indexIntoBandArray] : ((float *)self.values.bytes)[indexIntoBandArray]);
             } else {
-                return 0.0;
+                return self.precision == MCValuePrecisionDouble ? @0.0 : @0.0f;
             }
         } break;
             
         default: break;
     }
-    
 }
 
 - (MCVector *)rowVectorForRow:(int)row
 {
     NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
     
-    double *values = malloc(self.columns * sizeof(double));
-    for (int col = 0; col < self.columns; col += 1) {
-        values[col] = [self valueAtRow:row column:col];
+    MCVector *vector;
+    
+    if (self.precision == MCValuePrecisionDouble) {
+        size_t size = self.columns * sizeof(double);
+        double *values = malloc(size);
+        for (int col = 0; col < self.columns; col += 1) {
+            values[col] = [self valueAtRow:row column:col].doubleValue;
+        }
+        vector = [MCVector vectorWithValues:[NSData dataWithBytes:values length:size] length:self.columns vectorFormat:MCVectorFormatRowVector];
+    } else {
+        size_t size = self.columns * sizeof(float);
+        float *values = malloc(size);
+        for (int col = 0; col < self.columns; col += 1) {
+            values[col] = [self valueAtRow:row column:col].floatValue;
+        }
+        vector = [MCVector vectorWithValues:[NSData dataWithBytes:values length:size] length:self.columns vectorFormat:MCVectorFormatRowVector];
     }
     
-    return [MCVector vectorWithValues:values length:self.columns vectorFormat:MCVectorFormatRowVector];
+    return vector;
 }
 
 - (MCVector *)columnVectorForColumn:(int)column
 {
     NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
     
-    double *values = malloc(self.rows * sizeof(double));
-    for (int row = 0; row < self.rows; row += 1) {
-        values[row] = [self valueAtRow:row column:column];
+    MCVector *vector;
+    
+    if (self.precision == MCValuePrecisionDouble) {
+        size_t size = self.rows * sizeof(double);
+        double *values = malloc(size);
+        for (int row = 0; row < self.rows; row += 1) {
+            values[row] = [self valueAtRow:row column:column].doubleValue;
+        }
+        vector = [MCVector vectorWithValues:[NSData dataWithBytes:values length:size] length:self.rows vectorFormat:MCVectorFormatColumnVector];
+    } else {
+        size_t size = self.rows * sizeof(float);
+        float *values = malloc(size);
+        for (int row = 0; row < self.rows; row += 1) {
+            values[row] = [self valueAtRow:row column:column].floatValue;
+        }
+        vector = [MCVector vectorWithValues:[NSData dataWithBytes:values length:size] length:self.rows vectorFormat:MCVectorFormatColumnVector];
     }
     
-    return [MCVector vectorWithValues:values length:self.rows vectorFormat:MCVectorFormatColumnVector];
+    return vector;
 }
 
 #pragma mark - Subscripting
@@ -1068,15 +1452,25 @@ MCMatrixNorm;
 }
 
 #pragma mark - Mutation
-- (void)setEntryAtRow:(int)row column:(int)column toValue:(double)value
+- (void)setEntryAtRow:(int)row column:(int)column toValue:(NSNumber *)value
 {
     NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
+    BOOL precisionsMatch = (self.precision == MCValuePrecisionDouble && kMCIsDoubleEncoding(value.objCType)) || (self.precision == MCValuePrecisionSingle && kMCIsFloatEncoding(value.objCType));
+    NSAssert(precisionsMatch, @"Precisions do not match.");
     
-    if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
-        self.values[row * self.columns + column] = value;
+    if (self.precision == MCValuePrecisionDouble) {
+        if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
+            ((double *)self.values.bytes)[row * self.columns + column] = value.doubleValue;
+        } else {
+            ((double *)self.values.bytes)[column * self.rows + row] = value.doubleValue;
+        }
     } else {
-        self.values[column * self.rows + row] = value;
+        if (self.leadingDimension == MCMatrixLeadingDimensionRow) {
+            ((float *)self.values.bytes)[row * self.columns + column] = value.floatValue;
+        } else {
+            ((float *)self.values.bytes)[column * self.rows + row] = value.floatValue;
+        }
     }
 }
 
@@ -1085,28 +1479,42 @@ MCMatrixNorm;
 + (MCMatrix *)productOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
     NSAssert(matrixA.columns == matrixB.rows, @"matrixA does not have an equal amount of columns as rows in matrixB");
+    NSAssert(matrixA.precision == matrixB.precision, @"Precisions do not match.");
     
-    double *aVals = [matrixA valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
-    double *bVals = [matrixB valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
-    double *cVals = malloc(matrixA.rows * matrixB.columns * sizeof(double));
+    MCMatrix *matrix;
     
-    vDSP_mmulD(aVals, 1, bVals, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
+    NSData *aVals = [matrixA valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    NSData *bVals = [matrixB valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
     
-    free(aVals);
-    free(bVals);
+    if (matrixA.precision == MCValuePrecisionDouble) {
+        size_t size = matrixA.rows * matrixB.columns * sizeof(double);
+        double *cVals = malloc(size);
+        vDSP_mmulD(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
+        matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:cVals length:size] rows:matrixA.rows columns:matrixB.columns leadingDimension:MCMatrixLeadingDimensionRow];
+    } else {
+        size_t size = matrixA.rows * matrixB.columns * sizeof(float);
+        float *cVals = malloc(size);
+        vDSP_mmul(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
+        matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:cVals length:size] rows:matrixA.rows columns:matrixB.columns leadingDimension:MCMatrixLeadingDimensionRow];
+    }
     
-    return [MCMatrix matrixWithValues:cVals rows:matrixA.rows columns:matrixB.columns leadingDimension:MCMatrixLeadingDimensionRow];
+    return matrix;
 }
 
 + (MCMatrix *)sumOfMatrixA:(MCMatrix *)matrixA andMatrixB:(MCMatrix *)matrixB
 {
     NSAssert(matrixA.rows == matrixB.rows, @"Matrices have mismatched amounts of rows.");
     NSAssert(matrixA.columns == matrixB.columns, @"Matrices have mismatched amounts of columns.");
+    NSAssert(matrixA.precision == matrixB.precision, @"Precisions do not match.");
     
-    MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns];
+    MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns precision:matrixA.precision];
     for (int i = 0; i < matrixA.rows; i++) {
         for (int j = 0; j < matrixA.columns; j++) {
-            [sum setEntryAtRow:i column:j toValue:[matrixA valueAtRow:i column:j] + [matrixB valueAtRow:i column:j]];
+            if (matrixA.precision == MCValuePrecisionDouble) {
+                [sum setEntryAtRow:i column:j toValue:@([matrixA valueAtRow:i column:j].doubleValue + [matrixB valueAtRow:i column:j].doubleValue)];
+            } else {
+                [sum setEntryAtRow:i column:j toValue:@([matrixA valueAtRow:i column:j].floatValue + [matrixB valueAtRow:i column:j].floatValue)];
+            }
         }
     }
     
@@ -1117,21 +1525,31 @@ MCMatrixNorm;
 {
     NSAssert(matrixA.rows == matrixB.rows, @"Matrices have mismatched amounts of rows.");
     NSAssert(matrixA.columns == matrixB.columns, @"Matrices have mismatched amounts of columns.");
+    NSAssert(matrixA.precision == matrixB.precision, @"Precisions do not match.");
     
-    MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns];
+    MCMatrix *sum = [MCMatrix matrixWithRows:matrixA.rows columns:matrixA.columns precision:matrixA.precision];
     for (int i = 0; i < matrixA.rows; i++) {
         for (int j = 0; j < matrixA.columns; j++) {
-            [sum setEntryAtRow:i column:j toValue:[matrixA valueAtRow:i column:j] - [matrixB valueAtRow:i column:j]];
+            if (matrixA.precision == MCValuePrecisionDouble) {
+                [sum setEntryAtRow:i column:j toValue:@([matrixA valueAtRow:i column:j].doubleValue - [matrixB valueAtRow:i column:j].doubleValue)];
+            } else {
+                [sum setEntryAtRow:i column:j toValue:@([matrixA valueAtRow:i column:j].floatValue - [matrixB valueAtRow:i column:j].floatValue)];
+            }
         }
     }
     
     return sum;
 }
 
+// TODO: this should really return a vector instead of a matrix
 + (MCMatrix *)solveLinearSystemWithMatrixA:(MCMatrix *)A
                                    valuesB:(MCMatrix *)B
 {
-    double *aVals = [A valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSAssert(A.precision == B.precision, @"Precisions do not match.");
+    
+    MCMatrix *matrix;
+    
+    NSData *aData = [A valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
     
     if (A.rows == A.columns) {
         // solve for square matrix A
@@ -1142,37 +1560,83 @@ MCMatrixNorm;
         int ldb = n;
         int info;
         int *ipiv = malloc(n * sizeof(int));
-        double *a = malloc(n * n * sizeof(double));
-        for (int i = 0; i < n * n; i++) {
-            a[i] = aVals[i];
-        }
         int nb = B.rows;
-        double *b = malloc(nb * sizeof(double));
-        for (int i = 0; i < nb; i++) {
-            b[i] = B.values[i];
-        }
         
-        dgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info);
-        
-        if (info != 0) {
-            free(ipiv);
-            free(a);
-            free(b);
-            return nil;
-        } else {
-            double *solutionValues = malloc(n * sizeof(double));
-            for (int i = 0; i < n; i++) {
-                solutionValues[i] = b[i];
+        if (A.precision == MCValuePrecisionDouble) {
+            double *a = malloc(n * n * sizeof(double));
+            for (int i = 0; i < n * n; i++) {
+                a[i] = ((double*)aData.bytes)[i];
+            } // TODO: maybe call -copy on aData instead of looping for deep copy here
+            double *b = malloc(nb * sizeof(double));
+            for (int i = 0; i < nb; i++) {
+                b[i] = ((double *)B.values.bytes)[i];
+            } // TODO: maybe call -copy on B.values here instead of looping for deep copy
+            
+            dgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info);
+            
+            if (info != 0) {
+                free(ipiv);
+                free(a);
+                free(b);
+                return nil;
+            } else {
+                size_t size = n * sizeof(double);
+                double *solutionValues = malloc(size);
+                for (int i = 0; i < n; i++) {
+                    solutionValues[i] = b[i];
+                }
+                free(ipiv);
+                free(a);
+                free(b);
+                matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:size]
+                                               rows:n
+                                            columns:1];
             }
-            free(ipiv);
-            free(a);
-            free(b);
-            return [MCMatrix matrixWithValues:solutionValues
-                                         rows:n
-                                      columns:1];
+        } else {
+            float *a = malloc(n * n * sizeof(float));
+            for (int i = 0; i < n * n; i++) {
+                a[i] = ((float*)aData.bytes)[i];
+            } // TODO: maybe call -copy on aData instead of looping for deep copy here
+            float *b = malloc(nb * sizeof(float));
+            for (int i = 0; i < nb; i++) {
+                b[i] = ((float *)B.values.bytes)[i];
+            } // TODO: maybe call -copy on B.values here instead of looping for deep copy
+            
+            sgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info);
+            
+            if (info != 0) {
+                free(ipiv);
+                free(a);
+                free(b);
+                return nil;
+            } else {
+                size_t size = n * sizeof(float);
+                float *solutionValues = malloc(size);
+                for (int i = 0; i < n; i++) {
+                    solutionValues[i] = b[i];
+                }
+                free(ipiv);
+                free(a);
+                free(b);
+                matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:size]
+                                               rows:n
+                                            columns:1];
+            }
         }
     } else {
         // solve for general m x n rectangular matrix A
+        
+        /*
+         solution interpretation:
+         
+         if  m >= n, rows 1 to n of b contain the least
+         squares solution vectors; the residual sum of squares for the
+         solution in each column is given by the sum of squares of
+         elements N+1 to M in that column;
+         
+         if  m < n, rows 1 to n of b contain the
+         minimum norm solution vectors;
+         */
         
         int m = A.rows;
         int n = A.columns;
@@ -1181,66 +1645,123 @@ MCMatrixNorm;
         int ldb = A.rows;
         int info;
         int lwork = -1;
-        double wkopt;
-        double* work;
-        double *a = malloc(m * n * sizeof(double));
-        for (int i = 0; i < m * n; i++) {
-            a[i] = aVals[i];
-        }
         int nb = B.rows;
-        double *b = malloc(nb * sizeof(double));
-        for (int i = 0; i < nb; i++) {
-            b[i] = B.values[i];
-        }
-        // get the optimal workspace
-        dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
         
-        lwork = (int)wkopt;
-        work = (double*)malloc(lwork * sizeof(double));
-        
-        // solve the system of equations
-        dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, work, &lwork, &info);
-        
-        /*
-         if  m >= n, rows 1 to n of b contain the least
-            squares solution vectors; the residual sum of squares for the
-            solution in each column is given by the sum of squares of
-            elements N+1 to M in that column;
-         if  m < n, rows 1 to n of b contain the
-            minimum norm solution vectors;
-         */
-        if (info != 0) {
-            free(a);
-            free(b);
-            free(work);
-            return nil;
-        } else {
-            double *solutionValues = malloc(n * sizeof(double));
-            for (int i = 0; i < n; i++) {
-                solutionValues[i] = b[i];
+        if (A.precision == MCValuePrecisionDouble) {
+            double wkopt;
+            double* work;
+            double *a = malloc(m * n * sizeof(double));
+            for (int i = 0; i < m * n; i++) {
+                a[i] = ((double *)aData.bytes)[i];
+            } // TODO: maybe call -copy on aData instead of looping for deep copy here
+            double *b = malloc(nb * sizeof(double));
+            for (int i = 0; i < nb; i++) {
+                b[i] = ((double *)B.values.bytes)[i];
+            } // TODO: maybe call -copy on B.values here instead of looping for deep copy
+            
+            // get the optimal workspace
+            dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
+            
+            lwork = (int)wkopt;
+            work = (double*)malloc(lwork * sizeof(double));
+            
+            // solve the system of equations
+            dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, work, &lwork, &info);
+            
+            if (info != 0) {
+                free(a);
+                free(b);
+                free(work);
+                return nil;
+            } else {
+                size_t size = n * sizeof(double);
+                double *solutionValues = malloc(size);
+                for (int i = 0; i < n; i++) {
+                    solutionValues[i] = b[i];
+                }
+                free(a);
+                free(b);
+                free(work);
+                matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:size]
+                                               rows:n
+                                            columns:1];
             }
-            free(a);
-            free(b);
-            free(work);
-            return [MCMatrix matrixWithValues:solutionValues rows:n columns:1];
+        } else {
+            float wkopt;
+            float* work;
+            float *a = malloc(m * n * sizeof(float));
+            for (int i = 0; i < m * n; i++) {
+                a[i] = ((float *)aData.bytes)[i];
+            } // TODO: maybe call -copy on aData instead of looping for deep copy here
+            float *b = malloc(nb * sizeof(float));
+            for (int i = 0; i < nb; i++) {
+                b[i] = ((float *)B.values.bytes)[i];
+            } // TODO: maybe call -copy on B.values here instead of looping for deep copy
+            
+            // get the optimal workspace
+            sgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
+            
+            lwork = (int)wkopt;
+            work = (float*)malloc(lwork * sizeof(float));
+            
+            // solve the system of equations
+            sgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, work, &lwork, &info);
+            
+            if (info != 0) {
+                free(a);
+                free(b);
+                free(work);
+                return nil;
+            } else {
+                size_t size = n * sizeof(float);
+                float *solutionValues = malloc(size);
+                for (int i = 0; i < n; i++) {
+                    solutionValues[i] = b[i];
+                }
+                free(a);
+                free(b);
+                free(work);
+                matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:size]
+                                               rows:n
+                                            columns:1];
+            }
         }
     }
+    
+    return matrix;
 }
 
 + (MCVector *)productOfMatrix:(MCMatrix *)matrix andVector:(MCVector *)vector
 {
     NSAssert(matrix.columns == vector.length, @"Matrix must have same amount of columns as vector length.");
+    NSAssert(matrix.precision == vector.precision, @"Precisions do not match.");
+    
+    MCVector *product;
     
     short order = matrix.leadingDimension == MCMatrixLeadingDimensionColumn ? CblasColMajor : CblasRowMajor;
     short transpose = CblasNoTrans;
     int rows = matrix.rows;
     int cols = matrix.columns;
-    double *result = malloc(vector.length * sizeof(double));
-    for (int i = 0; i < vector.length; i += 1) {
-        result[i] = 0.0;
+    
+    if (matrix.precision == MCValuePrecisionDouble) {
+        size_t size = vector.length * sizeof(double);
+        double *result = malloc(size);
+        for (int i = 0; i < vector.length; i += 1) {
+            result[i] = 0.0;
+        } // TODO: calloc instead of looping to set values in result to 0
+        cblas_dgemv(order, transpose, rows, cols, 1.0, matrix.values.bytes, rows, vector.values.bytes, 1, 1.0, result, 1);
+        product = [MCVector vectorWithValues:[NSData dataWithBytes:result length:size] length:vector.length];
+    } else {
+        size_t size = vector.length * sizeof(float);
+        float *result = malloc(size);
+        for (int i = 0; i < vector.length; i += 1) {
+            result[i] = 0.0f;
+        } // TODO: calloc instead of looping to set values in result to 0
+        cblas_sgemv(order, transpose, rows, cols, 1.0f, matrix.values.bytes, rows, vector.values.bytes, 1, 1.0f, result, 1);
+        product = [MCVector vectorWithValues:[NSData dataWithBytes:result length:size] length:vector.length];
     }
-    cblas_dgemv(order, transpose, rows, cols, 1.0, matrix.values, rows, vector.values, 1, 1.0, result, 1);
-    return [MCVector vectorWithValues:result length:vector.length];
+    
+    return product;
 }
 
 + (MCMatrix *)raiseMatrix:(MCMatrix *)matrix toPower:(NSUInteger)power
@@ -1269,83 +1790,58 @@ MCMatrixNorm;
     
     matrixCopy->_columns = _columns;
     matrixCopy->_rows = _rows;
-    
     matrixCopy->_leadingDimension = _leadingDimension;
     matrixCopy->_triangularComponent = _triangularComponent;
     matrixCopy->_packingMethod = _packingMethod;
-    
-    matrixCopy->_values = malloc(self.rows * self.columns * sizeof(double));
-    for (int i = 0; i < self.rows * self.columns; i += 1) {
-        matrixCopy->_values[i] = self.values[i];
-    }
-    
-    if (_transpose) {
-        matrixCopy->_transpose = _transpose.copy;
-    }
-    
-    matrixCopy->_determinant = _determinant;
-    
-    if (_inverse) {
-        matrixCopy->_inverse = _inverse.copy;
-    }
-    
-    if (_adjugate) {
-        matrixCopy->_adjugate = _adjugate.copy;
-    }
-    
-    if (_conditionNumber) {
-        matrixCopy->_conditionNumber = _conditionNumber;
-    }
-    
-    if (_qrFactorization) {
-        matrixCopy->_qrFactorization = _qrFactorization.copy;
-    }
-    
-    if (_luFactorization) {
-        matrixCopy->_luFactorization = _luFactorization.copy;
-    }
-    
-    if (_singularValueDecomposition) {
-        matrixCopy->_singularValueDecomposition = _singularValueDecomposition.copy;
-    }
-    
-    if (_eigendecomposition) {
-        matrixCopy->_eigendecomposition = _eigendecomposition.copy;
-    }
-    
-    if (_diagonalValues) {
-        matrixCopy->_diagonalValues = _diagonalValues.copy;
-    }
-    
-    if (_minorMatrix) {
-        matrixCopy->_minorMatrix = _minorMatrix.copy;
-    }
-    
-    if (_cofactorMatrix) {
-        matrixCopy->_cofactorMatrix = _cofactorMatrix.copy;
-    }
-    
-    matrixCopy->_isSymmetric = _isSymmetric.copy;
     matrixCopy->_definiteness = _definiteness;
-    matrixCopy->_trace = _trace;
     
-    matrixCopy->_normInfinity = _normInfinity;
-    matrixCopy->_normL1 = _normL1;
-    matrixCopy->_normFroebenius = _normFroebenius;
-    matrixCopy->_normFroebenius = _normMax;
+    matrixCopy->_values = _values.copy;
+    matrixCopy->_transpose = _transpose.copy;
+    matrixCopy->_determinant = _determinant.copy;
+    matrixCopy->_inverse = _inverse.copy;
+    matrixCopy->_adjugate = _adjugate.copy;
+    matrixCopy->_conditionNumber = _conditionNumber.copy;
+    matrixCopy->_qrFactorization = _qrFactorization.copy;
+    matrixCopy->_luFactorization = _luFactorization.copy;
+    matrixCopy->_singularValueDecomposition = _singularValueDecomposition.copy;
+    matrixCopy->_eigendecomposition = _eigendecomposition.copy;
+    matrixCopy->_diagonalValues = _diagonalValues.copy;
+    matrixCopy->_minorMatrix = _minorMatrix.copy;
+    matrixCopy->_cofactorMatrix = _cofactorMatrix.copy;
+    matrixCopy->_isSymmetric = _isSymmetric.copy;
+    matrixCopy->_trace = _trace.copy;
+    matrixCopy->_normInfinity = _normInfinity.copy;
+    matrixCopy->_normL1 = _normL1.copy;
+    matrixCopy->_normFroebenius = _normFroebenius.copy;
+    matrixCopy->_normMax = _normMax.copy;
     
     return matrixCopy;
 }
 
 #pragma mark - Private interface
 
-+ (double *)randomArrayOfSize:(int)size
++ (NSData *)randomArrayOfSize:(int)size
+                    precision:(MCValuePrecision)precision
 {
-    double *values = malloc(size * sizeof(double));
-    for (int i = 0; i < size; i += 1) {
-        values[i] = drand48();
+    NSData *data;
+    
+    if (precision == MCValuePrecisionDouble) {
+        NSUInteger dataSize = size * sizeof(double);
+        double *values = malloc(dataSize);
+        for (int i = 0; i < size; i += 1) {
+            values[i] = drand48();
+        }
+        data = [NSData dataWithBytes:values length:dataSize];
+    } else {
+        NSUInteger dataSize = size * sizeof(float);
+        float *values = malloc(dataSize);
+        for (int i = 0; i < size; i += 1) {
+            values[i] = rand() / RAND_MAX;
+        }
+        data = [NSData dataWithBytes:values length:dataSize];
     }
-    return values;
+    
+    return data;
 }
 
 - (instancetype)init
@@ -1355,6 +1851,7 @@ MCMatrixNorm;
         _rows = 0;
         _columns = 0;
         _values = nil;
+        _precision = MCValuePrecisionSingle;
         
         _leadingDimension = MCMatrixLeadingDimensionColumn;
         _packingMethod = MCMatrixValuePackingMethodConventional;
@@ -1368,28 +1865,28 @@ MCMatrixNorm;
         _eigendecomposition = nil;
         _inverse = nil;
         _transpose = nil;
-        _conditionNumber = -1.0;
-        _determinant = NAN;
+        _conditionNumber = nil;
+        _determinant = nil;
         _diagonalValues = nil;
-        _trace = NAN;
+        _trace = nil;
         _adjugate = nil;
         _minorMatrix = nil;
         _cofactorMatrix = nil;
-        _normInfinity = NAN;
-        _normL1 = NAN;
-        _normMax = NAN;
-        _normFroebenius = NAN;
+        _normInfinity = nil;
+        _normL1 = nil;
+        _normMax = nil;
+        _normFroebenius = nil;
     }
     return self;
 }
 
-- (double)normOfType:(MCMatrixNorm)normType
+- (NSNumber *)normOfType:(MCMatrixNorm)normType
 {
-    double normResult = NAN;
+    NSNumber *normResult;
     
-    double *values = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
     int m = self.rows;
     int n = self.columns;
+    NSData *valueData = [self valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
     char *norm = "";
     if (normType == MCMatrixNormL1) {
         norm = "1";
@@ -1401,7 +1898,11 @@ MCMatrixNorm;
         norm = "F";
     }
     
-    normResult = dlange_(norm, &m, &n, values, &m, nil);
+    if (self.precision == MCValuePrecisionDouble) {
+        normResult = @(dlange_(norm, &m, &n, (double *)valueData.bytes, &m, nil));
+    } else {
+        normResult = @(slange_(norm, &m, &n, (float *)valueData.bytes, &m, nil));
+    }
     
     return normResult;
 }

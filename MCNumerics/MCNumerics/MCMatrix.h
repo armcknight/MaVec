@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MCNumberFormats.h"
+
 @class MCSingularValueDecomposition;
 @class MCLUFactorization;
 @class MCQRFactorization;
@@ -147,7 +149,7 @@ MCMatrixDefiniteness;
  @property values
  @brief A one-dimensional C array of floating point values.
  */
-@property (nonatomic, readonly, assign) double *values;
+@property (nonatomic, readonly, assign) NSData *values;
 
 /**
  @property leadingDimension 
@@ -177,7 +179,7 @@ MCMatrixDefiniteness;
  @property determinant
  @brief The determinant of this matrix. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) double determinant;
+@property (nonatomic, readonly, strong) NSNumber *determinant;
 
 /**
  @property inverse
@@ -207,7 +209,7 @@ MCMatrixDefiniteness;
  @property conditionNumber
  @brief The condition number of this matrix. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) double conditionNumber;
+@property (nonatomic, readonly, strong) NSNumber *conditionNumber;
 
 /**
  @property qrFactorization
@@ -257,31 +259,33 @@ MCMatrixDefiniteness;
  @property trace
  @brief The sum of the values on the main diagonal. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) double trace;
+@property (nonatomic, readonly, strong) NSNumber *trace;
 
 /**
  @property normL1
  @brief The maximum absolute column sum of the matrix. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) double normL1;
+@property (nonatomic, readonly, strong) NSNumber *normL1;
 
 /**
  @property normInfinity
  @brief The maximum absolute row sum of the matrix. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) double normInfinity;
+@property (nonatomic, readonly, strong) NSNumber *normInfinity;
 
 /**
  @property normMax
  @brief The maximum value of all entries in the matrix. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) double normMax;
+@property (nonatomic, readonly, strong) NSNumber *normMax;
 
 /**
  @property normFroebenius
  @brief Square root of the sum of the squared values in the matrix. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) double normFroebenius;
+@property (nonatomic, readonly, strong) NSNumber *normFroebenius;
+
+@property (nonatomic, readonly, assign) MCValuePrecision precision;
 
 
 #pragma mark - Constructors
@@ -296,7 +300,7 @@ MCMatrixDefiniteness;
  @param triangularComponent Describes the triangular component described by the supplied values parameter.
  @return A new MCMatrix object.
  */
-- (instancetype)initWithValues:(double *)values
+- (instancetype)initWithValues:(NSData *)values
                           rows:(int)rows
                        columns:(int)columns
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension
@@ -307,24 +311,28 @@ MCMatrixDefiniteness;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns but without supplying values.
- @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in column-major format.
+ @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in column-major format and in the specified floating-point precision.
  @param rows The number of rows.
  @param columns The number of columns.
+ @param precision The precision the matrix values will be stored in.
  @return New instance of MCMatrix.
  */
 + (instancetype)matrixWithRows:(int)rows
-                       columns:(int)columns;
+                       columns:(int)columns
+                     precision:(MCValuePrecision)precision;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns and storage format, but without supplying values.
- @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in the specified format.
+ @description  Instantiates a new object of type MCMatrix with the specified number of rows and columns, with no supplied values, but with an initialized array to hold those values stored in the specified format and specified floating-point precision..
  @param rows The number of rows.
  @param columns The number of columns.
+ @param precision The precision the matrix values will be stored in.
  @param leadingDimension The format to store values in; either row- or column-major.
  @return New instance of MCMatrix.
  */
 + (instancetype)matrixWithRows:(int)rows
                        columns:(int)columns
+                     precision:(MCValuePrecision)precision
               leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
@@ -335,7 +343,7 @@ MCMatrixDefiniteness;
  @param columns The number of columns.
  @return New instance of MCMatrix.
  */
-+ (instancetype)matrixWithValues:(double *)values
++ (instancetype)matrixWithValues:(NSData *)values
                             rows:(int)rows
                          columns:(int)columns;
 
@@ -348,7 +356,7 @@ MCMatrixDefiniteness;
  @param leadingDimension The format to store values in; either row- or column-major.
  @return New instance of MCMatrix.
  */
-+ (instancetype)matrixWithValues:(double *)values
++ (instancetype)matrixWithValues:(NSData *)values
                             rows:(int)rows
                          columns:(int)columns
                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension;
@@ -356,19 +364,22 @@ MCMatrixDefiniteness;
 /**
  @brief Class convenience method to create a square identity matrix with the specified size.
  @description  Instantiates a new object of type MCMatrix with dimensions size x size whose diagonal values are 1.0 and all other values are 0.0, stored in column-major format.
- @param size The square dimension in which to create this identity matrix.
+ @param order The square dimension in which to create this identity matrix.
+ @param precision The precision of the floating point values.
  @return New instance of MCMatrix representing the identity matrix of dimension size x size.
  */
-+ (instancetype)identityMatrixWithSize:(int)size;
++ (instancetype)identityMatrixOfOrder:(int)order
+                            precision:(MCValuePrecision)precision;
 
 /**
  @brief Class convenience method to create a square matrix with the specified diagonal values.
  @description  Instantiates a new object of type MCMatrix of dimension size x size with the specified diagonal values and other values as 0.0, stored in column-major format.
  @param values The values for the diagonal of the matrix, from the top-leftmost value to the bottom-rightmost value.
+ @param order The square dimension inwhich to create this diagonal matrix.
  @return New instance of MCMatrix representing the square matrix of dimension size x size with specified diagonal values.
  */
-+ (instancetype)diagonalMatrixWithValues:(double *)values
-                                    size:(int)size;
++ (instancetype)diagonalMatrixWithValues:(NSData *)values
+                                   order:(int)order;
 
 /**
  @brief Class convenience method to create a matrix from an array of MCVectors describing the matrix column vectors.
@@ -392,7 +403,7 @@ MCMatrixDefiniteness;
  @param order The number of rows/columns in the square triangular matrix.
  @return A new instance of MCMatrix representing the desired triangular matrix.
  */
-+ (instancetype)triangularMatrixWithPackedValues:(double *)values
++ (instancetype)triangularMatrixWithPackedValues:(NSData *)values
                            ofTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                            order:(int)order;
@@ -405,7 +416,7 @@ MCMatrixDefiniteness;
  @param order The number of rows/columns in the square triangular matrix.
  @return A new instance of MCMatrix representing the desired triangular matrix.
  */
-+ (instancetype)symmetricMatrixWithPackedValues:(double *)values
++ (instancetype)symmetricMatrixWithPackedValues:(NSData *)values
                             triangularComponent:(MCMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                                           order:(int)order;
@@ -418,7 +429,7 @@ MCMatrixDefiniteness;
  @param oddDiagonalLocation If there is an extra codiagonal, specifies whether it appears in the upper or lower triangular component of the matrix; disregarded otherwise. (Cannot be MCMatrixTriangularComponentBoth if bandwidth is even).
  @return A new instance of MCMatrix representing the band matrix.
  */
-+ (instancetype)bandMatrixWithValues:(double *)values
++ (instancetype)bandMatrixWithValues:(NSData *)values
                                order:(int)order
                     upperCodiagonals:(int)upperCodiagonals
                     lowerCodiagonals:(int)lowerCodiagonals;
@@ -427,44 +438,54 @@ MCMatrixDefiniteness;
  @brief Class convenience method to create a matrix with the specified size containing random double-precision floating-point values.
  @param rows The number of rows desired in the random matrix.
  @param columns The number of columns desired in the random matrix.
+ @param precision The precision of the floating point values.
  @return A new instance of MCMatrix containing rows * columns random values.
  */
 + (instancetype)randomMatrixWithRows:(int)rows
-                             columns:(int)columns;
+                             columns:(int)columns
+                           precision:(MCValuePrecision)precision;
 
 /**
  @brief Class convenience method to create a square symmetric matrix with the specified order containing random double-precision floating-point values.
  @param order The amount of rows/columns desired in the matrix.
+ @param precision The precision of the floating point values.
  @return A new square symmetric instance of MCMatrix containing random values.
  */
-+ (instancetype)randomSymmetricMatrixOfOrder:(int)order;
++ (instancetype)randomSymmetricMatrixOfOrder:(int)order
+                                   precision:(MCValuePrecision)precision;
 
 /**
  @brief Class convenience method to create a square diagonal matrix with the specified order containing random double-precision floating-point values.
  @param order The amount of rows/columns desired in the matrix.
+ @param precision The precision of the floating point values.
  @return A new square diagonal instance of MCMatrix containing random values.
  */
-+ (instancetype)randomDiagonalMatrixOfOrder:(int)order;
++ (instancetype)randomDiagonalMatrixOfOrder:(int)order
+                                  precision:(MCValuePrecision)precision;
 
 /**
  @brief Class convenience method to create a square triangular matrix with the specified order containing random double-precision floating-point values.
  @param order The amount of rows/columns desired in the matrix.
  @param triangularComponent The triangular component the values should reside in, either upper or lower (cannot be MCMatrixTriangularComponentBoth).
+ @param precision The precision of the floating point values.
  @return A new square triangular instance of MCMatrix containing random values.
  */
 + (instancetype)randomTriangularMatrixOfOrder:(int)order
-                          triangularComponent:(MCMatrixTriangularComponent)triangularComponent;
+                          triangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                    precision:(MCValuePrecision)precision;
 
 /**
  @brief Class convenience method to create a square band matrix with the specified order containing random double-precision floating-point values.
  @param order The amount of rows/columns desired in the matrix.
  @param bandwidth Number of diagonals and codiagonals in the band matrix.
  @param oddDiagonalLocation If there is an extra codiagonal, specifies whether it appears in the upper or lower triangular component of the matrix; disregarded otherwise. (Cannot be MCMatrixTriangularComponentBoth if bandwidth is even).
+ @param precision The precision of the floating point values.
  @return A new square band instance of MCMatrix containing random values.
  */
 + (instancetype)randomBandMatrixOfOrder:(int)order
                        upperCodiagonals:(int)upperCodiagonals
-                       lowerCodiagonals:(int)lowerCodiagonals;
+                       lowerCodiagonals:(int)lowerCodiagonals
+                              precision:(MCValuePrecision)precision;
 
 #pragma mark - Operations
 
@@ -506,7 +527,7 @@ MCMatrixDefiniteness;
  @param leadingDimension Dimension to use when flattening the values into a one-dimensional array.
  @return A copy of this matrix' values stored in the specified format (row-major or column-major).
  */
-- (double *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension;
+- (NSData *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension;
 
 /**
  @brief Return values from the specified triangular component of the matrix, flattened into a one-dimensional array using the specified leading dimension and packing format.
@@ -515,7 +536,7 @@ MCMatrixDefiniteness;
  @param packingMethod The packing format to consider when flattening the values into the array.
  @return A copy of this matrix' values from the specified triangular component, flattened and packed into a one-dimensional according to specified parameters.
  */
-- (double *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
+- (NSData *)valuesFromTriangularComponent:(MCMatrixTriangularComponent)triangularComponent
                          leadingDimension:(MCMatrixLeadingDimension)leadingDimension
                             packingMethod:(MCMatrixValuePackingMethod)packingMethod;
 
@@ -525,7 +546,7 @@ MCMatrixDefiniteness;
  @param lowerCodiagonal The codiagonal below the main diagonal to use as a boundary for the band.
  @return Pointer to an array of band-format values.
  */
-- (double *)valuesInBandBetweenUpperCodiagonal:(int)upperCodiagonal
+- (NSData *)valuesInBandBetweenUpperCodiagonal:(int)upperCodiagonal
                                lowerCodiagonal:(int)lowerCodiagonal;
 
 /**
@@ -534,7 +555,7 @@ MCMatrixDefiniteness;
  @param column The column in which the desired value resides.
  @return The value at the specified row and column.
  */
-- (double)valueAtRow:(int)row column:(int)column;
+- (NSNumber *)valueAtRow:(int)row column:(int)column;
 
 /**
  @brief Extract the values of a column of this matrix.
@@ -567,7 +588,7 @@ MCMatrixDefiniteness;
  @param column The column in which the value will be set.
  @param value The value to set at the specified position.
  */
-- (void)setEntryAtRow:(int)row column:(int)column toValue:(double)value;
+- (void)setEntryAtRow:(int)row column:(int)column toValue:(NSNumber *)value;
 
 #pragma mark - Class-level operations
 
