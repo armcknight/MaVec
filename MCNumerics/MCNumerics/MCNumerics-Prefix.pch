@@ -14,5 +14,16 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 
-    #define kMCUnimplementedMethodException [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil]
+#pragma mark - Exceptions
+
+#define kMCUnimplementedMethodException [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil]
+#define kMCUnsupportedDataType [NSException exceptionWithName:@"Unsuppoted data type" reason:@"Data must be either double or float type." userInfo:nil]
+
+#pragma mark - Precision
+
+#define kMCIsFloatEncoding(encoding)    (strcmp(encoding, @encode(float)) == 0)
+#define kMCIsFloatType(size_t)          (size_t == sizeof(float))
+#define kMCIsDoubleEncoding(encoding)   (strcmp(encoding, @encode(double)) == 0)
+#define kMCIsDoubleType(size_t)         (size_t == sizeof(double))
+
 #endif
