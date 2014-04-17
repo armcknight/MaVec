@@ -127,6 +127,7 @@
 		494F454E185EA9DA00347096 /* MCLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLUFactorization.h; sourceTree = "<group>"; };
 		494F454F185EA9DA00347096 /* MCLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLUFactorization.m; sourceTree = "<group>"; };
 		494F455A1861565B00347096 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4955B65F18FB79690020F36D /* MCNumberFormats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCNumberFormats.h; sourceTree = "<group>"; };
 		4978F2D41877D9030095DE06 /* MCEigendecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCEigendecomposition.h; sourceTree = "<group>"; };
 		4978F2D51877D9030095DE06 /* MCEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEigendecomposition.m; sourceTree = "<group>"; };
 		4978F2E2187852330095DE06 /* MCTribool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTribool.h; sourceTree = "<group>"; };
@@ -314,6 +315,7 @@
 				4978F2E3187852330095DE06 /* MCTribool.m */,
 				4936537418B012220086C243 /* MCPair.h */,
 				4936537518B012220086C243 /* MCPair.m */,
+				4955B65F18FB79690020F36D /* MCNumberFormats.h */,
 			);
 			name = "Data Types";
 			sourceTree = "<group>";
