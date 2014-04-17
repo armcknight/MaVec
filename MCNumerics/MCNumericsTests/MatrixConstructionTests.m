@@ -38,7 +38,7 @@
     diagonalValues[1] = 2.0;
     diagonalValues[2] = 3.0;
     diagonalValues[3] = 4.0;
-    MCMatrix *diagonal = [MCMatrix diagonalMatrixWithValues:diagonalValues size:4];
+    MCMatrix *diagonal = [MCMatrix diagonalMatrixWithValues:diagonalValues order:4];
     
     double *solution = malloc(16 * sizeof(double));
     solution[0] = 1.0;
@@ -68,7 +68,7 @@
 
 - (void)testIdentityMatrixCreation
 {
-    MCMatrix *identity = [MCMatrix identityMatrixWithSize:4];
+    MCMatrix *identity = [MCMatrix identityMatrixOfOrder:4];
     
     double *solution = malloc(16 * sizeof(double));
     solution[0] = 1.0;
