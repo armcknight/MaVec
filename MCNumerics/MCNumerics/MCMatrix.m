@@ -424,7 +424,7 @@ MCMatrixNorm;
             vDSP_mtransD(aVals.bytes, 1, tVals, 1, self.columns, self.rows);
         }
         
-        _transpose = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:elementSize] rows:self.columns columns:self.rows];
+        _transpose = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:aVals.length] rows:self.columns columns:self.rows];
     }
     
     return _transpose;
