@@ -38,6 +38,8 @@
 		494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
 		494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
 		494F455B1861565B00347096 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F455A1861565B00347096 /* Accelerate.framework */; };
+		4955B61918FA1F350020F36D /* MCRealNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4955B61818FA1F350020F36D /* MCRealNumber.m */; };
+		4955B62318FB21BC0020F36D /* MCComplexNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4955B62218FB21BC0020F36D /* MCComplexNumber.m */; };
 		4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2D51877D9030095DE06 /* MCEigendecomposition.m */; };
 		4978F2E4187852330095DE06 /* MCTribool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2E3187852330095DE06 /* MCTribool.m */; };
 		4996B21218CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21118CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m */; };
@@ -126,6 +128,10 @@
 		494F454E185EA9DA00347096 /* MCLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLUFactorization.h; sourceTree = "<group>"; };
 		494F454F185EA9DA00347096 /* MCLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLUFactorization.m; sourceTree = "<group>"; };
 		494F455A1861565B00347096 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4955B61718FA1F350020F36D /* MCRealNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCRealNumber.h; sourceTree = "<group>"; };
+		4955B61818FA1F350020F36D /* MCRealNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCRealNumber.m; sourceTree = "<group>"; };
+		4955B62118FB21BC0020F36D /* MCComplexNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCComplexNumber.h; sourceTree = "<group>"; };
+		4955B62218FB21BC0020F36D /* MCComplexNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCComplexNumber.m; sourceTree = "<group>"; };
 		4955B65F18FB79690020F36D /* MCNumberFormats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCNumberFormats.h; sourceTree = "<group>"; };
 		4978F2D41877D9030095DE06 /* MCEigendecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCEigendecomposition.h; sourceTree = "<group>"; };
 		4978F2D51877D9030095DE06 /* MCEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEigendecomposition.m; sourceTree = "<group>"; };
@@ -312,6 +318,10 @@
 				4978F2E3187852330095DE06 /* MCTribool.m */,
 				4936537418B012220086C243 /* MCPair.h */,
 				4936537518B012220086C243 /* MCPair.m */,
+				4955B61718FA1F350020F36D /* MCRealNumber.h */,
+				4955B61818FA1F350020F36D /* MCRealNumber.m */,
+				4955B62118FB21BC0020F36D /* MCComplexNumber.h */,
+				4955B62218FB21BC0020F36D /* MCComplexNumber.m */,
 				4955B65F18FB79690020F36D /* MCNumberFormats.h */,
 			);
 			name = "Data Types";
@@ -548,9 +558,11 @@
 				49BEF2661885978C002F5F41 /* MCQRFactorization.m in Sources */,
 				4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */,
 				494F44DB185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
+				4955B62318FB21BC0020F36D /* MCComplexNumber.m in Sources */,
 				49B682D8184ED2D5006A61D3 /* LeastSquaresApproximationViewController.m in Sources */,
 				494F44D9185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,
 				49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */,
+				4955B61918FA1F350020F36D /* MCRealNumber.m in Sources */,
 				494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */,
 				494F44D7185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */,
 				494F44D5185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
