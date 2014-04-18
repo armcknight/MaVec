@@ -14,8 +14,6 @@
 #import "MCQRFactorization.h"
 #import "MCEigenDecomposition.h"
 
-#import "DynamicArrayUtility.h"
-
 @interface Demos : XCTestCase
 
 @end
@@ -43,9 +41,9 @@
     MCVector *vectorA, *vectorB, *vectorC;
     
     double vectorAValues[3] = { 1.0, 2.0, 3.0 };
-    vectorA = [MCVector vectorWithValues:vectorAValues length:3]; // column vector from C array
+    vectorA = [MCVector vectorWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] length:3]; // column vector from C array
     
-    vectorB = [MCVector vectorWithValues:vectorAValues length:3 vectorFormat:MCVectorFormatRowVector]; // row vector from C array
+    vectorB = [MCVector vectorWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] length:3 vectorFormat:MCVectorFormatRowVector]; // row vector from C array
     
     vectorC = [MCVector vectorWithValuesInArray:@[@1, @2, @3]]; // column vector from NSArray
     
@@ -62,12 +60,12 @@
     };
     
     // matrix from C array of column-major values
-    matrixA = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:matrixValues size:9]
+    matrixA = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
                                     rows:3
                                  columns:3];
     
     // matrix from C array of row-major values
-    matrixB = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:matrixValues size:9]
+    matrixB = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
                                     rows:3
                                  columns:3
                         leadingDimension:MCMatrixLeadingDimensionRow];
@@ -82,15 +80,15 @@
     
     MCMatrix *diagonal, *identity, *randomTriangular, *randomSymmetric, *randomTridiagonal;
     
-    diagonal = [MCMatrix diagonalMatrixWithValues:vectorAValues size:3];
+    diagonal = [MCMatrix diagonalMatrixWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] order:3];
     
-    identity = [MCMatrix identityMatrixWithSize:3];
+    identity = [MCMatrix identityMatrixOfOrder:3 precision:MCValuePrecisionDouble];
     
-    randomTriangular = [MCMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MCMatrixTriangularComponentUpper];
+    randomTriangular = [MCMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MCMatrixTriangularComponentUpper precision:MCValuePrecisionDouble];
     
-    randomSymmetric = [MCMatrix randomSymmetricMatrixOfOrder:3];
+    randomSymmetric = [MCMatrix randomSymmetricMatrixOfOrder:3 precision:MCValuePrecisionDouble];
     
-    randomTridiagonal = [MCMatrix randomBandMatrixOfOrder:3 bandwidth:3 oddDiagonalLocation:MCMatrixTriangularComponentBoth];
+    randomTridiagonal = [MCMatrix randomBandMatrixOfOrder:3 upperCodiagonals:1 lowerCodiagonals:1 precision:MCValuePrecisionDouble];
     
     NSLog(@"so far so good!");
     
