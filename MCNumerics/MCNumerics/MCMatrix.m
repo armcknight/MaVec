@@ -387,8 +387,8 @@ MCMatrixNorm;
 }
 
 + (instancetype)randomTriangularMatrixOfOrder:(int)order
-                                    precision:(MCValuePrecision)precision
                           triangularComponent:(MCMatrixTriangularComponent)triangularComponent
+                                    precision:(MCValuePrecision)precision
 {
     return [MCMatrix triangularMatrixWithPackedValues:[self randomArrayOfSize:(order * (order + 1))/2 precision:precision]
                                 ofTriangularComponent:triangularComponent
