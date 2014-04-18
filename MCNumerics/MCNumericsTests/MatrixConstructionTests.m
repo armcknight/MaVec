@@ -11,8 +11,6 @@
 #import "MCMatrix.h"
 #import "MCVector.h"
 
-#import "DynamicArrayUtility.h"
-
 @interface MatrixConstructionTests : XCTestCase
 
 @end

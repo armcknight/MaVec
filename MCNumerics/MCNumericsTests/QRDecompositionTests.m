@@ -12,8 +12,6 @@
 #import "MCQRFactorization.h"
 #import "MCVector.h"
 
-#import "DynamicArrayUtility.h"
-
 @interface QRDecompositionTests : XCTestCase
 
 @end

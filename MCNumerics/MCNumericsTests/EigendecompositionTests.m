@@ -12,8 +12,6 @@
 #import "MCEigendecomposition.h"
 #import "MCVector.h"
 
-#import "DynamicArrayUtility.h"
-
 @interface EigendecompositionTests : XCTestCase
 
 @end

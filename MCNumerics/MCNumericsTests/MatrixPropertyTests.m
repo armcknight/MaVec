@@ -11,8 +11,6 @@
 #import "MCMatrix.h"
 #import "MCTribool.h"
 
-#import "DynamicArrayUtility.h"
-
 @interface MatrixPropertyTests : XCTestCase
 
 @end

@@ -10,8 +10,6 @@
 
 #import "MCMatrix.h"
 
-#import "DynamicArrayUtility.h"
-
 @interface MatrixInversionTests : XCTestCase
 
 @end
