@@ -149,7 +149,7 @@ MCMatrixDefiniteness;
  @property values
  @brief A one-dimensional C array of floating point values.
  */
-@property (nonatomic, readonly, assign) NSData *values;
+@property (nonatomic, readonly, strong) NSData *values;
 
 /**
  @property leadingDimension 

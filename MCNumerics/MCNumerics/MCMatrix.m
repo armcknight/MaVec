@@ -45,6 +45,7 @@ MCMatrixNorm;
 @interface MCMatrix ()
 
 // public readonly properties redeclared as readwrite
+@property (strong, readwrite, nonatomic) NSData *values;
 @property (strong, readwrite, nonatomic) MCMatrix *transpose;
 @property (strong, readwrite, nonatomic) MCQRFactorization *qrFactorization;
 @property (strong, readwrite, nonatomic) MCLUFactorization *luFactorization;
