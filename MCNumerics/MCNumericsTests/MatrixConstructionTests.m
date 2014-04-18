@@ -31,14 +31,16 @@
 
 - (void)testDiagonalMatrixCreation
 {
-    double *diagonalValues = malloc(4 * sizeof(double));
+    size_t size = 4 * sizeof(double);
+    double *diagonalValues = malloc(size);
     diagonalValues[0] = 1.0;
     diagonalValues[1] = 2.0;
     diagonalValues[2] = 3.0;
     diagonalValues[3] = 4.0;
-    MCMatrix *diagonal = [MCMatrix diagonalMatrixWithValues:diagonalValues order:4];
+    MCMatrix *diagonal = [MCMatrix diagonalMatrixWithValues:[NSData dataWithBytes:diagonalValues length:size] order:4];
     
-    double *solution = malloc(16 * sizeof(double));
+    size = 16 * sizeof(double);
+    double *solution = malloc(size);
     solution[0] = 1.0;
     solution[1] = 0.0;
     solution[2] = 0.0;
@@ -55,20 +57,21 @@
     solution[13] = 0.0;
     solution[14] = 0.0;
     solution[15] = 4.0;
-    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:4 columns:4];
+    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:4 columns:4];
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            XCTAssertEqual([diagonal valueAtRow:i column:j], [s valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+            XCTAssertEqual([diagonal valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
 }
 
 - (void)testIdentityMatrixCreation
 {
-    MCMatrix *identity = [MCMatrix identityMatrixOfOrder:4];
+    MCMatrix *identity = [MCMatrix identityMatrixOfOrder:4 precision:MCValuePrecisionDouble];
     
-    double *solution = malloc(16 * sizeof(double));
+    size_t size = 16 * sizeof(double);
+    double *solution = malloc(size);
     solution[0] = 1.0;
     solution[1] = 0.0;
     solution[2] = 0.0;
@@ -85,11 +88,11 @@
     solution[13] = 0.0;
     solution[14] = 0.0;
     solution[15] = 1.0;
-    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:4 columns:4];
+    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:4 columns:4];
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            XCTAssertEqual([identity valueAtRow:i column:j], [s valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+            XCTAssertEqual([identity valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
 }
@@ -101,7 +104,7 @@
         2.0, 5.0, 7.0,
         3.0, 7.0, 12.0
     };
-    MCMatrix *solutionMatrix = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValues size:9] rows:3 columns:3];
+    MCMatrix *solutionMatrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)] rows:3 columns:3];
     
     // packed row-major upper triangular
     double rowMajorPackedUpperValues[6] = {
@@ -109,14 +112,14 @@
         5.0, 7.0,
         12.0
     };
-    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:rowMajorPackedUpperValues size:6]
+    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:rowMajorPackedUpperValues length:6*sizeof(double)]
                                              triangularComponent:MCMatrixTriangularComponentUpper
                                                 leadingDimension:MCMatrixLeadingDimensionRow
                                                            order:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            XCTAssertEqual([solutionMatrix valueAtRow:i column:j], [matrix valueAtRow:i column:j], @"Value at %u, %u incorrect.", i, j);
+            XCTAssertEqual([solutionMatrix valueAtRow:i column:j].doubleValue, [matrix valueAtRow:i column:j].doubleValue, @"Value at %u, %u incorrect.", i, j);
         }
     }
     
@@ -126,14 +129,14 @@
         2.0, 5.0,
         3.0, 7.0, 12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:rowMajorPackedLowerValues size:6]
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:rowMajorPackedLowerValues length:6*sizeof(double)]
                                    triangularComponent:MCMatrixTriangularComponentLower
                                       leadingDimension:MCMatrixLeadingDimensionRow
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            XCTAssertEqual([solutionMatrix valueAtRow:i column:j], [matrix valueAtRow:i column:j], @"Value at %u, %u incorrect.", i, j);
+            XCTAssertEqual([solutionMatrix valueAtRow:i column:j].doubleValue, [matrix valueAtRow:i column:j].doubleValue, @"Value at %u, %u incorrect.", i, j);
         }
     }
     
@@ -143,14 +146,14 @@
         5.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:columnMajorPackedLowerValues size:6]
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:columnMajorPackedLowerValues length:6*sizeof(double)]
                                    triangularComponent:MCMatrixTriangularComponentLower
                                       leadingDimension:MCMatrixLeadingDimensionColumn
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            XCTAssertEqual([solutionMatrix valueAtRow:i column:j], [matrix valueAtRow:i column:j], @"Value at %u, %u incorrect.", i, j);
+            XCTAssertEqual([solutionMatrix valueAtRow:i column:j].doubleValue, [matrix valueAtRow:i column:j].doubleValue, @"Value at %u, %u incorrect.", i, j);
         }
     }
     
@@ -160,14 +163,14 @@
         2.0, 5.0,
         3.0, 7.0, 12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:columnMajorPackedUpperValues size:6]
+    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:columnMajorPackedUpperValues length:6*sizeof(double)]
                                    triangularComponent:MCMatrixTriangularComponentUpper
                                       leadingDimension:MCMatrixLeadingDimensionColumn
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            XCTAssertEqual([solutionMatrix valueAtRow:i column:j], [matrix valueAtRow:i column:j], @"Value at %u, %u incorrect.", i, j);
+            XCTAssertEqual([solutionMatrix valueAtRow:i column:j].doubleValue, [matrix valueAtRow:i column:j].doubleValue, @"Value at %u, %u incorrect.", i, j);
         }
     }
 }
@@ -179,7 +182,7 @@
         0.0,   5.0,   7.0,
         0.0,   0.0,   12.0
     };
-    MCMatrix *upperSolution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:upperSolutionValues size:9]
+    MCMatrix *upperSolution = [MCMatrix matrixWithValues:[NSData dataWithBytes:upperSolutionValues length:9*sizeof(double)]
                                                     rows:3
                                                  columns:3
                                         leadingDimension:MCMatrixLeadingDimensionRow];
@@ -190,7 +193,7 @@
         5.0, 7.0,
         12.0
     };
-    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:rowMajorUpperValues size:6]
+    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:rowMajorUpperValues length:6*sizeof(double)]
                                             ofTriangularComponent:MCMatrixTriangularComponentUpper
                                                  leadingDimension:MCMatrixLeadingDimensionRow
                                                             order:3];
@@ -202,7 +205,7 @@
         3.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:columnMajorUpperValues size:6]
+    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:columnMajorUpperValues length:6*sizeof(double)]
                                   ofTriangularComponent:MCMatrixTriangularComponentUpper
                                        leadingDimension:MCMatrixLeadingDimensionColumn
                                                   order:3];
@@ -213,7 +216,7 @@
         2.0,   5.0,   0.0,
         3.0,   7.0,   12.0
     };
-    MCMatrix *lowerSolution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:lowerSolutionValues size:9]
+    MCMatrix *lowerSolution = [MCMatrix matrixWithValues:[NSData dataWithBytes:lowerSolutionValues length:9*sizeof(double)]
                                                     rows:3
                                                  columns:3
                                         leadingDimension:MCMatrixLeadingDimensionRow];
@@ -224,7 +227,7 @@
         3.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:rowMajorLowerValues size:6]
+    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:rowMajorLowerValues length:6*sizeof(double)]
                                   ofTriangularComponent:MCMatrixTriangularComponentLower
                                        leadingDimension:MCMatrixLeadingDimensionRow
                                                   order:3];
@@ -236,7 +239,7 @@
         5.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[DynamicArrayUtility dynamicArrayForStaticArray:columnMajorLowerValues size:6]
+    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:columnMajorLowerValues length:6*sizeof(double)]
                                   ofTriangularComponent:MCMatrixTriangularComponentLower
                                        leadingDimension:MCMatrixLeadingDimensionColumn
                                                   order:3];
@@ -251,7 +254,7 @@
         10.0, 20.0, 30.0, 40.0, 50.0,
         5.0,  6.0,  7.0,  8.0,  0.0
     };
-    MCMatrix *matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:balancedBandValues size:15]
+    MCMatrix *matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:balancedBandValues length:15*sizeof(double)]
                                                 order:5
                                      upperCodiagonals:1
                                      lowerCodiagonals:1];
@@ -263,14 +266,14 @@
         0.0,   0.0,   7.0,   40.0,  4.0,
         0.0,   0.0,   0.0,   8.0,   50.0
     };
-    MCMatrix *solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:oddBandwidthSolutionValues size:25]
+    MCMatrix *solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:oddBandwidthSolutionValues length:25*sizeof(double)]
                                                rows:5
                                             columns:5
                                    leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
-            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with balanced codiagonals.", row, col);
+            XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with balanced codiagonals.", row, col);
         }
     }
     
@@ -281,7 +284,7 @@
         10.0, 20.0, 30.0, 40.0, 50.0,
         5.0,  6.0,  7.0,  8.0,  0.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithExtraUpper size:20]
+    matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithExtraUpper length:20*sizeof(double)]
                                       order:5
                            upperCodiagonals:2
                            lowerCodiagonals:1];
@@ -293,14 +296,14 @@
         0.0,   0.0,   7.0,    40.0,  4.0,
         0.0,   0.0,   0.0,    8.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithExtraUpper size:25]
+    solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithExtraUpper length:25*sizeof(double)]
                                      rows:5
                                   columns:5
                          leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
-            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with extra upper codiagonal.", row, col);
+            XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with extra upper codiagonal.", row, col);
         }
     }
     
@@ -311,7 +314,7 @@
         5.0,  6.0,  7.0,  8.0,  0.0,
         -1.0, -2.0, -3.0, 0.0,  0.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithExtraLower size:20]
+    matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithExtraLower length:20*sizeof(double)]
                                       order:5
                            upperCodiagonals:1
                            lowerCodiagonals:2];
@@ -323,14 +326,14 @@
         0.0,   -2.0,   7.0,   40.0,  4.0,
         0.0,   0.0,   -3.0,   8.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithExtraLower size:25]
+    solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithExtraLower length:25*sizeof(double)]
                                      rows:5
                                   columns:5
                          leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
-            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
+            XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
         }
     }
     
@@ -340,7 +343,7 @@
         0.0,  1.0,  2.0,  3.0,  4.0,
         10.0, 20.0, 30.0, 40.0, 50.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithTwoUpper size:15]
+    matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithTwoUpper length:15*sizeof(double)]
                                       order:5
                            upperCodiagonals:2
                            lowerCodiagonals:0];
@@ -352,14 +355,14 @@
         0.0,   0.0,   0.0,    40.0,  4.0,
         0.0,   0.0,   0.0,    0.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithTwoUpper size:25]
+    solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithTwoUpper length:25*sizeof(double)]
                                      rows:5
                                   columns:5
                          leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
-            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
+            XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
         }
     }
     
@@ -369,7 +372,7 @@
         5.0,  6.0,  7.0,  8.0,  0.0,
         -1.0, -2.0, -3.0, 0.0,  0.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:bandValuesWithTwoLower size:15]
+    matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithTwoLower length:15*sizeof(double)]
                                       order:5
                            upperCodiagonals:0
                            lowerCodiagonals:2];
@@ -381,14 +384,14 @@
         0.0,   -2.0,  7.0,   40.0,  0.0,
         0.0,   0.0,   -3.0,  8.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:solutionValuesWithTwoLower size:25]
+    solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithTwoLower length:25*sizeof(double)]
                                      rows:5
                                   columns:5
                          leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
-            XCTAssertEqual([matrix valueAtRow:row column:col], [solution valueAtRow:row column:col], @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
+            XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
         }
     }
 }

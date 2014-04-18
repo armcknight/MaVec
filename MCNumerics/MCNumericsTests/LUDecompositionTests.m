@@ -32,7 +32,8 @@
 - (void)testLUDecompositionOfSquareMatrix1
 {
     // pg 85 of Sauer
-    double *values = malloc(9 * sizeof(double));
+    size_t size = 9 * sizeof(double);
+    double *values = malloc(size);
     values[0] = 1.0;
     values[1] = 2.0;
     values[2] = -3.0;
@@ -43,7 +44,7 @@
     values[7] = -2.0;
     values[8] = 1.0;
     
-    MCMatrix *m = [MCMatrix matrixWithValues:values rows:3 columns:3];
+    MCMatrix *m = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:3 columns:3];
     
     MCLUFactorization *f = m.luFactorization;
     
@@ -54,8 +55,8 @@
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            double a = [m valueAtRow:i column:j];
-            double b = [product valueAtRow:i column:j];
+            double a = [m valueAtRow:i column:j].doubleValue;
+            double b = [product valueAtRow:i column:j].doubleValue;
             XCTAssertEqualWithAccuracy(a, b, 0.0000000000000003, @"Value at row %i and column %i was not recomputed correctly", i, j);
         }
     }
@@ -64,13 +65,14 @@
 - (void)testLUDecompositionOfSquareMatrix2
 {
     // pg 85 of Sauer
-    double *values = malloc(4 * sizeof(double));
+    size_t size = 4 * sizeof(double);
+    double *values = malloc(size);
     values[0] = 1.0;
     values[1] = 3.0;
     values[2] = 1.0;
     values[3] = -4.0;
     
-    MCMatrix *m = [MCMatrix matrixWithValues:values rows:2 columns:2];
+    MCMatrix *m = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:2 columns:2];
     
     MCLUFactorization *f = m.luFactorization;
     
@@ -79,8 +81,8 @@
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
-            double a = [m valueAtRow:i column:j];
-            double b = [product valueAtRow:i column:j];
+            double a = [m valueAtRow:i column:j].doubleValue;
+            double b = [product valueAtRow:i column:j].doubleValue;
             XCTAssertEqualWithAccuracy(a, b, 0.0000000000000003, @"Value at row %i and column %i was not recomputed correctly", i, j);
         }
     }

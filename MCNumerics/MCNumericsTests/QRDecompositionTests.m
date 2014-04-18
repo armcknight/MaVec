@@ -45,8 +45,8 @@
     
     for(int row = 0; row < qrProduct.rows; row += 1) {
         for(int col = 0; col < qrProduct.columns; col += 1) {
-            double a = [source valueAtRow:row column:col];
-            double b = [qrProduct valueAtRow:row column:col];
+            double a = [source valueAtRow:row column:col].doubleValue;
+            double b = [qrProduct valueAtRow:row column:col].doubleValue;
             double accuracy = 1.0e-10;
             XCTAssertEqualWithAccuracy(a, b, accuracy, @"value at (%u, %u) incorrect beyond accuracy = %f", row, col, accuracy);
         }
@@ -59,7 +59,7 @@
         0.0, 2.0, 2.0, 0.0, 2.0, 2.0,
         2.0, -1.0, -1.0, 1.5, -1.0, -1.0
     };
-    MCMatrix *source = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:values size:12]
+    MCMatrix *source = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:12*sizeof(double)]
                                              rows:6
                                           columns:2
                                  leadingDimension:MCMatrixLeadingDimensionColumn];
@@ -71,8 +71,8 @@
     
     for(int row = 0; row < qrProduct.rows; row += 1) {
         for(int col = 0; col < qrProduct.columns; col += 1) {
-            double a = [source valueAtRow:row column:col];
-            double b = [qrProduct valueAtRow:row column:col];
+            double a = [source valueAtRow:row column:col].doubleValue;
+            double b = [qrProduct valueAtRow:row column:col].doubleValue;
             double accuracy = 1.0e-10;
             XCTAssertEqualWithAccuracy(a, b, accuracy, @"value at (%u, %u) incorrect beyond accuracy = %f", row, col, accuracy);
         }

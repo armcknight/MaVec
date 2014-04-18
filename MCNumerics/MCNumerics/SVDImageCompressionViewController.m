@@ -130,7 +130,7 @@
     CGImageRelease(imageRef);
     free(rawData);
     
-    MCMatrix *grayscaleMatrix = [MCMatrix matrixWithValues:grayscaleValues rows:(int)height columns:(int)width];
+    MCMatrix *grayscaleMatrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:grayscaleValues length:numberOfPixels*sizeof(double)] rows:(int)height columns:(int)width];
     
     return grayscaleMatrix;
 }
@@ -185,7 +185,7 @@
     int size = sum.rows * sum.columns;
     unsigned char *pixelValues = malloc(size * 4);
     for (int i = 0; i < size; i++) {
-        double grayscaleValue = sum.values[i];
+        double grayscaleValue = ((double *)sum.values.bytes)[i];
         pixelValues[4 * i] = grayscaleValue * 255;
         pixelValues[4 * i + 1] = grayscaleValue * 255;
         pixelValues[4 * i + 2] = grayscaleValue * 255;

@@ -32,14 +32,15 @@
 - (void)testFirstSVDTest
 {
     // page 568 example 12.5 from Sauer
-    double *values = malloc(6 * sizeof(double));
+    size_t size = 6 * sizeof(double);
+    double *values = malloc(size);
     values[0] = 0.0;
     values[1] = 3.0;
     values[2] = 0.0;
     values[3] = -0.5;
     values[4] = 0.0;
     values[5] = 0.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:2];
+    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:3 columns:2];
     
     MCSingularValueDecomposition *svd = a.singularValueDecomposition;
     
@@ -48,7 +49,7 @@
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 2; j++) {
-            XCTAssertEqualWithAccuracy([a valueAtRow:i column:j], [original valueAtRow:i column:j], __DBL_EPSILON__ * 10.0, @"Value at row %u and column %u incorrect", i, j);
+            XCTAssertEqualWithAccuracy([a valueAtRow:i column:j].doubleValue, [original valueAtRow:i column:j].doubleValue, __DBL_EPSILON__ * 10.0, @"Value at row %u and column %u incorrect", i, j);
         }
     }
 }
@@ -56,7 +57,8 @@
 - (void)testSecondSVDTest
 {
     // page 574 example 12.9 from Sauer
-    double *values = malloc(8 * sizeof(double));
+    size_t size = 8 * sizeof(double);
+    double *values = malloc(size);
     values[0] = 3.0;
     values[1] = 2.0;
     values[2] = 2.0;
@@ -65,7 +67,7 @@
     values[5] = -1.0;
     values[6] = -3.0;
     values[7] = -5.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:values rows:2 columns:4];
+    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:2 columns:4];
     
     MCSingularValueDecomposition *svd = a.singularValueDecomposition;
     
@@ -74,7 +76,7 @@
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 4; j++) {
-            XCTAssertEqualWithAccuracy([a valueAtRow:i column:j], [original valueAtRow:i column:j], __DBL_EPSILON__ * 10.0, @"Value at row %u and column %u incorrect", i, j);
+            XCTAssertEqualWithAccuracy([a valueAtRow:i column:j].doubleValue, [original valueAtRow:i column:j].doubleValue, __DBL_EPSILON__ * 10.0, @"Value at row %u and column %u incorrect", i, j);
         }
     }
 }

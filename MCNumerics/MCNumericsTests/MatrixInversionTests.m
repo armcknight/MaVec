@@ -43,12 +43,9 @@
         0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  10.0,  11.0,  12.0
     };
     
-    MCMatrix *original = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:values size:81] rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
+    MCMatrix *original = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:81*sizeof(double)] rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
     
     MCMatrix *inverse = original.inverse;
-    
-    NSLog(original.description);
-    NSLog(inverse.description);
     
     double inverseValues[81] = {
         0.333,   -0.667,   0.333,  0.000,  0.000,  0.000,   0.042, -0.042,  0.000,
@@ -62,12 +59,12 @@
         -325.000,  305.000,   5.000,  3.000,  2.000,  1.429, -39.554,  3.125,  3.000
     };
     
-    MCMatrix *solution = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:inverseValues size:81] rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
+    MCMatrix *solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:inverseValues length:81*sizeof(double)] rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 9; row += 1) {
         for (int col = 0; col < 9; col += 1) {
-            double a = [inverse valueAtRow:row column:col];
-            double b = [solution valueAtRow:row column:col];
+            double a = [inverse valueAtRow:row column:col].doubleValue;
+            double b = [solution valueAtRow:row column:col].doubleValue;
             double accuracy = 1.0e-3;
             XCTAssertEqualWithAccuracy(a, b, accuracy, @"Value at (%u, %u) incorrect beyond accuracy=%f", row, col, accuracy);
         }

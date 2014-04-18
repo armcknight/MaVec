@@ -71,8 +71,11 @@
 - (void)approximate
 {
     if (self.points.count >= self.order) {
-        double *aVals = malloc(self.points.count * self.order * sizeof(double));
-        double *bVals = malloc(self.points.count * sizeof(double));
+        size_t aSize = self.points.count * self.order * sizeof(double);
+        double *aVals = malloc(aSize);
+        
+        size_t bSize = self.points.count * sizeof(double);
+        double *bVals = malloc(bSize);
         
         for (int i = 0; i < self.points.count; i++) {
             for (int p = 0; p < self.order; p++) {
@@ -86,14 +89,14 @@
             bVals[i] = ((MCPoint *)self.points[i]).y;
         }
         
-        MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:(int)self.points.count columns:self.order leadingDimension:MCMatrixLeadingDimensionRow];
-        MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:(int)self.points.count columns:1];
+        MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:(int)self.points.count columns:self.order leadingDimension:MCMatrixLeadingDimensionRow];
+        MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:(int)self.points.count columns:1];
         
         MCMatrix *coefficients = [MCMatrix solveLinearSystemWithMatrixA:a valuesB:b];
         
         NSMutableArray *cArray = [NSMutableArray array];
         for (int i = 0; i < self.order; i++) {
-            [cArray addObject:@([coefficients valueAtRow:i column:0])];
+            [cArray addObject:[coefficients valueAtRow:i column:0]];
         }
         
         self.polynomial = [MCPolynomial polynomialWithCoefficients:cArray];

@@ -41,50 +41,48 @@
         -3.18,   7.21,  -7.42,   8.54,   2.51
     };
     
-    MCMatrix *o = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:values size:25] rows:5 columns:5 leadingDimension:MCMatrixLeadingDimensionRow];
+    MCMatrix *o = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:25*sizeof(double)] rows:5 columns:5 leadingDimension:MCMatrixLeadingDimensionRow];
     MCEigendecomposition *e = o.eigendecomposition;
     
     for (int i = 0; i < 5; i += 1) {
         MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
-        double eigenvalue = [e.eigenvalues valueAtIndex:i];
+        NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
         MCVector *left = [MCMatrix productOfMatrix:o andVector:eigenvector];
         MCVector *right = [MCVector productOfVector:eigenvector scalar:eigenvalue];
         for (int j = 0; j < 5; j += 1) {
-            double a = [left valueAtIndex:j];
-            double b = [right valueAtIndex:j];
+            double a = [left valueAtIndex:j].doubleValue;
+            double b = [right valueAtIndex:j].doubleValue;
             double accuracy = 0.0000000001;
             XCTAssertEqualWithAccuracy(a, b, accuracy, @"Values at index %u differ by more than %f", j, accuracy);
         }
     }
 }
 
-//- (void)testNonsymmetricMatrixEigendecomposition
-//{
-//    // example from http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_eigevd.htm
-//    double values[16] = {
-//        -2.0,  2.0,  2.0,  2.0,
-//        -3.0,  3.0,  2.0,  2.0,
-//        -2.0,  0.0,  4.0,  2.0,
-//        -1.0,  0.0,  0.0,  5.0
-//    };
-//    
-//    MCMatrix *source = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:values size:16] rows:4 columns:4 leadingDimension:MCMatrixLeadingDimensionRow];
-//    MCEigendecomposition *e = source.eigendecomposition;
-//    
-//    for (int i = 0; i < 4; i += 1) {
-//        MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
-//        double eigenvalue = [e.eigenvalues valueAtIndex:i];
-//        MCVector *left = [MCMatrix productOfMatrix:source andVector:eigenvector];
-//        MCVector *right = [MCVector productOfVector:eigenvector scalar:eigenvalue];
-//        NSLog(left.description);
-//        NSLog(right.description);
-//        for (int j = 0; j < 4; j += 1) {
-//            double a = [left valueAtIndex:j];
-//            double b = [right valueAtIndex:j];
-//            double accuracy = 1.0e-6;
-//            XCTAssertEqualWithAccuracy(a, b, accuracy, @"Values at index %u differ by more than %f", j, accuracy);
-//        }
-//    }
-//}
+- (void)testNonsymmetricMatrixEigendecomposition
+{
+    // example from http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_eigevd.htm
+    double values[16] = {
+        -2.0,  2.0,  2.0,  2.0,
+        -3.0,  3.0,  2.0,  2.0,
+        -2.0,  0.0,  4.0,  2.0,
+        -1.0,  0.0,  0.0,  5.0
+    };
+    
+    MCMatrix *source = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MCMatrixLeadingDimensionRow];
+    MCEigendecomposition *e = source.eigendecomposition;
+    
+    for (int i = 0; i < 4; i += 1) {
+        MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
+        NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
+        MCVector *left = [MCMatrix productOfMatrix:source andVector:eigenvector];
+        MCVector *right = [MCVector productOfVector:eigenvector scalar:eigenvalue];
+        for (int j = 0; j < 4; j += 1) {
+            double a = [left valueAtIndex:j].doubleValue;
+            double b = [right valueAtIndex:j].doubleValue;
+            double accuracy = 1.0e-6;
+            XCTAssertEqualWithAccuracy(a, b, accuracy, @"Values at index %u differ by more than %f", j, accuracy);
+        }
+    }
+}
 
 @end

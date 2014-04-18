@@ -30,8 +30,9 @@
 
 - (void)testMultiplySquareMatrices
 {
-    double *aVals = malloc(4 * sizeof(double));
-    double *bVals = malloc(4 * sizeof(double));
+    size_t size = 4 * sizeof(double);
+    double *aVals = malloc(size);
+    double *bVals = malloc(size);
     aVals[0] = 1.0;
     aVals[1] = 3.0;
     aVals[2] = 2.0;
@@ -41,18 +42,18 @@
     bVals[1] = 8.0;
     bVals[2] = 7.0;
     bVals[3] = 9.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:2 columns:2];
-    MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:2 columns:2];
+    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:2 columns:2];
+    MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bVals length:size] rows:2 columns:2];
     
     MCMatrix *p = [MCMatrix productOfMatrixA:a andMatrixB:b];
     
-    double *solution = malloc(4 * sizeof(double));
+    double *solution = malloc(size);
     solution[0] = 22.0;
     solution[1] = 58.0;
     solution[2] = 25.0;
     solution[3] = 66.0;
     
-    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:2 columns:2];
+    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:2 columns:2];
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
@@ -63,8 +64,10 @@
 
 - (void)testMultiplyRectangularMatrices
 {
-    double *aVals = malloc(6 * sizeof(double));
-    double *bVals = malloc(9 * sizeof(double));
+    size_t aSize = 6 * sizeof(double);
+    size_t bSize = 9 * sizeof(double);
+    double *aVals = malloc(aSize);
+    double *bVals = malloc(bSize);
     aVals[0] = 0.0;
     aVals[1] = 1.0;
     aVals[2] = 1.0;
@@ -81,23 +84,23 @@
     bVals[6] = 3.0;
     bVals[7] = 6.0;
     bVals[8] = 9.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:2 columns:3];
-    MCMatrix *b = [MCMatrix matrixWithValues:bVals rows:3 columns:3];
+    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:2 columns:3];
+    MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:3 columns:3];
     
     MCMatrix *p = [MCMatrix productOfMatrixA:a andMatrixB:b];
     
-    double *solution = malloc(6 * sizeof(double));
+    double *solution = malloc(aSize);
     solution[0] = -3.0;
     solution[1] = 8.0;
     solution[2] = -3.0;
     solution[3] = 10.0;
     solution[4] = -3.0;
     solution[5] = 12.0;
-    MCMatrix *s = [MCMatrix matrixWithValues:solution rows:2 columns:3];
+    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:aSize] rows:2 columns:3];
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 3; j++) {
-            XCTAssertEqual([p valueAtRow:i column:j], [s valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+            XCTAssertEqual([p valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
 }

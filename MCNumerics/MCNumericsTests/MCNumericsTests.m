@@ -36,8 +36,10 @@
 
 - (void)testMultiplyingMatrixByVector
 {
-    double *aVals = malloc(16 * sizeof(double));
-    double *bVals = malloc(4 * sizeof(double));
+    size_t aSize = 16 * sizeof(double);
+    size_t bSize = 4 * sizeof(double);
+    double *aVals = malloc(aSize);
+    double *bVals = malloc(bSize);
     aVals[0] = 8.0;
     aVals[1] = 0.0;
     aVals[2] = 0.0;
@@ -59,20 +61,20 @@
     bVals[1] = -0.7445;
     bVals[2] = -2.5594;
     bVals[3] = 1.125;
-    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:4 columns:4];
-    MCVector *b = [MCVector vectorWithValues:bVals length:4];
+    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:4 columns:4];
+    MCVector *b = [MCVector vectorWithValues:[NSData dataWithBytes:bVals length:bSize] length:4];
     
     MCVector *product = [MCMatrix productOfMatrix:a andVector:b];
     
-    double *solution = malloc(4 * sizeof(double));
+    double *solution = malloc(bSize);
     solution[0] = -15.6;
     solution[1] = -2.9778;
     solution[2] = -10.2376;
     solution[3] = 4.5;
-    MCVector *s = [MCVector vectorWithValues:solution length:4];
+    MCVector *s = [MCVector vectorWithValues:[NSData dataWithBytes:solution length:bSize] length:4];
     
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqualWithAccuracy([s valueAtIndex:i], [product valueAtIndex:i], 0.0005, @"Coefficient %u incorrect", i);
+        XCTAssertEqualWithAccuracy([s valueAtIndex:i].doubleValue, [product valueAtIndex:i].doubleValue, 0.0005, @"Coefficient %u incorrect", i);
     }
 }
 

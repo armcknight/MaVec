@@ -35,7 +35,8 @@
      4 5 6
      7 8 9
      */
-    double *values = malloc(9 * sizeof(double));
+    size_t size = 9 * sizeof(double);
+    double *values = malloc(size);
     values[0] = 1.0;
     values[1] = 2.0;
     values[2] = 3.0;
@@ -45,7 +46,7 @@
     values[6] = 7.0;
     values[7] = 8.0;
     values[8] = 9.0;
-    MCMatrix *original = [MCMatrix matrixWithValues:values
+    MCMatrix *original = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
                                                rows:3
                                             columns:3
                                    leadingDimension:MCMatrixLeadingDimensionRow];
@@ -57,15 +58,15 @@
         -6.0, -12.0, -6.0,
         -3.0, -6.0, -3.0
     };
-    MCMatrix *minorSolutions = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:minorSolutionValues size:9]
+    MCMatrix *minorSolutions = [MCMatrix matrixWithValues:[NSData dataWithBytes:minorSolutionValues length:9*sizeof(double)]
                                                      rows:3
                                                   columns:3
                                          leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {
-            double a = [minorMatrix valueAtRow:row column:col];
-            double b = [minorSolutions valueAtRow:row column:col];
+            double a = [minorMatrix valueAtRow:row column:col].doubleValue;
+            double b = [minorSolutions valueAtRow:row column:col].doubleValue;
             XCTAssertEqual(a, b, @"Minor at (%u, %u) calculated incorrectly", row, col);
         }
     }
@@ -73,7 +74,8 @@
 
 - (void)testCofactorCalculation
 {
-    double *values = malloc(9 * sizeof(double));
+    size_t size = 9 * sizeof(double);
+    double *values = malloc(size);
     values[0] = 1.0;
     values[1] = 2.0;
     values[2] = 3.0;
@@ -83,7 +85,7 @@
     values[6] = 7.0;
     values[7] = 8.0;
     values[8] = 9.0;
-    MCMatrix *original = [MCMatrix matrixWithValues:values
+    MCMatrix *original = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
                                                rows:3
                                             columns:3
                                    leadingDimension:MCMatrixLeadingDimensionRow];
@@ -95,15 +97,15 @@
         6.0, -12.0, 6.0,
         -3.0, 6.0, -3.0
     };
-    MCMatrix *cofactorSolutions = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:cofactorSolutionValues size:9]
+    MCMatrix *cofactorSolutions = [MCMatrix matrixWithValues:[NSData dataWithBytes:cofactorSolutionValues length:9*sizeof(double)]
                                                         rows:3
                                                      columns:3
                                             leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {
-            double a = [cofactorMatrix valueAtRow:row column:col];
-            double b = [cofactorSolutions valueAtRow:row column:col];
+            double a = [cofactorMatrix valueAtRow:row column:col].doubleValue;
+            double b = [cofactorSolutions valueAtRow:row column:col].doubleValue;
             XCTAssertEqual(a, b, @"Cofactor at (%u, %u) calculated incorrectly", row, col);
         }
     }
@@ -117,7 +119,7 @@
         6.0, 9.0, 2.0,
         -6.0, 9.0, -2.0
     };
-    MCMatrix *original = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:values size:9]
+    MCMatrix *original = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)]
                                                rows:3
                                             columns:3
                                    leadingDimension:MCMatrixLeadingDimensionRow];
@@ -129,15 +131,15 @@
         -0.0, 26.0, 26.0,
         108.0, -114.0, 30.0
     };
-    MCMatrix *adjugateSolutions = [MCMatrix matrixWithValues:[DynamicArrayUtility dynamicArrayForStaticArray:adjugateSolutionValues size:9]
+    MCMatrix *adjugateSolutions = [MCMatrix matrixWithValues:[NSData dataWithBytes:adjugateSolutionValues length:9*sizeof(double)]
                                                         rows:3
                                                      columns:3
                                             leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {
-            double a = [adjugate valueAtRow:row column:col];
-            double b = [adjugateSolutions valueAtRow:row column:col];
+            double a = [adjugate valueAtRow:row column:col].doubleValue;
+            double b = [adjugateSolutions valueAtRow:row column:col].doubleValue;
             XCTAssertEqual(a, b, @"Adjugate value at (%u, %u) calculated incorrectly", row, col);
         }
     }

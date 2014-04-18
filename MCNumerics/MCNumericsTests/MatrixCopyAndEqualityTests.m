@@ -40,8 +40,8 @@
         bValues[i] = i;
     }
     
-    MCMatrix *a = [MCMatrix matrixWithValues:aValues rows:4 columns:4];
-    MCMatrix *b = [MCMatrix matrixWithValues:bValues rows:4 columns:4];
+    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aValues length:16*sizeof(double)] rows:4 columns:4];
+    MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bValues length:16*sizeof(double)] rows:4 columns:4];
     
     XCTAssertEqual([a isEqual:[NSArray array]], NO, @"Thought an MCMatrix was equal to an NSArray using isEqual:");
     XCTAssertEqual([a isEqual:a], YES, @"Couldn't tell an MCMatrix was equal to itself (same instance object) using isEqual:");
@@ -54,15 +54,15 @@
     for (int i = 0; i < size; i++) {
         cValues[i] = i;
     }
-    MCMatrix *c = [MCMatrix matrixWithValues:cValues rows:4 columns:4];
+    MCMatrix *c = [MCMatrix matrixWithValues:[NSData dataWithBytes:cValues length:16*sizeof(double)] rows:4 columns:4];
     MCMatrix *cr = [MCMatrix matrixWithValues:[c valuesWithLeadingDimension:MCMatrixLeadingDimensionRow] rows:c.rows columns:c.columns leadingDimension:MCMatrixLeadingDimensionRow];
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
-            double oldCValue = [c valueAtRow:i column:j];
-            [c setEntryAtRow:i column:j toValue:-1.0];
-            double oldCRValue = [cr valueAtRow:i column:j];
-            [cr setEntryAtRow:i column:j toValue:-1.0];
+            NSNumber *oldCValue = [c valueAtRow:i column:j];
+            [c setEntryAtRow:i column:j toValue:@(-1.0)];
+            NSNumber *oldCRValue = [cr valueAtRow:i column:j];
+            [cr setEntryAtRow:i column:j toValue:@(-1.0)];
             XCTAssertEqual([a isEqual:c], NO, @"Couldn't tell two MCMatrix objects differing at value %u are unequal using isEqual:", i);
             XCTAssertEqual([a isEqualToMatrix:c], NO, @"Couldn't tell two MCMatrix objects differing at value %u are unequal using isEqualToMatrix:", i);
             XCTAssertEqual([a isEqual:cr], NO, @"Couldn't tell two MCMatrix objects with different value storage formats differing at value %u are unequal using isEqual:", i);
@@ -77,35 +77,36 @@
     for (int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
-    MCMatrix *d = [MCMatrix matrixWithValues:dValues rows:4 columns:3];
-    XCTAssertEqual([a isEqual:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqual:");
-    XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqualToMatrix:");
+    MCMatrix *d = [MCMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:4 columns:3];
+    XCTAssert([a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqual:");
+    XCTAssert([a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqualToMatrix:");
     dValues = malloc(smallerSize * sizeof(double));
     for (int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
-    d = [MCMatrix matrixWithValues:dValues rows:3 columns:4];
-    XCTAssertEqual([a isEqual:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqual:");
-    XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqualToMatrix:");
+    d = [MCMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:3 columns:4];
+    XCTAssert([a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqual:");
+    XCTAssert([a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqualToMatrix:");
     
     smallerSize = 9;
     dValues = malloc(smallerSize * sizeof(double));
     for (int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
-    d = [MCMatrix matrixWithValues:dValues rows:3 columns:3];
-    XCTAssertEqual([a isEqual:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and columns are unequal using isEqual:");
-    XCTAssertEqual([a isEqualToMatrix:d], NO, @"Couldn't tell two MCMatrix objects with different amounts of rows and  columns are unequal using isEqualToMatrix:");
+    d = [MCMatrix matrixWithValues:[NSData dataWithBytes:dValues length:9*sizeof(double)] rows:3 columns:3];
+    XCTAssert(![a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of rows and columns are unequal using isEqual:");
+    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of rows and  columns are unequal using isEqualToMatrix:");
     
     MCMatrix *r = [MCMatrix matrixWithValues:[b valuesWithLeadingDimension:MCMatrixLeadingDimensionRow] rows:b.rows columns:b.columns leadingDimension:MCMatrixLeadingDimensionRow];
     r.leadingDimension = MCMatrixLeadingDimensionRow;
-    XCTAssertEqual([a isEqual:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqual:");
-    XCTAssertEqual([a isEqualToMatrix:r], YES, @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
+    XCTAssert([a isEqual:r], @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqual:");
+    XCTAssert([a isEqualToMatrix:r], @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
 }
 
 - (void)testMatrixCopy
 {
-    double *values = malloc(9 * sizeof(double));
+    size_t size = 9 * sizeof(double);
+    double *values = malloc(size);
     values[0] = 1.0;
     values[1] = 2.0;
     values[2] = -3.0;
@@ -116,7 +117,7 @@
     values[7] = -2.0;
     values[8] = 1.0;
     
-    MCMatrix *a = [MCMatrix matrixWithValues:values rows:3 columns:3];
+    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:3 columns:3];
     a.luFactorization;
     a.singularValueDecomposition;
     a.transpose;

@@ -30,7 +30,8 @@
 
 - (void)testTransposition
 {
-    double *aVals= malloc(9 * sizeof(double));
+    size_t size = 9 * sizeof(double);
+    double *aVals= malloc(size);
     aVals[0] = 1.0;
     aVals[1] = 2.0;
     aVals[2] = 3.0;
@@ -40,9 +41,9 @@
     aVals[6] = 7.0;
     aVals[7] = 8.0;
     aVals[8] = 9.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:aVals rows:3 columns:3];
+    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:3 columns:3];
     
-    double *tVals= malloc(9 * sizeof(double));
+    double *tVals= malloc(size);
     tVals[0] = 1.0;
     tVals[1] = 4.0;
     tVals[2] = 7.0;
@@ -52,7 +53,7 @@
     tVals[6] = 3.0;
     tVals[7] = 6.0;
     tVals[8] = 9.0;
-    MCMatrix *t = [MCMatrix matrixWithValues:tVals rows:3 columns:3].transpose;
+    MCMatrix *t = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3].transpose;
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -60,7 +61,7 @@
         }
     }
     
-    aVals= malloc(9 * sizeof(double));
+    aVals= malloc(size);
     aVals[0] = 1.0;
     aVals[1] = 2.0;
     aVals[2] = 3.0;
@@ -70,9 +71,9 @@
     aVals[6] = 7.0;
     aVals[7] = 8.0;
     aVals[8] = 9.0;
-    a = [MCMatrix matrixWithValues:aVals rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
+    a = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     
-    tVals= malloc(9 * sizeof(double));
+    tVals= malloc(size);
     tVals[0] = 1.0;
     tVals[1] = 4.0;
     tVals[2] = 7.0;
@@ -82,7 +83,7 @@
     tVals[6] = 3.0;
     tVals[7] = 6.0;
     tVals[8] = 9.0;
-    t = [MCMatrix matrixWithValues:tVals rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow].transpose;
+    t = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow].transpose;
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {

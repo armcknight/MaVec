@@ -30,7 +30,7 @@
 
 - (void)testVectorDotProduct
 {
-    double dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
+    NSNumber *dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
                                                                                           @1,
                                                                                           @3,
                                                                                           @(-5)]]
@@ -38,7 +38,7 @@
                                                                                           @4,
                                                                                           @(-2),
                                                                                           @(-1)]]];
-    XCTAssertEqual(dotProduct, 3.0, @"Dot product not computed correctly");
+    XCTAssertEqual(dotProduct.doubleValue, 3.0, @"Dot product not computed correctly");
     
     dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
                                                                                    @0,
@@ -48,7 +48,7 @@
                                                                                    @0,
                                                                                    @1,
                                                                                    @0]]];
-    XCTAssertEqual(dotProduct, 0.0, @"Dot product not computed correctly");
+    XCTAssertEqual(dotProduct.doubleValue, 0.0, @"Dot product not computed correctly");
     
     @try {
         dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
@@ -153,10 +153,10 @@
     double l3NormSolution = 3.30192724889;
     double infinityNormSolution = 3.0;
     
-    XCTAssertEqual(vector.l1Norm, l1NormSolution, @"L1 norm incorrect.");
-    XCTAssertEqualWithAccuracy(vector.l2Norm, l2NormSolution, 1e-10, @"L2 norm incorrect.");
-    XCTAssertEqualWithAccuracy(vector.l3Norm, l3NormSolution, 1e-10, @"L3 norm incorrect.");
-    XCTAssertEqual(vector.infinityNorm, infinityNormSolution, @"Infinity norm incorrect.");
+    XCTAssertEqual(vector.l1Norm.doubleValue, l1NormSolution, @"L1 norm incorrect.");
+    XCTAssertEqualWithAccuracy(vector.l2Norm.doubleValue, l2NormSolution, 1e-10, @"L2 norm incorrect.");
+    XCTAssertEqualWithAccuracy(vector.l3Norm.doubleValue, l3NormSolution, 1e-10, @"L3 norm incorrect.");
+    XCTAssertEqual(vector.infinityNorm.doubleValue, infinityNormSolution, @"Infinity norm incorrect.");
 }
 
 @end
