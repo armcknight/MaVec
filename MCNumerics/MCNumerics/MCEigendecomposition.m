@@ -46,7 +46,6 @@
             int iwkopt;
             int liwork = -1;
             int info;
-            int *iwork = malloc(liwork * sizeof(int));
             NSData *a = [matrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower
                                              leadingDimension:MCMatrixLeadingDimensionColumn
                                                 packingMethod:MCMatrixValuePackingMethodConventional];
@@ -60,6 +59,7 @@
                 lwork = (int)wkopt;
                 double *work = malloc(lwork * sizeof(double));
                 liwork = iwkopt;
+                int *iwork = malloc(liwork * sizeof(int));
                 dsyevd_("V", "L", &n, (double *)a.bytes, &lda, w, work, &lwork, iwork, &liwork, &info);
                 
                 free(work);
@@ -78,6 +78,7 @@
                 lwork = (int)wkopt;
                 float *work = malloc(lwork * sizeof(float));
                 liwork = iwkopt;
+                int *iwork = malloc(liwork * sizeof(int));
                 ssyevd_("V", "L", &n, (float *)a.bytes, &lda, w, work, &lwork, iwork, &liwork, &info);
                 
                 free(work);
