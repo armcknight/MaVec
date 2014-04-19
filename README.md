@@ -19,7 +19,7 @@ See For Yourself
 // of either floats or doubles exists in column major format
 //
 
-MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:9 * sizeof(double)]
+MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:sizeof(values)]
                                          rows:3
                                       columns:3];
 MCQRFactorization *qr = matrix.qrFactorization;
