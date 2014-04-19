@@ -54,7 +54,7 @@ See For Yourself
 ===
 
 **MaVec QR factorization:**
-```
+```objective-c
 //
 // assume an array named "values" representing a 3x3 matrix 
 // of either floats or doubles exists in column major format
@@ -67,7 +67,7 @@ MCQRFactorization *qr = matrix.qrFactorization;
 ```
 
 **Accelerate QR factorization:**
-```
+```objective-c
 //
 // assume an array named "values" representing a 3x3 matrix 
 // of either floats or doubles exists in column major format
