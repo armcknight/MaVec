@@ -520,6 +520,8 @@ MCMatrixDefiniteness;
  */
 - (NSString *)description;
 
+- (id)debugQuickLookObject;
+
 #pragma mark - Inspection
 
 /**

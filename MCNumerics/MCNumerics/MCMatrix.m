@@ -985,6 +985,11 @@ MCMatrixNorm;
     return description;
 }
 
+- (id)debugQuickLookObject
+{
+    return self.description;
+}
+
 #pragma mark - Inspection
 
 - (NSData *)valuesWithLeadingDimension:(MCMatrixLeadingDimension)leadingDimension

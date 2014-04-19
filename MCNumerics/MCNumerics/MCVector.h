@@ -189,6 +189,8 @@ MCVectorFormat;
  */
 - (NSString *)description;
 
+- (id)debugQuickLookObject;
+
 #pragma mark - Inspection
 
 /**

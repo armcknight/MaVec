@@ -425,6 +425,11 @@
     return description;
 }
 
+- (id)debugQuickLookObject
+{
+    return self.description;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
