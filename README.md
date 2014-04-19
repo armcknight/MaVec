@@ -7,7 +7,48 @@ With MaVec you can create a matrix object from any of several array representati
 
 ![](MatrixConversions.png)
 
-Many useful utilities exist to transform the value representations, from, say, upper triangular column-major to conventional row-major, or symmetric to band. Operations such as LU and QR factorization, singular value decomposition, eigendecomposition, matrix and vector arithmetic, definiteness determination, linear system solving and many more are all one line of code away!
+Supported Operations
+===
+**Vectors**
+- Addition
+- Subtraction
+- Multiplication (vector/scalar)
+- Division
+- Powers
+- Dot product
+- Cross product
+- Triple products (vector/scalar)
+- Element sum/product
+- L1/L2/L3/Inifity norm
+- Maximum/minimum value
+- Absolute value
+- Random generation
+
+**Matrices**
+- Addition
+- Subtraction
+- Multiplication
+- Division
+- Transpose
+- Inverse
+- Minors
+- Cofactors
+- Adjugates
+- Condition numbers
+- QR factorization
+- LU factorization
+- Singular value decomposition
+- Eigendecomposition
+- Symmetry queries
+- Definitenes queries (positive/positive semi/negative/negative semi/indefinite
+- Trace
+- L1/infinity/max/froebenius(euclidean) norm
+- Column/row swaps
+- Column/row extraction
+- Linear system solving
+- Random generation
+
+Both MCMatrix and MCVector override NSObject's equality, description and hashing methods, implement the NSCopying protocol (so they can be inserted in Foundation collections!), and support object subscripting (`[matrix valueAtRow:3 column:3] == matrix[3][3]`) and [`debugQuickLookObject`](https://developer.apple.com/library/ios/documentation/ToolsLanguages/Conceptual/Xcode_Overview/DebugYourApp/DebugYourApp.html) for easier debugging.
 
 See For Yourself
 ===
@@ -110,6 +151,7 @@ MaVec is a test-driven framework, where each method that is added comes with a u
 
 Future Goals
 ===
+- Efficient matrix chain multiplication
 - Handle complex numbers
 - Use entire catalog of specialized functions for a given operation based on matrix/vector characteristics (for instance, eigendecompositions of general, symmetric, triangular, tridiagonal, etc matrices all have different accelerate functions)
 - Add more unit tests!
