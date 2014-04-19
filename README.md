@@ -15,7 +15,8 @@ See For Yourself
 **MaVec QR factorization:**
 ```
 //
-// assume an array named "values" representing a 3x3 matrix of either floats or doubles exists in column major format
+// assume an array named "values" representing a 3x3 matrix 
+// of either floats or doubles exists in column major format
 //
 
 MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:9 * sizeof(double)]
@@ -27,7 +28,8 @@ MCQRFactorization *qr = matrix.qrFactorization;
 **Accelerate QR factorization:**
 ```
 //
-// assume an array named "values" representing a 3x3 matrix of either floats or doubles exists in column major format
+// assume an array named "values" representing a 3x3 matrix 
+// of either floats or doubles exists in column major format
 //
 
 int m = 3;
