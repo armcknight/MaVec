@@ -40,13 +40,13 @@ Supported Operations
 - Singular value decomposition
 - Eigendecomposition
 - Symmetry queries
-- Definitenes queries (positive/positive semi/negative/negative semi/indefinite
+- Definitenes queries (positive/positive semi/negative/negative semi/indefinite)
 - Trace
 - L1/infinity/max/froebenius(euclidean) norm
 - Column/row swaps
 - Column/row extraction
 - Linear system solving
-- Random generation
+- Random generation (general/diagonal/triangular/symmetric/band)
 
 Both MCMatrix and MCVector override NSObject's equality, description and hashing methods, implement the NSCopying protocol (so they can be inserted in Foundation collections!), and support object subscripting (`[matrix valueAtRow:3 column:3] == matrix[3][3]`) and [`debugQuickLookObject`](https://developer.apple.com/library/ios/documentation/ToolsLanguages/Conceptual/Xcode_Overview/DebugYourApp/DebugYourApp.html) for easier debugging.
 
