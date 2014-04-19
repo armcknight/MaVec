@@ -9,7 +9,10 @@ With MaVec you can create a matrix object from any of several matrix representat
 
 Many useful utilities exist to transform the value representations, from, say, upper triangular column-major to conventional row-major, or symmetric to band. Operations such as LU and QR factorization, singular value decomposition, eigendecomposition, matrix and vector arithmetic, definiteness determination, linear system solving and many more are all one line of code away!
 
-MaVec QR factorization:
+See For Yourself
+===
+
+**MaVec QR factorization:**
 ```
 //
 // assume an array named "values" representing a 3x3 matrix of either floats or doubles exists in column major format
@@ -21,7 +24,7 @@ MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values lengt
 MCQRFactorization *qr = matrix.qrFactorization;
 ```
 
-Accelerate QR factorization:
+**Accelerate QR factorization:**
 ```
 //
 // assume an array named "values" representing a 3x3 matrix of either floats or doubles exists in column major format
@@ -98,3 +101,13 @@ if (sizeof(values) / sizeof(double) == 9) {
     vDSP_mmul(values, 1, a, 1, r, 1, m, n, m);
 }
 ```
+
+Unit Tests
+===
+MaVec is a test-driven framework, where each method that is added comes with a unit test to ensure it doesn't break due to future changes. As of 4/19/2014 there are 223 tests.
+
+Future Goals
+===
+- Handle complex numbers
+- Use entire catalog of specialized functions for a given operation based on matrix/vector characteristics (for instance, eigendecompositions of general, symmetric, triangular, tridiagonal, etc matrices all have different accelerate functions)
+- Add more unit tests!
