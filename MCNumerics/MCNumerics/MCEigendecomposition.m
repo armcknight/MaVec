@@ -103,8 +103,8 @@
                 size_t size = n * sizeof(double);
                 double *wr= malloc(size);
                 double *wi= malloc(size);
-                double *vl= malloc(size);
-                double *vr= malloc(size);
+                double *vl= malloc(n * size);
+                double *vr= malloc(n * size);
                 double wkopt;
                 dgeev_("V", "V", &n, (double *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
                 
@@ -118,7 +118,7 @@
                 
                 if (info == 0) {
                     _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
-                    _eigenvectors = [MCMatrix matrixWithValues:[NSData dataWithBytes:vr length:size] rows:n columns:n];
+                    _eigenvectors = [MCMatrix matrixWithValues:[NSData dataWithBytes:vr length:n * size] rows:n columns:n];
                 }
             } else {
                 size_t size = n * sizeof(float);
