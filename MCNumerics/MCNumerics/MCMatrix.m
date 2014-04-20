@@ -1840,6 +1840,7 @@ MCMatrixNorm;
     matrixCopy->_triangularComponent = _triangularComponent;
     matrixCopy->_packingMethod = _packingMethod;
     matrixCopy->_definiteness = _definiteness;
+    matrixCopy->_precision = _precision;
     
     matrixCopy->_values = _values.copy;
     matrixCopy->_transpose = _transpose.copy;
