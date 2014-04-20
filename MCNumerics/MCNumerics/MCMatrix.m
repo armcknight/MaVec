@@ -135,7 +135,25 @@ MCMatrixNorm;
         _values = values;
         _rows = rows;
         _columns = columns;
-        _precision = kMCIsDoubleType(values.length / (rows * columns)) ? MCValuePrecisionDouble : MCValuePrecisionSingle;
+        
+        int numberOfValues;
+        switch (packingMethod) {
+            case MCMatrixValuePackingMethodPacked:
+                numberOfValues = (rows * (rows + 1)) / 2;
+                break;
+                
+            case MCMatrixValuePackingMethodConventional:
+                numberOfValues = rows * columns;
+                break;
+                
+            case MCMatrixValuePackingMethodBand:
+                // must set in any band init methods
+                numberOfValues = 1;
+                break;
+                
+            default: break;
+        }
+        _precision = kMCIsDoubleType(values.length / numberOfValues) ? MCValuePrecisionDouble : MCValuePrecisionSingle;
     }
     return self;
 }
@@ -163,6 +181,7 @@ MCMatrixNorm;
                                  leadingDimension:MCMatrixLeadingDimensionColumn
                                     packingMethod:MCMatrixValuePackingMethodConventional
                               triangularComponent:MCMatrixTriangularComponentBoth];
+        matrix.precision = MCValuePrecisionDouble;
     } else {
         size_t size = rows * columns * sizeof(float);
         float *values = malloc(size);
@@ -177,6 +196,7 @@ MCMatrixNorm;
                                  leadingDimension:MCMatrixLeadingDimensionColumn
                                     packingMethod:MCMatrixValuePackingMethodConventional
                               triangularComponent:MCMatrixTriangularComponentBoth];
+        matrix.precision = MCValuePrecisionSingle;
     }
     
     return matrix;
@@ -376,6 +396,7 @@ MCMatrixNorm;
     matrix.upperCodiagonals = upperCodiagonals;
     matrix.bandwidth = lowerCodiagonals + upperCodiagonals + 1;
     matrix.numberOfBandValues = matrix.bandwidth * order;
+    matrix.precision = kMCIsDoubleType(values.length / matrix.numberOfBandValues) ? MCValuePrecisionDouble : MCValuePrecisionSingle;
     
     return matrix;
 }
