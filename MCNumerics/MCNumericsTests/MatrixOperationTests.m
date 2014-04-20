@@ -90,7 +90,7 @@
     aVals[6] = 7.0;
     aVals[7] = 8.0;
     aVals[8] = 9.0;
-    a = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
+    a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
     
     tVals= malloc(size);
     tVals[0] = 1.0;
