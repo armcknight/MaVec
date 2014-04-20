@@ -195,6 +195,17 @@
     }
 }
 
++ (instancetype)vectorFilledWithValue:(NSNumber *)value
+                               length:(int)length
+                         vectorFormat:(MCVectorFormat)vectorFormat
+{
+    NSMutableArray *values = [NSMutableArray array];
+    for (int i = 0; i < length; i++) {
+        [values addObject:value];
+    }
+    return [MCVector vectorWithValuesInArray:values vectorFormat:vectorFormat];
+}
+
 #pragma mark - Lazy loaded properties
 
 - (NSNumber *)sumOfValues

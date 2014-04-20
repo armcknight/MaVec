@@ -203,6 +203,17 @@ MCVectorFormat;
                         vectorFormat:(MCVectorFormat)vectorFormat
                            precision:(MCValuePrecision)precision;
 
+/**
+ @brief Create a vector of specified length and vector format, whose values are all equal to the specified value.
+ @param value The value to set each element of the vector to.
+ @param length The amount of values to be in the array.
+ @param vectorFormat Format of the vector, either row or column.
+ @return A new MCVector with specified length and vector format containing the specified value at each element.
+ */
++ (instancetype)vectorFilledWithValue:(NSNumber *)value
+                               length:(int)length
+                         vectorFormat:(MCVectorFormat)vectorFormat;
+
 #pragma mark - NSObject overrides
 
 /**
