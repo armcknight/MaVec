@@ -53,9 +53,9 @@
 {
     // example from wikipedia: http://en.wikipedia.org/wiki/QR_decomposition#Example
     MCMatrix *source = [MCMatrix matrixWithColumnVectors:@[
-                                                           [MCVector vectorWithValuesInArray:@[@12, @6, @(-4)]],
-                                                           [MCVector vectorWithValuesInArray:@[@(-51), @167, @24]],
-                                                           [MCVector vectorWithValuesInArray:@[@4, @(-68), @(-41)]],
+                                                           [MCVector vectorWithValuesInArray:@[@12.0, @6.0, @(-4.0)]],
+                                                           [MCVector vectorWithValuesInArray:@[@(-51.0), @167.0, @24.0]],
+                                                           [MCVector vectorWithValuesInArray:@[@4.0, @(-68.0), @(-41.0)]],
                                                            ]];
     
     MCQRFactorization *qrFactorization = source.qrFactorization;

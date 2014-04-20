@@ -50,35 +50,35 @@
 - (void)testVectorDotProduct
 {
     NSNumber *dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
-                                                                                          @1,
-                                                                                          @3,
-                                                                                          @(-5)]]
+                                                                                          @1.0,
+                                                                                          @3.0,
+                                                                                          @(-5.0)]]
                                            vectorB:[MCVector vectorWithValuesInArray:@[
-                                                                                          @4,
-                                                                                          @(-2),
-                                                                                          @(-1)]]];
+                                                                                          @4.0,
+                                                                                          @(-2.0),
+                                                                                          @(-1.0)]]];
     XCTAssertEqual(dotProduct.doubleValue, 3.0, @"Dot product not computed correctly");
     
     dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
-                                                                                   @0,
-                                                                                   @0,
-                                                                                   @1]]
+                                                                                   @0.0,
+                                                                                   @0.0,
+                                                                                   @1.0]]
                                     vectorB:[MCVector vectorWithValuesInArray:@[
-                                                                                   @0,
-                                                                                   @1,
-                                                                                   @0]]];
+                                                                                   @0.0,
+                                                                                   @1.0,
+                                                                                   @0.0]]];
     XCTAssertEqual(dotProduct.doubleValue, 0.0, @"Dot product not computed correctly");
     
     @try {
         dotProduct = [MCVector dotProductOfVectorA:[MCVector vectorWithValuesInArray:@[
-                                                                                       @0,
-                                                                                       @0,
-                                                                                       @1]]
+                                                                                       @0.0,
+                                                                                       @0.0,
+                                                                                       @1.0]]
                                         vectorB:[MCVector vectorWithValuesInArray:@[
-                                                                                       @0,
-                                                                                       @1,
-                                                                                       @0,
-                                                                                       @1]]];
+                                                                                       @0.0,
+                                                                                       @1.0,
+                                                                                       @0.0,
+                                                                                       @1.0]]];
     }
     @catch (NSException *exception) {
         XCTAssert([exception.name isEqualToString:NSInternalInconsistencyException], @"Did not detect dimension mismatch in MCVector dot product method");
@@ -87,12 +87,12 @@
 
 - (void)testVectorAddition
 {
-    MCVector *a = [MCVector vectorWithValuesInArray:@[@1, @2, @3, @4]];
-    MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
-    MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@5.0, @6.0, @7.0, @8.0]];
+    MCVector *c = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
     MCVector *sum = [MCVector sumOfVectorA:a vectorB:b];
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@6, @8, @10, @12]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@6.0, @8.0, @10.0, @12.0]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([sum valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not added correctly", i);
     }
@@ -102,12 +102,12 @@
 
 - (void)testVectorSubtraction
 {
-    MCVector *a = [MCVector vectorWithValuesInArray:@[@1, @2, @3, @4]];
-    MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
-    MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@5.0, @6.0, @7.0, @8.0]];
+    MCVector *c = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
     MCVector *diff = [MCVector differenceOfVectorMinuend:b vectorSubtrahend:a];
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@4, @4, @4, @4]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@4.0, @4.0, @4.0, @4.0]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([diff valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not subtracted correctly", i);
     }
@@ -117,12 +117,12 @@
 
 - (void)testVectorMultiplication
 {
-    MCVector *a = [MCVector vectorWithValuesInArray:@[@1, @2, @3, @4]];
-    MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @7, @8]];
-    MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@5.0, @6.0, @7.0, @8.0]];
+    MCVector *c = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
     MCVector *prod = [MCVector productOfVectorA:a vectorB:b];
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@5, @12, @21, @32]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@5.0, @12.0, @21.0, @32.0]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([prod valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not multiplied correctly", i);
     }
@@ -132,12 +132,12 @@
 
 - (void)testVectorDivision
 {
-    MCVector *a = [MCVector vectorWithValuesInArray:@[@1, @2, @3, @4]];
-    MCVector *b = [MCVector vectorWithValuesInArray:@[@5, @6, @9, @8]];
-    MCVector *c = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@5.0, @6.0, @9.0, @8.0]];
+    MCVector *c = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
     MCVector *quotient = [MCVector quotientOfVectorDividend:b vectorDivisor:a];
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@5, @3, @3, @2]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@5.0, @3.0, @3.0, @2.0]];
     for (int i = 0; i < 4; i++) {
         XCTAssertEqual([quotient valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not divided correctly", i);
     }
@@ -147,16 +147,16 @@
 
 - (void)testVectorCrossProduct
 {
-    MCVector *a = [MCVector vectorWithValuesInArray:@[@3, @(-3), @1]];
-    MCVector *b = [MCVector vectorWithValuesInArray:@[@4, @9, @2]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@3.0, @(-3.0), @1.0]];
+    MCVector *b = [MCVector vectorWithValuesInArray:@[@4.0, @9.0, @2.0]];
     MCVector *c = [MCVector crossProductOfVectorA:a vectorB:b];
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@(-15), @(-2), @39]];
+    MCVector *solution = [MCVector vectorWithValuesInArray:@[@(-15.0), @(-2.0), @39.0]];
     XCTAssertTrue([c isEqualToVector:solution], @"Cross product not computed correctly.");
 }
 
 - (void)testVectorCopying
 {
-    MCVector *a = [MCVector vectorWithValuesInArray:@[@3, @(-3), @1]];
+    MCVector *a = [MCVector vectorWithValuesInArray:@[@3.0, @(-3.0), @1.0]];
     MCVector *aCopy = a.copy;
     
     XCTAssertNotEqual(a.self, aCopy.self, @"The copied vector is the same instance as its source.");
@@ -165,7 +165,7 @@
 
 - (void)testVectorNorms
 {
-    MCVector *vector = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
+    MCVector *vector = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
     double l1NormSolution = 6.0;
     double l2NormSolution = 3.74165738677;

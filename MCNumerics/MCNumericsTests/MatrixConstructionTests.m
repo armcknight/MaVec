@@ -417,9 +417,9 @@
 
 - (void)testMatrixCreationFromVectors
 {
-    MCVector *v1 = [MCVector vectorWithValuesInArray:@[@1, @2, @3]];
-    MCVector *v2 = [MCVector vectorWithValuesInArray:@[@4, @5, @6]];
-    MCVector *v3 = [MCVector vectorWithValuesInArray:@[@7, @8, @9]];
+    MCVector *v1 = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
+    MCVector *v2 = [MCVector vectorWithValuesInArray:@[@4.0, @5.0, @6.0]];
+    MCVector *v3 = [MCVector vectorWithValuesInArray:@[@7.0, @8.0, @9.0]];
     
     /* create the matrix
      [ 1  4  7
