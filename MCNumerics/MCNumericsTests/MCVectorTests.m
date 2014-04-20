@@ -94,7 +94,7 @@
     MCVector *sum = [MCVector sumOfVectorA:a vectorB:b];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@6, @8, @10, @12]];
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqual([sum valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not added correctly", i);
+        XCTAssertEqual([sum valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not added correctly", i);
     }
     
     XCTAssertThrows([MCVector sumOfVectorA:a vectorB:c], @"Should throw a mismatched dimension exception");
@@ -109,7 +109,7 @@
     MCVector *diff = [MCVector differenceOfVectorMinuend:b vectorSubtrahend:a];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@4, @4, @4, @4]];
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqual([diff valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not subtracted correctly", i);
+        XCTAssertEqual([diff valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not subtracted correctly", i);
     }
     
     XCTAssertThrows([MCVector differenceOfVectorMinuend:a vectorSubtrahend:c], @"Should throw a mismatched dimension exception");
@@ -124,7 +124,7 @@
     MCVector *prod = [MCVector productOfVectorA:a vectorB:b];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@5, @12, @21, @32]];
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqual([prod valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not multiplied correctly", i);
+        XCTAssertEqual([prod valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not multiplied correctly", i);
     }
     
     XCTAssertThrows([MCVector productOfVectorA:a vectorB:c], @"Should throw a mismatched dimension exception");
@@ -139,7 +139,7 @@
     MCVector *quotient = [MCVector quotientOfVectorDividend:b vectorDivisor:a];
     MCVector *solution = [MCVector vectorWithValuesInArray:@[@5, @3, @3, @2]];
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqual([quotient valueAtIndex:i], [solution valueAtIndex:i], @"Value at index %u not divided correctly", i);
+        XCTAssertEqual([quotient valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not divided correctly", i);
     }
     
     XCTAssertThrows([MCVector quotientOfVectorDividend:a vectorDivisor:c], @"Should throw a mismatched dimension exception");

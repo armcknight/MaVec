@@ -76,7 +76,7 @@
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
-            XCTAssertEqual([p valueAtRow:i column:j], [s valueAtRow:i column:j], @"Value at row %u and column %u incorrect", i, j);
+            XCTAssertEqual([p valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
 }
