@@ -97,15 +97,15 @@
         dValues[i] = i;
     }
     MCMatrix *d = [MCMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:4 columns:3];
-    XCTAssert([a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqual:");
-    XCTAssert([a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqualToMatrix:");
+    XCTAssert(![a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqual:");
+    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqualToMatrix:");
     dValues = malloc(smallerSize * sizeof(double));
     for (int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
     d = [MCMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:3 columns:4];
-    XCTAssert([a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqual:");
-    XCTAssert([a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqualToMatrix:");
+    XCTAssert(![a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqual:");
+    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqualToMatrix:");
     
     smallerSize = 9;
     dValues = malloc(smallerSize * sizeof(double));
