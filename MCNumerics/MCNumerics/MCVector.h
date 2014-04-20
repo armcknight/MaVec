@@ -135,6 +135,10 @@ MCVectorFormat;
  */
 @property (strong, readonly, nonatomic) MCVector *absoluteVector;
 
+/**
+ @property precision
+ @brief The precision of the numeric values in the vector, either single- or double-precision floating point.
+ */
 @property (assign, readonly, nonatomic) MCValuePrecision precision;
 
 #pragma mark - Constructors
@@ -188,7 +192,16 @@ MCVectorFormat;
  */
 + (instancetype)vectorWithValuesInArray:(NSArray *)values vectorFormat:(MCVectorFormat)vectorFormat;
 
-+ (instancetype)randomVectorOfLength:(int)length vectorFormat:(MCVectorFormat)vectorFormat precision:(MCValuePrecision)precision;
+/**
+ @brief Generate a vector containing random single- or double-precision floating point values.
+ @param length The amount of random values to generate for the matrix.
+ @param vectorFormat The format of the vector to generate, either column or row.
+ @param precision The precision of the random values to generate, either single- or double- precision.
+ @return A new MCVector containing the amount of random values of specified precision.
+ */
++ (instancetype)randomVectorOfLength:(int)length
+                        vectorFormat:(MCVectorFormat)vectorFormat
+                           precision:(MCValuePrecision)precision;
 
 #pragma mark - NSObject overrides
 

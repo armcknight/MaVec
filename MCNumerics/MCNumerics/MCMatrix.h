@@ -304,6 +304,10 @@ MCMatrixDefiniteness;
  */
 @property (nonatomic, readonly, strong) NSNumber *normFroebenius;
 
+/**
+ @property precision
+ @brief The precision of the numeric values in the matrix, either single- or double-precision floating point.
+ */
 @property (nonatomic, readonly, assign) MCValuePrecision precision;
 
 

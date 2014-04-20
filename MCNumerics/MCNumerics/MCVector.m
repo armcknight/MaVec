@@ -174,7 +174,9 @@
     return [[MCVector alloc] initWithValuesInArray:values vectorFormat:vectorFormat];
 }
 
-+ (instancetype)randomVectorOfLength:(int)length vectorFormat:(MCVectorFormat)vectorFormat precision:(MCValuePrecision)precision
++ (instancetype)randomVectorOfLength:(int)length
+                        vectorFormat:(MCVectorFormat)vectorFormat
+                           precision:(MCValuePrecision)precision
 {
     if (precision == MCValuePrecisionDouble) {
         NSUInteger size = length * sizeof(double);
