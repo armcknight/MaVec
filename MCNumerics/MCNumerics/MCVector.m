@@ -509,7 +509,7 @@
         for (int i = 0; i < vector.length; i++) {
             newValues[i] = scalar.doubleValue * ((double *)vector.values.bytes)[i];
         }
-        product = [MCVector vectorWithValues:[NSData dataWithBytes:newValues length:vector.length] length:vector.length vectorFormat:vector.vectorFormat];
+        product = [MCVector vectorWithValues:[NSData dataWithBytes:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
     } else {
         float *newValues = malloc(vector.length * sizeof(float));
         for (int i = 0; i < vector.length; i++) {
