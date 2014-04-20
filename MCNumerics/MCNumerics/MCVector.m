@@ -643,7 +643,6 @@
     }
     
     return crossProduct;
-    
 }
 
 + (NSNumber *)scalarTripleProductWithVectorA:(MCVector *)vectorA vectorB:(MCVector *)vectorB vectorC:(MCVector *)vectorC
