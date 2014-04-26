@@ -59,6 +59,32 @@ Both MCMatrix and MCVector override NSObject's equality, description and hashing
 See For Yourself
 ===
 
+**Basic operations:**
+```objective-c
+/* create some vectors and compare them */
+double vectorValues[3] = { 1.0, 2.0, 3.0 };
+MCVector *vectorA = [MCVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3 * sizeof(double)] 
+                                        length:3];
+MCVector *vectorB = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
+BOOL equal = [vectorA isEqualToVector:vectorB]; // YES
+
+/* multiply the vectors together and do some more comparisons */
+MCVector *product = [MCVector productOfVectorA:vectorA vectorB:vectorB];
+equal = [vectorA isEqualToVector:product]; // NO
+                         
+/* vectors can be subscripted */                                              
+equal = [vectorA[0] compare:product[0]]; // YES
+equal = [vectorA[1] compare:product[1]]; // NO
+
+/* create some matrices and compare them */
+MCMatrix *matrix = [MCMatrix randomSymmetricMatrixOfOrder:3 precision:MCValuePrecisionDouble];
+MCMatrix *transpose = matrix.transpose.copy; // MCMatrix adopts NSCopying
+equal = [matrix isEqualToMatrix:transpose]; // YES
+
+/* matrices can also be subscripted */
+equal = [matrix[0][0] compare:transpose[0][0]]; // YES
+```
+
 **MaVec QR factorization:**
 ```objective-c
 //
