@@ -46,7 +46,13 @@ Supported Operations
 - Column/row swaps
 - Column/row extraction
 - Linear system solving
-- Random generation (general/diagonal/triangular/symmetric/band)
+- Random generation
+   - General
+   - Diagonal
+   - Triangular
+   - Symmetric
+   - Band
+   - Positive/negative/positive semi/negative semi/indefinite
 
 Both MCMatrix and MCVector override NSObject's equality, description and hashing methods, implement the NSCopying protocol (so they can be inserted in Foundation collections!), and support object subscripting (`[matrix valueAtRow:3 column:3] == matrix[3][3]`) and [`debugQuickLookObject`](https://developer.apple.com/library/ios/documentation/ToolsLanguages/Conceptual/Xcode_Overview/DebugYourApp/DebugYourApp.html) for easier debugging.
 
