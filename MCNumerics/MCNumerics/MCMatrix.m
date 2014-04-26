@@ -1972,7 +1972,20 @@ MCMatrixNorm;
     matrixCopy->_definiteness = _definiteness;
     matrixCopy->_precision = _precision;
     
-    matrixCopy->_values = _values.copy;
+    if (_precision == MCValuePrecisionDouble) {
+        double *values = malloc(_values.length);
+        for (int i = 0; i < _values.length / sizeof(double); i++) {
+            values[i] = ((double *)_values.bytes)[i];
+        }
+        matrixCopy->_values = [NSData dataWithBytes:values length:_values.length];
+    } else {
+        float *values = malloc(_values.length);
+        for (int i = 0; i < _values.length / sizeof(float); i++) {
+            values[i] = ((float *)_values.bytes)[i];
+        }
+        matrixCopy->_values = [NSData dataWithBytes:values length:_values.length];
+    }
+    
     matrixCopy->_transpose = _transpose.copy;
     matrixCopy->_determinant = _determinant.copy;
     matrixCopy->_inverse = _inverse.copy;
@@ -1991,6 +2004,10 @@ MCMatrixNorm;
     matrixCopy->_normL1 = _normL1.copy;
     matrixCopy->_normFroebenius = _normFroebenius.copy;
     matrixCopy->_normMax = _normMax.copy;
+    
+    matrixCopy->_bandwidth = _bandwidth;
+    matrixCopy->_numberOfBandValues = _numberOfBandValues;
+    matrixCopy->_upperCodiagonals = _upperCodiagonals;
     
     return matrixCopy;
 }

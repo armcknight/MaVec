@@ -124,24 +124,38 @@
 
 - (void)testMatrixCopy
 {
-    size_t size = 9 * sizeof(double);
-    double *values = malloc(size);
-    values[0] = 1.0;
-    values[1] = 2.0;
-    values[2] = -3.0;
-    values[3] = 2.0;
-    values[4] = 1.0;
-    values[5] = 1.0;
-    values[6] = -1.0;
-    values[7] = -2.0;
-    values[8] = 1.0;
-    
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:3 columns:3];
-    a.luFactorization;
-    a.singularValueDecomposition;
-    a.transpose;
-    
+    MCMatrix *a = [MCMatrix randomMatrixWithRows:3 columns:3 precision:MCValuePrecisionDouble];
     MCMatrix *b = a.copy;
+    
+    XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
+    XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
+    
+    a = [MCMatrix randomSymmetricMatrixOfOrder:3 precision:MCValuePrecisionDouble];
+    b = a.copy;
+    
+    XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
+    XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
+    
+    a = [MCMatrix randomBandMatrixOfOrder:3 upperCodiagonals:2 lowerCodiagonals:1 precision:MCValuePrecisionDouble];
+    b = a.copy;
+    
+    XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
+    XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
+    
+    a = [MCMatrix randomDiagonalMatrixOfOrder:3 precision:MCValuePrecisionDouble];
+    b = a.copy;
+    
+    XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
+    XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
+    
+    a = [MCMatrix randomMatrixOfOrder:3 definiteness:MCMatrixDefinitenessIndefinite precision:MCValuePrecisionDouble];
+    b = a.copy;
+    
+    XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
+    XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
+    
+    a = [MCMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MCMatrixTriangularComponentLower precision:MCValuePrecisionDouble];
+    b = a.copy;
     
     XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
