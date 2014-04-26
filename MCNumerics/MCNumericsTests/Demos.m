@@ -64,7 +64,7 @@
     
     vectorB = [MCVector vectorWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] length:3 vectorFormat:MCVectorFormatRowVector]; // row vector from C array
     
-    vectorC = [MCVector vectorWithValuesInArray:@[@1, @2, @3]]; // column vector from NSArray
+    vectorC = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]]; // column vector from NSArray
     
     /*
      * Matrices
