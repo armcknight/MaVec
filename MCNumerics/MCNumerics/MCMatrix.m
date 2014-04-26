@@ -714,10 +714,10 @@ MCMatrixNorm;
 
 - (MCMatrixDefiniteness)definiteness
 {
-    BOOL hasFoundEigenvalueStrictlyGreaterThanZero = NO;
-    BOOL hasFoundEigenvalueStrictlyLesserThanZero = NO;
-    BOOL hasFoundEigenvalueEqualToZero = NO;
     if (self.isSymmetric && _definiteness == MCMatrixDefinitenessUnknown) {
+        BOOL hasFoundEigenvalueStrictlyGreaterThanZero = NO;
+        BOOL hasFoundEigenvalueStrictlyLesserThanZero = NO;
+        BOOL hasFoundEigenvalueEqualToZero = NO;
         MCVector *eigenvalues = self.eigendecomposition.eigenvalues;
         for (int i = 0; i < eigenvalues.length; i += 1) {
             NSNumber *eigenvalue = [eigenvalues valueAtIndex:i];
@@ -731,24 +731,24 @@ MCMatrixNorm;
                 hasFoundEigenvalueEqualToZero = YES;
             }
         }
-        if (hasFoundEigenvalueStrictlyGreaterThanZero
-            && !hasFoundEigenvalueStrictlyLesserThanZero
-            && !hasFoundEigenvalueEqualToZero) {
-            _definiteness = MCMatrixDefinitenessPositiveDefinite;
-        } else if (!hasFoundEigenvalueStrictlyGreaterThanZero
-                   && hasFoundEigenvalueStrictlyLesserThanZero
-                   && !hasFoundEigenvalueEqualToZero) {
-            _definiteness = MCMatrixDefinitenessNegativeDefinite;
-        } else if (hasFoundEigenvalueStrictlyGreaterThanZero
-                   && !hasFoundEigenvalueStrictlyLesserThanZero
-                   && hasFoundEigenvalueEqualToZero) {
-            _definiteness = MCMatrixDefinitenessPositiveSemidefinite;
-        } else if (!hasFoundEigenvalueStrictlyGreaterThanZero
-                   && hasFoundEigenvalueStrictlyLesserThanZero
-                   && hasFoundEigenvalueEqualToZero) {
-            _definiteness = MCMatrixDefinitenessNegativeSemidefinite;
+        if (hasFoundEigenvalueEqualToZero) {
+            // will be semidefinite or indefinite
+            if (hasFoundEigenvalueStrictlyGreaterThanZero && !hasFoundEigenvalueStrictlyLesserThanZero) {
+                _definiteness = MCMatrixDefinitenessPositiveSemidefinite;
+            } else if (!hasFoundEigenvalueStrictlyGreaterThanZero && hasFoundEigenvalueStrictlyLesserThanZero) {
+                _definiteness = MCMatrixDefinitenessNegativeSemidefinite;
+            } else {
+                _definiteness = MCMatrixDefinitenessIndefinite;
+            }
         } else {
-            _definiteness = MCMatrixDefinitenessIndefinite;
+            // will be definite or indefinite (but not semidefinite)
+            if (hasFoundEigenvalueStrictlyGreaterThanZero && !hasFoundEigenvalueStrictlyLesserThanZero) {
+                _definiteness = MCMatrixDefinitenessPositiveDefinite;
+            } else if (!hasFoundEigenvalueStrictlyGreaterThanZero && hasFoundEigenvalueStrictlyLesserThanZero) {
+                _definiteness = MCMatrixDefinitenessNegativeDefinite;
+            } else {
+                _definiteness = MCMatrixDefinitenessIndefinite;
+            }
         }
     }
     return _definiteness;
