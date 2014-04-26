@@ -59,7 +59,7 @@ Both MCMatrix and MCVector override NSObject's equality, description and hashing
 See For Yourself
 ===
 
-**Basic operations:**
+### Basic operations:
 ```objective-c
 /* create some vectors and compare them */
 double vectorValues[3] = { 1.0, 2.0, 3.0 };
@@ -85,7 +85,8 @@ equal = [matrix isEqualToMatrix:transpose]; // YES
 equal = [matrix[0][0] compare:transpose[0][0]]; // YES
 ```
 
-**MaVec QR factorization:**
+### QR factorization
+**The MaVec way:**
 ```objective-c
 //
 // assume an array named "values" representing a 3x3 matrix 
@@ -98,7 +99,7 @@ MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values lengt
 MCQRFactorization *qr = matrix.qrFactorization;
 ```
 
-**Accelerate QR factorization:**
+**The Accelerate way:**
 ```objective-c
 //
 // assume an array named "values" representing a 3x3 matrix 
