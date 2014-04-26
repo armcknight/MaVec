@@ -436,4 +436,56 @@
     MCMatrix *b = [MCMatrix matrixWithRowVectors:@[v1, v2, v3]];
 }
 
+- (void)testRandomDefiniteMatrices
+{
+    int numberOfTests = 1000;
+    
+    int positiveDefiniteFails = 0;
+    int negativeDefiniteFails = 0;
+    int positiveSemidefiniteFails = 0;
+    int negativeSemidefiniteFails = 0;
+    int indefiniteFails = 0;
+    
+    MCMatrix *test;
+    
+    for(int i = 0; i < numberOfTests; i++) {
+        int order = 3;
+        MCMatrix *positiveDefinite = [MCMatrix randomMatrixOfOrder:order definiteness:MCMatrixDefinitenessPositiveDefinite precision:MCValuePrecisionDouble];
+        test = [MCMatrix matrixWithValues:[positiveDefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MCMatrixDefinitenessPositiveDefinite) {
+            positiveDefiniteFails++;
+        }
+        
+        MCMatrix *negativeDefinite = [MCMatrix randomMatrixOfOrder:3 definiteness:MCMatrixDefinitenessNegativeDefinite precision:MCValuePrecisionDouble];
+        test = [MCMatrix matrixWithValues:[negativeDefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MCMatrixDefinitenessNegativeDefinite) {
+            negativeDefiniteFails++;
+        }
+        
+        MCMatrix *positiveSemidefinite = [MCMatrix randomMatrixOfOrder:3 definiteness:MCMatrixDefinitenessPositiveSemidefinite precision:MCValuePrecisionDouble];
+        test = [MCMatrix matrixWithValues:[positiveSemidefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MCMatrixDefinitenessPositiveSemidefinite) {
+            positiveSemidefiniteFails++;
+        }
+        
+        MCMatrix *negativeSemidefinite = [MCMatrix randomMatrixOfOrder:3 definiteness:MCMatrixDefinitenessNegativeSemidefinite precision:MCValuePrecisionDouble];
+        test = [MCMatrix matrixWithValues:[negativeSemidefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MCMatrixDefinitenessNegativeSemidefinite) {
+            negativeSemidefiniteFails++;
+        }
+        
+        MCMatrix *indefinite = [MCMatrix randomMatrixOfOrder:3 definiteness:MCMatrixDefinitenessIndefinite precision:MCValuePrecisionDouble];
+        test = [MCMatrix matrixWithValues:[indefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MCMatrixDefinitenessIndefinite) {
+            indefiniteFails++;
+        }
+    }
+    
+    XCTAssert(positiveDefiniteFails == 0, @"%i positive definite failures", positiveDefiniteFails);
+    XCTAssert(negativeDefiniteFails == 0, @"%i negative definite failures", negativeDefiniteFails);
+    XCTAssert(positiveSemidefiniteFails == 0, @"%i positive semidefinite failures", positiveSemidefiniteFails);
+    XCTAssert(negativeSemidefiniteFails == 0, @"%i negative semidefinite failures", negativeSemidefiniteFails);
+    XCTAssert(indefiniteFails == 0, @"%i indefinite failures", indefiniteFails);
+}
+
 @end

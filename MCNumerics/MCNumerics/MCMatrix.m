@@ -451,6 +451,133 @@ MCMatrixNorm;
                          lowerCodiagonals:lowerCodiagonals];
 }
 
++ (instancetype)randomMatrixOfOrder:(int)order
+                       definiteness:(MCMatrixDefiniteness)definiteness
+                          precision:(MCValuePrecision)precision
+{
+    MCMatrix *matrix;
+    
+    switch(definiteness) {
+            
+        case MCMatrixDefinitenessIndefinite: {
+            BOOL shouldHaveZero = (arc4random() % 2) == 0;
+            int zeroIndex = arc4random() % order;
+            BOOL positive = (arc4random() % 2) == 0;
+            NSData *valueData;
+            if (precision == MCValuePrecisionDouble) {
+                size_t length = order * sizeof(double);
+                double *values = malloc(length);
+                for (int i = 0; i < order; i++) {
+                    if (shouldHaveZero && i == zeroIndex) {
+                        values[i] = 0.0;
+                    } else {
+                        values[i] = fabs(randomDouble) * (positive ? 1.0 : -1.0);
+                        positive = !positive;
+                    }
+                }
+                valueData = [NSData dataWithBytes:values length:length];
+            } else {
+                size_t length = order * sizeof(float);
+                float *values = malloc(length);
+                for (int i = 0; i < order; i++) {
+                    if (shouldHaveZero && i == zeroIndex) {
+                        values[i] = 0.0f;
+                    } else {
+                        values[i] = fabsf(randomFloat) * (positive ? 1.0f : -1.0f);
+                        positive = !positive;
+                    }
+                }
+                valueData = [NSData dataWithBytes:values length:length];
+            }
+            matrix = [MCMatrix diagonalMatrixWithValues:valueData order:order];
+        } break;
+            
+        case MCMatrixDefinitenessPositiveDefinite: {
+            // A is pos. def. if A = B^T * B, B is nonsingular square
+            MCMatrix *start = [MCMatrix randomMatrixWithRows:order columns:order precision:precision];
+            matrix = [MCMatrix productOfMatrixA:start andMatrixB:start.transpose];
+        } break;
+            
+        case MCMatrixDefinitenessNegativeDefinite: {
+            // A is neg. def. if A = B^T * B, B is nonsingular square with all negative values
+            MCMatrix *start = [MCMatrix randomMatrixWithRows:order columns:order precision:precision];
+            matrix = [MCMatrix productOfMatrix:[MCMatrix productOfMatrixA:start andMatrixB:start.transpose] andScalar:precision == MCValuePrecisionDouble ? @(-1.0) : @(-1.0f)];
+        } break;
+            
+        /*
+         positive and negative semidefinite matrices are diagonal matrices whose diagonal values are ≥ (or ≤, respectively) than 0
+         http://onlinelibrary.wiley.com/store/10.1002/9780470173862.app3/asset/app3.pdf?v=1&t=hu78fklx&s=a57be4e6e17e511a0722c8b666ea79ebd47d250b
+         */
+            
+        case MCMatrixDefinitenessPositiveSemidefinite: {
+            int zeroIndex = arc4random() % order;
+            NSData *valueData;
+            if (precision == MCValuePrecisionDouble) {
+                size_t length = order * sizeof(double);
+                double *values = malloc(length);
+                for (int i = 0; i < order; i++) {
+                    if (i == zeroIndex) {
+                        values[i] = 0.0;
+                    } else {
+                        values[i] = fabs(randomDouble);
+                    }
+                }
+                valueData = [NSData dataWithBytes:values length:length];
+            } else {
+                size_t length = order * sizeof(float);
+                float *values = malloc(length);
+                for (int i = 0; i < order; i++) {
+                    if (i == zeroIndex) {
+                        values[i] = 0.0f;
+                    } else {
+                        values[i] = fabsf(randomFloat);
+                    }
+                }
+                valueData = [NSData dataWithBytes:values length:length];
+            }
+            matrix = [MCMatrix diagonalMatrixWithValues:valueData order:order];
+        } break;
+            
+        case MCMatrixDefinitenessNegativeSemidefinite: {
+            int zeroIndex = arc4random() % order;
+            NSData *valueData;
+            if (precision == MCValuePrecisionDouble) {
+                size_t length = order * sizeof(double);
+                double *values = malloc(length);
+                for (int i = 0; i < order; i++) {
+                    if (i == zeroIndex) {
+                        values[i] = 0.0;
+                    } else {
+                        values[i] = -fabs(randomDouble);
+                    }
+                }
+                valueData = [NSData dataWithBytes:values length:length];
+            } else {
+                size_t length = order * sizeof(float);
+                float *values = malloc(length);
+                for (int i = 0; i < order; i++) {
+                    if (i == zeroIndex) {
+                        values[i] = 0.0f;
+                    } else {
+                        values[i] = -fabsf(randomFloat);
+                    }
+                }
+                valueData = [NSData dataWithBytes:values length:length];
+            }
+            matrix = [MCMatrix diagonalMatrixWithValues:valueData order:order];
+        } break;
+            
+        case MCMatrixDefinitenessUnknown:
+            matrix = [MCMatrix randomMatrixWithRows:order columns:order precision:precision];
+            break;
+            
+        default: break;
+    }
+    
+    matrix.definiteness = definiteness;
+    return matrix;
+}
+
 #pragma mark - Lazy-loaded properties
 
 - (MCMatrix *)transpose
