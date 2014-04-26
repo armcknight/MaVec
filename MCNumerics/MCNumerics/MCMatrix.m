@@ -35,6 +35,9 @@
 #import "MCQRFactorization.h"
 #import "MCTribool.h"
 
+#define randomDouble drand48()
+#define randomFloat rand() / RAND_MAX
+
 typedef enum : UInt8 {
     /**
      The maximum absolute column sum of the matrix.
@@ -1876,14 +1879,14 @@ MCMatrixNorm;
         NSUInteger dataSize = size * sizeof(double);
         double *values = malloc(dataSize);
         for (int i = 0; i < size; i += 1) {
-            values[i] = drand48();
+            values[i] = randomDouble;
         }
         data = [NSData dataWithBytes:values length:dataSize];
     } else {
         NSUInteger dataSize = size * sizeof(float);
         float *values = malloc(dataSize);
         for (int i = 0; i < size; i += 1) {
-            values[i] = rand() / RAND_MAX;
+            values[i] = randomFloat;
         }
         data = [NSData dataWithBytes:values length:dataSize];
     }
