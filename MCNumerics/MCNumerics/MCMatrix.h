@@ -662,6 +662,14 @@ MCMatrixDefiniteness;
 + (MCVector *)productOfMatrix:(MCMatrix *)matrix andVector:(MCVector *)vector;
 
 /**
+ @brief Multiplies each value in a matrix by a scalar value.
+ @param matrix The matrix whose values are to be multiplied.
+ @param scalar The scalar to multiply each value in the matrix by.
+ @return A new MCMatrix object containing the results of the multiplication.
+ */
++ (MCMatrix *)productOfMatrix:(MCMatrix *)matrix andScalar:(NSNumber *)scalar;
+
+/**
  @brief Raises a given matrix to specified power. If power = 0, returns the identity matrix of the same dimension; otherwise, the matrix is multiplied by itself power number of times, and must therefore be a square matrix. Throws an exception if this requirement is not met.
  @param matrix The matrix to raise to the specified power.
  @param power The power to raise the input matrix. Essentially the number of times the matrix will be multiplied by itself.

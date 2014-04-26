@@ -1940,6 +1940,37 @@ MCMatrixNorm;
     return product;
 }
 
++ (MCMatrix *)productOfMatrix:(MCMatrix *)matrix andScalar:(NSNumber *)scalar
+{
+    MCMatrix *product;
+    
+    int valueCount = matrix.rows * matrix.columns;
+    if (matrix.precision == MCValuePrecisionDouble) {
+        size_t size = valueCount * sizeof(double);
+        double *values = malloc(size);
+        for (int i = 0; i < valueCount; i++) {
+            values[i] = ((double *)matrix.values.bytes)[i] * scalar.doubleValue;
+        }
+        product = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
+                                        rows:matrix.rows
+                                     columns:matrix.columns
+                            leadingDimension:matrix.leadingDimension];
+    }
+    else {
+        size_t size = valueCount * sizeof(float);
+        float *values = malloc(size);
+        for (int i = 0; i < valueCount; i++) {
+            values[i] = ((float *)matrix.values.bytes)[i] * scalar.floatValue;
+        }
+        product = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
+                                        rows:matrix.rows
+                                     columns:matrix.columns
+                            leadingDimension:matrix.leadingDimension];
+    }
+    
+    return product;
+}
+
 + (MCMatrix *)raiseMatrix:(MCMatrix *)matrix toPower:(NSUInteger)power
 {
     NSAssert(matrix.rows == matrix.columns, @"Cannot raise a non-square matrix to exponents.");
