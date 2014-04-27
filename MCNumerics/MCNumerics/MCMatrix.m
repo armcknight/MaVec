@@ -1938,21 +1938,13 @@ MCMatrixNorm;
     int cols = matrix.columns;
     
     if (matrix.precision == MCValuePrecisionDouble) {
-        size_t size = vector.length * sizeof(double);
-        double *result = malloc(size);
-        for (int i = 0; i < vector.length; i += 1) {
-            result[i] = 0.0;
-        } // TODO: calloc instead of looping to set values in result to 0
+        double *result = calloc(vector.length, sizeof(double));
         cblas_dgemv(order, transpose, rows, cols, 1.0, matrix.values.bytes, rows, vector.values.bytes, 1, 1.0, result, 1);
-        product = [MCVector vectorWithValues:[NSData dataWithBytes:result length:size] length:vector.length];
+        product = [MCVector vectorWithValues:[NSData dataWithBytes:result length:vector.values.length] length:vector.length];
     } else {
-        size_t size = vector.length * sizeof(float);
-        float *result = malloc(size);
-        for (int i = 0; i < vector.length; i += 1) {
-            result[i] = 0.0f;
-        } // TODO: calloc instead of looping to set values in result to 0
+        float *result = calloc(vector.length, sizeof(float));
         cblas_sgemv(order, transpose, rows, cols, 1.0f, matrix.values.bytes, rows, vector.values.bytes, 1, 1.0f, result, 1);
-        product = [MCVector vectorWithValues:[NSData dataWithBytes:result length:size] length:vector.length];
+        product = [MCVector vectorWithValues:[NSData dataWithBytes:result length:vector.values.length] length:vector.length];
     }
     
     return product;
