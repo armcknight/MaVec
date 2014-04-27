@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MCMatrix.h"
+#import "MCVector.h"
 
 @interface MCMatrixMultiplicationTests : XCTestCase
 
@@ -122,6 +123,86 @@
             XCTAssertEqual([p valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
+}
+
+- (void)testMatrixVectorMultiplication
+{
+    double matrixValues[9] = {
+        -9.0, 4.0, -9.0,
+        -7.0, -4.0, -4.0,
+        9.0, 7.0, 1.0
+    };
+    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
+                                             rows:3
+                                          columns:3
+                                 leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    double vectorValues[3] = {
+        9.0, -8.0, -4.0
+    };
+    MCVector *vector = [MCVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3*sizeof(double)] length:3];
+    
+    MCVector *product = [MCMatrix productOfMatrix:matrix andVector:vector];
+    double productSolution[3] = {
+        -77.0, -15.0, 21.0
+    };
+    MCVector *solutionVector = [MCVector vectorWithValues:[NSData dataWithBytes:productSolution length:3*sizeof(double)] length:3];
+    
+    XCTAssert([product isEqualToVector:solutionVector], @"Product of matrix and vector incorrectly calculated.");
+}
+
+- (void)testMatrixScalarMultiplication
+{
+    double matrixValues[9] = {
+        -9.0, 4.0, -9.0,
+        -7.0, -4.0, -4.0,
+        9.0, 7.0, 1.0
+    };
+    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
+                                             rows:3
+                                          columns:3
+                                 leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    MCMatrix *product = [MCMatrix productOfMatrix:matrix andScalar:@7.2];
+    
+    double solutionValues[9] = {
+        -64.8, 28.8, -64.8,
+        -50.4, -28.8, -28.8,
+        64.8, 50.4, 7.2
+    };
+    MCMatrix *solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)]
+                                               rows:3
+                                            columns:3
+                                   leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    XCTAssert([product isEqualToMatrix:solution], @"Product of matrix and scalar incorrectly calculated.");
+}
+
+- (void)testMatrixPower
+{
+    double matrixValues[9] = {
+        -9.0, 4.0, -9.0,
+        -7.0, -4.0, -4.0,
+        9.0, 7.0, 1.0
+    };
+    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
+                                             rows:3
+                                          columns:3
+                                 leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    MCMatrix *power = [MCMatrix raiseMatrix:matrix toPower:4];
+    
+    double solutionValues[9] = {
+        -12317.0, 8660.0, -16241.0,
+        -12815.0, -3600.0, -8020.0,
+        17281.0, 11695.0, 6013.0
+    };
+    MCMatrix *solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)]
+                                               rows:3
+                                            columns:3
+                                   leadingDimension:MCMatrixLeadingDimensionRow];
+    
+    XCTAssert([power isEqualToMatrix:solution], @"Power of matrix incorrectly calculated.");
 }
 
 @end
