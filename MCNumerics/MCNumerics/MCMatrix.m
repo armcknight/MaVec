@@ -472,6 +472,9 @@ MCMatrixNorm;
                         values[i] = 0.0;
                     } else {
                         values[i] = fabs(randomDouble) * (positive ? 1.0 : -1.0);
+                        while (values[i] == 0.0 || values[i] == -0.0) {
+                            values[i] = fabs(randomDouble) * (positive ? 1.0 : -1.0);
+                        }
                         positive = !positive;
                     }
                 }
@@ -484,6 +487,9 @@ MCMatrixNorm;
                         values[i] = 0.0f;
                     } else {
                         values[i] = fabsf(randomFloat) * (positive ? 1.0f : -1.0f);
+                        while (values[i] == 0.0f || values[i] == -0.0f) {
+                            values[i] = fabsf(randomFloat) * (positive ? 1.0f : -1.0f);
+                        }
                         positive = !positive;
                     }
                 }
@@ -520,6 +526,9 @@ MCMatrixNorm;
                         values[i] = 0.0;
                     } else {
                         values[i] = fabs(randomDouble);
+                        while (values[i] == 0.0 || values[i] == -0.0) {
+                            values[i] = fabs(randomDouble);
+                        }
                     }
                 }
                 valueData = [NSData dataWithBytes:values length:length];
@@ -531,6 +540,9 @@ MCMatrixNorm;
                         values[i] = 0.0f;
                     } else {
                         values[i] = fabsf(randomFloat);
+                        while (values[i] == 0.0f || values[i] == -0.0f) {
+                            values[i] = fabsf(randomFloat);
+                        }
                     }
                 }
                 valueData = [NSData dataWithBytes:values length:length];
@@ -549,6 +561,9 @@ MCMatrixNorm;
                         values[i] = 0.0;
                     } else {
                         values[i] = -fabs(randomDouble);
+                        while (values[i] == 0.0 || values[i] == -0.0) {
+                            values[i] = -fabs(randomDouble);
+                        }
                     }
                 }
                 valueData = [NSData dataWithBytes:values length:length];
@@ -560,6 +575,9 @@ MCMatrixNorm;
                         values[i] = 0.0f;
                     } else {
                         values[i] = -fabsf(randomFloat);
+                        while (values[i] == 0.0f || values[i] == -0.0f) {
+                            values[i] = -fabsf(randomFloat);
+                        }
                     }
                 }
                 valueData = [NSData dataWithBytes:values length:length];
