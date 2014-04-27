@@ -1989,8 +1989,8 @@ MCMatrixNorm;
     NSAssert(matrix.rows == matrix.columns, @"Cannot raise a non-square matrix to exponents.");
     
     MCMatrix *product = [MCMatrix productOfMatrixA:matrix andMatrixB:matrix];
-    for (int i = 0; i < power - 1; i += 1) {
-        product = [MCMatrix productOfMatrixA:product andMatrixB:matrix];
+    for (int i = 0; i < power - 2; i += 1) {
+        product = [MCMatrix productOfMatrixA:matrix andMatrixB:product];
     }
     return product;
 }
