@@ -1082,36 +1082,6 @@ MCMatrixNorm;
     return _adjugate;
 }
 
-#pragma mark - Matrix operations
-
-- (void)swapRowA:(int)rowA withRowB:(int)rowB
-{
-    NSAssert1(rowA < self.rows, @"rowA = %u is outside the range of possible rows.", rowA);
-    NSAssert1(rowB < self.rows, @"rowB = %u is outside the range of possible rows.", rowB);
-    
-    // TODO: implement using cblas_dswap
-    
-    for (int i = 0; i < self.columns; i++) {
-        NSNumber *temp = [self valueAtRow:rowA column:i];
-        [self setEntryAtRow:rowA column:i toValue:[self valueAtRow:rowB column:i]];
-        [self setEntryAtRow:rowB column:i toValue:temp];
-    }
-}
-
-- (void)swapColumnA:(int)columnA withColumnB:(int)columnB
-{
-    NSAssert1(columnA < self.columns, @"columnA = %u is outside the range of possible columns.", columnA);
-    NSAssert1(columnB < self.columns, @"columnB = %u is outside the range of possible columns.", columnB);
-    
-    // TODO: implement using cblas_dswap
-    
-    for (int i = 0; i < self.rows; i++) {
-        NSNumber *temp = [self valueAtRow:i column:columnA];
-        [self setEntryAtRow:i column:columnA toValue:[self valueAtRow:i column:columnB]];
-        [self setEntryAtRow:i column:columnB toValue:temp];
-    }
-}
-
 #pragma mark - NSObject overrides
 
 - (BOOL)isEqualToMatrix:(MCMatrix *)otherMatrix
@@ -1646,8 +1616,41 @@ MCMatrixNorm;
 }
 
 #pragma mark - Mutation
+
+// TODO: invalidate all calculated properties when mutating matrix values
+
+- (void)swapRowA:(int)rowA withRowB:(int)rowB
+{
+    NSAssert1(rowA < self.rows, @"rowA = %u is outside the range of possible rows.", rowA);
+    NSAssert1(rowB < self.rows, @"rowB = %u is outside the range of possible rows.", rowB);
+    
+    // TODO: implement using cblas_dswap
+    
+    for (int i = 0; i < self.columns; i++) {
+        NSNumber *temp = [self valueAtRow:rowA column:i];
+        [self setEntryAtRow:rowA column:i toValue:[self valueAtRow:rowB column:i]];
+        [self setEntryAtRow:rowB column:i toValue:temp];
+    }
+}
+
+- (void)swapColumnA:(int)columnA withColumnB:(int)columnB
+{
+    NSAssert1(columnA < self.columns, @"columnA = %u is outside the range of possible columns.", columnA);
+    NSAssert1(columnB < self.columns, @"columnB = %u is outside the range of possible columns.", columnB);
+    
+    // TODO: implement using cblas_dswap
+    
+    for (int i = 0; i < self.rows; i++) {
+        NSNumber *temp = [self valueAtRow:i column:columnA];
+        [self setEntryAtRow:i column:columnA toValue:[self valueAtRow:i column:columnB]];
+        [self setEntryAtRow:i column:columnB toValue:temp];
+    }
+}
+
 - (void)setEntryAtRow:(int)row column:(int)column toValue:(NSNumber *)value
 {
+    // TODO: take into account internal representation
+    
     NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
     BOOL precisionsMatch = (self.precision == MCValuePrecisionDouble && kMCIsDoubleEncoding(value.objCType)) || (self.precision == MCValuePrecisionSingle && kMCIsFloatEncoding(value.objCType));
