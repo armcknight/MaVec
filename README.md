@@ -46,14 +46,47 @@ Supported Operations
 - Column/row swaps
 - Column/row extraction
 - Linear system solving
-- Random generation (general/diagonal/triangular/symmetric/band)
+- Random generation
+   - General
+   - Diagonal
+   - Triangular
+   - Symmetric
+   - Band
+   - Positive/negative/positive semi/negative semi/indefinite
 
 Both MCMatrix and MCVector override NSObject's equality, description and hashing methods, implement the NSCopying protocol (so they can be inserted in Foundation collections!), and support object subscripting (`[matrix valueAtRow:3 column:3] == matrix[3][3]`) and [`debugQuickLookObject`](https://developer.apple.com/library/ios/documentation/ToolsLanguages/Conceptual/Xcode_Overview/DebugYourApp/DebugYourApp.html) for easier debugging.
 
 See For Yourself
 ===
 
-**MaVec QR factorization:**
+### Basic operations:
+```objective-c
+/* create some vectors and compare them */
+double vectorValues[3] = { 1.0, 2.0, 3.0 };
+MCVector *vectorA = [MCVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3 * sizeof(double)] 
+                                        length:3];
+MCVector *vectorB = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
+BOOL equal = [vectorA isEqualToVector:vectorB]; // YES
+
+/* multiply the vectors together and do some more comparisons */
+MCVector *product = [MCVector productOfVectorA:vectorA vectorB:vectorB];
+equal = [vectorA isEqualToVector:product]; // NO
+                         
+/* vectors can be subscripted */                                              
+equal = [vectorA[0] compare:product[0]]; // YES
+equal = [vectorA[1] compare:product[1]]; // NO
+
+/* create some matrices and compare them */
+MCMatrix *matrix = [MCMatrix randomSymmetricMatrixOfOrder:3 precision:MCValuePrecisionDouble];
+MCMatrix *transpose = matrix.transpose.copy; // MCMatrix adopts NSCopying
+equal = [matrix isEqualToMatrix:transpose]; // YES
+
+/* matrices can also be subscripted */
+equal = [matrix[0][0] compare:transpose[0][0]]; // YES
+```
+
+### QR factorization
+**The MaVec way:**
 ```objective-c
 //
 // assume an array named "values" representing a 3x3 matrix 
@@ -66,7 +99,7 @@ MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values lengt
 MCQRFactorization *qr = matrix.qrFactorization;
 ```
 
-**Accelerate QR factorization:**
+**The Accelerate way:**
 ```objective-c
 //
 // assume an array named "values" representing a 3x3 matrix 
