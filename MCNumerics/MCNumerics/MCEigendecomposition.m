@@ -124,8 +124,8 @@
                 size_t size = n * sizeof(float);
                 float *wr= malloc(size);
                 float *wi= malloc(size);
-                float *vl= malloc(size);
-                float *vr= malloc(size);
+                float *vl= malloc(n * size);
+                float *vr= malloc(n * size);
                 float wkopt;
                 sgeev_("V", "V", &n, (float *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
                 
@@ -139,7 +139,7 @@
                 
                 if (info == 0) {
                     _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
-                    _eigenvectors = [MCMatrix matrixWithValues:[NSData dataWithBytes:vr length:size] rows:n columns:n];
+                    _eigenvectors = [MCMatrix matrixWithValues:[NSData dataWithBytes:vr length:n * size] rows:n columns:n];
                 }
             }
             
