@@ -521,6 +521,22 @@ MCMatrixDefiniteness;
                        definiteness:(MCMatrixDefiniteness)definiteness
                           precision:(MCValuePrecision)precision;
 
+/**
+ @brief Generate a square matrix of random values with a determinant of 0, accomplished by making an entire row or column (randomly chosen) with 0 values.
+ @param order The square dimension of the matrix.
+ @param precision Either single- or double-precision floating point values.
+ @return New instance of MCMatrix with random values and determinant == 0.
+ */
++ (instancetype)randomSingularMatrixOfOrder:(int)order precision:(MCValuePrecision)precision;
+
+/**
+ @brief Generate a square matrix of random values with a determinant not equal to 0.
+ @param order The square dimension of the matrix.
+ @param precision Either single- or double-precision floating point values.
+ @return New instance of MCMatrix with random values and determinant != 0.
+ */
++ (instancetype)randomNonsigularMatrixOfOrder:(int)order precision:(MCValuePrecision)precision;
+
 #pragma mark - NSObject overrides
 
 /**

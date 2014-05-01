@@ -596,6 +596,32 @@ MCMatrixNorm;
     return matrix;
 }
 
++ (instancetype)randomSingularMatrixOfOrder:(int)order precision:(MCValuePrecision)precision
+{
+    BOOL shouldHaveZeroColumn = (arc4random() % 2) == 0;
+    int zeroVectorIndex = arc4random() % order;
+    
+    NSMutableArray *vectors = [NSMutableArray new];
+    MCVectorFormat vectorFormat = shouldHaveZeroColumn ? MCVectorFormatColumnVector : MCVectorFormatRowVector;
+    for (int i = 0; i < order; i++) {
+        if (i == zeroVectorIndex) {
+            [vectors addObject:[MCVector vectorFilledWithValue:(precision == MCValuePrecisionDouble ? @0.0 : @0.0f) length:order vectorFormat:vectorFormat]];
+        } else {
+            [vectors addObject:[MCVector randomVectorOfLength:order vectorFormat:vectorFormat precision:precision]];
+        }
+    }
+    return shouldHaveZeroColumn ? [MCMatrix matrixWithColumnVectors:vectors] : [MCMatrix matrixWithRowVectors:vectors];
+}
+
++ (instancetype)randomNonsigularMatrixOfOrder:(int)order precision:(MCValuePrecision)precision
+{
+    MCMatrix *matrix = [MCMatrix randomMatrixWithRows:order columns:order precision:precision];
+    while ([matrix.determinant compare:(precision == MCValuePrecisionDouble ? @0.0 : @0.0f)] == NSOrderedSame) {
+        matrix = [MCMatrix randomMatrixWithRows:order columns:order precision:precision];
+    }
+    return matrix;
+}
+
 #pragma mark - Lazy-loaded properties
 
 - (MCMatrix *)transpose

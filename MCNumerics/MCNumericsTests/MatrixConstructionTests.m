@@ -488,4 +488,46 @@
     XCTAssert(indefiniteFails == 0, @"%i indefinite failures", indefiniteFails);
 }
 
+- (void)testRandomSingularMatrices
+{
+    int numberOfTests = 97;
+    
+    int singularFails = 0;
+    
+    MCMatrix *test;
+    
+    int order = 3;
+    for(int i = 0; i < numberOfTests; i++) {
+        MCMatrix *singular = [MCMatrix randomSingularMatrixOfOrder:order precision:MCValuePrecisionDouble];
+        test = [MCMatrix matrixWithValues:[singular valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
+        if ([test.determinant compare:@0.0] != NSOrderedSame) {
+            singularFails++;
+        }
+        order++;
+    }
+    
+    XCTAssert(singularFails == 0, @"%i singular failures", singularFails);
+}
+
+- (void)testRandomNonsingularMatrices
+{
+    int numberOfTests = 97;
+    
+    int nonsingularFails = 0;
+    
+    MCMatrix *test;
+    
+    int order = 3;
+    for(int i = 0; i < numberOfTests; i++) {
+        MCMatrix *singular = [MCMatrix randomNonsigularMatrixOfOrder:order precision:MCValuePrecisionDouble];
+        test = [MCMatrix matrixWithValues:[singular valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
+        if ([test.determinant compare:@0.0] == NSOrderedSame) {
+            nonsingularFails++;
+        }
+        order++;
+    }
+    
+    XCTAssert(nonsingularFails == 0, @"%i nonsingular failures", nonsingularFails);
+}
+
 @end
