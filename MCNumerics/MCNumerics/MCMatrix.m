@@ -1606,6 +1606,24 @@ MCMatrixNorm;
     return vector;
 }
 
+- (NSArray *)rowVectors
+{
+    NSMutableArray *vectors = [NSMutableArray new];
+    for (int i = 0; i < self.rows; i++) {
+        [vectors addObject:[self rowVectorForRow:i]];
+    }
+    return vectors;
+}
+
+- (NSArray *)columnVectors
+{
+    NSMutableArray *vectors = [NSMutableArray new];
+    for (int i = 0; i < self.columns; i++) {
+        [vectors addObject:[self columnVectorForColumn:i]];
+    }
+    return vectors;
+}
+
 #pragma mark - Subscripting
 
 - (MCVector *)objectAtIndexedSubscript:(int)idx

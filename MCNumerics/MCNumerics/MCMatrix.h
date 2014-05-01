@@ -591,6 +591,16 @@ MCMatrixDefiniteness;
  */
 - (MCVector *)rowVectorForRow:(int)row;
 
+/**
+ @return An array containing MCVector objects representing the row vectors of the matrix from top to bottom.
+ */
+- (NSArray *)rowVectors;
+
+/**
+ @return An array containing MCVector objects representing the column vectors of the matrix from left to right.
+ */
+- (NSArray *)columnVectors;
+
 #pragma mark - Subscripting
 
 /**
