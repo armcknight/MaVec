@@ -496,13 +496,10 @@
     
     int singularFails = 0;
     
-    MCMatrix *test;
-    
     int order = 3;
     for(int i = 0; i < numberOfTests; i++) {
         MCMatrix *singular = [MCMatrix randomSingularMatrixOfOrder:order precision:MCValuePrecisionDouble];
-        test = [MCMatrix matrixWithValues:[singular valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
-        if ([test.determinant compare:@0.0] != NSOrderedSame) {
+        if ([singular.determinant compare:@0.0] != NSOrderedSame) {
             singularFails++;
         }
         order++;
@@ -517,13 +514,10 @@
     
     int nonsingularFails = 0;
     
-    MCMatrix *test;
-    
     int order = 3;
     for(int i = 0; i < numberOfTests; i++) {
-        MCMatrix *singular = [MCMatrix randomNonsigularMatrixOfOrder:order precision:MCValuePrecisionDouble];
-        test = [MCMatrix matrixWithValues:[singular valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
-        if ([test.determinant compare:@0.0] == NSOrderedSame) {
+        MCMatrix *nonsingular = [MCMatrix randomNonsigularMatrixOfOrder:order precision:MCValuePrecisionDouble];
+        if ([nonsingular.determinant compare:@0.0] == NSOrderedSame) {
             nonsingularFails++;
         }
         order++;
