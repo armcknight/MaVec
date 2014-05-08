@@ -42,6 +42,7 @@
 		4955B62318FB21BC0020F36D /* MCComplexNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4955B62218FB21BC0020F36D /* MCComplexNumber.m */; };
 		4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2D51877D9030095DE06 /* MCEigendecomposition.m */; };
 		4978F2E4187852330095DE06 /* MCTribool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2E3187852330095DE06 /* MCTribool.m */; };
+		49838F94191DB8FD00926654 /* RotationMatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49838F93191DB8FD00926654 /* RotationMatrixTests.m */; };
 		4996B21218CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21118CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m */; };
 		4996B21518CBA24700C1CEF9 /* SingularValueDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */; };
 		4996B21718CBA29100C1CEF9 /* LeastSquaresSolutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21618CBA29100C1CEF9 /* LeastSquaresSolutionTests.m */; };
@@ -137,6 +138,7 @@
 		4978F2D51877D9030095DE06 /* MCEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEigendecomposition.m; sourceTree = "<group>"; };
 		4978F2E2187852330095DE06 /* MCTribool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTribool.h; sourceTree = "<group>"; };
 		4978F2E3187852330095DE06 /* MCTribool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTribool.m; sourceTree = "<group>"; };
+		49838F93191DB8FD00926654 /* RotationMatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotationMatrixTests.m; sourceTree = "<group>"; };
 		4996B21118CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrixMultiplicationTests.m; sourceTree = "<group>"; };
 		4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingularValueDecompositionTests.m; sourceTree = "<group>"; };
 		4996B21618CBA29100C1CEF9 /* LeastSquaresSolutionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeastSquaresSolutionTests.m; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				4996B22018CBA43C00C1CEF9 /* QRDecompositionTests.m */,
 				4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */,
 				49AEC1C318F18B3700A4175F /* MatrixValueRepresentationConversion.m */,
+				49838F93191DB8FD00926654 /* RotationMatrixTests.m */,
 			);
 			name = "Matrix Tests";
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				4996B21B18CBA33A00C1CEF9 /* LUDecompositionTests.m in Sources */,
 				4996B22118CBA43C00C1CEF9 /* QRDecompositionTests.m in Sources */,
 				4996B21218CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m in Sources */,
+				49838F94191DB8FD00926654 /* RotationMatrixTests.m in Sources */,
 				4996B21518CBA24700C1CEF9 /* SingularValueDecompositionTests.m in Sources */,
 				494F44D4185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
 				494F44E2185B61BB00347096 /* RZObserverCollection.m in Sources */,
