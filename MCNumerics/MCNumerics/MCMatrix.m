@@ -404,6 +404,104 @@ MCMatrixNorm;
     return matrix;
 }
 
++ (instancetype)matrixForTwoDimensionalRotationWithAngle:(NSNumber *)angle direction:(MCAngleDirection)direction
+{
+    NSData *valueData;
+    if (kMCIsDoubleEncoding(angle.objCType)) {
+        double directedAngle = angle.doubleValue * (direction == MCAngleDirectionClockwise ? -1.0 : 1.0);
+        size_t size = 4 * sizeof(double);
+        double *values = malloc(size);
+        values[0] = cos(directedAngle);
+        values[1] = -sin(directedAngle);
+        values[2] = sin(directedAngle);
+        values[3] = cos(directedAngle);
+        valueData = [NSData dataWithBytes:values length:size];
+    } else {
+        float directedAngle = angle.floatValue * (direction == MCAngleDirectionClockwise ? -1.0f : 1.0f);
+        size_t size = 4 * sizeof(float);
+        float *values = malloc(size);
+        values[0] = cosf(directedAngle);
+        values[1] = -sinf(directedAngle);
+        values[2] = sinf(directedAngle);
+        values[3] = cosf(directedAngle);
+        valueData = [NSData dataWithBytes:values length:size];
+    }
+    return [MCMatrix matrixWithValues:valueData rows:2 columns:2 leadingDimension:MCMatrixLeadingDimensionRow];
+}
+
++ (instancetype)matrixForThreeDimensionalRotationWithAngle:(NSNumber *)angle
+                                                 aboutAxis:(MCCoordinateAxis)axis
+                                                 direction:(MCAngleDirection)direction
+{
+    NSData *valueData;
+    if (kMCIsDoubleEncoding(angle.objCType)) {
+        double directedAngle = angle.doubleValue * (direction == MCAngleDirectionClockwise ? -1.0 : 1.0);
+        double *values = calloc(9, sizeof(double));
+        switch (axis) {
+            
+            case MCCoordinateAxisX: {
+                values[0] = 1.0;
+                values[4] = cos(directedAngle);
+                values[5] = -sin(directedAngle);
+                values[7] = sin(directedAngle);
+                values[8] = cos(directedAngle);
+            } break;
+            
+            case MCCoordinateAxisY: {
+                values[0] = cos(directedAngle);
+                values[2] = sin(directedAngle);
+                values[4] = 1.0;
+                values[6] = -sin(directedAngle);
+                values[8] = cos(directedAngle);
+            } break;
+                
+            case MCCoordinateAxisZ: {
+                values[0] = cos(directedAngle);
+                values[1] = -sin(directedAngle);
+                values[3] = sin(directedAngle);
+                values[4] = cos(directedAngle);
+                values[8] = 1.0;
+            } break;
+                
+            default: break;
+        }
+        valueData = [NSData dataWithBytes:values length:9 * sizeof(double)];
+    } else {
+        float directedAngle = angle.floatValue * (direction == MCAngleDirectionClockwise ? -1.0f : 1.0f);
+        float *values = calloc(9, sizeof(float));
+        switch (axis) {
+                
+            case MCCoordinateAxisX: {
+                values[0] = 1.0f;
+                values[4] = cosf(directedAngle);
+                values[5] = -sinf(directedAngle);
+                values[7] = sinf(directedAngle);
+                values[8] = cosf(directedAngle);
+            } break;
+                
+            case MCCoordinateAxisY: {
+                values[0] = cosf(directedAngle);
+                values[2] = sinf(directedAngle);
+                values[4] = 1.0f;
+                values[6] = -sinf(directedAngle);
+                values[8] = cosf(directedAngle);
+            } break;
+                
+            case MCCoordinateAxisZ: {
+                values[0] = cosf(directedAngle);
+                values[1] = -sinf(directedAngle);
+                values[3] = sinf(directedAngle);
+                values[4] = cosf(directedAngle);
+                values[8] = 1.0f;
+            } break;
+                
+            default: break;
+        }
+        valueData = [NSData dataWithBytes:values length:9 * sizeof(float)];
+    }
+    return [MCMatrix matrixWithValues:valueData rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
+}
+
 + (instancetype)randomMatrixWithRows:(int)rows
                              columns:(int)columns
                            precision:(MCValuePrecision)precision
@@ -780,7 +878,6 @@ MCMatrixNorm;
         size_t valueType = rowMajorValues.length / (m * n);
         if (kMCIsDoubleType(valueType)) {
             double *values = (double *)rowMajorValues.bytes;
-            
             double norm = dlange_("1", &m, &n, values, &m, nil);
             
             int lda = self.rows;

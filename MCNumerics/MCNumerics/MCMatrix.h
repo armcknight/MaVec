@@ -146,6 +146,22 @@ typedef enum : UInt8 {
  */
 MCMatrixDefiniteness;
 
+typedef enum : UInt8 {
+    MCAngleDirectionClockwise,
+    MCAngleDirectionCounterClockwise
+} MCAngleDirection;
+
+typedef enum : UInt8 {
+    MCCoordinateAxisX,
+    MCCoordinateAxisY,
+    MCCoordinateAxisZ
+} MCCoordinateAxis;
+
+typedef enum : UInt8 {
+    MCCoordinateSystemHandednessLeft,
+    MCCoordinateSystemHandednessRight
+} MCCoordinateSystemHandedness;
+
 /**
  @class MCMatrix
  @description A class providing storage and operations for matrices of double-precision floating point numbers, where underlying details governing how the two-dimensional structure is reduced to the one-dimensional array containing its values (packing, leading dimension, or other internal value representation method) is abstracted away for any operation or property.
@@ -456,6 +472,25 @@ MCMatrixDefiniteness;
                                order:(int)order
                     upperCodiagonals:(int)upperCodiagonals
                     lowerCodiagonals:(int)lowerCodiagonals;
+
+/**
+ @brief Class convenience method to create a matrix describing the rotation of a vector through a fixed two dimensional Cartesian space.
+ @param angle The magnitude of the angle.
+ @param direction The direction of the angle, either clockwise or counterclockwise.
+ @return A new instance of MCMatrix representing the rotation matrix.
+ */
++ (instancetype)matrixForTwoDimensionalRotationWithAngle:(NSNumber *)angle direction:(MCAngleDirection)direction;
+
+/**
+ @brief Class convenience method to create a matrix describing the rotation of a vector about a single axis of a fixed three dimensional Cartesian space.
+ @param angle The magnitude of the angle.
+ @param axis The three dimensional Cartesian axis to rotate about, either X, Y or Z.
+ @param direction The direction of the angle, either clockwise or counterclockwise, when the positive end of the axis faces the observer.
+ @return A new instance of MCMatrix representing the rotation matrix.
+ */
++ (instancetype)matrixForThreeDimensionalRotationWithAngle:(NSNumber *)angle
+                                                 aboutAxis:(MCCoordinateAxis)axis
+                                                 direction:(MCAngleDirection)direction;
 
 /**
  @brief Class convenience method to create a matrix with the specified size containing random double-precision floating-point values.
