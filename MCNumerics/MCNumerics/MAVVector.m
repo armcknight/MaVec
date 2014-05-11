@@ -1,6 +1,6 @@
 //
 //  MAVVector.m
-//  MAVNumerics
+//  MaVec
 //
 //  Created by andrew mcknight on 12/8/13.
 //

@@ -1,6 +1,6 @@
 //
-//  RotationMatrixTests.m
-//  MAVNumerics
+//  MAVRotationMatrixTests.m
+//  MaVec
 //
 //  Created by Andrew McKnight on 5/9/14.
 //  Copyright (c) 2014 andrew mcknight. All rights reserved.
@@ -11,11 +11,11 @@
 #import "MAVMatrix.h"
 #import "MAVVector.h"
 
-@interface RotationMatrixTests : XCTestCase
+@interface MAVRotationMatrixTests : XCTestCase
 
 @end
 
-@implementation RotationMatrixTests
+@implementation MAVRotationMatrixTests
 
 - (void)testTwoDimensionalRotations
 {

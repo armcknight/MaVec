@@ -1,6 +1,6 @@
 //
-//  MatrixInversionTests.m
-//  MAVNumerics
+//  MAVMatrixInversionTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -29,11 +29,11 @@
 
 #import "MAVMatrix.h"
 
-@interface MatrixInversionTests : XCTestCase
+@interface MAVMatrixInversionTests : XCTestCase
 
 @end
 
-@implementation MatrixInversionTests
+@implementation MAVMatrixInversionTests
 
 - (void)setUp
 {

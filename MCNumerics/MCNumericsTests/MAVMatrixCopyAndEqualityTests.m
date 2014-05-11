@@ -1,6 +1,6 @@
 //
-//  MatrixCopyAndEqualityTests.m
-//  MAVNumerics
+//  MAVMatrixCopyAndEqualityTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -29,11 +29,11 @@
 
 #import "MAVMatrix.h"
 
-@interface MatrixCopyAndEqualityTests : XCTestCase
+@interface MAVMatrixCopyAndEqualityTests : XCTestCase
 
 @end
 
-@implementation MatrixCopyAndEqualityTests
+@implementation MAVMatrixCopyAndEqualityTests
 
 - (void)setUp
 {

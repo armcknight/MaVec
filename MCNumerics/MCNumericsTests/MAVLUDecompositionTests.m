@@ -1,6 +1,6 @@
 //
-//  LUDecompositionTests.m
-//  MAVNumerics
+//  MAVLUDecompositionTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -30,11 +30,11 @@
 #import "MAVMatrix.h"
 #import "MAVLUFactorization.h"
 
-@interface LUDecompositionTests : XCTestCase
+@interface MAVLUDecompositionTests : XCTestCase
 
 @end
 
-@implementation LUDecompositionTests
+@implementation MAVLUDecompositionTests
 
 - (void)setUp
 {

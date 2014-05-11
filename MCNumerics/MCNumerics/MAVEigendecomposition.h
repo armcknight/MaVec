@@ -1,6 +1,6 @@
 //
-//  EigenvalueDecomposition.h
-//  MAVNumerics
+//  MAVEigenvalueDecomposition.h
+//  MaVec
 //
 //  Created by andrew mcknight on 1/4/14.
 //

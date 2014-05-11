@@ -1,6 +1,6 @@
 //
-//  QRDecompositionTests.m
-//  MAVNumerics
+//  MAVQRDecompositionTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -31,11 +31,11 @@
 #import "MAVQRFactorization.h"
 #import "MAVVector.h"
 
-@interface QRDecompositionTests : XCTestCase
+@interface MAVQRDecompositionTests : XCTestCase
 
 @end
 
-@implementation QRDecompositionTests
+@implementation MAVQRDecompositionTests
 
 - (void)setUp
 {

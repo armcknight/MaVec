@@ -1,6 +1,6 @@
 //
-//  MatrixConstructionTests.m
-//  MAVNumerics
+//  MAVMatrixConstructionTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -30,11 +30,11 @@
 #import "MAVMatrix.h"
 #import "MAVVector.h"
 
-@interface MatrixConstructionTests : XCTestCase
+@interface MAVMatrixConstructionTests : XCTestCase
 
 @end
 
-@implementation MatrixConstructionTests
+@implementation MAVMatrixConstructionTests
 
 - (void)setUp
 {

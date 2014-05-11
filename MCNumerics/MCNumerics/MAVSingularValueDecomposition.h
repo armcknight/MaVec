@@ -1,6 +1,6 @@
 //
 //  MAVSingularValueDecomposition.h
-//  MAVNumerics
+//  MaVec
 //
 //  Created by andrew mcknight on 12/15/13.
 //

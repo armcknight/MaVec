@@ -1,6 +1,6 @@
 //
-//  SingularValueDecompositionTests.m
-//  MAVNumerics
+//  MAVSingularValueDecompositionTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -30,11 +30,11 @@
 #import "MAVMatrix.h"
 #import "MAVSingularValueDecomposition.h"
 
-@interface SingularValueDecompositionTests : XCTestCase
+@interface MAVSingularValueDecompositionTests : XCTestCase
 
 @end
 
-@implementation SingularValueDecompositionTests
+@implementation MAVSingularValueDecompositionTests
 
 - (void)setUp
 {

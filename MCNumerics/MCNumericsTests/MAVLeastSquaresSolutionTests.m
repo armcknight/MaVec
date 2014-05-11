@@ -1,6 +1,6 @@
 //
-//  LeastSquaresSolutionTests.m
-//  MAVNumerics
+//  MAVLeastSquaresSolutionTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -29,11 +29,11 @@
 
 #import "MAVMatrix.h"
 
-@interface LeastSquaresSolutionTests : XCTestCase
+@interface MAVLeastSquaresSolutionTests : XCTestCase
 
 @end
 
-@implementation LeastSquaresSolutionTests
+@implementation MAVLeastSquaresSolutionTests
 
 - (void)setUp
 {

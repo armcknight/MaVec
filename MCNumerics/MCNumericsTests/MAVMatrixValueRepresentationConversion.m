@@ -1,6 +1,6 @@
 //
-//  MatrixValueRepresentationConversion.m
-//  MAVNumerics
+//  MAVMatrixValueRepresentationConversion.m
+//  MaVec
 //
 //  Created by andrew mcknight on 4/6/14.
 //
@@ -29,11 +29,11 @@
 
 #import "MAVMatrix.h"
 
-@interface MatrixValueRepresentationConversion : XCTestCase
+@interface MAVMatrixValueRepresentationConversion : XCTestCase
 
 @end
 
-@implementation MatrixValueRepresentationConversion
+@implementation MAVMatrixValueRepresentationConversion
 
 - (void)setUp
 {

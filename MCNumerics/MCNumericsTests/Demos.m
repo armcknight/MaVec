@@ -1,6 +1,6 @@
 //
 //  Demos.m
-//  MAVNumerics
+//  MaVec
 //
 //  Created by andrew mcknight on 4/2/14.
 //

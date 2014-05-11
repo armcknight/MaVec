@@ -1,6 +1,6 @@
 //
-//  EigendecompositionTests.m
-//  MAVNumerics
+//  MAVEigendecompositionTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //

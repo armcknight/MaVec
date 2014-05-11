@@ -1,6 +1,6 @@
 //
 //  MCKTriboolTests.m
-//  MAVNumerics
+//  MCKNumerics
 //
 //  Created by andrew mcknight on 3/15/14.
 //

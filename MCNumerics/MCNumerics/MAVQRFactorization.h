@@ -1,6 +1,6 @@
 //
 //  MAVQRFactorization.h
-//  MAVNumerics
+//  MaVec
 //
 //  Created by andrew mcknight on 1/14/14.
 //

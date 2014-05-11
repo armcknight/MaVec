@@ -1,6 +1,6 @@
 //
-//  Matrix.h
-//  AccelerometerPlot
+//  MAVMatrix.h
+//  MaVec
 //
 //  Created by andrew mcknight on 11/30/13.
 //

@@ -1,6 +1,6 @@
 //
-//  MAVMatrixMultiplicationTests.m
-//  MAVNumerics
+//  MAVMAVMatrixMultiplicationTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //

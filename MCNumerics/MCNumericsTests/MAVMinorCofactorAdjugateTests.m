@@ -1,6 +1,6 @@
 //
-//  MinorCofactorAdjugateTests.m
-//  MAVNumerics
+//  MAVMinorCofactorAdjugateTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -29,11 +29,11 @@
 
 #import "MAVMatrix.h"
 
-@interface MinorCofactorAdjugateTests : XCTestCase
+@interface MAVMinorCofactorAdjugateTests : XCTestCase
 
 @end
 
-@implementation MinorCofactorAdjugateTests
+@implementation MAVMinorCofactorAdjugateTests
 
 - (void)setUp
 {
