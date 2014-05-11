@@ -147,15 +147,41 @@ typedef enum : UInt8 {
 MCMatrixDefiniteness;
 
 typedef enum : UInt8 {
+    /**
+     Specifies that an angle rotates in a clockwise direction when viewed in a right handed coordinate system.
+     */
     MCAngleDirectionClockwise,
+    
+    /**
+     Specifies that an angle rotates in a counterclockwise direction when viewed in a right handed coordinate system.
+     */
     MCAngleDirectionCounterClockwise
-} MCAngleDirection;
+}
+/**
+ Direction of an angle, either clockwise or counterclockwise when viewed in a right handed coordinate system. The actual coordinate system has no bearing on the values of a rotated vector.
+ */
+MCAngleDirection;
 
 typedef enum : UInt8 {
+    /**
+     The X cartesian axis.
+     */
     MCCoordinateAxisX,
+    
+    /**
+     The Y cartesian axis.
+     */
     MCCoordinateAxisY,
+    
+    /**
+     The Z cartesian axis.
+     */
     MCCoordinateAxisZ
-} MCCoordinateAxis;
+}
+/**
+ One of the three Cartesian coordinate axes, either X, Y or Z.
+ */
+MCCoordinateAxis;
 
 /**
  @class MCMatrix
