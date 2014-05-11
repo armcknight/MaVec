@@ -1,8 +1,8 @@
 //
-//  MCPair.h
-//  MCNumerics
+//  MCKRealNumber.m
+//  MCKMath
 //
-//  Created by andrew mcknight on 2/15/14.
+//  Created by andrew mcknight on 4/12/14.
 //
 //  Copyright (c) 2014 Andrew Robert McKnight
 //
@@ -25,14 +25,30 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "MCKRealNumber.h"
 
-@interface MCPair : NSObject
+@interface MCKRealNumber ()
 
-@property (strong, nonatomic, readonly) NSNumber *first;
-@property (strong, nonatomic, readonly) NSNumber *second;
+@property (assign, nonatomic, readwrite) MCKValuePrecision precision;
+@property (strong, nonatomic, readwrite) NSNumber *realValue;
 
-- (instancetype)initWithFirst:(NSNumber *)first second:(NSNumber *)second;
-+ (instancetype)pairWithFirst:(NSNumber *)first second:(NSNumber *)second;
+@end
+
+@implementation MCKRealNumber
+
+- (instancetype)initWithValue:(NSNumber *)value precision:(MCKValuePrecision)precision
+{
+    self = [super init];
+    if (self != nil) {
+        _precision = precision;
+        _realValue = value;
+    }
+    return self;
+}
+
++ (instancetype)realNumberWithValue:(NSNumber *)value precision:(MCKValuePrecision)precision
+{
+    return [[self alloc] initWithValue:value precision:precision];
+}
 
 @end

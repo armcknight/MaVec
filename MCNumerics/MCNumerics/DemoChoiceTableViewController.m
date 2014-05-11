@@ -1,6 +1,6 @@
 //
 //  DemoChoiceTableViewController.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 12/3/13.
 //

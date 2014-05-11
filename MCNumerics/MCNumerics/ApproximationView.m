@@ -1,6 +1,6 @@
 //
 //  ApproximationView.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 12/19/13.
 //
@@ -26,17 +26,17 @@
 //
 
 #import "ApproximationView.h"
-#import "MCPolynomial.h"
-#import "MCMatrix.h"
+#import "MCKPolynomial.h"
+#import "MAVMatrix.h"
 
-@interface MCPoint : NSObject
+@interface MAVPoint : NSObject
 
 @property (assign, nonatomic) CGFloat x, y;
 - (id)initWithX:(CGFloat)x y:(CGFloat)y;
 
 @end
 
-@implementation MCPoint
+@implementation MAVPoint
 
 - (id)initWithX:(CGFloat)x y:(CGFloat)y
 {
@@ -53,7 +53,7 @@
 @interface ApproximationView ()
 
 @property (strong, nonatomic) NSMutableArray *points;
-@property (strong, nonatomic) MCPolynomial *polynomial;
+@property (strong, nonatomic) MCKPolynomial *polynomial;
 
 
 @end
@@ -82,7 +82,7 @@
 {
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInView:self];
-    [self.points addObject:[[MCPoint alloc] initWithX:touchPoint.x y:touchPoint.y]];
+    [self.points addObject:[[MAVPoint alloc] initWithX:touchPoint.x y:touchPoint.y]];
     [self approximate];
     [self setNeedsDisplay];
 }
@@ -99,26 +99,26 @@
         for (int i = 0; i < self.points.count; i++) {
             for (int p = 0; p < self.order; p++) {
                 int idx = i * self.order + p;
-                double val = pow(((MCPoint *)self.points[i]).x, p);
+                double val = pow(((MAVPoint *)self.points[i]).x, p);
                 aVals[idx] = val;
             }
         }
         
         for (int i = 0; i < self.points.count; i++) {
-            bVals[i] = ((MCPoint *)self.points[i]).y;
+            bVals[i] = ((MAVPoint *)self.points[i]).y;
         }
         
-        MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:(int)self.points.count columns:self.order leadingDimension:MCMatrixLeadingDimensionRow];
-        MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:(int)self.points.count columns:1];
+        MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:(int)self.points.count columns:self.order leadingDimension:MAVMatrixLeadingDimensionRow];
+        MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:(int)self.points.count columns:1];
         
-        MCMatrix *coefficients = [MCMatrix solveLinearSystemWithMatrixA:a valuesB:b];
+        MAVMatrix *coefficients = [MAVMatrix solveLinearSystemWithMatrixA:a valuesB:b];
         
         NSMutableArray *cArray = [NSMutableArray array];
         for (int i = 0; i < self.order; i++) {
             [cArray addObject:[coefficients valueAtRow:i column:0]];
         }
         
-        self.polynomial = [MCPolynomial polynomialWithCoefficients:cArray];
+        self.polynomial = [MCKPolynomial polynomialWithCoefficients:cArray];
     } else {
         self.polynomial = nil;
     }
@@ -137,7 +137,7 @@
     CGContextSetFillColorWithColor(ctx, [UIColor blackColor].CGColor);
     CGContextSetStrokeColorWithColor(ctx, [UIColor blackColor].CGColor);
     
-    for (MCPoint *p in self.points) {
+    for (MAVPoint *p in self.points) {
         CGContextFillEllipseInRect(ctx, CGRectMake(p.x - 3.f, p.y - 3.f, 6.f, 6.f));
     }
     

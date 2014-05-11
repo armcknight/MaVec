@@ -1,6 +1,6 @@
 //
-//  MCImaginaryNumber.m
-//  MCNumerics
+//  MCKComplexNumber.h
+//  MCKMath
 //
 //  Created by andrew mcknight on 4/13/14.
 //
@@ -25,28 +25,13 @@
 //  SOFTWARE.
 //
 
-#import "MCComplexNumber.h"
+#import "MCKRealNumber.h"
 
-@interface MCComplexNumber ()
+@interface MCKComplexNumber : MCKRealNumber
 
-@property (strong, nonatomic, readwrite) NSValue *imaginaryValue;
+@property (strong, nonatomic, readonly) NSValue *imaginaryValue;
 
-@end
-
-@implementation MCComplexNumber
-
-- (instancetype)initWithRealValue:(const void *)realValue imaginaryValue:(const void *)imaginaryValue precision:(MCValuePrecision)precision
-{
-    self = [super initWithValue:(__bridge NSNumber *)(realValue) precision:precision];
-    if (self != nil) {
-        _imaginaryValue = [NSValue valueWithBytes:imaginaryValue objCType:precision == MCValuePrecisionSingle ? @encode(float) : @encode(double)];
-    }
-    return self;
-}
-
-+ (instancetype)complexNumberWithRealValue:(const void *)realValue imaginaryValue:(const void *)imaginaryValue precision:(MCValuePrecision)precision
-{
-    return [[self alloc] initWithRealValue:realValue imaginaryValue:imaginaryValue precision:precision];
-}
+- (instancetype)initWithRealValue:(const void *)realValue imaginaryValue:(const void *)imaginaryValue precision:(MCKValuePrecision)precision;
++ (instancetype)complexNumberWithRealValue:(const void *)realValue imaginaryValue:(const void *)imaginaryValue precision:(MCKValuePrecision)precision;
 
 @end

@@ -1,6 +1,6 @@
 //
 //  MatrixValueRepresentationConversion.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 4/6/14.
 //
@@ -27,7 +27,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
+#import "MAVMatrix.h"
 
 @interface MatrixValueRepresentationConversion : XCTestCase
 
@@ -60,9 +60,9 @@
         6.0, 7.0, 8.0
     };
     
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    NSData *columnMajorValues = [a valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *columnMajorValues = [a valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double solutionValues[9] = {
         0.0, 3.0, 6.0,
@@ -88,9 +88,9 @@
         2.0, 5.0, 8.0
     };
     
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionColumn];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionColumn];
     
-    NSData *rowMajorValues = [a valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    NSData *rowMajorValues = [a valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     
     double solutionValues[9] = {
         0.0, 1.0, 2.0,
@@ -112,7 +112,7 @@
         12.0, 13.0, 14.0, 15.0
     };
     
-    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MCMatrixLeadingDimensionRow];
+    MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MAVMatrixLeadingDimensionRow];
     
     NSData *balancedBandValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
     
@@ -162,7 +162,7 @@
         3.0, 7.0, 11.0, 15.0
     };
     
-    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MCMatrixLeadingDimensionColumn];
+    MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MAVMatrixLeadingDimensionColumn];
     
     NSData *balancedBandValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
     
@@ -216,16 +216,16 @@
         6.0, 7.0, 8.0
     };
     
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow];
     
     /*
      0  1  2
      -  4  5
      -  -  8
      */
-    NSData *packedUpperTriangularValuesRowMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentUpper
-                                                                  leadingDimension:MCMatrixLeadingDimensionRow
-                                                                     packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedUpperTriangularValuesRowMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                                  leadingDimension:MAVMatrixLeadingDimensionRow
+                                                                     packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedUpperTriangularValuesRowMajorSolution[6] = {
         0.0, 1.0, 2.0,
              4.0, 5.0,
@@ -235,9 +235,9 @@
         XCTAssertEqual(((double *)packedUpperTriangularValuesRowMajor.bytes)[i], packedUpperTriangularValuesRowMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *packedUpperTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentUpper
-                                                                     leadingDimension:MCMatrixLeadingDimensionColumn
-                                                                        packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedUpperTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                                     leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                                        packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedUpperTriangularValuesColumnMajorSolution[6] = {
         0.0,
         1.0, 4.0,
@@ -247,9 +247,9 @@
         XCTAssertEqual(((double *)packedUpperTriangularValuesColumnMajor.bytes)[i], packedUpperTriangularValuesColumnMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *unpackedUpperTriangularValuesRowMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentUpper
-                                                                    leadingDimension:MCMatrixLeadingDimensionRow
-                                                                       packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedUpperTriangularValuesRowMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                                    leadingDimension:MAVMatrixLeadingDimensionRow
+                                                                       packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedUpperTriangularValuesRowMajorSolution[9] = {
         0.0, 1.0, 2.0,
         0.0, 4.0, 5.0,
@@ -259,9 +259,9 @@
         XCTAssertEqual(((double *)unpackedUpperTriangularValuesRowMajor.bytes)[i], unpackedUpperTriangularValuesRowMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *unpackedUpperTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentUpper
-                                                                       leadingDimension:MCMatrixLeadingDimensionColumn
-                                                                          packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedUpperTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                                       leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                                          packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedUpperTriangularValuesColumnMajorSolution[9] = {
         0.0, 0.0, 0.0,
         1.0, 4.0, 0.0,
@@ -276,9 +276,9 @@
      3  4  -
      6  7  8
      */
-    NSData *packedLowerTriangularValuesRowMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                                  leadingDimension:MCMatrixLeadingDimensionRow
-                                                                     packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedLowerTriangularValuesRowMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                                                  leadingDimension:MAVMatrixLeadingDimensionRow
+                                                                     packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedLowerTriangularValuesRowMajorSolution[6] = {
         0.0,
         3.0, 4.0,
@@ -288,9 +288,9 @@
         XCTAssertEqual(((double *)packedLowerTriangularValuesRowMajor.bytes)[i], packedLowerTriangularValuesRowMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *packedLowerTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                                     leadingDimension:MCMatrixLeadingDimensionColumn
-                                                                        packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedLowerTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                                                     leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                                        packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedLowerTriangularValuesColumnMajorSolution[6] = {
         0.0, 3.0, 6.0,
              4.0, 7.0,
@@ -300,9 +300,9 @@
         XCTAssertEqual(((double *)packedLowerTriangularValuesColumnMajor.bytes)[i], packedLowerTriangularValuesColumnMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *unpackedLowerTriangularValuesRowMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                                    leadingDimension:MCMatrixLeadingDimensionRow
-                                                                       packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedLowerTriangularValuesRowMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                                                    leadingDimension:MAVMatrixLeadingDimensionRow
+                                                                       packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedLowerTriangularValuesRowMajorSolution[9] = {
         0.0, 0.0, 0.0,
         3.0, 4.0, 0.0,
@@ -312,9 +312,9 @@
         XCTAssertEqual(((double *)unpackedLowerTriangularValuesRowMajor.bytes)[i], unpackedLowerTriangularValuesRowMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *unpackedLowerTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                                       leadingDimension:MCMatrixLeadingDimensionColumn
-                                                                          packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedLowerTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                                                       leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                                          packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedLowerTriangularValuesColumnMajorSolution[9] = {
         0.0, 3.0, 6.0,
         0.0, 4.0, 7.0,
@@ -338,16 +338,16 @@
         2.0, 5.0, 8.0
     };
     
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionColumn];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionColumn];
     
     /*
      0  1  2
      -  4  5
      -  -  8
      */
-    NSData *packedUpperTriangularValuesRowMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentUpper
-                                                                  leadingDimension:MCMatrixLeadingDimensionRow
-                                                                     packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedUpperTriangularValuesRowMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                                  leadingDimension:MAVMatrixLeadingDimensionRow
+                                                                     packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedUpperTriangularValuesRowMajorSolution[6] = {
         0.0, 1.0, 2.0,
         4.0, 5.0,
@@ -357,9 +357,9 @@
         XCTAssertEqual(((double *)packedUpperTriangularValuesRowMajor.bytes)[i], packedUpperTriangularValuesRowMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *packedUpperTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentUpper
-                                                                     leadingDimension:MCMatrixLeadingDimensionColumn
-                                                                        packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedUpperTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                                     leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                                        packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedUpperTriangularValuesColumnMajorSolution[6] = {
         0.0,
         1.0, 4.0,
@@ -369,9 +369,9 @@
         XCTAssertEqual(((double *)packedUpperTriangularValuesColumnMajor.bytes)[i], packedUpperTriangularValuesColumnMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *unpackedUpperTriangularValuesRowMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentUpper
-                                                                    leadingDimension:MCMatrixLeadingDimensionRow
-                                                                       packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedUpperTriangularValuesRowMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                                    leadingDimension:MAVMatrixLeadingDimensionRow
+                                                                       packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedUpperTriangularValuesRowMajorSolution[9] = {
         0.0, 1.0, 2.0,
         0.0, 4.0, 5.0,
@@ -381,9 +381,9 @@
         XCTAssertEqual(((double *)unpackedUpperTriangularValuesRowMajor.bytes)[i], unpackedUpperTriangularValuesRowMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *unpackedUpperTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentUpper
-                                                                       leadingDimension:MCMatrixLeadingDimensionColumn
-                                                                          packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedUpperTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                                       leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                                          packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedUpperTriangularValuesColumnMajorSolution[9] = {
         0.0, 0.0, 0.0,
         1.0, 4.0, 0.0,
@@ -398,9 +398,9 @@
      3  4  -
      6  7  8
      */
-    NSData *packedLowerTriangularValuesRowMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                                  leadingDimension:MCMatrixLeadingDimensionRow
-                                                                     packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedLowerTriangularValuesRowMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                                                  leadingDimension:MAVMatrixLeadingDimensionRow
+                                                                     packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedLowerTriangularValuesRowMajorSolution[6] = {
         0.0,
         3.0, 4.0,
@@ -410,9 +410,9 @@
         XCTAssertEqual(((double *)packedLowerTriangularValuesRowMajor.bytes)[i], packedLowerTriangularValuesRowMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *packedLowerTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                                     leadingDimension:MCMatrixLeadingDimensionColumn
-                                                                        packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedLowerTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                                                     leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                                        packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedLowerTriangularValuesColumnMajorSolution[6] = {
         0.0, 3.0, 6.0,
         4.0, 7.0,
@@ -422,9 +422,9 @@
         XCTAssertEqual(((double *)packedLowerTriangularValuesColumnMajor.bytes)[i], packedLowerTriangularValuesColumnMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *unpackedLowerTriangularValuesRowMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                                    leadingDimension:MCMatrixLeadingDimensionRow
-                                                                       packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedLowerTriangularValuesRowMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                                                    leadingDimension:MAVMatrixLeadingDimensionRow
+                                                                       packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedLowerTriangularValuesRowMajorSolution[9] = {
         0.0, 0.0, 0.0,
         3.0, 4.0, 0.0,
@@ -434,9 +434,9 @@
         XCTAssertEqual(((double *)unpackedLowerTriangularValuesRowMajor.bytes)[i], unpackedLowerTriangularValuesRowMajorSolution[i], @"Value incorrect");
     }
     
-    NSData *unpackedLowerTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                                                       leadingDimension:MCMatrixLeadingDimensionColumn
-                                                                          packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedLowerTriangularValuesColumnMajor = [a valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                                                       leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                                          packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedLowerTriangularValuesColumnMajorSolution[9] = {
         0.0, 3.0, 6.0,
         0.0, 4.0, 7.0,
@@ -458,11 +458,11 @@
              4.0, 5.0,
                   6.0
     };
-    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] ofTriangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionRow order:3];
+    MAVMatrix *matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] ofTriangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionRow order:3];
     
     // to row major conventional
     
-    NSData *upperRowMajorConventionalValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    NSData *upperRowMajorConventionalValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     
     double upperRowMajorConventionalValuesSolution[9] = {
         1.0, 2.0, 3.0,
@@ -476,7 +476,7 @@
     
     // to column major conventional
     
-    NSData *upperColumnMajorConventionalValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *upperColumnMajorConventionalValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double upperColumnMajorConventionalValuesSolution[9] = {
         1.0, 0.0, 0.0,
@@ -497,11 +497,11 @@
         2.0, 3.0,
         4.0, 5.0, 6.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] ofTriangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionRow order:3];
+    matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] ofTriangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionRow order:3];
     
     // to row major conventional
     
-    NSData *lowerRowMajorConventionalValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    NSData *lowerRowMajorConventionalValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     
     double lowerRowMajorConventionalValuesSolution[9] = {
         1.0, 0.0, 0.0,
@@ -515,7 +515,7 @@
     
     // to column major conventional
     
-    NSData *lowerColumnMajorConventionalValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *lowerColumnMajorConventionalValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double lowerColumnMajorConventionalValuesSolution[9] = {
         1.0, 2.0, 4.0,
@@ -539,11 +539,11 @@
         2.0, 4.0,
         3.0, 5.0, 6.0
     };
-    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] ofTriangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionColumn order:3];
+    MAVMatrix *matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] ofTriangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionColumn order:3];
     
     // to row major conventional
     
-    NSData *upperRowMajorConventionalValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    NSData *upperRowMajorConventionalValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     
     double upperRowMajorConventionalValuesSolution[9] = {
         1.0, 2.0, 3.0,
@@ -557,7 +557,7 @@
     
     // to column major conventional
     
-    NSData *upperColumnMajorConventionalValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *upperColumnMajorConventionalValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double upperColumnMajorConventionalValuesSolution[9] = {
         1.0, 0.0, 0.0,
@@ -578,11 +578,11 @@
         3.0, 5.0,
         6.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] ofTriangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionColumn order:3];
+    matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] ofTriangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionColumn order:3];
     
     // to row major conventional
     
-    NSData *lowerRowMajorConventionalValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    NSData *lowerRowMajorConventionalValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     
     double lowerRowMajorConventionalValuesSolution[9] = {
         1.0, 0.0, 0.0,
@@ -596,7 +596,7 @@
     
     // to column major conventional
     
-    NSData *lowerColumnMajorConventionalValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *lowerColumnMajorConventionalValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double lowerColumnMajorConventionalValuesSolution[9] = {
         1.0, 2.0, 4.0,
@@ -620,7 +620,7 @@
              4.0, 5.0,
                   6.0
     };
-    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] ofTriangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionRow order:3];
+    MAVMatrix *matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] ofTriangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionRow order:3];
     
     // tridiagonal
     NSData *upperTridiagonalValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
@@ -684,7 +684,7 @@
         2.0, 3.0,
         4.0, 5.0, 6.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] ofTriangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionRow order:3];
+    matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] ofTriangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionRow order:3];
     
     // tridiagonal
     NSData *lowerTridiagonalValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
@@ -751,7 +751,7 @@
         2.0, 4.0,
         3.0, 5.0, 6.0
     };
-    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] ofTriangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionColumn order:3];
+    MAVMatrix *matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] ofTriangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionColumn order:3];
     
     // tridiagonal
     NSData *upperTridiagonalValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
@@ -815,7 +815,7 @@
         3.0, 5.0,
         6.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] ofTriangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionColumn order:3];
+    matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] ofTriangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionColumn order:3];
     
     // tridiagonal
     NSData *lowerTridiagonalValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
@@ -888,10 +888,10 @@
              4.0, 5.0,
                 6.0
     };
-    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] triangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionRow order:3];
+    MAVMatrix *matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] triangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionRow order:3];
     
-    NSData *upperConventionalRowMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
-    NSData *upperConventionalColumnMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *upperConventionalRowMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
+    NSData *upperConventionalColumnMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double upperSolution[9] = {
         1.0, 2.0, 3.0,
@@ -922,10 +922,10 @@
         2.0, 3.0,
         4.0, 5.0, 6.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] triangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionRow order:3];
+    matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] triangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionRow order:3];
     
-    NSData *lowerConventionalRowMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
-    NSData *lowerConventionalColumnMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *lowerConventionalRowMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
+    NSData *lowerConventionalColumnMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double lowerSolution[9] = {
         1.0, 2.0, 4.0,
@@ -959,10 +959,10 @@
         2.0, 4.0,
         3.0, 5.0, 6.0
     };
-    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] triangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionColumn order:3];
+    MAVMatrix *matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] triangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionColumn order:3];
     
-    NSData *upperConventionalRowMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
-    NSData *upperConventionalColumnMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *upperConventionalRowMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
+    NSData *upperConventionalColumnMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double upperSolution[9] = {
         1.0, 2.0, 3.0,
@@ -994,10 +994,10 @@
         3.0, 5.0,
         6.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] triangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionColumn order:3];
+    matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] triangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionColumn order:3];
     
-    NSData *lowerConventionalRowMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
-    NSData *lowerConventionalColumnMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *lowerConventionalRowMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
+    NSData *lowerConventionalColumnMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double lowerSolution[9] = {
         1.0, 2.0, 4.0,
@@ -1031,7 +1031,7 @@
              4.0, 5.0,
                   6.0
     };
-    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] triangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionRow order:3];
+    MAVMatrix *matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] triangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionRow order:3];
     
     // tridiagonal
     NSData *upperTridiagonalValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
@@ -1101,7 +1101,7 @@
         2.0, 3.0,
         4.0, 5.0, 6.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] triangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionRow order:3];
+    matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] triangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionRow order:3];
     
     // tridiagonal
     NSData *lowerTridiagonalValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
@@ -1174,7 +1174,7 @@
         2.0, 4.0,
         3.0, 5.0, 6.0
     };
-    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] triangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionColumn order:3];
+    MAVMatrix *matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:upperValues length:6*sizeof(double)] triangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionColumn order:3];
     
     // tridiagonal
     NSData *upperTridiagonalValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
@@ -1244,7 +1244,7 @@
         3.0, 5.0,
         6.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] triangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionColumn order:3];
+    matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:lowerValues length:6*sizeof(double)] triangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionColumn order:3];
     
     // tridiagonal
     NSData *lowerTridiagonalValues = [matrix valuesInBandBetweenUpperCodiagonal:1 lowerCodiagonal:1];
@@ -1309,9 +1309,9 @@
         4.0, 9.0, 14.0, 0.0
     };
     
-    MCMatrix *bandMatrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValues length:16*sizeof(double)] order:4 upperCodiagonals:2 lowerCodiagonals:1];
+    MAVMatrix *bandMatrix = [MAVMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValues length:16*sizeof(double)] order:4 upperCodiagonals:2 lowerCodiagonals:1];
     
-    NSData *rowMajorValues = [bandMatrix valuesWithLeadingDimension:MCMatrixLeadingDimensionRow];
+    NSData *rowMajorValues = [bandMatrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     double rowMajorSolution[16] = {
         0.0,  1.0,  2.0,  0.0,
         4.0,  5.0,  6.0,  7.0,
@@ -1322,7 +1322,7 @@
         XCTAssertEqual(((double *)rowMajorValues.bytes)[i], rowMajorSolution[i], @"Incorrect value.");
     }
     
-    NSData *columnMajorValues = [bandMatrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+    NSData *columnMajorValues = [bandMatrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     double columnMajorSolution[16] = {
         0.0, 4.0, 0.0,  0.0,
         1.0, 5.0, 9.0,  0.0,
@@ -1343,10 +1343,10 @@
         4.0, 9.0, 14.0, 0.0
     };
     
-    MCMatrix *bandMatrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValues length:16*sizeof(double)] order:4 upperCodiagonals:2 lowerCodiagonals:1];
+    MAVMatrix *bandMatrix = [MAVMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValues length:16*sizeof(double)] order:4 upperCodiagonals:2 lowerCodiagonals:1];
     
     // packed upper row major
-    NSData *packedUpperRowMajorValues = [bandMatrix valuesFromTriangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionRow packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedUpperRowMajorValues = [bandMatrix valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionRow packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedUpperRowMajorValuesSolution[10] = {
         0.0,  1.0,  2.0,  0.0,
               5.0,  6.0,  7.0,
@@ -1358,7 +1358,7 @@
     }
     
     // packed upper col major
-    NSData *packedUpperColumnMajorValues = [bandMatrix valuesFromTriangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionColumn packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedUpperColumnMajorValues = [bandMatrix valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionColumn packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedUpperColumnMajorValuesSolution[10] = {
         0.0,
         1.0, 5.0,
@@ -1370,7 +1370,7 @@
     }
     
     // unpacked upper row major
-    NSData *unpackedUpperRowMajorValues = [bandMatrix valuesFromTriangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionRow packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedUpperRowMajorValues = [bandMatrix valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionRow packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedUpperRowMajorValuesSolution[16] = {
         0.0,  1.0,  2.0,  0.0,
         0.0,  5.0,  6.0,  7.0,
@@ -1382,7 +1382,7 @@
     }
     
     // unpacked upper col major
-    NSData *unpackedUpperColumnMajorValues = [bandMatrix valuesFromTriangularComponent:MCMatrixTriangularComponentUpper leadingDimension:MCMatrixLeadingDimensionColumn packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedUpperColumnMajorValues = [bandMatrix valuesFromTriangularComponent:MAVMatrixTriangularComponentUpper leadingDimension:MAVMatrixLeadingDimensionColumn packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedUpperColumnMajorValuesSolution[16] = {
         0.0, 0.0, 0.0,  0.0,
         1.0, 5.0, 0.0,  0.0,
@@ -1394,7 +1394,7 @@
     }
     
     // packed lower row major
-    NSData *packedLowerRowMajorValues = [bandMatrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionRow packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedLowerRowMajorValues = [bandMatrix valuesFromTriangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionRow packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedLowerRowMajorValuesSolution[10] = {
         0.0,
         4.0,  5.0,
@@ -1406,7 +1406,7 @@
     }
     
     // packed lower col major
-    NSData *packedLowerColumnMajorValues = [bandMatrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionColumn packingMethod:MCMatrixValuePackingMethodPacked];
+    NSData *packedLowerColumnMajorValues = [bandMatrix valuesFromTriangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionColumn packingMethod:MAVMatrixValuePackingMethodPacked];
     double packedLowerColumnMajorValuesSolution[10] = {
         0.0, 4.0, 0.0,  0.0,
              5.0, 9.0,  0.0,
@@ -1418,7 +1418,7 @@
     }
     
     // unpacked lower row major
-    NSData *unpackedLowerRowMajorValues = [bandMatrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionRow packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedLowerRowMajorValues = [bandMatrix valuesFromTriangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionRow packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedLowerRowMajorValuesSolution[16] = {
         0.0,  0.0,  0.0,  0.0,
         4.0,  5.0,  0.0,  0.0,
@@ -1430,7 +1430,7 @@
     }
     
     // unpacked lower col major
-    NSData *unpackedLowerColumnMajorValues = [bandMatrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower leadingDimension:MCMatrixLeadingDimensionColumn packingMethod:MCMatrixValuePackingMethodConventional];
+    NSData *unpackedLowerColumnMajorValues = [bandMatrix valuesFromTriangularComponent:MAVMatrixTriangularComponentLower leadingDimension:MAVMatrixLeadingDimensionColumn packingMethod:MAVMatrixValuePackingMethodConventional];
     double unpackedLowerColumnMajorValuesSolution[16] = {
         0.0, 4.0, 0.0,  0.0,
         0.0, 5.0, 9.0,  0.0,

@@ -1,8 +1,8 @@
 //
-//  MCImaginaryNumber.h
-//  MCNumerics
+//  MCKQuadratic.h
+//  MCKMath
 //
-//  Created by andrew mcknight on 4/13/14.
+//  Created by andrew mcknight on 2/15/14.
 //
 //  Copyright (c) 2014 Andrew Robert McKnight
 //
@@ -25,13 +25,17 @@
 //  SOFTWARE.
 //
 
-#import "MCRealNumber.h"
+#import <Foundation/Foundation.h>
 
-@interface MCComplexNumber : MCRealNumber
+#import "MCKPolynomial.h"
 
-@property (strong, nonatomic, readonly) NSValue *imaginaryValue;
+@class MCKPair;
 
-- (instancetype)initWithRealValue:(const void *)realValue imaginaryValue:(const void *)imaginaryValue precision:(MCValuePrecision)precision;
-+ (instancetype)complexNumberWithRealValue:(const void *)realValue imaginaryValue:(const void *)imaginaryValue precision:(MCValuePrecision)precision;
+@interface MCKQuadratic : MCKPolynomial
+
+@property (strong, nonatomic, readonly) MCKPair *roots;
+
+- (instancetype)initWithA:(NSNumber *)a b:(NSNumber *)b c:(NSNumber *)c;
++ (instancetype)quadraticWithA:(NSNumber *)a b:(NSNumber *)b c:(NSNumber *)c;
 
 @end

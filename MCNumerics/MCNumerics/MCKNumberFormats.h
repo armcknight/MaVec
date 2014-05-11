@@ -1,6 +1,6 @@
 //
-//  MCNumberFormats.h
-//  MCNumerics
+//  MCKNumberFormats.h
+//  MCKMath
 //
 //  Created by andrew mcknight on 4/13/14.
 //
@@ -25,17 +25,17 @@
 //  SOFTWARE.
 //
 
-#ifndef MCNumerics_MCNumberFormats_h
-#define MCNumerics_MCNumberFormats_h
+#ifndef MAVNumerics_MCKNumberFormats_h
+#define MAVNumerics_MCKNumberFormats_h
 
 typedef enum : UInt8 {
-    MCValuePrecisionSingle,
-    MCValuePrecisionDouble,
-} MCValuePrecision;
+    MCKValuePrecisionSingle,
+    MCKValuePrecisionDouble,
+} MCKValuePrecision;
 
 typedef enum : UInt8 {
-    MCValueTypeReal,
-    MCValueTypeComplex,
-} MCValueType;
+    MCKValueTypeReal,
+    MCKValueTypeComplex,
+} MCKValueType;
 
 #endif

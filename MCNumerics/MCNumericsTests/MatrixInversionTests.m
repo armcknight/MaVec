@@ -1,6 +1,6 @@
 //
 //  MatrixInversionTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,7 +27,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
+#import "MAVMatrix.h"
 
 @interface MatrixInversionTests : XCTestCase
 
@@ -62,9 +62,9 @@
         0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  10.0,  11.0,  12.0
     };
     
-    MCMatrix *original = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:81*sizeof(double)] rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
+    MAVMatrix *original = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:81*sizeof(double)] rows:9 columns:9 leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    MCMatrix *inverse = original.inverse;
+    MAVMatrix *inverse = original.inverse;
     
     double inverseValues[81] = {
         0.333,   -0.667,   0.333,  0.000,  0.000,  0.000,   0.042, -0.042,  0.000,
@@ -78,7 +78,7 @@
         -325.000,  305.000,   5.000,  3.000,  2.000,  1.429, -39.554,  3.125,  3.000
     };
     
-    MCMatrix *solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:inverseValues length:81*sizeof(double)] rows:9 columns:9 leadingDimension:MCMatrixLeadingDimensionRow];
+    MAVMatrix *solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:inverseValues length:81*sizeof(double)] rows:9 columns:9 leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 9; row += 1) {
         for (int col = 0; col < 9; col += 1) {

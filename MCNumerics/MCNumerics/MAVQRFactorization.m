@@ -1,6 +1,6 @@
 //
-//  MCQRFactorization.m
-//  MCNumerics
+//  MAVQRFactorization.m
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 1/14/14.
 //
@@ -27,22 +27,22 @@
 
 #import <Accelerate/Accelerate.h>
 
-#import "MCQRFactorization.h"
-#import "MCMatrix.h"
-#import "MCNumberFormats.h"
+#import "MAVQRFactorization.h"
+#import "MAVMatrix.h"
+#import "MCKNumberFormats.h"
 
-@interface MCQRFactorization ()
+@interface MAVQRFactorization ()
 
 @property (assign, nonatomic) int rows;
 @property (assign, nonatomic) int columns;
 
 @end
 
-@implementation MCQRFactorization
+@implementation MAVQRFactorization
 
 #pragma mark - Init
 
-- (instancetype)initWithMatrix:(MCMatrix *)matrix
+- (instancetype)initWithMatrix:(MAVMatrix *)matrix
 {
     // usage can be found at http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_hdgeqrf.htm
     self = [super init];
@@ -53,11 +53,11 @@
         _columns = n;
         int lwork = -1;
         int info;
-        NSData *values = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+        NSData *values = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
         
         NSData *data;
         
-        if (matrix.precision == MCValuePrecisionDouble) {
+        if (matrix.precision == MCKValuePrecisionDouble) {
             size_t size = m * m * sizeof(double);
             double *a = malloc(size);
             for (int i = 0; i < m * n; i += 1) {
@@ -130,24 +130,24 @@
         }
         
         // use output from dorgqr to build the q mcmatrix object
-        _q = [MCMatrix matrixWithValues:data rows:m columns:m leadingDimension:MCMatrixLeadingDimensionColumn];
+        _q = [MAVMatrix matrixWithValues:data rows:m columns:m leadingDimension:MAVMatrixLeadingDimensionColumn];
         
         // compute r by multiplying the transpose of q by the input matrix
-        _r = [MCMatrix productOfMatrixA:_q.transpose andMatrixB:matrix];
+        _r = [MAVMatrix productOfMatrixA:_q.transpose andMatrixB:matrix];
     }
     return self;
 }
 
-+ (instancetype)qrFactorizationOfMatrix:(MCMatrix *)matrix
++ (instancetype)qrFactorizationOfMatrix:(MAVMatrix *)matrix
 {
-    return [[MCQRFactorization alloc] initWithMatrix:matrix];
+    return [[MAVQRFactorization alloc] initWithMatrix:matrix];
 }
 
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    MCQRFactorization *qrCopy = [[self class] allocWithZone:zone];
+    MAVQRFactorization *qrCopy = [[self class] allocWithZone:zone];
     
     qrCopy->_q = _q;
     qrCopy->_r = _r;
@@ -159,9 +159,9 @@
 
 #pragma mark - Operations
 
-- (MCQRFactorization *)thinFactorization
+- (MAVQRFactorization *)thinFactorization
 {
-    MCQRFactorization *thin = [self copy];
+    MAVQRFactorization *thin = [self copy];
     NSMutableArray *qColumnVectors = [NSMutableArray array];
     NSMutableArray *rRowVectors = [NSMutableArray array];
     for (int i = 0; i < self.columns; i += 1) {
@@ -169,8 +169,8 @@
         [rRowVectors addObject:[self.r rowVectorForRow:i]];
     }
     
-    thin->_q = [MCMatrix matrixWithColumnVectors:qColumnVectors];
-    thin->_r = [MCMatrix matrixWithRowVectors:rRowVectors];
+    thin->_q = [MAVMatrix matrixWithColumnVectors:qColumnVectors];
+    thin->_r = [MAVMatrix matrixWithRowVectors:rRowVectors];
     
     return thin;
 }

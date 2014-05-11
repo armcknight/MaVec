@@ -1,6 +1,6 @@
 //
-//  MCNumericsTests.m
-//  MCNumericsTests
+//  MAVNumericsTests.m
+//  MAVNumericsTests
 //
 //  Created by andrew mcknight on 12/2/13.
 //
@@ -27,19 +27,19 @@
 
 #import <XCTest/XCTest.h>
 #import <Accelerate/Accelerate.h>
-#import "MCMatrix.h"
-#import "MCVector.h"
-#import "MCSingularValueDecomposition.h"
-#import "MCLUFactorization.h"
-#import "MCTribool.h"
-#import "MCEigendecomposition.h"
-#import "MCQRFactorization.h"
+#import "MAVMatrix.h"
+#import "MAVVector.h"
+#import "MAVSingularValueDecomposition.h"
+#import "MAVLUFactorization.h"
+#import "MCKTribool.h"
+#import "MAVEigendecomposition.h"
+#import "MAVQRFactorization.h"
 
-@interface MCNumericsTests : XCTestCase
+@interface MAVNumericsTests : XCTestCase
 
 @end
 
-@implementation MCNumericsTests
+@implementation MAVNumericsTests
 
 - (void)setUp
 {
@@ -80,17 +80,17 @@
     bVals[1] = -0.7445;
     bVals[2] = -2.5594;
     bVals[3] = 1.125;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:4 columns:4];
-    MCVector *b = [MCVector vectorWithValues:[NSData dataWithBytes:bVals length:bSize] length:4];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:4 columns:4];
+    MAVVector *b = [MAVVector vectorWithValues:[NSData dataWithBytes:bVals length:bSize] length:4];
     
-    MCVector *product = [MCMatrix productOfMatrix:a andVector:b];
+    MAVVector *product = [MAVMatrix productOfMatrix:a andVector:b];
     
     double *solution = malloc(bSize);
     solution[0] = -15.6;
     solution[1] = -2.9778;
     solution[2] = -10.2376;
     solution[3] = 4.5;
-    MCVector *s = [MCVector vectorWithValues:[NSData dataWithBytes:solution length:bSize] length:4];
+    MAVVector *s = [MAVVector vectorWithValues:[NSData dataWithBytes:solution length:bSize] length:4];
     
     for (int i = 0; i < 4; i++) {
         XCTAssertEqualWithAccuracy([s valueAtIndex:i].doubleValue, [product valueAtIndex:i].doubleValue, 0.0005, @"Coefficient %u incorrect", i);

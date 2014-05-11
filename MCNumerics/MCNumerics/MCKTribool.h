@@ -1,6 +1,6 @@
 //
-//  MCTribool.h
-//  MCNumerics
+//  MCKTribool.h
+//  MCKMath
 //
 //  Created by andrew mcknight on 1/4/14.
 //
@@ -31,26 +31,26 @@ typedef enum : SInt8 {
     /**
      @brief The ternary logical value for "no" or "false", defined in balanced ternary logic as -1.
      */
-    MCTriboolValueNo        = -1,
+    MCKTriboolValueNo        = -1,
     
     /**
      @brief The ternary logical value for "unknown", "unknowable/undecidable", "irrelevant", or "both", defined in balanced ternary logic as 0.
      */
-    MCTriboolValueUnknown   = 0,
+    MCKTriboolValueUnknown   = 0,
     
     /**
      @brief The ternary logical value for "yes" or "true", defined in balanced ternary logic as +1.
      */
-    MCTriboolValueYes       = 1
+    MCKTriboolValueYes       = 1
 }
 /**
  @brief Constants specifying the numeric values of the three possible logical states. Based on assigned values from "balanced ternary logic": -1 for false, 0 for unknown, and +1 for true, or simply -, 0 and +.
- @note These constants must be represented as MCTriboolValueNo = -1, MCTriboolValueUnknown = 0 and MCTriboolValueYes = 1 for the optimized ternary logical operations in conjunctionOfTriboolValueA:triboolValueB:, disjunctionOfTriboolValueA:triboolValueB:, negationOfTriboolValue:, kleeneImplicationOfTriboolValueA:triboolValueB: and lukasiewiczImplicationOfTriboolValueA:triboolValueB: to be computed correctly.
+ @note These constants must be represented as MCKTriboolValueNo = -1, MCKTriboolValueUnknown = 0 and MCKTriboolValueYes = 1 for the optimized ternary logical operations in conjunctionOfTriboolValueA:triboolValueB:, disjunctionOfTriboolValueA:triboolValueB:, negationOfTriboolValue:, kleeneImplicationOfTriboolValueA:triboolValueB: and lukasiewiczImplicationOfTriboolValueA:triboolValueB: to be computed correctly.
  */
-MCTriboolValue;
+MCKTriboolValue;
 
 /**
- @description The MCTribool class encapsulates the values and operations of ternary logic. See http://en.wikipedia.org/wiki/Three-valued_logic for an introduction. The truth table for the implemented logic functions follows:
+ @description The MCKTribool class encapsulates the values and operations of ternary logic. See http://en.wikipedia.org/wiki/Three-valued_logic for an introduction. The truth table for the implemented logic functions follows:
  @code
                                    Kleene  Łukasiewicz
  | p q | ¬p | ¬q | p ∧ q | p v q | p → q | p → q |
@@ -66,47 +66,47 @@ MCTriboolValue;
  | + + | -  | -  |   +   |   +   |   +   |   +   |
  -------------------------------------------------
  */
-@interface MCTribool : NSValue <NSCopying>
+@interface MCKTribool : NSValue <NSCopying>
 
 /**
  @property triboolValue
- @brief The underlying ternary logical value for this MCTribool object.
+ @brief The underlying ternary logical value for this MCKTribool object.
  */
-@property (nonatomic, readonly, assign) MCTriboolValue triboolValue;
+@property (nonatomic, readonly, assign) MCKTriboolValue triboolValue;
 
 #pragma mark - Init
 
 /**
- @brief Construct an MCTribool object with specified ternary logic value.
- @param triboolValue The ternary logic value the MCTribool object should represent.
- @return A new MCTribool object representing the specified ternary logic value.
+ @brief Construct an MCKTribool object with specified ternary logic value.
+ @param triboolValue The ternary logic value the MCKTribool object should represent.
+ @return A new MCKTribool object representing the specified ternary logic value.
  */
-- (instancetype)initWithTriboolValue:(MCTriboolValue)triboolValue;
+- (instancetype)initWithTriboolValue:(MCKTriboolValue)triboolValue;
 
 /**
  @brief Convenience class method for initWithTriboolValue:
- @param triboolValue The ternary logic value the MCTribool object should represent.
- @return A new MCTribool object representing the specified ternary logic value.
+ @param triboolValue The ternary logic value the MCKTribool object should represent.
+ @return A new MCKTribool object representing the specified ternary logic value.
  */
-+ (instancetype)triboolWithValue:(MCTriboolValue)triboolValue;
++ (instancetype)triboolWithValue:(MCKTriboolValue)triboolValue;
 
 #pragma mark - Inspection
 
 /**
  @brief Method to determine if the underlying value evaluates to "yes" or "true".
- @return YES if underlying value is MCTriboolValueYes, or NO if value is MCTriboolValueNo or MCTriboolValueUnknown.
+ @return YES if underlying value is MCKTriboolValueYes, or NO if value is MCKTriboolValueNo or MCKTriboolValueUnknown.
  */
 - (BOOL)isYes;
 
 /**
  @brief Method to determine if the underlying value evaluates to "no" or "false".
- @return YES if underlying value is MCTriboolValueNo, or NO if value is MCTriboolValueYes or MCTriboolValueUnknown.
+ @return YES if underlying value is MCKTriboolValueNo, or NO if value is MCKTriboolValueYes or MCKTriboolValueUnknown.
  */
 - (BOOL)isNo;
 
 /**
  @brief Method to determine if the underlying value evaluates to "unknown".
- @return YES if underlying value is either MCTriboolValueYes or MCTriboolValueNo; NO if value is MCTriboolValueUnknown.
+ @return YES if underlying value is either MCKTriboolValueYes or MCKTriboolValueNo; NO if value is MCKTriboolValueUnknown.
  */
 - (BOOL)isKnown;
 
@@ -114,8 +114,8 @@ MCTriboolValue;
 
 /**
  @brief Performs ternary logical AND with the supplied values (self ∧ tribool), yielding the results described in the following table:
- @param tribool The MCTribool object to perform the conjuction with.
- @return A new MCTribool object representing the result of the conjunction.
+ @param tribool The MCKTribool object to perform the conjuction with.
+ @return A new MCKTribool object representing the result of the conjunction.
  @code
  ---------------
  | ∧ | + | 0 | - |
@@ -127,12 +127,12 @@ MCTriboolValue;
  | - | - | - | - |
  ---------------
  */
-- (MCTribool *)andTribool:(MCTribool *)tribool;
+- (MCKTribool *)andTribool:(MCKTribool *)tribool;
 
 /**
  @brief Performs ternary logical OR with the supplied values (self v tribool), yielding the results described in the following table:
- @param tribool The MCTribool object to perform the disjuction with.
- @return A new MCTribool object representing the result of the disjunction.
+ @param tribool The MCKTribool object to perform the disjuction with.
+ @return A new MCKTribool object representing the result of the disjunction.
  @code
  ---------------
  | v | + | 0 | - |
@@ -144,11 +144,11 @@ MCTriboolValue;
  | - | + | 0 | - |
  ---------------
  */
-- (MCTribool *)orTribool:(MCTribool *)tribool;
+- (MCKTribool *)orTribool:(MCKTribool *)tribool;
 
 /**
  @brief Performs ternary logical NOT with the supplied values (¬self), yielding the results described in the following table:
- @return A new MCTribool object representing the result of the negation.
+ @return A new MCKTribool object representing the result of the negation.
  @code
  -------
  | ¬ |   |
@@ -160,12 +160,12 @@ MCTriboolValue;
  | - | + |
  -------
  */
-- (MCTribool *)negate;
+- (MCKTribool *)negate;
 
 /**
  @brief Performs ternary logical Kleene implication with the supplied values (self → tribool), yielding the results described in the following table:
- @param tribool The MCTribool object to perform the Kleene implication with.
- @return A new MCTribool object representing the result of the Kleene implication.
+ @param tribool The MCKTribool object to perform the Kleene implication with.
+ @return A new MCKTribool object representing the result of the Kleene implication.
  @code
  -------------------
  | a → b | + | 0 | - |
@@ -177,12 +177,12 @@ MCTriboolValue;
  |     - | + | + | + |
  -------------------
  */
-- (MCTribool *)kleeneImplication:(MCTribool *)tribool;
+- (MCKTribool *)kleeneImplication:(MCKTribool *)tribool;
 
 /**
  @brief Performs ternary logical Łukasiewicz implication with the supplied values (self → tribool), yielding the results described in the following table:
- @param tribool The MCTribool object to perform the Łukasiewicz implication with.
- @return A new MCTribool object representing the result of the Łukasiewicz implication.
+ @param tribool The MCKTribool object to perform the Łukasiewicz implication with.
+ @return A new MCKTribool object representing the result of the Łukasiewicz implication.
  @code
  -------------------
  | a → b | + | 0 | - |
@@ -194,15 +194,15 @@ MCTriboolValue;
  |     - | + | + | + |
  -------------------
  */
-- (MCTribool *)lukasiewiczImplication:(MCTribool *)tribool;
+- (MCKTribool *)lukasiewiczImplication:(MCKTribool *)tribool;
 
 #pragma mark - Class operators
 
 /**
  @brief Performs ternary logical AND with the supplied values (triboolValueA ∧ triboolValueB), yielding the results described in the following table:
- @param triboolValueA MCTriboolValue enum constant for the left side of the conjunction.
- @param triboolValueB MCTriboolValue enum constant for the right side of the conjunction.
- @return A MCTriboolValue enum constant representing the result of the conjunction.
+ @param triboolValueA MCKTriboolValue enum constant for the left side of the conjunction.
+ @param triboolValueB MCKTriboolValue enum constant for the right side of the conjunction.
+ @return A MCKTriboolValue enum constant representing the result of the conjunction.
  @code
   ---------------
  | ∧ | + | 0 | - |
@@ -214,14 +214,14 @@ MCTriboolValue;
  | - | - | - | - |
   ---------------
  */
-+ (MCTriboolValue)conjunctionOfTriboolValueA:(MCTriboolValue)triboolValueA
-                               triboolValueB:(MCTriboolValue)triboolValueB;
++ (MCKTriboolValue)conjunctionOfTriboolValueA:(MCKTriboolValue)triboolValueA
+                               triboolValueB:(MCKTriboolValue)triboolValueB;
 
 /**
  @brief Performs ternary logical OR with the supplied values (triboolValueA v triboolValueB), yielding the results described in the following table:
- @param triboolValueA MCTriboolValue enum constant for the left side of the disjunction.
- @param triboolValueB MCTriboolValue enum constant for the right side of the disjunction.
- @return A MCTriboolValue enum constant representing the result of the disjunction.
+ @param triboolValueA MCKTriboolValue enum constant for the left side of the disjunction.
+ @param triboolValueB MCKTriboolValue enum constant for the right side of the disjunction.
+ @return A MCKTriboolValue enum constant representing the result of the disjunction.
  @code
   ---------------
  | v | + | 0 | - |
@@ -233,13 +233,13 @@ MCTriboolValue;
  | - | + | 0 | - |
   ---------------
  */
-+ (MCTriboolValue)disjunctionOfTriboolValueA:(MCTriboolValue)triboolValueA
-                               triboolValueB:(MCTriboolValue)triboolValueB;
++ (MCKTriboolValue)disjunctionOfTriboolValueA:(MCKTriboolValue)triboolValueA
+                               triboolValueB:(MCKTriboolValue)triboolValueB;
 
 /**
  @brief Performs ternary logical NOT with the supplied values (¬triboolValue), yielding the results described in the following table:
- @param triboolValue MCTriboolValue enum constant to be negated.
- @return A MCTriboolValue enum constant representing the result of the negation.
+ @param triboolValue MCKTriboolValue enum constant to be negated.
+ @return A MCKTriboolValue enum constant representing the result of the negation.
  @code
   -------
  | ¬ |   |
@@ -251,13 +251,13 @@ MCTriboolValue;
  | - | + |
   -------
  */
-+ (MCTriboolValue)negationOfTriboolValue:(MCTriboolValue)triboolValue;
++ (MCKTriboolValue)negationOfTriboolValue:(MCKTriboolValue)triboolValue;
 
 /**
  @brief Performs ternary logical Kleene implication with the supplied values (triboolValueA → triboolValueB), yielding the results described in the following table:
- @param triboolValueA MCTriboolValue enum constant for the left side of the Kleene implication.
- @param triboolValueB MCTriboolValue enum constant for the right side of the Kleene implication.
- @return A MCTriboolValue enum constant representing the result of the Kleene implication.
+ @param triboolValueA MCKTriboolValue enum constant for the left side of the Kleene implication.
+ @param triboolValueB MCKTriboolValue enum constant for the right side of the Kleene implication.
+ @return A MCKTriboolValue enum constant representing the result of the Kleene implication.
  @code
   -------------------
  | a → b | + | 0 | - |
@@ -269,14 +269,14 @@ MCTriboolValue;
  |     - | + | + | + |
   -------------------
  */
-+ (MCTriboolValue)kleeneImplicationOfTriboolValueA:(MCTriboolValue)triboolValueA
-                                     triboolValueB:(MCTriboolValue)triboolValueB;
++ (MCKTriboolValue)kleeneImplicationOfTriboolValueA:(MCKTriboolValue)triboolValueA
+                                     triboolValueB:(MCKTriboolValue)triboolValueB;
 
 /**
  @brief Performs ternary logical Łukasiewicz implication with the supplied values (triboolValueA → triboolValueB), yielding the results described in the following table:
- @param triboolValueA MCTriboolValue enum constant for the left side of the Łukasiewicz implication.
- @param triboolValueB MCTriboolValue enum constant for the right side of the Łukasiewicz implication.
- @return A MCTriboolValue enum constant representing the result of the Łukasiewicz implication.
+ @param triboolValueA MCKTriboolValue enum constant for the left side of the Łukasiewicz implication.
+ @param triboolValueB MCKTriboolValue enum constant for the right side of the Łukasiewicz implication.
+ @return A MCKTriboolValue enum constant representing the result of the Łukasiewicz implication.
  @code
   -------------------
  | a → b | + | 0 | - |
@@ -288,7 +288,7 @@ MCTriboolValue;
  |     - | + | + | + |
   -------------------
  */
-+ (MCTriboolValue)lukasiewiczImplicationOfTriboolValueA:(MCTriboolValue)triboolValueA
-                                          triboolValueB:(MCTriboolValue)triboolValueB;
++ (MCKTriboolValue)lukasiewiczImplicationOfTriboolValueA:(MCKTriboolValue)triboolValueA
+                                          triboolValueB:(MCKTriboolValue)triboolValueB;
 
 @end

@@ -1,6 +1,6 @@
 //
 //  Demos.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 4/2/14.
 //
@@ -27,11 +27,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
-#import "MCVector.h"
+#import "MAVMatrix.h"
+#import "MAVVector.h"
 
-#import "MCQRFactorization.h"
-#import "MCEigenDecomposition.h"
+#import "MAVQRFactorization.h"
+#import "MAVEigenDecomposition.h"
 
 @interface Demos : XCTestCase
 
@@ -57,20 +57,20 @@
      * Vectors
      */
     
-    MCVector *vectorA, *vectorB, *vectorC;
+    MAVVector *vectorA, *vectorB, *vectorC;
     
     double vectorAValues[3] = { 1.0, 2.0, 3.0 };
-    vectorA = [MCVector vectorWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] length:3]; // column vector from C array
+    vectorA = [MAVVector vectorWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] length:3]; // column vector from C array
     
-    vectorB = [MCVector vectorWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] length:3 vectorFormat:MCVectorFormatRowVector]; // row vector from C array
+    vectorB = [MAVVector vectorWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] length:3 vectorFormat:MAVVectorFormatRowVector]; // row vector from C array
     
-    vectorC = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]]; // column vector from NSArray
+    vectorC = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]]; // column vector from NSArray
     
     /*
      * Matrices
      */
     
-    MCMatrix *matrixA, *matrixB, *matrixC, *matrixD;
+    MAVMatrix *matrixA, *matrixB, *matrixC, *matrixD;
     
     double matrixValues[9] = {
         1.0, 2.0, 3.0,
@@ -79,43 +79,43 @@
     };
     
     // matrix from C array of column-major values
-    matrixA = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
+    matrixA = [MAVMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
                                     rows:3
                                  columns:3];
     
     // matrix from C array of row-major values
-    matrixB = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
+    matrixB = [MAVMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
                                     rows:3
                                  columns:3
-                        leadingDimension:MCMatrixLeadingDimensionRow];
+                        leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    matrixC = [MCMatrix matrixWithRowVectors:@[vectorA, vectorB, vectorC]]; // matrix from NSArray of row vectors
+    matrixC = [MAVMatrix matrixWithRowVectors:@[vectorA, vectorB, vectorC]]; // matrix from NSArray of row vectors
     
-    matrixD = [MCMatrix matrixWithColumnVectors:@[vectorA, vectorB, vectorC]]; // matrix from NSArray of column vectors
+    matrixD = [MAVMatrix matrixWithColumnVectors:@[vectorA, vectorB, vectorC]]; // matrix from NSArray of column vectors
     
     /*
      * Special matrices
      */
     
-    MCMatrix *diagonal, *identity, *randomTriangular, *randomSymmetric, *randomTridiagonal;
+    MAVMatrix *diagonal, *identity, *randomTriangular, *randomSymmetric, *randomTridiagonal;
     
-    diagonal = [MCMatrix diagonalMatrixWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] order:3];
+    diagonal = [MAVMatrix diagonalMatrixWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] order:3];
     
-    identity = [MCMatrix identityMatrixOfOrder:3 precision:MCValuePrecisionDouble];
+    identity = [MAVMatrix identityMatrixOfOrder:3 precision:MCKValuePrecisionDouble];
     
-    randomTriangular = [MCMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MCMatrixTriangularComponentUpper precision:MCValuePrecisionDouble];
+    randomTriangular = [MAVMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MAVMatrixTriangularComponentUpper precision:MCKValuePrecisionDouble];
     
-    randomSymmetric = [MCMatrix randomSymmetricMatrixOfOrder:3 precision:MCValuePrecisionDouble];
+    randomSymmetric = [MAVMatrix randomSymmetricMatrixOfOrder:3 precision:MCKValuePrecisionDouble];
     
-    randomTridiagonal = [MCMatrix randomBandMatrixOfOrder:3 upperCodiagonals:1 lowerCodiagonals:1 precision:MCValuePrecisionDouble];
+    randomTridiagonal = [MAVMatrix randomBandMatrixOfOrder:3 upperCodiagonals:1 lowerCodiagonals:1 precision:MCKValuePrecisionDouble];
     
     NSLog(@"so far so good!");
     
-    MCMatrix *product = [MCMatrix productOfMatrixA:matrixA andMatrixB:matrixB];
+    MAVMatrix *product = [MAVMatrix productOfMatrixA:matrixA andMatrixB:matrixB];
     
-    MCQRFactorization *qrfactorization = [MCQRFactorization qrFactorizationOfMatrix:matrixA];
+    MAVQRFactorization *qrfactorization = [MAVQRFactorization qrFactorizationOfMatrix:matrixA];
     
-    MCEigendecomposition *eigenDecomposition = [MCEigendecomposition eigendecompositionOfMatrix:matrixA];
+    MAVEigendecomposition *eigenDecomposition = [MAVEigendecomposition eigendecompositionOfMatrix:matrixA];
     
     NSLog(@"whew!");
 }

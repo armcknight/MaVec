@@ -1,6 +1,6 @@
 //
 //  EigendecompositionTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,9 +27,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
-#import "MCEigendecomposition.h"
-#import "MCVector.h"
+#import "MAVMatrix.h"
+#import "MAVEigendecomposition.h"
+#import "MAVVector.h"
 
 @interface EigendecompositionTests : XCTestCase
 
@@ -60,14 +60,14 @@
         -3.18,   7.21,  -7.42,   8.54,   2.51
     };
     
-    MCMatrix *o = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:25*sizeof(double)] rows:5 columns:5 leadingDimension:MCMatrixLeadingDimensionRow];
-    MCEigendecomposition *e = o.eigendecomposition;
+    MAVMatrix *o = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:25*sizeof(double)] rows:5 columns:5 leadingDimension:MAVMatrixLeadingDimensionRow];
+    MAVEigendecomposition *e = o.eigendecomposition;
     
     for (int i = 0; i < 5; i += 1) {
-        MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
+        MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
-        MCVector *left = [MCMatrix productOfMatrix:o andVector:eigenvector];
-        MCVector *right = [MCVector productOfVector:eigenvector scalar:eigenvalue];
+        MAVVector *left = [MAVMatrix productOfMatrix:o andVector:eigenvector];
+        MAVVector *right = [MAVVector productOfVector:eigenvector scalar:eigenvalue];
         for (int j = 0; j < 5; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
             double b = [right valueAtIndex:j].doubleValue;
@@ -87,14 +87,14 @@
         -1.0,  0.0,  0.0,  5.0
     };
     
-    MCMatrix *source = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MCMatrixLeadingDimensionRow];
-    MCEigendecomposition *e = source.eigendecomposition;
+    MAVMatrix *source = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MAVMatrixLeadingDimensionRow];
+    MAVEigendecomposition *e = source.eigendecomposition;
     
     for (int i = 0; i < 4; i += 1) {
-        MCVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
+        MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
-        MCVector *left = [MCMatrix productOfMatrix:source andVector:eigenvector];
-        MCVector *right = [MCVector productOfVector:eigenvector scalar:eigenvalue];
+        MAVVector *left = [MAVMatrix productOfMatrix:source andVector:eigenvector];
+        MAVVector *right = [MAVVector productOfVector:eigenvector scalar:eigenvalue];
         for (int j = 0; j < 4; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
             double b = [right valueAtIndex:j].doubleValue;

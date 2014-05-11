@@ -1,6 +1,6 @@
 //
 //  ApproximationView.h
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 12/19/13.
 //

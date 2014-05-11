@@ -1,6 +1,6 @@
 //
 //  SVDImageCompressionViewController.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/30/14.
 //
@@ -27,9 +27,9 @@
 
 #import "SVDImageCompressionViewController.h"
 
-#import "MCMatrix.h"
-#import "MCVector.h"
-#import "MCSingularValueDecomposition.h"
+#import "MAVMatrix.h"
+#import "MAVVector.h"
+#import "MAVSingularValueDecomposition.h"
 
 @interface SVDImageCompressionViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -40,7 +40,7 @@
 @property (strong, nonatomic) IBOutlet UIView *progressView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (strong, nonatomic) MCSingularValueDecomposition *imageSVD;
+@property (strong, nonatomic) MAVSingularValueDecomposition *imageSVD;
 
 @property (assign, nonatomic) int currentAmountOfSingularValues;
 
@@ -103,10 +103,10 @@
     
     self.imageView.image = croppedGrayscaleImage;
     
-    MCMatrix *grayscaleValues = [self getGrayscalePixelValuesFromImage:croppedGrayscaleImage];
-    self.imageSVD = [MCSingularValueDecomposition singularValueDecompositionWithMatrix:grayscaleValues];
+    MAVMatrix *grayscaleValues = [self getGrayscalePixelValuesFromImage:croppedGrayscaleImage];
+    self.imageSVD = [MAVSingularValueDecomposition singularValueDecompositionWithMatrix:grayscaleValues];
     
-    MCVector *singularValues = self.imageSVD.s.diagonalValues;
+    MAVVector *singularValues = self.imageSVD.s.diagonalValues;
     self.compressionSlider.minimumValue = 1;
     self.compressionSlider.maximumValue = singularValues.length;
     self.currentAmountOfSingularValues = singularValues.length;
@@ -118,7 +118,7 @@
 #pragma mark - Private interface
 
 // adapted from http://stackoverflow.com/questions/448125/how-to-get-pixel-data-from-a-uiimage-cocoa-touch-or-cgimage-core-graphics
-- (MCMatrix *)getGrayscalePixelValuesFromImage:(UIImage*)image
+- (MAVMatrix *)getGrayscalePixelValuesFromImage:(UIImage*)image
 {
     // First get the image into your data buffer
     CGImageRef imageRef = [image CGImage];
@@ -149,7 +149,7 @@
     CGImageRelease(imageRef);
     free(rawData);
     
-    MCMatrix *grayscaleMatrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:grayscaleValues length:numberOfPixels*sizeof(double)] rows:(int)height columns:(int)width];
+    MAVMatrix *grayscaleMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:grayscaleValues length:numberOfPixels*sizeof(double)] rows:(int)height columns:(int)width];
     
     return grayscaleMatrix;
 }
@@ -188,17 +188,17 @@
 // adapted from http://stackoverflow.com/questions/4545237/creating-uiimage-from-raw-rgba-data
 - (UIImage *)compressedImageWithSingularValues:(int)singularValues
 {
-    MCVector *partialSum = [MCVector productOfVector:[self.imageSVD.u columnVectorForColumn:0] scalar:[self.imageSVD.s.diagonalValues valueAtIndex:0]];
-    MCMatrix *leftMultiplicand = [MCMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
-    MCVector *rightMultiplicandVector = [self.imageSVD.vT rowVectorForRow:0];
-    MCMatrix *rightMultiplicand = [MCMatrix matrixWithValues:rightMultiplicandVector.values rows:1 columns:rightMultiplicandVector.length];
-    MCMatrix *sum = [MCMatrix productOfMatrixA:leftMultiplicand andMatrixB:rightMultiplicand];
+    MAVVector *partialSum = [MAVVector productOfVector:[self.imageSVD.u columnVectorForColumn:0] scalar:[self.imageSVD.s.diagonalValues valueAtIndex:0]];
+    MAVMatrix *leftMultiplicand = [MAVMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
+    MAVVector *rightMultiplicandVector = [self.imageSVD.vT rowVectorForRow:0];
+    MAVMatrix *rightMultiplicand = [MAVMatrix matrixWithValues:rightMultiplicandVector.values rows:1 columns:rightMultiplicandVector.length];
+    MAVMatrix *sum = [MAVMatrix productOfMatrixA:leftMultiplicand andMatrixB:rightMultiplicand];
     for (int i = singularValues - 1; i >= 0; i--) {
-        partialSum = [MCVector productOfVector:[self.imageSVD.u columnVectorForColumn:i] scalar:[self.imageSVD.s.diagonalValues valueAtIndex:i]];
-        leftMultiplicand = [MCMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
+        partialSum = [MAVVector productOfVector:[self.imageSVD.u columnVectorForColumn:i] scalar:[self.imageSVD.s.diagonalValues valueAtIndex:i]];
+        leftMultiplicand = [MAVMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
         rightMultiplicandVector = [self.imageSVD.vT rowVectorForRow:i];
-        rightMultiplicand = [MCMatrix matrixWithValues:rightMultiplicandVector.values rows:1 columns:rightMultiplicandVector.length];
-        sum = [MCMatrix sumOfMatrixA:sum andMatrixB:[MCMatrix productOfMatrixA:leftMultiplicand andMatrixB:rightMultiplicand]];
+        rightMultiplicand = [MAVMatrix matrixWithValues:rightMultiplicandVector.values rows:1 columns:rightMultiplicandVector.length];
+        sum = [MAVMatrix sumOfMatrixA:sum andMatrixB:[MAVMatrix productOfMatrixA:leftMultiplicand andMatrixB:rightMultiplicand]];
     }
     
     int size = sum.rows * sum.columns;

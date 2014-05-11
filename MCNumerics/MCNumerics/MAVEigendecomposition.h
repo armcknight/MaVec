@@ -1,6 +1,6 @@
 //
 //  EigenvalueDecomposition.h
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 1/4/14.
 //
@@ -27,35 +27,35 @@
 
 #import <Foundation/Foundation.h>
 
-@class MCMatrix;
-@class MCVector;
+@class MAVMatrix;
+@class MAVVector;
 
-@interface MCEigendecomposition : NSObject
+@interface MAVEigendecomposition : NSObject
 
 /**
  @property eigenvectors
- @brief An MCMatrix object whose columns are the eigenvectors of the eigendecomposition. The order of eigenvectors matches the order of the eigenvalues.
+ @brief An MAVMatrix object whose columns are the eigenvectors of the eigendecomposition. The order of eigenvectors matches the order of the eigenvalues.
  */
-@property (strong, nonatomic) MCMatrix *eigenvectors;
+@property (strong, nonatomic) MAVMatrix *eigenvectors;
 
 /**
  @property eigenvalues
- @brief An MCVector object containing the eigenvalues of the eigendecomposition. The order of values matches the order of the eigenvectors.
+ @brief An MAVVector object containing the eigenvalues of the eigendecomposition. The order of values matches the order of the eigenvectors.
  */
-@property (strong, nonatomic) MCVector *eigenvalues;
+@property (strong, nonatomic) MAVVector *eigenvalues;
 
 /**
- @brief Creates a new instance of MCEigendecomposition by calculating the eigendecomposition of the supplied matrix.
- @param matrix The MCMatrix object to decompose.
- @return A new instance of MCEigendecomposition containing the resulting eigenvalues and eigenvectors of the decomposition.
+ @brief Creates a new instance of MAVEigendecomposition by calculating the eigendecomposition of the supplied matrix.
+ @param matrix The MAVMatrix object to decompose.
+ @return A new instance of MAVEigendecomposition containing the resulting eigenvalues and eigenvectors of the decomposition.
  */
-- (instancetype)initWithMatrix:(MCMatrix *)matrix;
+- (instancetype)initWithMatrix:(MAVMatrix *)matrix;
 
 /**
- @brief Class convenience method to create a new instance of MCEigendecomposition by calculating the eigendecomposition of the supplied matrix.
- @param matrix The MCMatrix object to decompose.
- @return A new instance of MCEigendecomposition containing the resulting eigenvalues and eigenvectors of the decomposition.
+ @brief Class convenience method to create a new instance of MAVEigendecomposition by calculating the eigendecomposition of the supplied matrix.
+ @param matrix The MAVMatrix object to decompose.
+ @return A new instance of MAVEigendecomposition containing the resulting eigenvalues and eigenvectors of the decomposition.
  */
-+ (instancetype)eigendecompositionOfMatrix:(MCMatrix *)matrix;
++ (instancetype)eigendecompositionOfMatrix:(MAVMatrix *)matrix;
 
 @end

@@ -16,14 +16,14 @@
 
 #pragma mark - Exceptions
 
-#define kMCUnimplementedMethodException [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil]
-#define kMCUnsupportedDataType [NSException exceptionWithName:@"Unsuppoted data type" reason:@"Data must be either double or float type." userInfo:nil]
+#define kMAVUnimplementedMethodException [NSException exceptionWithName:@"Unimplemented method" reason:@"Method not yet implemented" userInfo:nil]
+#define kMAVUnsupportedDataType [NSException exceptionWithName:@"Unsuppoted data type" reason:@"Data must be either double or float type." userInfo:nil]
 
 #pragma mark - Precision
 
-#define kMCIsFloatEncoding(encoding)    (strcmp(encoding, @encode(float)) == 0)
-#define kMCIsFloatType(size_t)          (size_t == sizeof(float))
-#define kMCIsDoubleEncoding(encoding)   (strcmp(encoding, @encode(double)) == 0)
-#define kMCIsDoubleType(size_t)         (size_t == sizeof(double))
+#define kMAVIsFloatEncoding(encoding)    (strcmp(encoding, @encode(float)) == 0)
+#define kMAVIsFloatType(size_t)          (size_t == sizeof(float))
+#define kMAVIsDoubleEncoding(encoding)   (strcmp(encoding, @encode(double)) == 0)
+#define kMAVIsDoubleType(size_t)         (size_t == sizeof(double))
 
 #endif

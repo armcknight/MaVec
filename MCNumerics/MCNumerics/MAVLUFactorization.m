@@ -1,6 +1,6 @@
 //
-//  MCLUFactorization.m
-//  MCNumerics
+//  MAVLUFactorization.m
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 12/15/13.
 //
@@ -27,32 +27,32 @@
 
 #import <Accelerate/Accelerate.h>
 
-#import "MCLUFactorization.h"
-#import "MCMatrix.h"
-#import "MCNumberFormats.h"
+#import "MAVLUFactorization.h"
+#import "MAVMatrix.h"
+#import "MCKNumberFormats.h"
 
-@implementation MCLUFactorization
+@implementation MAVLUFactorization
 
 @synthesize numberOfPermutations = _numberOfPermutations;
 
 #pragma mark - Init
 
-- (instancetype)initWithMatrix:(MCMatrix *)matrix
+- (instancetype)initWithMatrix:(MAVMatrix *)matrix
 {
     self = [super init];
     if (self) {
-        NSData *columnMajorValues = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+        NSData *columnMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
         
         int m = matrix.rows;
         int n = matrix.columns;
         int lda = m;
         int *ipiv = malloc(MIN(m, n) * sizeof(int));
         int info = 0;
-        MCMatrix *l = [MCMatrix matrixWithRows:m columns:n precision:matrix.precision];
-        MCMatrix *u = [MCMatrix matrixWithRows:n columns:m precision:matrix.precision];
-        MCMatrix *p = [MCMatrix identityMatrixOfOrder:MIN(m, n) precision:matrix.precision];
+        MAVMatrix *l = [MAVMatrix matrixWithRows:m columns:n precision:matrix.precision];
+        MAVMatrix *u = [MAVMatrix matrixWithRows:n columns:m precision:matrix.precision];
+        MAVMatrix *p = [MAVMatrix identityMatrixOfOrder:MIN(m, n) precision:matrix.precision];
         
-        if (matrix.precision == MCValuePrecisionDouble) {
+        if (matrix.precision == MCKValuePrecisionDouble) {
             dgetrf_(&m, &n, (double *)columnMajorValues.bytes, &lda, ipiv, &info);
             
             // extract L from values array
@@ -139,16 +139,16 @@
     return self;
 }
 
-+ (instancetype)luFactorizationOfMatrix:(MCMatrix *)matrix
++ (instancetype)luFactorizationOfMatrix:(MAVMatrix *)matrix
 {
-    return [[MCLUFactorization alloc] initWithMatrix:matrix];
+    return [[MAVLUFactorization alloc] initWithMatrix:matrix];
 }
 
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    MCLUFactorization *luCopy = [[self class] allocWithZone:zone];
+    MAVLUFactorization *luCopy = [[self class] allocWithZone:zone];
     
     luCopy->_lowerTriangularMatrix = _lowerTriangularMatrix.copy;
     luCopy->_upperTriangularMatrix = _upperTriangularMatrix.copy;

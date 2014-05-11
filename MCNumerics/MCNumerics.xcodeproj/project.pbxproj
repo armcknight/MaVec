@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4936537318B011060086C243 /* MCQuadratic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537218B011060086C243 /* MCQuadratic.m */; };
-		4936537618B012220086C243 /* MCPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537518B012220086C243 /* MCPair.m */; };
+		4936537318B011060086C243 /* MCKQuadratic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537218B011060086C243 /* MCKQuadratic.m */; };
+		4936537618B012220086C243 /* MCKPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537518B012220086C243 /* MCKPair.m */; };
 		4936537A18B1C6360086C243 /* MCVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4936537918B1C6360086C243 /* MCVectorTests.m */; };
 		493E8B5B18ECB81800021A5F /* Demos.m in Sources */ = {isa = PBXBuildFile; fileRef = 493E8B5A18ECB81800021A5F /* Demos.m */; };
 		494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4463185B61BB00347096 /* RZArrayCollectionList.m */; };
@@ -29,19 +29,19 @@
 		494F44E2185B61BB00347096 /* RZObserverCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4475185B61BB00347096 /* RZObserverCollection.m */; };
 		494F44E3185B61BB00347096 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4477185B61BB00347096 /* RZSortedCollectionList.m */; };
 		494F44E4185B61BB00347096 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4477185B61BB00347096 /* RZSortedCollectionList.m */; };
-		494F4543185BDA6200347096 /* MCPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCPolynomial.m */; };
-		494F4544185BDA6200347096 /* MCPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCPolynomial.m */; };
-		494F4547185BDE3000347096 /* NSNumber+MCMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCMath.m */; };
-		494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCMath.m */; };
-		494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
-		494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */; };
-		494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
-		494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MCLUFactorization.m */; };
+		494F4543185BDA6200347096 /* MCKPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCKPolynomial.m */; };
+		494F4544185BDA6200347096 /* MCKPolynomial.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4542185BDA6200347096 /* MCKPolynomial.m */; };
+		494F4547185BDE3000347096 /* NSNumber+MCKMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCKMath.m */; };
+		494F4548185BDE3000347096 /* NSNumber+MCKMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F4546185BDE3000347096 /* NSNumber+MCKMath.m */; };
+		494F454C185EA9D000347096 /* MAVSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MAVSingularValueDecomposition.m */; };
+		494F454D185EA9D000347096 /* MAVSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454B185EA9D000347096 /* MAVSingularValueDecomposition.m */; };
+		494F4550185EA9DA00347096 /* MAVLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MAVLUFactorization.m */; };
+		494F4551185EA9DA00347096 /* MAVLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 494F454F185EA9DA00347096 /* MAVLUFactorization.m */; };
 		494F455B1861565B00347096 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 494F455A1861565B00347096 /* Accelerate.framework */; };
-		4955B61918FA1F350020F36D /* MCRealNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4955B61818FA1F350020F36D /* MCRealNumber.m */; };
-		4955B62318FB21BC0020F36D /* MCComplexNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4955B62218FB21BC0020F36D /* MCComplexNumber.m */; };
-		4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2D51877D9030095DE06 /* MCEigendecomposition.m */; };
-		4978F2E4187852330095DE06 /* MCTribool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2E3187852330095DE06 /* MCTribool.m */; };
+		4955B61918FA1F350020F36D /* MCKRealNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4955B61818FA1F350020F36D /* MCKRealNumber.m */; };
+		4955B62318FB21BC0020F36D /* MCKComplexNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4955B62218FB21BC0020F36D /* MCKComplexNumber.m */; };
+		4978F2D61877D9030095DE06 /* MAVEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2D51877D9030095DE06 /* MAVEigendecomposition.m */; };
+		4978F2E4187852330095DE06 /* MCKTribool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4978F2E3187852330095DE06 /* MCKTribool.m */; };
 		49838F94191DB8FD00926654 /* RotationMatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49838F93191DB8FD00926654 /* RotationMatrixTests.m */; };
 		4996B21218CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21118CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m */; };
 		4996B21518CBA24700C1CEF9 /* SingularValueDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */; };
@@ -69,11 +69,11 @@
 		49B682AB184D8342006A61D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49B68293184D8342006A61D3 /* UIKit.framework */; };
 		49B682B3184D8342006A61D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49B682B1184D8342006A61D3 /* InfoPlist.strings */; };
 		49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682B4184D8342006A61D3 /* MCNumericsTests.m */; };
-		49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682BF184D8390006A61D3 /* MCMatrix.m */; };
+		49B682C0184D8390006A61D3 /* MAVMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682BF184D8390006A61D3 /* MAVMatrix.m */; };
 		49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */; };
 		49B682D8184ED2D5006A61D3 /* LeastSquaresApproximationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682D5184ED2D5006A61D3 /* LeastSquaresApproximationViewController.m */; };
-		49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682EA1854DEF8006A61D3 /* MCVector.m */; };
-		49BEF2661885978C002F5F41 /* MCQRFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BEF2651885978C002F5F41 /* MCQRFactorization.m */; };
+		49B682EB1854DEF8006A61D3 /* MAVVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B682EA1854DEF8006A61D3 /* MAVVector.m */; };
+		49BEF2661885978C002F5F41 /* MAVQRFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BEF2651885978C002F5F41 /* MAVQRFactorization.m */; };
 		49D15C3F18E8B3EC00CFD621 /* SVDImageCompressionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49D15C3D18E8B3EC00CFD621 /* SVDImageCompressionViewController.m */; };
 		49D15C4018E8B3EC00CFD621 /* SVDImageCompressionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49D15C3E18E8B3EC00CFD621 /* SVDImageCompressionViewController.xib */; };
 		49E0486318D48AEF00F4AA76 /* MCTriboolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49E0486218D48AEF00F4AA76 /* MCTriboolTests.m */; };
@@ -92,11 +92,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		37AE3C0218735B5200FAE5BC /* MCEquation.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MCEquation.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
-		4936537118B011060086C243 /* MCQuadratic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCQuadratic.h; sourceTree = "<group>"; };
-		4936537218B011060086C243 /* MCQuadratic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCQuadratic.m; sourceTree = "<group>"; };
-		4936537418B012220086C243 /* MCPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPair.h; sourceTree = "<group>"; };
-		4936537518B012220086C243 /* MCPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPair.m; sourceTree = "<group>"; };
+		37AE3C0218735B5200FAE5BC /* MCKEquation.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MCKEquation.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		4936537118B011060086C243 /* MCKQuadratic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKQuadratic.h; sourceTree = "<group>"; };
+		4936537218B011060086C243 /* MCKQuadratic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKQuadratic.m; sourceTree = "<group>"; };
+		4936537418B012220086C243 /* MCKPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKPair.h; sourceTree = "<group>"; };
+		4936537518B012220086C243 /* MCKPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKPair.m; sourceTree = "<group>"; };
 		4936537918B1C6360086C243 /* MCVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVectorTests.m; sourceTree = "<group>"; };
 		493E8B5A18ECB81800021A5F /* Demos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demos.m; sourceTree = "<group>"; };
 		494F4462185B61BB00347096 /* RZArrayCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZArrayCollectionList.h; sourceTree = "<group>"; };
@@ -120,24 +120,24 @@
 		494F4476185B61BB00347096 /* RZSortedCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZSortedCollectionList.h; sourceTree = "<group>"; };
 		494F4477185B61BB00347096 /* RZSortedCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZSortedCollectionList.m; sourceTree = "<group>"; };
 		494F4478185B61BB00347096 /* RZCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RZCollectionList.h; path = RZCollectionList/RZCollectionList.h; sourceTree = "<group>"; };
-		494F4541185BDA6200347096 /* MCPolynomial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPolynomial.h; sourceTree = "<group>"; };
-		494F4542185BDA6200347096 /* MCPolynomial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPolynomial.m; sourceTree = "<group>"; };
-		494F4545185BDE3000347096 /* NSNumber+MCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCMath.h"; sourceTree = "<group>"; };
-		494F4546185BDE3000347096 /* NSNumber+MCMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCMath.m"; sourceTree = "<group>"; };
-		494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSingularValueDecomposition.h; sourceTree = "<group>"; };
-		494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSingularValueDecomposition.m; sourceTree = "<group>"; };
-		494F454E185EA9DA00347096 /* MCLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCLUFactorization.h; sourceTree = "<group>"; };
-		494F454F185EA9DA00347096 /* MCLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCLUFactorization.m; sourceTree = "<group>"; };
+		494F4541185BDA6200347096 /* MCKPolynomial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKPolynomial.h; sourceTree = "<group>"; };
+		494F4542185BDA6200347096 /* MCKPolynomial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKPolynomial.m; sourceTree = "<group>"; };
+		494F4545185BDE3000347096 /* NSNumber+MCKMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCKMath.h"; sourceTree = "<group>"; };
+		494F4546185BDE3000347096 /* NSNumber+MCKMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCKMath.m"; sourceTree = "<group>"; };
+		494F454A185EA9D000347096 /* MAVSingularValueDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVSingularValueDecomposition.h; sourceTree = "<group>"; };
+		494F454B185EA9D000347096 /* MAVSingularValueDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVSingularValueDecomposition.m; sourceTree = "<group>"; };
+		494F454E185EA9DA00347096 /* MAVLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVLUFactorization.h; sourceTree = "<group>"; };
+		494F454F185EA9DA00347096 /* MAVLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVLUFactorization.m; sourceTree = "<group>"; };
 		494F455A1861565B00347096 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		4955B61718FA1F350020F36D /* MCRealNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCRealNumber.h; sourceTree = "<group>"; };
-		4955B61818FA1F350020F36D /* MCRealNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCRealNumber.m; sourceTree = "<group>"; };
-		4955B62118FB21BC0020F36D /* MCComplexNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCComplexNumber.h; sourceTree = "<group>"; };
-		4955B62218FB21BC0020F36D /* MCComplexNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCComplexNumber.m; sourceTree = "<group>"; };
-		4955B65F18FB79690020F36D /* MCNumberFormats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCNumberFormats.h; sourceTree = "<group>"; };
-		4978F2D41877D9030095DE06 /* MCEigendecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCEigendecomposition.h; sourceTree = "<group>"; };
-		4978F2D51877D9030095DE06 /* MCEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEigendecomposition.m; sourceTree = "<group>"; };
-		4978F2E2187852330095DE06 /* MCTribool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTribool.h; sourceTree = "<group>"; };
-		4978F2E3187852330095DE06 /* MCTribool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTribool.m; sourceTree = "<group>"; };
+		4955B61718FA1F350020F36D /* MCKRealNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKRealNumber.h; sourceTree = "<group>"; };
+		4955B61818FA1F350020F36D /* MCKRealNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKRealNumber.m; sourceTree = "<group>"; };
+		4955B62118FB21BC0020F36D /* MCKComplexNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKComplexNumber.h; sourceTree = "<group>"; };
+		4955B62218FB21BC0020F36D /* MCKComplexNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKComplexNumber.m; sourceTree = "<group>"; };
+		4955B65F18FB79690020F36D /* MCKNumberFormats.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCKNumberFormats.h; sourceTree = "<group>"; };
+		4978F2D41877D9030095DE06 /* MAVEigendecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVEigendecomposition.h; sourceTree = "<group>"; };
+		4978F2D51877D9030095DE06 /* MAVEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVEigendecomposition.m; sourceTree = "<group>"; };
+		4978F2E2187852330095DE06 /* MCKTribool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKTribool.h; sourceTree = "<group>"; };
+		4978F2E3187852330095DE06 /* MCKTribool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKTribool.m; sourceTree = "<group>"; };
 		49838F93191DB8FD00926654 /* RotationMatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotationMatrixTests.m; sourceTree = "<group>"; };
 		4996B21118CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrixMultiplicationTests.m; sourceTree = "<group>"; };
 		4996B21418CBA24700C1CEF9 /* SingularValueDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingularValueDecompositionTests.m; sourceTree = "<group>"; };
@@ -169,16 +169,16 @@
 		49B682B0184D8342006A61D3 /* MCNumericsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCNumericsTests-Info.plist"; sourceTree = "<group>"; };
 		49B682B2184D8342006A61D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		49B682B4184D8342006A61D3 /* MCNumericsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCNumericsTests.m; sourceTree = "<group>"; };
-		49B682BE184D8390006A61D3 /* MCMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMatrix.h; sourceTree = "<group>"; };
-		49B682BF184D8390006A61D3 /* MCMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMatrix.m; sourceTree = "<group>"; };
+		49B682BE184D8390006A61D3 /* MAVMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMatrix.h; sourceTree = "<group>"; };
+		49B682BF184D8390006A61D3 /* MAVMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrix.m; sourceTree = "<group>"; };
 		49B682D1184ED2D5006A61D3 /* DemoChoiceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoiceTableViewController.h; sourceTree = "<group>"; };
 		49B682D2184ED2D5006A61D3 /* DemoChoiceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoChoiceTableViewController.m; sourceTree = "<group>"; };
 		49B682D4184ED2D5006A61D3 /* LeastSquaresApproximationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeastSquaresApproximationViewController.h; sourceTree = "<group>"; };
 		49B682D5184ED2D5006A61D3 /* LeastSquaresApproximationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeastSquaresApproximationViewController.m; sourceTree = "<group>"; };
-		49B682E91854DEF8006A61D3 /* MCVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCVector.h; sourceTree = "<group>"; };
-		49B682EA1854DEF8006A61D3 /* MCVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVector.m; sourceTree = "<group>"; };
-		49BEF2641885978C002F5F41 /* MCQRFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCQRFactorization.h; sourceTree = "<group>"; };
-		49BEF2651885978C002F5F41 /* MCQRFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCQRFactorization.m; sourceTree = "<group>"; };
+		49B682E91854DEF8006A61D3 /* MAVVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVVector.h; sourceTree = "<group>"; };
+		49B682EA1854DEF8006A61D3 /* MAVVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVVector.m; sourceTree = "<group>"; };
+		49BEF2641885978C002F5F41 /* MAVQRFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVQRFactorization.h; sourceTree = "<group>"; };
+		49BEF2651885978C002F5F41 /* MAVQRFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVQRFactorization.m; sourceTree = "<group>"; };
 		49D15C3C18E8B3EC00CFD621 /* SVDImageCompressionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDImageCompressionViewController.h; sourceTree = "<group>"; };
 		49D15C3D18E8B3EC00CFD621 /* SVDImageCompressionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDImageCompressionViewController.m; sourceTree = "<group>"; };
 		49D15C3E18E8B3EC00CFD621 /* SVDImageCompressionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SVDImageCompressionViewController.xib; sourceTree = "<group>"; };
@@ -216,11 +216,11 @@
 		37AE3C0618735D4500FAE5BC /* Equations */ = {
 			isa = PBXGroup;
 			children = (
-				37AE3C0218735B5200FAE5BC /* MCEquation.h */,
-				494F4541185BDA6200347096 /* MCPolynomial.h */,
-				494F4542185BDA6200347096 /* MCPolynomial.m */,
-				4936537118B011060086C243 /* MCQuadratic.h */,
-				4936537218B011060086C243 /* MCQuadratic.m */,
+				37AE3C0218735B5200FAE5BC /* MCKEquation.h */,
+				494F4541185BDA6200347096 /* MCKPolynomial.h */,
+				494F4542185BDA6200347096 /* MCKPolynomial.m */,
+				4936537118B011060086C243 /* MCKQuadratic.h */,
+				4936537218B011060086C243 /* MCKQuadratic.m */,
 			);
 			name = Equations;
 			sourceTree = "<group>";
@@ -228,16 +228,16 @@
 		37AE3C0718735D5700FAE5BC /* Matrices */ = {
 			isa = PBXGroup;
 			children = (
-				49B682BE184D8390006A61D3 /* MCMatrix.h */,
-				49B682BF184D8390006A61D3 /* MCMatrix.m */,
-				49BEF2641885978C002F5F41 /* MCQRFactorization.h */,
-				49BEF2651885978C002F5F41 /* MCQRFactorization.m */,
-				494F454A185EA9D000347096 /* MCSingularValueDecomposition.h */,
-				494F454B185EA9D000347096 /* MCSingularValueDecomposition.m */,
-				494F454E185EA9DA00347096 /* MCLUFactorization.h */,
-				494F454F185EA9DA00347096 /* MCLUFactorization.m */,
-				4978F2D41877D9030095DE06 /* MCEigendecomposition.h */,
-				4978F2D51877D9030095DE06 /* MCEigendecomposition.m */,
+				49B682BE184D8390006A61D3 /* MAVMatrix.h */,
+				49B682BF184D8390006A61D3 /* MAVMatrix.m */,
+				49BEF2641885978C002F5F41 /* MAVQRFactorization.h */,
+				49BEF2651885978C002F5F41 /* MAVQRFactorization.m */,
+				494F454A185EA9D000347096 /* MAVSingularValueDecomposition.h */,
+				494F454B185EA9D000347096 /* MAVSingularValueDecomposition.m */,
+				494F454E185EA9DA00347096 /* MAVLUFactorization.h */,
+				494F454F185EA9DA00347096 /* MAVLUFactorization.m */,
+				4978F2D41877D9030095DE06 /* MAVEigendecomposition.h */,
+				4978F2D51877D9030095DE06 /* MAVEigendecomposition.m */,
 			);
 			name = Matrices;
 			sourceTree = "<group>";
@@ -245,8 +245,8 @@
 		37AE3C0818735D6800FAE5BC /* Vectors */ = {
 			isa = PBXGroup;
 			children = (
-				49B682E91854DEF8006A61D3 /* MCVector.h */,
-				49B682EA1854DEF8006A61D3 /* MCVector.m */,
+				49B682E91854DEF8006A61D3 /* MAVVector.h */,
+				49B682EA1854DEF8006A61D3 /* MAVVector.m */,
 			);
 			name = Vectors;
 			sourceTree = "<group>";
@@ -307,8 +307,8 @@
 		494F4549185D041200347096 /* _Categories */ = {
 			isa = PBXGroup;
 			children = (
-				494F4545185BDE3000347096 /* NSNumber+MCMath.h */,
-				494F4546185BDE3000347096 /* NSNumber+MCMath.m */,
+				494F4545185BDE3000347096 /* NSNumber+MCKMath.h */,
+				494F4546185BDE3000347096 /* NSNumber+MCKMath.m */,
 			);
 			name = _Categories;
 			sourceTree = "<group>";
@@ -316,15 +316,15 @@
 		4978F2E1187852230095DE06 /* Data Types */ = {
 			isa = PBXGroup;
 			children = (
-				4978F2E2187852330095DE06 /* MCTribool.h */,
-				4978F2E3187852330095DE06 /* MCTribool.m */,
-				4936537418B012220086C243 /* MCPair.h */,
-				4936537518B012220086C243 /* MCPair.m */,
-				4955B61718FA1F350020F36D /* MCRealNumber.h */,
-				4955B61818FA1F350020F36D /* MCRealNumber.m */,
-				4955B62118FB21BC0020F36D /* MCComplexNumber.h */,
-				4955B62218FB21BC0020F36D /* MCComplexNumber.m */,
-				4955B65F18FB79690020F36D /* MCNumberFormats.h */,
+				4978F2E2187852330095DE06 /* MCKTribool.h */,
+				4978F2E3187852330095DE06 /* MCKTribool.m */,
+				4936537418B012220086C243 /* MCKPair.h */,
+				4936537518B012220086C243 /* MCKPair.m */,
+				4955B61718FA1F350020F36D /* MCKRealNumber.h */,
+				4955B61818FA1F350020F36D /* MCKRealNumber.m */,
+				4955B62118FB21BC0020F36D /* MCKComplexNumber.h */,
+				4955B62218FB21BC0020F36D /* MCKComplexNumber.m */,
+				4955B65F18FB79690020F36D /* MCKNumberFormats.h */,
 			);
 			name = "Data Types";
 			sourceTree = "<group>";
@@ -558,15 +558,15 @@
 				49B682A0184D8342006A61D3 /* AppDelegate.m in Sources */,
 				494F44E1185B61BB00347096 /* RZObserverCollection.m in Sources */,
 				49E10B451863F60900308AD2 /* ApproximationView.m in Sources */,
-				49BEF2661885978C002F5F41 /* MCQRFactorization.m in Sources */,
-				4978F2D61877D9030095DE06 /* MCEigendecomposition.m in Sources */,
+				49BEF2661885978C002F5F41 /* MAVQRFactorization.m in Sources */,
+				4978F2D61877D9030095DE06 /* MAVEigendecomposition.m in Sources */,
 				494F44DB185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
-				4955B62318FB21BC0020F36D /* MCComplexNumber.m in Sources */,
+				4955B62318FB21BC0020F36D /* MCKComplexNumber.m in Sources */,
 				49B682D8184ED2D5006A61D3 /* LeastSquaresApproximationViewController.m in Sources */,
 				494F44D9185B61BB00347096 /* RZCollectionListTableViewDataSource.m in Sources */,
 				49B682D6184ED2D5006A61D3 /* DemoChoiceTableViewController.m in Sources */,
-				4955B61918FA1F350020F36D /* MCRealNumber.m in Sources */,
-				494F454C185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */,
+				4955B61918FA1F350020F36D /* MCKRealNumber.m in Sources */,
+				494F454C185EA9D000347096 /* MAVSingularValueDecomposition.m in Sources */,
 				494F44D7185B61BB00347096 /* RZCollectionListNotificationWrappers.m in Sources */,
 				494F44D5185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
 				49B6829C184D8342006A61D3 /* main.m in Sources */,
@@ -574,15 +574,15 @@
 				494F44D1185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
 				494F44E3185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
 				494F44DF185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
-				49B682EB1854DEF8006A61D3 /* MCVector.m in Sources */,
-				49B682C0184D8390006A61D3 /* MCMatrix.m in Sources */,
-				4936537618B012220086C243 /* MCPair.m in Sources */,
+				49B682EB1854DEF8006A61D3 /* MAVVector.m in Sources */,
+				49B682C0184D8390006A61D3 /* MAVMatrix.m in Sources */,
+				4936537618B012220086C243 /* MCKPair.m in Sources */,
 				494F44D3185B61BB00347096 /* RZBaseCollectionList.m in Sources */,
-				494F4543185BDA6200347096 /* MCPolynomial.m in Sources */,
-				494F4547185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
-				4978F2E4187852330095DE06 /* MCTribool.m in Sources */,
-				4936537318B011060086C243 /* MCQuadratic.m in Sources */,
-				494F4550185EA9DA00347096 /* MCLUFactorization.m in Sources */,
+				494F4543185BDA6200347096 /* MCKPolynomial.m in Sources */,
+				494F4547185BDE3000347096 /* NSNumber+MCKMath.m in Sources */,
+				4978F2E4187852330095DE06 /* MCKTribool.m in Sources */,
+				4936537318B011060086C243 /* MCKQuadratic.m in Sources */,
+				494F4550185EA9DA00347096 /* MAVLUFactorization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +594,7 @@
 				4996B22518CBA4B600C1CEF9 /* MatrixPropertyTests.m in Sources */,
 				494F44E4185B61BB00347096 /* RZSortedCollectionList.m in Sources */,
 				49E0486318D48AEF00F4AA76 /* MCTriboolTests.m in Sources */,
-				494F454D185EA9D000347096 /* MCSingularValueDecomposition.m in Sources */,
+				494F454D185EA9D000347096 /* MAVSingularValueDecomposition.m in Sources */,
 				4996B21B18CBA33A00C1CEF9 /* LUDecompositionTests.m in Sources */,
 				4996B22118CBA43C00C1CEF9 /* QRDecompositionTests.m in Sources */,
 				4996B21218CBA1EB00C1CEF9 /* MCMatrixMultiplicationTests.m in Sources */,
@@ -611,15 +611,15 @@
 				494F44D2185B61BB00347096 /* RZArrayCollectionList.m in Sources */,
 				4996B21F18CBA3F500C1CEF9 /* EigendecompositionTests.m in Sources */,
 				4996B21718CBA29100C1CEF9 /* LeastSquaresSolutionTests.m in Sources */,
-				494F4544185BDA6200347096 /* MCPolynomial.m in Sources */,
-				494F4551185EA9DA00347096 /* MCLUFactorization.m in Sources */,
+				494F4544185BDA6200347096 /* MCKPolynomial.m in Sources */,
+				494F4551185EA9DA00347096 /* MAVLUFactorization.m in Sources */,
 				494F44DC185B61BB00347096 /* RZCompositeCollectionList.m in Sources */,
 				4996B21918CBA2C600C1CEF9 /* MatrixConstructionTests.m in Sources */,
 				494F44E0185B61BB00347096 /* RZFilteredCollectionList.m in Sources */,
 				494F44D6185B61BB00347096 /* RZCollectionListCollectionViewDataSource.m in Sources */,
 				49AEC1C418F18B3700A4175F /* MatrixValueRepresentationConversion.m in Sources */,
 				493E8B5B18ECB81800021A5F /* Demos.m in Sources */,
-				494F4548185BDE3000347096 /* NSNumber+MCMath.m in Sources */,
+				494F4548185BDE3000347096 /* NSNumber+MCKMath.m in Sources */,
 				49B682B5184D8342006A61D3 /* MCNumericsTests.m in Sources */,
 				4996B22318CBA48800C1CEF9 /* MatrixInversionTests.m in Sources */,
 			);

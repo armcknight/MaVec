@@ -1,6 +1,6 @@
 //
 //  LeastSquaresSolutionTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,7 +27,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
+#import "MAVMatrix.h"
 
 @interface LeastSquaresSolutionTests : XCTestCase
 
@@ -63,16 +63,16 @@
     bVals[0] = 2.0;
     bVals[1] = 1.0;
     bVals[2] = 3.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:3 columns:2];
-    MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:3 columns:1];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:3 columns:2];
+    MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:3 columns:1];
     
-    MCMatrix *coefficients = [MCMatrix solveLinearSystemWithMatrixA:a valuesB:b];
+    MAVMatrix *coefficients = [MAVMatrix solveLinearSystemWithMatrixA:a valuesB:b];
     
     size_t solutionSize = 2 * sizeof(double);
     double *solution = malloc(solutionSize);
     solution[0] = 7.0 / 4.0;
     solution[1] = 3.0 / 4.0;
-    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:solutionSize] rows:2 columns:1];
+    MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:solutionSize] rows:2 columns:1];
     
     for (int i = 0; i < 2; i++) {
         XCTAssertEqualWithAccuracy([s valueAtRow:i column:0].doubleValue, [coefficients valueAtRow:i column:0].doubleValue, __DBL_EPSILON__ * 10.0, @"Coefficient %u incorrect", i);
@@ -106,10 +106,10 @@
     bVals[1] = -2.9778;
     bVals[2] = -10.2376;
     bVals[3] = 4.5;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:4 columns:4];
-    MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:4 columns:1];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:4 columns:4];
+    MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:4 columns:1];
     
-    MCMatrix *coefficients = [MCMatrix solveLinearSystemWithMatrixA:a valuesB:b];
+    MAVMatrix *coefficients = [MAVMatrix solveLinearSystemWithMatrixA:a valuesB:b];
     
     size_t solutionSize = 4 * sizeof(double);
     double *solution = malloc(solutionSize);
@@ -117,7 +117,7 @@
     solution[1] = -0.7445;
     solution[2] = -2.5594;
     solution[3] = 1.125;
-    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:solutionSize] rows:4 columns:1];
+    MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:solutionSize] rows:4 columns:1];
     
     for (int i = 0; i < 4; i++) {
         XCTAssertEqualWithAccuracy([s valueAtRow:i column:0].doubleValue, [coefficients valueAtRow:i column:0].doubleValue, 0.0005, @"Coefficient %u incorrect", i);

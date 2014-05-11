@@ -1,6 +1,6 @@
 //
-//  MCTribool.m
-//  MCNumerics
+//  MCKTribool.m
+//  MCKMath
 //
 //  Created by andrew mcknight on 1/4/14.
 //
@@ -25,19 +25,19 @@
 //  SOFTWARE.
 //
 
-#import "MCTribool.h"
+#import "MCKTribool.h"
 
-@interface MCTribool ()
+@interface MCKTribool ()
 
 @end
 
-@implementation MCTribool
+@implementation MCKTribool
 
 @synthesize triboolValue = _triboolValue;
 
 #pragma mark - Init
 
-- (id)initWithTriboolValue:(MCTriboolValue)triboolValue
+- (id)initWithTriboolValue:(MCKTriboolValue)triboolValue
 {
     self = [super init];
     if (self) {
@@ -46,86 +46,86 @@
     return self;
 }
 
-+ (MCTribool *)triboolWithValue:(MCTriboolValue)triboolValue
++ (MCKTribool *)triboolWithValue:(MCKTriboolValue)triboolValue
 {
-    return [[MCTribool alloc] initWithTriboolValue:triboolValue];
+    return [[MCKTribool alloc] initWithTriboolValue:triboolValue];
 }
 
 #pragma mark - Inspection
 
 - (BOOL)isYes
 {
-    return (_triboolValue == MCTriboolValueYes);
+    return (_triboolValue == MCKTriboolValueYes);
 }
 
 - (BOOL)isNo
 {
-    return (_triboolValue == MCTriboolValueNo);
+    return (_triboolValue == MCKTriboolValueNo);
 }
 
 - (BOOL)isKnown
 {
-    return (_triboolValue != MCTriboolValueUnknown);
+    return (_triboolValue != MCKTriboolValueUnknown);
 }
 
 #pragma mark - Instance operators
 
-- (MCTribool *)andTribool:(MCTribool *)tribool
+- (MCKTribool *)andTribool:(MCKTribool *)tribool
 {
-    return [MCTribool triboolWithValue:[MCTribool conjunctionOfTriboolValueA:self.triboolValue
+    return [MCKTribool triboolWithValue:[MCKTribool conjunctionOfTriboolValueA:self.triboolValue
                                                                triboolValueB:tribool.triboolValue]];
 }
 
-- (MCTribool *)orTribool:(MCTribool *)tribool
+- (MCKTribool *)orTribool:(MCKTribool *)tribool
 {
-    return [MCTribool triboolWithValue:[MCTribool disjunctionOfTriboolValueA:self.triboolValue
+    return [MCKTribool triboolWithValue:[MCKTribool disjunctionOfTriboolValueA:self.triboolValue
                                                                triboolValueB:tribool.triboolValue]];
 }
 
-- (MCTribool *)negate
+- (MCKTribool *)negate
 {
-    return [MCTribool triboolWithValue:[MCTribool negationOfTriboolValue:self.triboolValue]];
+    return [MCKTribool triboolWithValue:[MCKTribool negationOfTriboolValue:self.triboolValue]];
 }
 
-- (MCTribool *)kleeneImplication:(MCTribool *)tribool
+- (MCKTribool *)kleeneImplication:(MCKTribool *)tribool
 {
-    return [MCTribool triboolWithValue:[MCTribool kleeneImplicationOfTriboolValueA:self.triboolValue
+    return [MCKTribool triboolWithValue:[MCKTribool kleeneImplicationOfTriboolValueA:self.triboolValue
                                                                      triboolValueB:tribool.triboolValue]];
 }
 
-- (MCTribool *)lukasiewiczImplication:(MCTribool *)tribool
+- (MCKTribool *)lukasiewiczImplication:(MCKTribool *)tribool
 {
-    return [MCTribool triboolWithValue:[MCTribool lukasiewiczImplicationOfTriboolValueA:self.triboolValue
+    return [MCKTribool triboolWithValue:[MCKTribool lukasiewiczImplicationOfTriboolValueA:self.triboolValue
                                                                           triboolValueB:tribool.triboolValue]];
 }
 
 #pragma mark - Class operators
 
-+ (MCTriboolValue)conjunctionOfTriboolValueA:(MCTriboolValue)triboolValueA
-                               triboolValueB:(MCTriboolValue)triboolValueB
++ (MCKTriboolValue)conjunctionOfTriboolValueA:(MCKTriboolValue)triboolValueA
+                               triboolValueB:(MCKTriboolValue)triboolValueB
 {
     return MIN(triboolValueA, triboolValueB);
 }
 
-+ (MCTriboolValue)disjunctionOfTriboolValueA:(MCTriboolValue)triboolValueA
-                               triboolValueB:(MCTriboolValue)triboolValueB
++ (MCKTriboolValue)disjunctionOfTriboolValueA:(MCKTriboolValue)triboolValueA
+                               triboolValueB:(MCKTriboolValue)triboolValueB
 {
     return MAX(triboolValueA, triboolValueB);
 }
 
-+ (MCTriboolValue)negationOfTriboolValue:(MCTriboolValue)triboolValue
++ (MCKTriboolValue)negationOfTriboolValue:(MCKTriboolValue)triboolValue
 {
     return -1 * triboolValue;
 }
 
-+ (MCTriboolValue)kleeneImplicationOfTriboolValueA:(MCTriboolValue)triboolValueA
-                                     triboolValueB:(MCTriboolValue)triboolValueB
++ (MCKTriboolValue)kleeneImplicationOfTriboolValueA:(MCKTriboolValue)triboolValueA
+                                     triboolValueB:(MCKTriboolValue)triboolValueB
 {
     return MAX(-1 * triboolValueA, triboolValueB);
 }
 
-+ (MCTriboolValue)lukasiewiczImplicationOfTriboolValueA:(MCTriboolValue)triboolValueA
-                                          triboolValueB:(MCTriboolValue)triboolValueB
++ (MCKTriboolValue)lukasiewiczImplicationOfTriboolValueA:(MCKTriboolValue)triboolValueA
+                                          triboolValueB:(MCKTriboolValue)triboolValueB
 {
     return MIN(1, 1 - triboolValueA + triboolValueB);
 }
@@ -135,7 +135,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    MCTribool *triboolCopy = [[self class] allocWithZone:zone];
+    MCKTribool *triboolCopy = [[self class] allocWithZone:zone];
     
     triboolCopy->_triboolValue = _triboolValue;
     

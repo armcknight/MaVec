@@ -1,6 +1,6 @@
 //
 //  QRDecompositionTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,9 +27,9 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
-#import "MCQRFactorization.h"
-#import "MCVector.h"
+#import "MAVMatrix.h"
+#import "MAVQRFactorization.h"
+#import "MAVVector.h"
 
 @interface QRDecompositionTests : XCTestCase
 
@@ -52,15 +52,15 @@
 - (void)testQRDecompositionOfSquareMatrix
 {
     // example from wikipedia: http://en.wikipedia.org/wiki/QR_decomposition#Example
-    MCMatrix *source = [MCMatrix matrixWithColumnVectors:@[
-                                                           [MCVector vectorWithValuesInArray:@[@12.0, @6.0, @(-4.0)]],
-                                                           [MCVector vectorWithValuesInArray:@[@(-51.0), @167.0, @24.0]],
-                                                           [MCVector vectorWithValuesInArray:@[@4.0, @(-68.0), @(-41.0)]],
+    MAVMatrix *source = [MAVMatrix matrixWithColumnVectors:@[
+                                                           [MAVVector vectorWithValuesInArray:@[@12.0, @6.0, @(-4.0)]],
+                                                           [MAVVector vectorWithValuesInArray:@[@(-51.0), @167.0, @24.0]],
+                                                           [MAVVector vectorWithValuesInArray:@[@4.0, @(-68.0), @(-41.0)]],
                                                            ]];
     
-    MCQRFactorization *qrFactorization = source.qrFactorization;
+    MAVQRFactorization *qrFactorization = source.qrFactorization;
     
-    MCMatrix *qrProduct = [MCMatrix productOfMatrixA:qrFactorization.q andMatrixB:qrFactorization.r];
+    MAVMatrix *qrProduct = [MAVMatrix productOfMatrixA:qrFactorization.q andMatrixB:qrFactorization.r];
     
     for(int row = 0; row < qrProduct.rows; row += 1) {
         for(int col = 0; col < qrProduct.columns; col += 1) {
@@ -78,15 +78,15 @@
         0.0, 2.0, 2.0, 0.0, 2.0, 2.0,
         2.0, -1.0, -1.0, 1.5, -1.0, -1.0
     };
-    MCMatrix *source = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:12*sizeof(double)]
+    MAVMatrix *source = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:12*sizeof(double)]
                                              rows:6
                                           columns:2
-                                 leadingDimension:MCMatrixLeadingDimensionColumn];
+                                 leadingDimension:MAVMatrixLeadingDimensionColumn];
     
-    MCQRFactorization *qrFactorization = source.qrFactorization.thinFactorization;
+    MAVQRFactorization *qrFactorization = source.qrFactorization.thinFactorization;
     
     // need to take the 'thin QR factorization' of the general rectangular matrix
-    MCMatrix *qrProduct = [MCMatrix productOfMatrixA:qrFactorization.q andMatrixB:qrFactorization.r];
+    MAVMatrix *qrProduct = [MAVMatrix productOfMatrixA:qrFactorization.q andMatrixB:qrFactorization.r];
     
     for(int row = 0; row < qrProduct.rows; row += 1) {
         for(int col = 0; col < qrProduct.columns; col += 1) {

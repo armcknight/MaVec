@@ -1,6 +1,6 @@
 //
-//  MCSingularValueDecomposition.m
-//  MCNumerics
+//  MAVSingularValueDecomposition.m
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 12/15/13.
 //
@@ -27,13 +27,13 @@
 
 #import <Accelerate/Accelerate.h>
 
-#import "MCSingularValueDecomposition.h"
-#import "MCMatrix.h"
-#import "MCNumberFormats.h"
+#import "MAVSingularValueDecomposition.h"
+#import "MAVMatrix.h"
+#import "MCKNumberFormats.h"
 
-@implementation MCSingularValueDecomposition
+@implementation MAVSingularValueDecomposition
 
-- (instancetype)initWithMatrix:(MCMatrix *)matrix
+- (instancetype)initWithMatrix:(MAVMatrix *)matrix
 {
     self = [super init];
     if (self) {
@@ -44,7 +44,7 @@
         int *iwork = malloc(8 * numSingularValues);
         int info = 0;
         
-        if (matrix.precision == MCValuePrecisionDouble) {
+        if (matrix.precision == MCKValuePrecisionDouble) {
             double workSize;
             double *work = &workSize;
             double *singularValues = malloc(numSingularValues * sizeof(double));
@@ -88,9 +88,9 @@
             free(singularValues);
             
             if (info == 0) {
-                _u = [MCMatrix matrixWithValues:[NSData dataWithBytes:uValues length:uSize] rows:m columns:m];
-                _vT = [MCMatrix matrixWithValues:[NSData dataWithBytes:vTValues length:vTSize] rows:n columns:n];
-                _s = [MCMatrix matrixWithValues:[NSData dataWithBytes:sValues length:sSize] rows:m columns:n];
+                _u = [MAVMatrix matrixWithValues:[NSData dataWithBytes:uValues length:uSize] rows:m columns:m];
+                _vT = [MAVMatrix matrixWithValues:[NSData dataWithBytes:vTValues length:vTSize] rows:n columns:n];
+                _s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:sValues length:sSize] rows:m columns:n];
             }
         } else {
             float workSize;
@@ -136,25 +136,25 @@
             free(singularValues);
             
             if (info == 0) {
-                _u = [MCMatrix matrixWithValues:[NSData dataWithBytes:uValues length:uSize] rows:m columns:m];
-                _vT = [MCMatrix matrixWithValues:[NSData dataWithBytes:vTValues length:vTSize] rows:n columns:n];
-                _s = [MCMatrix matrixWithValues:[NSData dataWithBytes:sValues length:sSize] rows:m columns:n];
+                _u = [MAVMatrix matrixWithValues:[NSData dataWithBytes:uValues length:uSize] rows:m columns:m];
+                _vT = [MAVMatrix matrixWithValues:[NSData dataWithBytes:vTValues length:vTSize] rows:n columns:n];
+                _s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:sValues length:sSize] rows:m columns:n];
             }
         }
     }
     return self;
 }
 
-+ (instancetype)singularValueDecompositionWithMatrix:(MCMatrix *)matrix
++ (instancetype)singularValueDecompositionWithMatrix:(MAVMatrix *)matrix
 {
-    return [[MCSingularValueDecomposition alloc] initWithMatrix:matrix];
+    return [[MAVSingularValueDecomposition alloc] initWithMatrix:matrix];
 }
 
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    MCSingularValueDecomposition *svdCopy = [[self class] allocWithZone:zone];
+    MAVSingularValueDecomposition *svdCopy = [[self class] allocWithZone:zone];
     
     svdCopy->_s = _s.copy;
     svdCopy->_u = _u.copy;

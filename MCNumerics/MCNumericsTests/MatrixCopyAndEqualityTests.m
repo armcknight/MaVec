@@ -1,6 +1,6 @@
 //
 //  MatrixCopyAndEqualityTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,7 +27,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
+#import "MAVMatrix.h"
 
 @interface MatrixCopyAndEqualityTests : XCTestCase
 
@@ -59,22 +59,22 @@
         bValues[i] = i;
     }
     
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aValues length:16*sizeof(double)] rows:4 columns:4];
-    MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bValues length:16*sizeof(double)] rows:4 columns:4];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aValues length:16*sizeof(double)] rows:4 columns:4];
+    MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bValues length:16*sizeof(double)] rows:4 columns:4];
     
-    XCTAssertEqual([a isEqual:[NSArray array]], NO, @"Thought an MCMatrix was equal to an NSArray using isEqual:");
-    XCTAssertEqual([a isEqual:a], YES, @"Couldn't tell an MCMatrix was equal to itself (same instance object) using isEqual:");
-    XCTAssertEqual([a isEqual:b], YES, @"Couldn't tell different MCMatrix instances with identical values were equal using isEqual:");
-    XCTAssertEqual([a isEqualToMatrix:(MCMatrix *)[NSArray array]], NO, @"Thought an MCMatrix was equal to an NSArray using isEqualToMatrix:");
-    XCTAssertEqual([a isEqualToMatrix:a], YES, @"Couldn't tell an MCMatrix was equal to itself (same instance object) using isEqualToMatrix:");
-    XCTAssertEqual([a isEqualToMatrix:b], YES, @"Couldn't tell different MCMatrix instances with identical values were equal using isEqualToMatrix:");
+    XCTAssertEqual([a isEqual:[NSArray array]], NO, @"Thought an MAVMatrix was equal to an NSArray using isEqual:");
+    XCTAssertEqual([a isEqual:a], YES, @"Couldn't tell an MAVMatrix was equal to itself (same instance object) using isEqual:");
+    XCTAssertEqual([a isEqual:b], YES, @"Couldn't tell different MAVMatrix instances with identical values were equal using isEqual:");
+    XCTAssertEqual([a isEqualToMatrix:(MAVMatrix *)[NSArray array]], NO, @"Thought an MAVMatrix was equal to an NSArray using isEqualToMatrix:");
+    XCTAssertEqual([a isEqualToMatrix:a], YES, @"Couldn't tell an MAVMatrix was equal to itself (same instance object) using isEqualToMatrix:");
+    XCTAssertEqual([a isEqualToMatrix:b], YES, @"Couldn't tell different MAVMatrix instances with identical values were equal using isEqualToMatrix:");
     
     double *cValues = malloc(size * sizeof(double));
     for (int i = 0; i < size; i++) {
         cValues[i] = i;
     }
-    MCMatrix *c = [MCMatrix matrixWithValues:[NSData dataWithBytes:cValues length:16*sizeof(double)] rows:4 columns:4];
-    MCMatrix *cr = [MCMatrix matrixWithValues:[c valuesWithLeadingDimension:MCMatrixLeadingDimensionRow] rows:c.rows columns:c.columns leadingDimension:MCMatrixLeadingDimensionRow];
+    MAVMatrix *c = [MAVMatrix matrixWithValues:[NSData dataWithBytes:cValues length:16*sizeof(double)] rows:4 columns:4];
+    MAVMatrix *cr = [MAVMatrix matrixWithValues:[c valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow] rows:c.rows columns:c.columns leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
@@ -82,10 +82,10 @@
             [c setEntryAtRow:i column:j toValue:@(-1.0)];
             NSNumber *oldCRValue = [cr valueAtRow:i column:j];
             [cr setEntryAtRow:i column:j toValue:@(-1.0)];
-            XCTAssertEqual([a isEqual:c], NO, @"Couldn't tell two MCMatrix objects differing at value %u are unequal using isEqual:", i);
-            XCTAssertEqual([a isEqualToMatrix:c], NO, @"Couldn't tell two MCMatrix objects differing at value %u are unequal using isEqualToMatrix:", i);
-            XCTAssertEqual([a isEqual:cr], NO, @"Couldn't tell two MCMatrix objects with different value storage formats differing at value %u are unequal using isEqual:", i);
-            XCTAssertEqual([a isEqualToMatrix:cr], NO, @"Couldn't tell two MCMatrix objects with different value storage formats  differing at value %u are unequal using isEqualToMatrix:", i);
+            XCTAssertEqual([a isEqual:c], NO, @"Couldn't tell two MAVMatrix objects differing at value %u are unequal using isEqual:", i);
+            XCTAssertEqual([a isEqualToMatrix:c], NO, @"Couldn't tell two MAVMatrix objects differing at value %u are unequal using isEqualToMatrix:", i);
+            XCTAssertEqual([a isEqual:cr], NO, @"Couldn't tell two MAVMatrix objects with different value storage formats differing at value %u are unequal using isEqual:", i);
+            XCTAssertEqual([a isEqualToMatrix:cr], NO, @"Couldn't tell two MAVMatrix objects with different value storage formats  differing at value %u are unequal using isEqualToMatrix:", i);
             [c setEntryAtRow:i column:j toValue:oldCValue];
             [cr setEntryAtRow:i column:j toValue:oldCRValue];
         }
@@ -96,65 +96,65 @@
     for (int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
-    MCMatrix *d = [MCMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:4 columns:3];
-    XCTAssert(![a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqual:");
-    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of columns are unequal using isEqualToMatrix:");
+    MAVMatrix *d = [MAVMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:4 columns:3];
+    XCTAssert(![a isEqual:d], @"Couldn't tell two MAVMatrix objects with different amounts of columns are unequal using isEqual:");
+    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MAVMatrix objects with different amounts of columns are unequal using isEqualToMatrix:");
     dValues = malloc(smallerSize * sizeof(double));
     for (int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
-    d = [MCMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:3 columns:4];
-    XCTAssert(![a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqual:");
-    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of rows are unequal using isEqualToMatrix:");
+    d = [MAVMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:3 columns:4];
+    XCTAssert(![a isEqual:d], @"Couldn't tell two MAVMatrix objects with different amounts of rows are unequal using isEqual:");
+    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MAVMatrix objects with different amounts of rows are unequal using isEqualToMatrix:");
     
     smallerSize = 9;
     dValues = malloc(smallerSize * sizeof(double));
     for (int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
-    d = [MCMatrix matrixWithValues:[NSData dataWithBytes:dValues length:9*sizeof(double)] rows:3 columns:3];
-    XCTAssert(![a isEqual:d], @"Couldn't tell two MCMatrix objects with different amounts of rows and columns are unequal using isEqual:");
-    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MCMatrix objects with different amounts of rows and  columns are unequal using isEqualToMatrix:");
+    d = [MAVMatrix matrixWithValues:[NSData dataWithBytes:dValues length:9*sizeof(double)] rows:3 columns:3];
+    XCTAssert(![a isEqual:d], @"Couldn't tell two MAVMatrix objects with different amounts of rows and columns are unequal using isEqual:");
+    XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MAVMatrix objects with different amounts of rows and  columns are unequal using isEqualToMatrix:");
     
-    MCMatrix *r = [MCMatrix matrixWithValues:[b valuesWithLeadingDimension:MCMatrixLeadingDimensionRow] rows:b.rows columns:b.columns leadingDimension:MCMatrixLeadingDimensionRow];
-    r.leadingDimension = MCMatrixLeadingDimensionRow;
-    XCTAssert([a isEqual:r], @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqual:");
-    XCTAssert([a isEqualToMatrix:r], @"Couldn't tell two MCMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
+    MAVMatrix *r = [MAVMatrix matrixWithValues:[b valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow] rows:b.rows columns:b.columns leadingDimension:MAVMatrixLeadingDimensionRow];
+    r.leadingDimension = MAVMatrixLeadingDimensionRow;
+    XCTAssert([a isEqual:r], @"Couldn't tell two MAVMatrix objects with identical values but different storage formats were equal using isEqual:");
+    XCTAssert([a isEqualToMatrix:r], @"Couldn't tell two MAVMatrix objects with identical values but different storage formats were equal using isEqualToMatrix:");
 }
 
 - (void)testMatrixCopy
 {
-    MCMatrix *a = [MCMatrix randomMatrixWithRows:3 columns:3 precision:MCValuePrecisionDouble];
-    MCMatrix *b = a.copy;
+    MAVMatrix *a = [MAVMatrix randomMatrixWithRows:3 columns:3 precision:MCKValuePrecisionDouble];
+    MAVMatrix *b = a.copy;
     
     XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
     
-    a = [MCMatrix randomSymmetricMatrixOfOrder:3 precision:MCValuePrecisionDouble];
+    a = [MAVMatrix randomSymmetricMatrixOfOrder:3 precision:MCKValuePrecisionDouble];
     b = a.copy;
     
     XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
     
-    a = [MCMatrix randomBandMatrixOfOrder:3 upperCodiagonals:2 lowerCodiagonals:1 precision:MCValuePrecisionDouble];
+    a = [MAVMatrix randomBandMatrixOfOrder:3 upperCodiagonals:2 lowerCodiagonals:1 precision:MCKValuePrecisionDouble];
     b = a.copy;
     
     XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
     
-    a = [MCMatrix randomDiagonalMatrixOfOrder:3 precision:MCValuePrecisionDouble];
+    a = [MAVMatrix randomDiagonalMatrixOfOrder:3 precision:MCKValuePrecisionDouble];
     b = a.copy;
     
     XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
     
-    a = [MCMatrix randomMatrixOfOrder:3 definiteness:MCMatrixDefinitenessIndefinite precision:MCValuePrecisionDouble];
+    a = [MAVMatrix randomMatrixOfOrder:3 definiteness:MAVMatrixDefinitenessIndefinite precision:MCKValuePrecisionDouble];
     b = a.copy;
     
     XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");
     XCTAssertTrue([a isEqualToMatrix:b], @"Matrix copy is not equal to its source.");
     
-    a = [MCMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MCMatrixTriangularComponentLower precision:MCValuePrecisionDouble];
+    a = [MAVMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MAVMatrixTriangularComponentLower precision:MCKValuePrecisionDouble];
     b = a.copy;
     
     XCTAssertNotEqual(a.self, b.self, @"The copied matrix is the same instance as its source.");

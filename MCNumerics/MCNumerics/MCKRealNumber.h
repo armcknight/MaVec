@@ -1,8 +1,8 @@
 //
-//  MCQuadratic.h
-//  MCNumerics
+//  MCKRealNumber.h
+//  MCKMath
 //
-//  Created by andrew mcknight on 2/15/14.
+//  Created by andrew mcknight on 4/12/14.
 //
 //  Copyright (c) 2014 Andrew Robert McKnight
 //
@@ -27,15 +27,17 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MCPolynomial.h"
+typedef enum : UInt8 {
+    MCKValuePrecisionSingle,
+    MCKValuePrecisionDouble,
+} MCKValuePrecision;
 
-@class MCPair;
+@interface MCKRealNumber : NSObject
 
-@interface MCQuadratic : MCPolynomial
+@property (assign, nonatomic, readonly) MCKValuePrecision precision;
+@property (strong, nonatomic, readonly) NSNumber *realValue;
 
-@property (strong, nonatomic, readonly) MCPair *roots;
-
-- (instancetype)initWithA:(NSNumber *)a b:(NSNumber *)b c:(NSNumber *)c;
-+ (instancetype)quadraticWithA:(NSNumber *)a b:(NSNumber *)b c:(NSNumber *)c;
+- (instancetype)initWithValue:(NSNumber *)value precision:(MCKValuePrecision)precision;
++ (instancetype)realNumberWithValue:(NSNumber *)value precision:(MCKValuePrecision)precision;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  MCEquation.h
+//  MCKEquation.h
 //  
 //
 //  Created by Andrew McKnight on 12/31/13.
@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol MCEquation <NSObject>
+@protocol MAVEquation <NSObject>
 
 @required
 
-- (id<MCEquation>)derivativeOfDegree:(NSUInteger)degree;
+- (id<MAVEquation>)derivativeOfDegree:(NSUInteger)degree;
 
 - (NSNumber *)evaluateAtValue:(NSNumber *)value;
 - (NSNumber *)evaluateDerivativeOfDegree:(NSUInteger)degree withValue:(NSNumber *)value;

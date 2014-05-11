@@ -1,6 +1,6 @@
 //
-//  MCMatrixMultiplicationTests.m
-//  MCNumerics
+//  MAVMatrixMultiplicationTests.m
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,14 +27,14 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
-#import "MCVector.h"
+#import "MAVMatrix.h"
+#import "MAVVector.h"
 
-@interface MCMatrixMultiplicationTests : XCTestCase
+@interface MAVMatrixMultiplicationTests : XCTestCase
 
 @end
 
-@implementation MCMatrixMultiplicationTests
+@implementation MAVMatrixMultiplicationTests
 
 - (void)setUp
 {
@@ -62,10 +62,10 @@
     bVals[1] = 8.0;
     bVals[2] = 7.0;
     bVals[3] = 9.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:2 columns:2];
-    MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bVals length:size] rows:2 columns:2];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:2 columns:2];
+    MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bVals length:size] rows:2 columns:2];
     
-    MCMatrix *p = [MCMatrix productOfMatrixA:a andMatrixB:b];
+    MAVMatrix *p = [MAVMatrix productOfMatrixA:a andMatrixB:b];
     
     double *solution = malloc(size);
     solution[0] = 22.0;
@@ -73,7 +73,7 @@
     solution[2] = 25.0;
     solution[3] = 66.0;
     
-    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:2 columns:2];
+    MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:2 columns:2];
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
@@ -104,10 +104,10 @@
     bVals[6] = 3.0;
     bVals[7] = 6.0;
     bVals[8] = 9.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:2 columns:3];
-    MCMatrix *b = [MCMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:3 columns:3];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:2 columns:3];
+    MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:3 columns:3];
     
-    MCMatrix *p = [MCMatrix productOfMatrixA:a andMatrixB:b];
+    MAVMatrix *p = [MAVMatrix productOfMatrixA:a andMatrixB:b];
     
     double *solution = malloc(aSize);
     solution[0] = -3.0;
@@ -116,7 +116,7 @@
     solution[3] = 10.0;
     solution[4] = -3.0;
     solution[5] = 12.0;
-    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:aSize] rows:2 columns:3];
+    MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:aSize] rows:2 columns:3];
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 3; j++) {
@@ -132,21 +132,21 @@
         -7.0, -4.0, -4.0,
         9.0, 7.0, 1.0
     };
-    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
+    MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
                                              rows:3
                                           columns:3
-                                 leadingDimension:MCMatrixLeadingDimensionRow];
+                                 leadingDimension:MAVMatrixLeadingDimensionRow];
     
     double vectorValues[3] = {
         9.0, -8.0, -4.0
     };
-    MCVector *vector = [MCVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3*sizeof(double)] length:3];
+    MAVVector *vector = [MAVVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3*sizeof(double)] length:3];
     
-    MCVector *product = [MCMatrix productOfMatrix:matrix andVector:vector];
+    MAVVector *product = [MAVMatrix productOfMatrix:matrix andVector:vector];
     double productSolution[3] = {
         -77.0, -15.0, 21.0
     };
-    MCVector *solutionVector = [MCVector vectorWithValues:[NSData dataWithBytes:productSolution length:3*sizeof(double)] length:3];
+    MAVVector *solutionVector = [MAVVector vectorWithValues:[NSData dataWithBytes:productSolution length:3*sizeof(double)] length:3];
     
     XCTAssert([product isEqualToVector:solutionVector], @"Product of matrix and vector incorrectly calculated.");
 }
@@ -158,22 +158,22 @@
         -7.0, -4.0, -4.0,
         9.0, 7.0, 1.0
     };
-    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
+    MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
                                              rows:3
                                           columns:3
-                                 leadingDimension:MCMatrixLeadingDimensionRow];
+                                 leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    MCMatrix *product = [MCMatrix productOfMatrix:matrix andScalar:@7.2];
+    MAVMatrix *product = [MAVMatrix productOfMatrix:matrix andScalar:@7.2];
     
     double solutionValues[9] = {
         -64.8, 28.8, -64.8,
         -50.4, -28.8, -28.8,
         64.8, 50.4, 7.2
     };
-    MCMatrix *solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)]
+    MAVMatrix *solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)]
                                                rows:3
                                             columns:3
-                                   leadingDimension:MCMatrixLeadingDimensionRow];
+                                   leadingDimension:MAVMatrixLeadingDimensionRow];
     
     XCTAssert([product isEqualToMatrix:solution], @"Product of matrix and scalar incorrectly calculated.");
 }
@@ -185,22 +185,22 @@
         -7.0, -4.0, -4.0,
         9.0, 7.0, 1.0
     };
-    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
+    MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:matrixValues length:9*sizeof(double)]
                                              rows:3
                                           columns:3
-                                 leadingDimension:MCMatrixLeadingDimensionRow];
+                                 leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    MCMatrix *power = [MCMatrix raiseMatrix:matrix toPower:4];
+    MAVMatrix *power = [MAVMatrix raiseMatrix:matrix toPower:4];
     
     double solutionValues[9] = {
         -12317.0, 8660.0, -16241.0,
         -12815.0, -3600.0, -8020.0,
         17281.0, 11695.0, 6013.0
     };
-    MCMatrix *solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)]
+    MAVMatrix *solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)]
                                                rows:3
                                             columns:3
-                                   leadingDimension:MCMatrixLeadingDimensionRow];
+                                   leadingDimension:MAVMatrixLeadingDimensionRow];
     
     XCTAssert([power isEqualToMatrix:solution], @"Power of matrix incorrectly calculated.");
 }

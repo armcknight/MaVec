@@ -1,8 +1,8 @@
 //
-//  MCValue.m
-//  MCNumerics
+//  MCKPolynomial.h
+//  MCKMath
 //
-//  Created by andrew mcknight on 4/12/14.
+//  Created by andrew mcknight on 12/13/13.
 //
 //  Copyright (c) 2014 Andrew Robert McKnight
 //
@@ -25,30 +25,31 @@
 //  SOFTWARE.
 //
 
-#import "MCRealNumber.h"
+#import <Foundation/Foundation.h>
+#import "MCKEquation.h"
 
-@interface MCRealNumber ()
+@interface MCKPolynomial : NSObject <MAVEquation>
 
-@property (assign, nonatomic, readwrite) MCValuePrecision precision;
-@property (strong, nonatomic, readwrite) NSNumber *realValue;
+@property (strong, nonatomic) NSArray *coefficients;
 
-@end
+#pragma mark - Init
 
-@implementation MCRealNumber
+- (id)initWithCoefficients:(NSArray *)coefficients;
 
-- (instancetype)initWithValue:(NSNumber *)value precision:(MCValuePrecision)precision
-{
-    self = [super init];
-    if (self != nil) {
-        _precision = precision;
-        _realValue = value;
-    }
-    return self;
-}
++ (MCKPolynomial *)polynomialWithCoefficients:(NSArray *)coefficients;
 
-+ (instancetype)realNumberWithValue:(NSNumber *)value precision:(MCValuePrecision)precision
-{
-    return [[self alloc] initWithValue:value precision:precision];
-}
+#pragma mark - NSObject overrides
+
+- (BOOL)isEqualToPolynomial:(MCKPolynomial *)otherPolynomial;
+- (NSString *)description;
+- (BOOL)isEqual:(id)object;
+- (NSUInteger)hash;
+
+#pragma mark - Operations
+
+- (NSNumber *)rootNearValue:(NSNumber *)value;
+- (NSNumber *)localMaximumNearValue:(NSNumber *)value;
+- (NSNumber *)localMinimumNearValue:(NSNumber *)value;
+- (NSNumber *)inflectionPointNearValue:(NSNumber *)value;
 
 @end

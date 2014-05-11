@@ -1,8 +1,8 @@
 //
-//  MCPolynomial.h
-//  MCNumerics
+//  MCKComplexNumber.m
+//  MCKMath
 //
-//  Created by andrew mcknight on 12/13/13.
+//  Created by andrew mcknight on 4/13/14.
 //
 //  Copyright (c) 2014 Andrew Robert McKnight
 //
@@ -25,31 +25,28 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import "MCEquation.h"
+#import "MCKComplexNumber.h"
 
-@interface MCPolynomial : NSObject <MCEquation>
+@interface MCKComplexNumber ()
 
-@property (strong, nonatomic) NSArray *coefficients;
+@property (strong, nonatomic, readwrite) NSValue *imaginaryValue;
 
-#pragma mark - Init
+@end
 
-- (id)initWithCoefficients:(NSArray *)coefficients;
+@implementation MCKComplexNumber
 
-+ (MCPolynomial *)polynomialWithCoefficients:(NSArray *)coefficients;
+- (instancetype)initWithRealValue:(const void *)realValue imaginaryValue:(const void *)imaginaryValue precision:(MCKValuePrecision)precision
+{
+    self = [super initWithValue:(__bridge NSNumber *)(realValue) precision:precision];
+    if (self != nil) {
+        _imaginaryValue = [NSValue valueWithBytes:imaginaryValue objCType:precision == MCKValuePrecisionSingle ? @encode(float) : @encode(double)];
+    }
+    return self;
+}
 
-#pragma mark - NSObject overrides
-
-- (BOOL)isEqualToPolynomial:(MCPolynomial *)otherPolynomial;
-- (NSString *)description;
-- (BOOL)isEqual:(id)object;
-- (NSUInteger)hash;
-
-#pragma mark - Operations
-
-- (NSNumber *)rootNearValue:(NSNumber *)value;
-- (NSNumber *)localMaximumNearValue:(NSNumber *)value;
-- (NSNumber *)localMinimumNearValue:(NSNumber *)value;
-- (NSNumber *)inflectionPointNearValue:(NSNumber *)value;
++ (instancetype)complexNumberWithRealValue:(const void *)realValue imaginaryValue:(const void *)imaginaryValue precision:(MCKValuePrecision)precision
+{
+    return [[self alloc] initWithRealValue:realValue imaginaryValue:imaginaryValue precision:precision];
+}
 
 @end

@@ -1,6 +1,6 @@
 //
-//  MCPolynomial.m
-//  MCNumerics
+//  MCKPolynomial.m
+//  MCKMath
 //
 //  Created by andrew mcknight on 12/13/13.
 //
@@ -25,15 +25,15 @@
 //  SOFTWARE.
 //
 
-#import "MCPolynomial.h"
+#import "MCKPolynomial.h"
 
-#import "NSNumber+MCMath.h"
+#import "NSNumber+MCKMath.h"
 
-@interface MCPolynomial ()
+@interface MCKPolynomial ()
 
 @end
 
-@implementation MCPolynomial
+@implementation MCKPolynomial
 
 #pragma mark - Init
 
@@ -46,14 +46,14 @@
     return self;
 }
 
-+ (MCPolynomial *)polynomialWithCoefficients:(NSArray *)coefficients
++ (MCKPolynomial *)polynomialWithCoefficients:(NSArray *)coefficients
 {
-    return [[MCPolynomial alloc] initWithCoefficients:coefficients];
+    return [[MCKPolynomial alloc] initWithCoefficients:coefficients];
 }
 
-#pragma mark - MCEquation methods
+#pragma mark - MAVEquation methods
 
-- (MCPolynomial *)derivativeOfDegree:(NSUInteger)degree
+- (MCKPolynomial *)derivativeOfDegree:(NSUInteger)degree
 {
     NSMutableArray *derivativeCoefficients = [NSMutableArray array];
     NSIndexSet *coefficientsToEnumerate = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(degree, self.coefficients.count - degree)];
@@ -66,7 +66,7 @@
                                           }
                                           [derivativeCoefficients addObject:derivativeCoefficient];
                                       }];
-    return [MCPolynomial polynomialWithCoefficients:derivativeCoefficients];
+    return [MCKPolynomial polynomialWithCoefficients:derivativeCoefficients];
 }
 
 - (NSNumber *)evaluateAtValue:(NSNumber *)value
@@ -80,13 +80,13 @@
 
 - (NSNumber *)evaluateDerivativeOfDegree:(NSUInteger)degree withValue:(NSNumber *)value
 {
-    MCPolynomial *derivative = [self derivativeOfDegree:degree];
+    MCKPolynomial *derivative = [self derivativeOfDegree:degree];
     return [derivative evaluateAtValue:value];
 }
 
 #pragma mark - NSObject overrides
 
-- (BOOL)isEqualToPolynomial:(MCPolynomial *)otherPolynomial
+- (BOOL)isEqualToPolynomial:(MCKPolynomial *)otherPolynomial
 {
     return [self.coefficients isEqualToArray:otherPolynomial.coefficients];
 }
@@ -96,10 +96,10 @@
     if (self == object) {
         return YES;
     }
-    if (![object isKindOfClass:[MCPolynomial class]]) {
+    if (![object isKindOfClass:[MCKPolynomial class]]) {
         return NO;
     }
-    return [self isEqualToPolynomial:(MCPolynomial *)object];
+    return [self isEqualToPolynomial:(MCKPolynomial *)object];
 }
 
 - (NSUInteger)hash

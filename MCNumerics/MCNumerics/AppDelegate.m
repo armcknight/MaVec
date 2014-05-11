@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 12/2/13.
 //

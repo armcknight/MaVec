@@ -1,8 +1,8 @@
 //
-//  MCValue.h
-//  MCNumerics
+//  MCKQuadratic.m
+//  MCKMath
 //
-//  Created by andrew mcknight on 4/12/14.
+//  Created by andrew mcknight on 2/15/14.
 //
 //  Copyright (c) 2014 Andrew Robert McKnight
 //
@@ -25,19 +25,40 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "MCKQuadratic.h"
+#import "MCKPair.h"
 
-typedef enum : UInt8 {
-    MCValuePrecisionSingle,
-    MCValuePrecisionDouble,
-} MCValuePrecision;
+#import "NSNumber+MCKMath.h"
 
-@interface MCRealNumber : NSObject
+@interface MCKQuadratic ()
 
-@property (assign, nonatomic, readonly) MCValuePrecision precision;
-@property (strong, nonatomic, readonly) NSNumber *realValue;
+@end
 
-- (instancetype)initWithValue:(NSNumber *)value precision:(MCValuePrecision)precision;
-+ (instancetype)realNumberWithValue:(NSNumber *)value precision:(MCValuePrecision)precision;
+@implementation MCKQuadratic
+
+@synthesize roots = _roots;
+
+- (instancetype)initWithA:(NSNumber *)a b:(NSNumber *)b c:(NSNumber *)c
+{
+    return [super initWithCoefficients:@[a, b, c]];
+}
+
++ (instancetype)quadraticWithA:(NSNumber *)a b:(NSNumber *)b c:(NSNumber *)c
+{
+    return [[MCKQuadratic alloc] initWithA:a b:b c:c];
+}
+
+- (MCKPair *)roots
+{
+    if (!_roots) {
+        double a = [self.coefficients.firstObject doubleValue];
+        double b = [self.coefficients[1] doubleValue];
+        double c = [self.coefficients.lastObject doubleValue] * -2.0;
+        double firstRoot = ( -b + sqrt(b * b - 4.0 * a * c) ) / 2.0;
+        double secondRoot = ( -b - sqrt(b * b - 4.0 * a * c) ) / 2.0;
+        _roots = [MCKPair pairWithFirst:@(firstRoot) second:@(secondRoot)];
+    }
+    return _roots;
+}
 
 @end

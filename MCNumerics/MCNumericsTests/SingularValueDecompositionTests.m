@@ -1,6 +1,6 @@
 //
 //  SingularValueDecompositionTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,8 +27,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
-#import "MCSingularValueDecomposition.h"
+#import "MAVMatrix.h"
+#import "MAVSingularValueDecomposition.h"
 
 @interface SingularValueDecompositionTests : XCTestCase
 
@@ -59,12 +59,12 @@
     values[3] = -0.5;
     values[4] = 0.0;
     values[5] = 0.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:3 columns:2];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:3 columns:2];
     
-    MCSingularValueDecomposition *svd = a.singularValueDecomposition;
+    MAVSingularValueDecomposition *svd = a.singularValueDecomposition;
     
-    MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
-    MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
+    MAVMatrix *intermediate = [MAVMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
+    MAVMatrix *original = [MAVMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 2; j++) {
@@ -86,12 +86,12 @@
     values[5] = -1.0;
     values[6] = -3.0;
     values[7] = -5.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:2 columns:4];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:size] rows:2 columns:4];
     
-    MCSingularValueDecomposition *svd = a.singularValueDecomposition;
+    MAVSingularValueDecomposition *svd = a.singularValueDecomposition;
     
-    MCMatrix *intermediate = [MCMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
-    MCMatrix *original = [MCMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
+    MAVMatrix *intermediate = [MAVMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
+    MAVMatrix *original = [MAVMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 4; j++) {

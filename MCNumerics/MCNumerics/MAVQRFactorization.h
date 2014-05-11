@@ -1,6 +1,6 @@
 //
-//  MCQRFactorization.h
-//  MCNumerics
+//  MAVQRFactorization.h
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 1/14/14.
 //
@@ -27,41 +27,41 @@
 
 #import <Foundation/Foundation.h>
 
-@class MCMatrix;
+@class MAVMatrix;
 
 /**
- @brief Container class to hold the results of a QR factorization in MCMatrix objects.
+ @brief Container class to hold the results of a QR factorization in MAVMatrix objects.
  @description The QR factorization decomposes a matrix A into the product QR, where Q is an orthogonal matrix and R is an upper triangular matrix.
  */
-@interface MCQRFactorization : NSObject <NSCopying>
+@interface MAVQRFactorization : NSObject <NSCopying>
 
 /**
  @property q
- @brief An MCMatrix holding the orthogonal matrix Q of the QR factorization.
+ @brief An MAVMatrix holding the orthogonal matrix Q of the QR factorization.
  */
-@property (nonatomic, strong) MCMatrix *q;
+@property (nonatomic, strong) MAVMatrix *q;
 
 /**
  @property r
- @brief An MCMatrix holding the upper triangular matrix R of the QR factorization.
+ @brief An MAVMatrix holding the upper triangular matrix R of the QR factorization.
  */
-@property (nonatomic, strong) MCMatrix *r;
+@property (nonatomic, strong) MAVMatrix *r;
 
 #pragma mark - Init
 
 /**
- @brief Create a new instance of MCQRFactorization by computing the factorization of the provided matrix.
- @param matrix The MCMatrix object to compute the factorization from.
- @return A new MCQRFactorization object containing the results of factorizing the provided matrix.
+ @brief Create a new instance of MAVQRFactorization by computing the factorization of the provided matrix.
+ @param matrix The MAVMatrix object to compute the factorization from.
+ @return A new MAVQRFactorization object containing the results of factorizing the provided matrix.
  */
-- (instancetype)initWithMatrix:(MCMatrix *)matrix;
+- (instancetype)initWithMatrix:(MAVMatrix *)matrix;
 
 /**
- @brief Convenience class method to create a new instance of MCQRFactorization by computing the factorization of the provided matrix.
- @param matrix The MCMatrix object to compute the factorization from.
- @return A new MCQRFactorization object containing the results of factorizing the provided matrix.
+ @brief Convenience class method to create a new instance of MAVQRFactorization by computing the factorization of the provided matrix.
+ @param matrix The MAVMatrix object to compute the factorization from.
+ @return A new MAVQRFactorization object containing the results of factorizing the provided matrix.
  */
-+ (instancetype)qrFactorizationOfMatrix:(MCMatrix *)matrix;
++ (instancetype)qrFactorizationOfMatrix:(MAVMatrix *)matrix;
 
 #pragma mark - Operations
 
@@ -73,6 +73,6 @@
  
  A = Q1 * R1 is the thin factorization
  */
-- (MCQRFactorization *)thinFactorization;
+- (MAVQRFactorization *)thinFactorization;
 
 @end

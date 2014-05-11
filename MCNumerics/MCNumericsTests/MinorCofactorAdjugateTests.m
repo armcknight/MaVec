@@ -1,6 +1,6 @@
 //
 //  MinorCofactorAdjugateTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,7 +27,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
+#import "MAVMatrix.h"
 
 @interface MinorCofactorAdjugateTests : XCTestCase
 
@@ -65,22 +65,22 @@
     values[6] = 7.0;
     values[7] = 8.0;
     values[8] = 9.0;
-    MCMatrix *original = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
+    MAVMatrix *original = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
                                                rows:3
                                             columns:3
-                                   leadingDimension:MCMatrixLeadingDimensionRow];
+                                   leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    MCMatrix *minorMatrix = original.minorMatrix;
+    MAVMatrix *minorMatrix = original.minorMatrix;
     
     double minorSolutionValues[9] = {
         -3.0, -6.0, -3.0,
         -6.0, -12.0, -6.0,
         -3.0, -6.0, -3.0
     };
-    MCMatrix *minorSolutions = [MCMatrix matrixWithValues:[NSData dataWithBytes:minorSolutionValues length:9*sizeof(double)]
+    MAVMatrix *minorSolutions = [MAVMatrix matrixWithValues:[NSData dataWithBytes:minorSolutionValues length:9*sizeof(double)]
                                                      rows:3
                                                   columns:3
-                                         leadingDimension:MCMatrixLeadingDimensionRow];
+                                         leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {
@@ -104,22 +104,22 @@
     values[6] = 7.0;
     values[7] = 8.0;
     values[8] = 9.0;
-    MCMatrix *original = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
+    MAVMatrix *original = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
                                                rows:3
                                             columns:3
-                                   leadingDimension:MCMatrixLeadingDimensionRow];
+                                   leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    MCMatrix *cofactorMatrix = original.cofactorMatrix;
+    MAVMatrix *cofactorMatrix = original.cofactorMatrix;
     
     double cofactorSolutionValues[9] = {
         -3.0, 6.0, -3.0,
         6.0, -12.0, 6.0,
         -3.0, 6.0, -3.0
     };
-    MCMatrix *cofactorSolutions = [MCMatrix matrixWithValues:[NSData dataWithBytes:cofactorSolutionValues length:9*sizeof(double)]
+    MAVMatrix *cofactorSolutions = [MAVMatrix matrixWithValues:[NSData dataWithBytes:cofactorSolutionValues length:9*sizeof(double)]
                                                         rows:3
                                                      columns:3
-                                            leadingDimension:MCMatrixLeadingDimensionRow];
+                                            leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {
@@ -138,22 +138,22 @@
         6.0, 9.0, 2.0,
         -6.0, 9.0, -2.0
     };
-    MCMatrix *original = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)]
+    MAVMatrix *original = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:9*sizeof(double)]
                                                rows:3
                                             columns:3
-                                   leadingDimension:MCMatrixLeadingDimensionRow];
+                                   leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    MCMatrix *adjugate = original.adjugate;
+    MAVMatrix *adjugate = original.adjugate;
     
     double adjugateSolutionValues[9] = {
         -36.0, 77.0, -49.0,
         -0.0, 26.0, 26.0,
         108.0, -114.0, 30.0
     };
-    MCMatrix *adjugateSolutions = [MCMatrix matrixWithValues:[NSData dataWithBytes:adjugateSolutionValues length:9*sizeof(double)]
+    MAVMatrix *adjugateSolutions = [MAVMatrix matrixWithValues:[NSData dataWithBytes:adjugateSolutionValues length:9*sizeof(double)]
                                                         rows:3
                                                      columns:3
-                                            leadingDimension:MCMatrixLeadingDimensionRow];
+                                            leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 3; row += 1) {
         for (int col = 0; col < 3; col += 1) {

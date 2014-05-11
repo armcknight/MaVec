@@ -1,6 +1,6 @@
 //
-//  NSNumber+MCArithmetic.m
-//  MCNumerics
+//  NSNumber+MCKMath.m
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 12/13/13.
 //
@@ -25,9 +25,9 @@
 //  SOFTWARE.
 //
 
-#import "NSNumber+MCMath.h"
+#import "NSNumber+MCKMath.h"
 
-@implementation NSNumber (MCMath)
+@implementation NSNumber (MCKMath)
 
 #pragma mark - Queries
 

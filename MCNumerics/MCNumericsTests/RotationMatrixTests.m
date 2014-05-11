@@ -1,6 +1,6 @@
 //
 //  RotationMatrixTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by Andrew McKnight on 5/9/14.
 //  Copyright (c) 2014 andrew mcknight. All rights reserved.
@@ -8,8 +8,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
-#import "MCVector.h"
+#import "MAVMatrix.h"
+#import "MAVVector.h"
 
 @interface RotationMatrixTests : XCTestCase
 
@@ -20,113 +20,113 @@
 - (void)testTwoDimensionalRotations
 {
     // 90 degrees clockwise
-    MCMatrix *matrix = [MCMatrix matrixForTwoDimensionalRotationWithAngle:@(90.0)
-                                                                direction:MCAngleDirectionClockwise];
+    MAVMatrix *matrix = [MAVMatrix matrixForTwoDimensionalRotationWithAngle:@(90.0)
+                                                                direction:MAVAngleDirectionClockwise];
     
-    MCVector *point = [MCVector vectorWithValuesInArray:@[@2.0, @3.0]
-                                           vectorFormat:MCVectorFormatColumnVector];
+    MAVVector *point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0]
+                                           vectorFormat:MAVVectorFormatColumnVector];
     
-    MCVector *rotatedPoint = [MCMatrix productOfMatrix:matrix andVector:point];
+    MAVVector *rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
     
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@3.0, @(-2.0)] vectorFormat:MCVectorFormatColumnVector];
+    MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@3.0, @(-2.0)] vectorFormat:MAVVectorFormatColumnVector];
     
     // 90 degrees counterclockwise
-    matrix = [MCMatrix matrixForTwoDimensionalRotationWithAngle:@(90.0)
-                                                      direction:MCAngleDirectionCounterClockwise];
+    matrix = [MAVMatrix matrixForTwoDimensionalRotationWithAngle:@(90.0)
+                                                      direction:MAVAngleDirectionCounterClockwise];
     
-    point = [MCVector vectorWithValuesInArray:@[@2.0, @3.0]
-                                 vectorFormat:MCVectorFormatColumnVector];
+    point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0]
+                                 vectorFormat:MAVVectorFormatColumnVector];
     
-    rotatedPoint = [MCMatrix productOfMatrix:matrix andVector:point];
+    rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
     
-    solution = [MCVector vectorWithValuesInArray:@[@(-3.0), @2.0] vectorFormat:MCVectorFormatColumnVector];
+    solution = [MAVVector vectorWithValuesInArray:@[@(-3.0), @2.0] vectorFormat:MAVVectorFormatColumnVector];
 }
 
 - (void)testThreeDimensionalRotationsAboutXAxis
 {
     // 90 degrees clockwise
-    MCVector *point = [MCVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
-                                           vectorFormat:MCVectorFormatColumnVector];
+    MAVVector *point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
+                                           vectorFormat:MAVVectorFormatColumnVector];
     
-    MCMatrix *matrix = [MCMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                                  aboutAxis:MCCoordinateAxisX
-                                                                  direction:MCAngleDirectionClockwise];
+    MAVMatrix *matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+                                                                  aboutAxis:MAVCoordinateAxisX
+                                                                  direction:MAVAngleDirectionClockwise];
     
-    MCVector *rotatedPoint = [MCMatrix productOfMatrix:matrix andVector:point];
+    MAVVector *rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
     
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@2.0, @(-5.0), @3.0]
-                                              vectorFormat:MCVectorFormatColumnVector];
+    MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@2.0, @(-5.0), @3.0]
+                                              vectorFormat:MAVVectorFormatColumnVector];
     
     // 90 degrees counterclockwise
-    point = [MCVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
-                                 vectorFormat:MCVectorFormatColumnVector];
+    point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
+                                 vectorFormat:MAVVectorFormatColumnVector];
     
-    matrix = [MCMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                        aboutAxis:MCCoordinateAxisX
-                                                        direction:MCAngleDirectionCounterClockwise];
+    matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+                                                        aboutAxis:MAVCoordinateAxisX
+                                                        direction:MAVAngleDirectionCounterClockwise];
     
-    rotatedPoint = [MCMatrix productOfMatrix:matrix andVector:point];
+    rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
     
-    solution = [MCVector vectorWithValuesInArray:@[@2.0, @5.0, @(-3.0)]
-                                    vectorFormat:MCVectorFormatColumnVector];
+    solution = [MAVVector vectorWithValuesInArray:@[@2.0, @5.0, @(-3.0)]
+                                    vectorFormat:MAVVectorFormatColumnVector];
 }
 
 - (void)testThreeDimensionalRotationsAboutYAxis
 {
     // 90 degrees clockwise
-    MCVector *point = [MCVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
-                                           vectorFormat:MCVectorFormatColumnVector];
+    MAVVector *point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
+                                           vectorFormat:MAVVectorFormatColumnVector];
     
-    MCMatrix *matrix = [MCMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                                  aboutAxis:MCCoordinateAxisY
-                                                                  direction:MCAngleDirectionClockwise];
+    MAVMatrix *matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+                                                                  aboutAxis:MAVCoordinateAxisY
+                                                                  direction:MAVAngleDirectionClockwise];
     
-    MCVector *rotatedPoint = [MCMatrix productOfMatrix:matrix andVector:point];
+    MAVVector *rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
     
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@5.0, @3.0, @(-2.0)]
-                                              vectorFormat:MCVectorFormatColumnVector];
+    MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@5.0, @3.0, @(-2.0)]
+                                              vectorFormat:MAVVectorFormatColumnVector];
     
     // 90 degrees counterclockwise
-    point = [MCVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
-                                 vectorFormat:MCVectorFormatColumnVector];
+    point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
+                                 vectorFormat:MAVVectorFormatColumnVector];
     
-    matrix = [MCMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                        aboutAxis:MCCoordinateAxisY
-                                                        direction:MCAngleDirectionCounterClockwise];
+    matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+                                                        aboutAxis:MAVCoordinateAxisY
+                                                        direction:MAVAngleDirectionCounterClockwise];
     
-    rotatedPoint = [MCMatrix productOfMatrix:matrix andVector:point];
+    rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
     
-    solution = [MCVector vectorWithValuesInArray:@[@(-5.0), @3.0, @2.0]
-                                    vectorFormat:MCVectorFormatColumnVector];
+    solution = [MAVVector vectorWithValuesInArray:@[@(-5.0), @3.0, @2.0]
+                                    vectorFormat:MAVVectorFormatColumnVector];
 }
 
 - (void)testThreeDimensionalRotationsAboutZAxis
 {
     // 90 degrees clockwise
-    MCVector *point = [MCVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
-                                           vectorFormat:MCVectorFormatColumnVector];
+    MAVVector *point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
+                                           vectorFormat:MAVVectorFormatColumnVector];
     
-    MCMatrix *matrix = [MCMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                                  aboutAxis:MCCoordinateAxisZ
-                                                                  direction:MCAngleDirectionClockwise];
+    MAVMatrix *matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+                                                                  aboutAxis:MAVCoordinateAxisZ
+                                                                  direction:MAVAngleDirectionClockwise];
     
-    MCVector *rotatedPoint = [MCMatrix productOfMatrix:matrix andVector:point];
+    MAVVector *rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
     
-    MCVector *solution = [MCVector vectorWithValuesInArray:@[@(-3.0), @2.0, @5.0]
-                                              vectorFormat:MCVectorFormatColumnVector];
+    MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@(-3.0), @2.0, @5.0]
+                                              vectorFormat:MAVVectorFormatColumnVector];
     
     // 90 degrees counterclockwise
-    point = [MCVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
-                                 vectorFormat:MCVectorFormatColumnVector];
+    point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
+                                 vectorFormat:MAVVectorFormatColumnVector];
     
-    matrix = [MCMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                        aboutAxis:MCCoordinateAxisZ
-                                                        direction:MCAngleDirectionCounterClockwise];
+    matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+                                                        aboutAxis:MAVCoordinateAxisZ
+                                                        direction:MAVAngleDirectionCounterClockwise];
     
-    rotatedPoint = [MCMatrix productOfMatrix:matrix andVector:point];
+    rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
     
-    solution = [MCVector vectorWithValuesInArray:@[@3.0, @(-2.0), @5.0]
-                                    vectorFormat:MCVectorFormatColumnVector];
+    solution = [MAVVector vectorWithValuesInArray:@[@3.0, @(-2.0), @5.0]
+                                    vectorFormat:MAVVectorFormatColumnVector];
 }
 
 @end

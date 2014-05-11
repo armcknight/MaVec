@@ -1,6 +1,6 @@
 //
-//  MCPair.m
-//  MCNumerics
+//  MCKPair.m
+//  MCKMath
 //
 //  Created by andrew mcknight on 2/15/14.
 //
@@ -25,9 +25,9 @@
 //  SOFTWARE.
 //
 
-#import "MCPair.h"
+#import "MCKPair.h"
 
-@implementation MCPair
+@implementation MCKPair
 
 - (instancetype)initWithFirst:(NSNumber *)first second:(NSNumber *)second
 {
@@ -41,7 +41,7 @@
 
 + (instancetype)pairWithFirst:(NSNumber *)first second:(NSNumber *)second
 {
-    return [[MCPair alloc] initWithFirst:first second:second];
+    return [[MCKPair alloc] initWithFirst:first second:second];
 }
 
 @end

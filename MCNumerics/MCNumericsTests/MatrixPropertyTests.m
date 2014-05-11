@@ -1,6 +1,6 @@
 //
 //  MatrixPropertyTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,8 +27,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
-#import "MCTribool.h"
+#import "MAVMatrix.h"
+#import "MCKTribool.h"
 
 @interface MatrixPropertyTests : XCTestCase
 
@@ -54,10 +54,10 @@
         1.0, 2.0,
         3.0, 4.0
     };
-    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values2x2 length:4*sizeof(double)]
+    MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values2x2 length:4*sizeof(double)]
                                              rows:2
                                           columns:2
-                                 leadingDimension:MCMatrixLeadingDimensionRow];
+                                 leadingDimension:MAVMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant.doubleValue, -2.0, @"Determinant not correct");
     
@@ -66,10 +66,10 @@
         4.0, -2.0, 5.0,
         2.0, 8.0, 7.0
     };
-    matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values3x3 length:9*sizeof(double)]
+    matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values3x3 length:9*sizeof(double)]
                                    rows:3
                                 columns:3
-                       leadingDimension:MCMatrixLeadingDimensionRow];
+                       leadingDimension:MAVMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant.doubleValue, -306.0, @"Determinant not correct");
     
@@ -79,10 +79,10 @@
         3.0, 0.0, 2.0, 1.0,
         9.0, 2.0, 3.0, 1.0
     };
-    matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values4x4 length:16*sizeof(double)]
+    matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values4x4 length:16*sizeof(double)]
                                    rows:4
                                 columns:4
-                       leadingDimension:MCMatrixLeadingDimensionRow];
+                       leadingDimension:MAVMatrixLeadingDimensionRow];
     
     XCTAssertEqual(matrix.determinant.doubleValue, 24.0, @"Determinant not correct");
 }
@@ -95,16 +95,16 @@
         -1.0, 2.0, -1.0,
         0.0, -1.0, 2.0
     };
-    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:positiveDefiniteValues length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
-    XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessPositiveDefinite, @"Positive definite matrix was not recognized.");
+    MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:positiveDefiniteValues length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow];
+    XCTAssertEqual(matrix.definiteness, MAVMatrixDefinitenessPositiveDefinite, @"Positive definite matrix was not recognized.");
     
     // ----- positive semidefinite -----
     double positiveSemidefiniteValues[4] = {
         1, 1,
         1, 1
     };
-    matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:positiveSemidefiniteValues length:4*sizeof(double)] rows:2 columns:2 leadingDimension:MCMatrixLeadingDimensionRow];
-    XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessPositiveSemidefinite, @"Positive semidefinite matrix was not recognized.");
+    matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:positiveSemidefiniteValues length:4*sizeof(double)] rows:2 columns:2 leadingDimension:MAVMatrixLeadingDimensionRow];
+    XCTAssertEqual(matrix.definiteness, MAVMatrixDefinitenessPositiveSemidefinite, @"Positive semidefinite matrix was not recognized.");
     
     // ----- indefinite -----
     double indefiniteValues[9] = {
@@ -112,8 +112,8 @@
         1.0, 1.0, 1.0,
         1.0, 1.0, 0.5
     };
-    matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:indefiniteValues length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
-    XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessIndefinite, @"Indefinite matrix was not recognized.");
+    matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:indefiniteValues length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow];
+    XCTAssertEqual(matrix.definiteness, MAVMatrixDefinitenessIndefinite, @"Indefinite matrix was not recognized.");
     
     // ----- negative semidefinite -----
     
@@ -122,8 +122,8 @@
         0.0, 0.0,
         0.0, -1.0
     };
-    matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:negativeSemidefiniteValues length:4*sizeof(double)] rows:2 columns:2 leadingDimension:MCMatrixLeadingDimensionRow];
-    XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessNegativeSemidefinite, @"Negative semidefinite matrix was not recognized.");
+    matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:negativeSemidefiniteValues length:4*sizeof(double)] rows:2 columns:2 leadingDimension:MAVMatrixLeadingDimensionRow];
+    XCTAssertEqual(matrix.definiteness, MAVMatrixDefinitenessNegativeSemidefinite, @"Negative semidefinite matrix was not recognized.");
     
     // ----- negative definite -----
     double negativeDefiniteValues[9] = {
@@ -131,8 +131,8 @@
         0.0, -1.0, 0.0,
         0.0, 0.0, -1.0
     };
-    matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:negativeDefiniteValues length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
-    XCTAssertEqual(matrix.definiteness, MCMatrixDefinitenessNegativeDefinite, @"Negative definite matrix was not recognized.");
+    matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:negativeDefiniteValues length:9*sizeof(double)] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow];
+    XCTAssertEqual(matrix.definiteness, MAVMatrixDefinitenessNegativeDefinite, @"Negative definite matrix was not recognized.");
 }
 
 // tests can be verified using http://comnuan.com/cmnn0100c/
@@ -142,7 +142,7 @@
         7.0, 3.0,
         -9.0, 2.0
     };
-    MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:4*sizeof(double)] rows:2 columns:2 leadingDimension:MCMatrixLeadingDimensionColumn];
+    MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:4*sizeof(double)] rows:2 columns:2 leadingDimension:MAVMatrixLeadingDimensionColumn];
     
     double conditionNumber = matrix.conditionNumber.doubleValue;
     
@@ -162,7 +162,7 @@
     aValues[6] = 7.0;
     aValues[7] = 8.0;
     aValues[8] = 9.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aValues length:size] rows:3 columns:3];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aValues length:size] rows:3 columns:3];
     
     
     XCTAssertFalse(a.isSymmetric.isYes, @"Nonsymmetric matrix reported to be symmetric.");
@@ -179,7 +179,7 @@
     aValues[6] = 3.0;
     aValues[7] = 6.0;
     aValues[8] = 1.0;
-    a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aValues length:size] rows:3 columns:3];
+    a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aValues length:size] rows:3 columns:3];
     
     XCTAssertTrue(a.isSymmetric.isYes, @"Symmetric matrix not reported to be symmetric.");
     
@@ -197,7 +197,7 @@
     bValues[9] = 9.0;
     bValues[10] = 9.0;
     bValues[11] = 9.0;
-    a = [MCMatrix matrixWithValues:[NSData dataWithBytes:bValues length:size] rows:3 columns:4];
+    a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bValues length:size] rows:3 columns:4];
     
     XCTAssertFalse(a.isSymmetric.isYes, @"Nonsquare matrix reported to be symmetric.");
 }

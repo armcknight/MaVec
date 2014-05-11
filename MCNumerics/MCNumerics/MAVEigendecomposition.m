@@ -1,6 +1,6 @@
 //
 //  EigenvalueDecomposition.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 1/4/14.
 //
@@ -27,15 +27,15 @@
 
 #import <Accelerate/Accelerate.h>
 
-#import "MCEigendecomposition.h"
-#import "MCMatrix.h"
-#import "MCVector.h"
-#import "MCTribool.h"
-#import "MCNumberFormats.h"
+#import "MAVEigendecomposition.h"
+#import "MAVMatrix.h"
+#import "MAVVector.h"
+#import "MCKTribool.h"
+#import "MCKNumberFormats.h"
 
-@implementation MCEigendecomposition
+@implementation MAVEigendecomposition
 
-- (instancetype)initWithMatrix:(MCMatrix *)matrix
+- (instancetype)initWithMatrix:(MAVMatrix *)matrix
 {
     self = [super init];
     if (self) {
@@ -46,11 +46,11 @@
             int iwkopt;
             int liwork = -1;
             int info;
-            NSData *a = [matrix valuesFromTriangularComponent:MCMatrixTriangularComponentLower
-                                             leadingDimension:MCMatrixLeadingDimensionColumn
-                                                packingMethod:MCMatrixValuePackingMethodConventional];
+            NSData *a = [matrix valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
+                                             leadingDimension:MAVMatrixLeadingDimensionColumn
+                                                packingMethod:MAVMatrixValuePackingMethodConventional];
             
-            if (matrix.precision == MCValuePrecisionDouble) {
+            if (matrix.precision == MCKValuePrecisionDouble) {
                 size_t size = n * sizeof(double);
                 double *w = malloc(size);
                 double wkopt;
@@ -66,8 +66,8 @@
                 free(iwork);
                 
                 if (info == 0) {
-                    _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:w length:size] length:n];
-                    _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
+                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytes:w length:size] length:n];
+                    _eigenvectors = [MAVMatrix matrixWithValues:a rows:n columns:n];
                 }
             } else {
                 size_t size = n * sizeof(float);
@@ -85,8 +85,8 @@
                 free(iwork);
                 
                 if (info == 0) {
-                    _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:w length:size] length:n];
-                    _eigenvectors = [MCMatrix matrixWithValues:a rows:n columns:n];
+                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytes:w length:size] length:n];
+                    _eigenvectors = [MAVMatrix matrixWithValues:a rows:n columns:n];
                 }
             }
         } else {
@@ -97,9 +97,9 @@
             int lwork = -1;
             int info;
             
-            NSData *a = [matrix valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn];
+            NSData *a = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
             
-            if (matrix.precision == MCValuePrecisionDouble) {
+            if (matrix.precision == MCKValuePrecisionDouble) {
                 size_t size = n * sizeof(double);
                 double *wr= malloc(size);
                 double *wi= malloc(size);
@@ -117,8 +117,8 @@
                 free(work);
                 
                 if (info == 0) {
-                    _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
-                    _eigenvectors = [MCMatrix matrixWithValues:[NSData dataWithBytes:vr length:n * size] rows:n columns:n];
+                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
+                    _eigenvectors = [MAVMatrix matrixWithValues:[NSData dataWithBytes:vr length:n * size] rows:n columns:n];
                 }
             } else {
                 size_t size = n * sizeof(float);
@@ -138,8 +138,8 @@
                 free(work);
                 
                 if (info == 0) {
-                    _eigenvalues = [MCVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
-                    _eigenvectors = [MCMatrix matrixWithValues:[NSData dataWithBytes:vr length:n * size] rows:n columns:n];
+                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
+                    _eigenvectors = [MAVMatrix matrixWithValues:[NSData dataWithBytes:vr length:n * size] rows:n columns:n];
                 }
             }
             
@@ -148,9 +148,9 @@
     return self;
 }
 
-+ (instancetype)eigendecompositionOfMatrix:(MCMatrix *)matrix
++ (instancetype)eigendecompositionOfMatrix:(MAVMatrix *)matrix
 {
-    return [[MCEigendecomposition alloc] initWithMatrix:matrix];
+    return [[MAVEigendecomposition alloc] initWithMatrix:matrix];
 }
 
 @end

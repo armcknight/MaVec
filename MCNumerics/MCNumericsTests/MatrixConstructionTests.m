@@ -1,6 +1,6 @@
 //
 //  MatrixConstructionTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,8 +27,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
-#import "MCVector.h"
+#import "MAVMatrix.h"
+#import "MAVVector.h"
 
 @interface MatrixConstructionTests : XCTestCase
 
@@ -56,7 +56,7 @@
     diagonalValues[1] = 2.0;
     diagonalValues[2] = 3.0;
     diagonalValues[3] = 4.0;
-    MCMatrix *diagonal = [MCMatrix diagonalMatrixWithValues:[NSData dataWithBytes:diagonalValues length:size] order:4];
+    MAVMatrix *diagonal = [MAVMatrix diagonalMatrixWithValues:[NSData dataWithBytes:diagonalValues length:size] order:4];
     
     size = 16 * sizeof(double);
     double *solution = malloc(size);
@@ -76,7 +76,7 @@
     solution[13] = 0.0;
     solution[14] = 0.0;
     solution[15] = 4.0;
-    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:4 columns:4];
+    MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:4 columns:4];
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
@@ -87,7 +87,7 @@
 
 - (void)testIdentityMatrixCreation
 {
-    MCMatrix *identity = [MCMatrix identityMatrixOfOrder:4 precision:MCValuePrecisionDouble];
+    MAVMatrix *identity = [MAVMatrix identityMatrixOfOrder:4 precision:MCKValuePrecisionDouble];
     
     size_t size = 16 * sizeof(double);
     double *solution = malloc(size);
@@ -107,7 +107,7 @@
     solution[13] = 0.0;
     solution[14] = 0.0;
     solution[15] = 1.0;
-    MCMatrix *s = [MCMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:4 columns:4];
+    MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:4 columns:4];
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
@@ -123,7 +123,7 @@
         2.0, 5.0, 7.0,
         3.0, 7.0, 12.0
     };
-    MCMatrix *solutionMatrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)] rows:3 columns:3];
+    MAVMatrix *solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:9*sizeof(double)] rows:3 columns:3];
     
     // packed row-major upper triangular
     double rowMajorPackedUpperValues[6] = {
@@ -131,9 +131,9 @@
         5.0, 7.0,
         12.0
     };
-    MCMatrix *matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:rowMajorPackedUpperValues length:6*sizeof(double)]
-                                             triangularComponent:MCMatrixTriangularComponentUpper
-                                                leadingDimension:MCMatrixLeadingDimensionRow
+    MAVMatrix *matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:rowMajorPackedUpperValues length:6*sizeof(double)]
+                                             triangularComponent:MAVMatrixTriangularComponentUpper
+                                                leadingDimension:MAVMatrixLeadingDimensionRow
                                                            order:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
@@ -148,9 +148,9 @@
         2.0, 5.0,
         3.0, 7.0, 12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:rowMajorPackedLowerValues length:6*sizeof(double)]
-                                   triangularComponent:MCMatrixTriangularComponentLower
-                                      leadingDimension:MCMatrixLeadingDimensionRow
+    matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:rowMajorPackedLowerValues length:6*sizeof(double)]
+                                   triangularComponent:MAVMatrixTriangularComponentLower
+                                      leadingDimension:MAVMatrixLeadingDimensionRow
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
@@ -165,9 +165,9 @@
         5.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:columnMajorPackedLowerValues length:6*sizeof(double)]
-                                   triangularComponent:MCMatrixTriangularComponentLower
-                                      leadingDimension:MCMatrixLeadingDimensionColumn
+    matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:columnMajorPackedLowerValues length:6*sizeof(double)]
+                                   triangularComponent:MAVMatrixTriangularComponentLower
+                                      leadingDimension:MAVMatrixLeadingDimensionColumn
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
@@ -182,9 +182,9 @@
         2.0, 5.0,
         3.0, 7.0, 12.0
     };
-    matrix = [MCMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:columnMajorPackedUpperValues length:6*sizeof(double)]
-                                   triangularComponent:MCMatrixTriangularComponentUpper
-                                      leadingDimension:MCMatrixLeadingDimensionColumn
+    matrix = [MAVMatrix symmetricMatrixWithPackedValues:[NSData dataWithBytes:columnMajorPackedUpperValues length:6*sizeof(double)]
+                                   triangularComponent:MAVMatrixTriangularComponentUpper
+                                      leadingDimension:MAVMatrixLeadingDimensionColumn
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
     for (int i = 0; i < 3; i++) {
@@ -201,10 +201,10 @@
         0.0,   5.0,   7.0,
         0.0,   0.0,   12.0
     };
-    MCMatrix *upperSolution = [MCMatrix matrixWithValues:[NSData dataWithBytes:upperSolutionValues length:9*sizeof(double)]
+    MAVMatrix *upperSolution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:upperSolutionValues length:9*sizeof(double)]
                                                     rows:3
                                                  columns:3
-                                        leadingDimension:MCMatrixLeadingDimensionRow];
+                                        leadingDimension:MAVMatrixLeadingDimensionRow];
     
     // upper row-major
     double rowMajorUpperValues[6] = {
@@ -212,9 +212,9 @@
         5.0, 7.0,
         12.0
     };
-    MCMatrix *matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:rowMajorUpperValues length:6*sizeof(double)]
-                                            ofTriangularComponent:MCMatrixTriangularComponentUpper
-                                                 leadingDimension:MCMatrixLeadingDimensionRow
+    MAVMatrix *matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:rowMajorUpperValues length:6*sizeof(double)]
+                                            ofTriangularComponent:MAVMatrixTriangularComponentUpper
+                                                 leadingDimension:MAVMatrixLeadingDimensionRow
                                                             order:3];
     XCTAssert([matrix isEqualToMatrix:upperSolution], @"Upper triangular row major matrix incorrectly created.");
     
@@ -224,9 +224,9 @@
         3.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:columnMajorUpperValues length:6*sizeof(double)]
-                                  ofTriangularComponent:MCMatrixTriangularComponentUpper
-                                       leadingDimension:MCMatrixLeadingDimensionColumn
+    matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:columnMajorUpperValues length:6*sizeof(double)]
+                                  ofTriangularComponent:MAVMatrixTriangularComponentUpper
+                                       leadingDimension:MAVMatrixLeadingDimensionColumn
                                                   order:3];
     XCTAssert([matrix isEqualToMatrix:upperSolution], @"Upper triangular column major matrix incorrectly created.");
     
@@ -235,10 +235,10 @@
         2.0,   5.0,   0.0,
         3.0,   7.0,   12.0
     };
-    MCMatrix *lowerSolution = [MCMatrix matrixWithValues:[NSData dataWithBytes:lowerSolutionValues length:9*sizeof(double)]
+    MAVMatrix *lowerSolution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:lowerSolutionValues length:9*sizeof(double)]
                                                     rows:3
                                                  columns:3
-                                        leadingDimension:MCMatrixLeadingDimensionRow];
+                                        leadingDimension:MAVMatrixLeadingDimensionRow];
     
     // lower row-major
     double rowMajorLowerValues[6] = {
@@ -246,9 +246,9 @@
         3.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:rowMajorLowerValues length:6*sizeof(double)]
-                                  ofTriangularComponent:MCMatrixTriangularComponentLower
-                                       leadingDimension:MCMatrixLeadingDimensionRow
+    matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:rowMajorLowerValues length:6*sizeof(double)]
+                                  ofTriangularComponent:MAVMatrixTriangularComponentLower
+                                       leadingDimension:MAVMatrixLeadingDimensionRow
                                                   order:3];
     XCTAssert([matrix isEqualToMatrix:lowerSolution], @"Lower triangular row major matrix incorrectly created.");
     
@@ -258,9 +258,9 @@
         5.0, 7.0,
         12.0
     };
-    matrix = [MCMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:columnMajorLowerValues length:6*sizeof(double)]
-                                  ofTriangularComponent:MCMatrixTriangularComponentLower
-                                       leadingDimension:MCMatrixLeadingDimensionColumn
+    matrix = [MAVMatrix triangularMatrixWithPackedValues:[NSData dataWithBytes:columnMajorLowerValues length:6*sizeof(double)]
+                                  ofTriangularComponent:MAVMatrixTriangularComponentLower
+                                       leadingDimension:MAVMatrixLeadingDimensionColumn
                                                   order:3];
     XCTAssert([matrix isEqualToMatrix:lowerSolution], @"Lower triangular column major matrix incorrectly created.");
 }
@@ -273,7 +273,7 @@
         10.0, 20.0, 30.0, 40.0, 50.0,
         5.0,  6.0,  7.0,  8.0,  0.0
     };
-    MCMatrix *matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:balancedBandValues length:15*sizeof(double)]
+    MAVMatrix *matrix = [MAVMatrix bandMatrixWithValues:[NSData dataWithBytes:balancedBandValues length:15*sizeof(double)]
                                                 order:5
                                      upperCodiagonals:1
                                      lowerCodiagonals:1];
@@ -285,10 +285,10 @@
         0.0,   0.0,   7.0,   40.0,  4.0,
         0.0,   0.0,   0.0,   8.0,   50.0
     };
-    MCMatrix *solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:oddBandwidthSolutionValues length:25*sizeof(double)]
+    MAVMatrix *solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:oddBandwidthSolutionValues length:25*sizeof(double)]
                                                rows:5
                                             columns:5
-                                   leadingDimension:MCMatrixLeadingDimensionRow];
+                                   leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
@@ -303,7 +303,7 @@
         10.0, 20.0, 30.0, 40.0, 50.0,
         5.0,  6.0,  7.0,  8.0,  0.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithExtraUpper length:20*sizeof(double)]
+    matrix = [MAVMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithExtraUpper length:20*sizeof(double)]
                                       order:5
                            upperCodiagonals:2
                            lowerCodiagonals:1];
@@ -315,10 +315,10 @@
         0.0,   0.0,   7.0,    40.0,  4.0,
         0.0,   0.0,   0.0,    8.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithExtraUpper length:25*sizeof(double)]
+    solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithExtraUpper length:25*sizeof(double)]
                                      rows:5
                                   columns:5
-                         leadingDimension:MCMatrixLeadingDimensionRow];
+                         leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
@@ -333,7 +333,7 @@
         5.0,  6.0,  7.0,  8.0,  0.0,
         -1.0, -2.0, -3.0, 0.0,  0.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithExtraLower length:20*sizeof(double)]
+    matrix = [MAVMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithExtraLower length:20*sizeof(double)]
                                       order:5
                            upperCodiagonals:1
                            lowerCodiagonals:2];
@@ -345,10 +345,10 @@
         0.0,   -2.0,   7.0,   40.0,  4.0,
         0.0,   0.0,   -3.0,   8.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithExtraLower length:25*sizeof(double)]
+    solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithExtraLower length:25*sizeof(double)]
                                      rows:5
                                   columns:5
-                         leadingDimension:MCMatrixLeadingDimensionRow];
+                         leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
@@ -362,7 +362,7 @@
         0.0,  1.0,  2.0,  3.0,  4.0,
         10.0, 20.0, 30.0, 40.0, 50.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithTwoUpper length:15*sizeof(double)]
+    matrix = [MAVMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithTwoUpper length:15*sizeof(double)]
                                       order:5
                            upperCodiagonals:2
                            lowerCodiagonals:0];
@@ -374,10 +374,10 @@
         0.0,   0.0,   0.0,    40.0,  4.0,
         0.0,   0.0,   0.0,    0.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithTwoUpper length:25*sizeof(double)]
+    solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithTwoUpper length:25*sizeof(double)]
                                      rows:5
                                   columns:5
-                         leadingDimension:MCMatrixLeadingDimensionRow];
+                         leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
@@ -391,7 +391,7 @@
         5.0,  6.0,  7.0,  8.0,  0.0,
         -1.0, -2.0, -3.0, 0.0,  0.0
     };
-    matrix = [MCMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithTwoLower length:15*sizeof(double)]
+    matrix = [MAVMatrix bandMatrixWithValues:[NSData dataWithBytes:bandValuesWithTwoLower length:15*sizeof(double)]
                                       order:5
                            upperCodiagonals:0
                            lowerCodiagonals:2];
@@ -403,10 +403,10 @@
         0.0,   -2.0,  7.0,   40.0,  0.0,
         0.0,   0.0,   -3.0,  8.0,   50.0
     };
-    solution = [MCMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithTwoLower length:25*sizeof(double)]
+    solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValuesWithTwoLower length:25*sizeof(double)]
                                      rows:5
                                   columns:5
-                         leadingDimension:MCMatrixLeadingDimensionRow];
+                         leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int row = 0; row < 5; row += 1) {
         for (int col = 0; col < 5; col += 1) {
@@ -417,23 +417,23 @@
 
 - (void)testMatrixCreationFromVectors
 {
-    MCVector *v1 = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
-    MCVector *v2 = [MCVector vectorWithValuesInArray:@[@4.0, @5.0, @6.0]];
-    MCVector *v3 = [MCVector vectorWithValuesInArray:@[@7.0, @8.0, @9.0]];
+    MAVVector *v1 = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
+    MAVVector *v2 = [MAVVector vectorWithValuesInArray:@[@4.0, @5.0, @6.0]];
+    MAVVector *v3 = [MAVVector vectorWithValuesInArray:@[@7.0, @8.0, @9.0]];
     
     /* create the matrix
      [ 1  4  7
      2  5  8
      3  6  9 ]
      */
-    MCMatrix *a = [MCMatrix matrixWithColumnVectors:@[v1, v2, v3]];
+    MAVMatrix *a = [MAVMatrix matrixWithColumnVectors:@[v1, v2, v3]];
     
     /* create the matrix
      [ 1  2  3
      4  5  6
      7  8  9 ]
      */
-    MCMatrix *b = [MCMatrix matrixWithRowVectors:@[v1, v2, v3]];
+    MAVMatrix *b = [MAVMatrix matrixWithRowVectors:@[v1, v2, v3]];
 }
 
 - (void)testRandomDefiniteMatrices
@@ -446,37 +446,37 @@
     int negativeSemidefiniteFails = 0;
     int indefiniteFails = 0;
     
-    MCMatrix *test;
+    MAVMatrix *test;
     
     int order = 3;
     for(int i = 0; i < numberOfTests; i++) {
-        MCMatrix *positiveDefinite = [MCMatrix randomMatrixOfOrder:order definiteness:MCMatrixDefinitenessPositiveDefinite precision:MCValuePrecisionDouble];
-        test = [MCMatrix matrixWithValues:[positiveDefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
-        if (test.definiteness != MCMatrixDefinitenessPositiveDefinite) {
+        MAVMatrix *positiveDefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessPositiveDefinite precision:MCKValuePrecisionDouble];
+        test = [MAVMatrix matrixWithValues:[positiveDefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MAVMatrixDefinitenessPositiveDefinite) {
             positiveDefiniteFails++;
         }
         
-        MCMatrix *negativeDefinite = [MCMatrix randomMatrixOfOrder:order definiteness:MCMatrixDefinitenessNegativeDefinite precision:MCValuePrecisionDouble];
-        test = [MCMatrix matrixWithValues:[negativeDefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
-        if (test.definiteness != MCMatrixDefinitenessNegativeDefinite) {
+        MAVMatrix *negativeDefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessNegativeDefinite precision:MCKValuePrecisionDouble];
+        test = [MAVMatrix matrixWithValues:[negativeDefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MAVMatrixDefinitenessNegativeDefinite) {
             negativeDefiniteFails++;
         }
         
-        MCMatrix *positiveSemidefinite = [MCMatrix randomMatrixOfOrder:order definiteness:MCMatrixDefinitenessPositiveSemidefinite precision:MCValuePrecisionDouble];
-        test = [MCMatrix matrixWithValues:[positiveSemidefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
-        if (test.definiteness != MCMatrixDefinitenessPositiveSemidefinite) {
+        MAVMatrix *positiveSemidefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessPositiveSemidefinite precision:MCKValuePrecisionDouble];
+        test = [MAVMatrix matrixWithValues:[positiveSemidefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MAVMatrixDefinitenessPositiveSemidefinite) {
             positiveSemidefiniteFails++;
         }
         
-        MCMatrix *negativeSemidefinite = [MCMatrix randomMatrixOfOrder:order definiteness:MCMatrixDefinitenessNegativeSemidefinite precision:MCValuePrecisionDouble];
-        test = [MCMatrix matrixWithValues:[negativeSemidefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
-        if (test.definiteness != MCMatrixDefinitenessNegativeSemidefinite) {
+        MAVMatrix *negativeSemidefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessNegativeSemidefinite precision:MCKValuePrecisionDouble];
+        test = [MAVMatrix matrixWithValues:[negativeSemidefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MAVMatrixDefinitenessNegativeSemidefinite) {
             negativeSemidefiniteFails++;
         }
         
-        MCMatrix *indefinite = [MCMatrix randomMatrixOfOrder:order definiteness:MCMatrixDefinitenessIndefinite precision:MCValuePrecisionDouble];
-        test = [MCMatrix matrixWithValues:[indefinite valuesWithLeadingDimension:MCMatrixLeadingDimensionColumn] rows:order columns:order];
-        if (test.definiteness != MCMatrixDefinitenessIndefinite) {
+        MAVMatrix *indefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessIndefinite precision:MCKValuePrecisionDouble];
+        test = [MAVMatrix matrixWithValues:[indefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
+        if (test.definiteness != MAVMatrixDefinitenessIndefinite) {
             indefiniteFails++;
         }
         
@@ -498,7 +498,7 @@
     
     int order = 3;
     for(int i = 0; i < numberOfTests; i++) {
-        MCMatrix *singular = [MCMatrix randomSingularMatrixOfOrder:order precision:MCValuePrecisionDouble];
+        MAVMatrix *singular = [MAVMatrix randomSingularMatrixOfOrder:order precision:MCKValuePrecisionDouble];
         if ([singular.determinant compare:@0.0] != NSOrderedSame) {
             singularFails++;
         }
@@ -516,7 +516,7 @@
     
     int order = 3;
     for(int i = 0; i < numberOfTests; i++) {
-        MCMatrix *nonsingular = [MCMatrix randomNonsigularMatrixOfOrder:order precision:MCValuePrecisionDouble];
+        MAVMatrix *nonsingular = [MAVMatrix randomNonsigularMatrixOfOrder:order precision:MCKValuePrecisionDouble];
         if ([nonsingular.determinant compare:@0.0] == NSOrderedSame) {
             nonsingularFails++;
         }

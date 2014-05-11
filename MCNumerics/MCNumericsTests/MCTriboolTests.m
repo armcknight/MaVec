@@ -1,6 +1,6 @@
 //
-//  MCTriboolTests.m
-//  MCNumerics
+//  MCKTriboolTests.m
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/15/14.
 //
@@ -27,13 +27,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCTribool.h"
+#import "MCKTribool.h"
 
-@interface MCTriboolTests : XCTestCase
+@interface MCKTriboolTests : XCTestCase
 
 @end
 
-@implementation MCTriboolTests
+@implementation MCKTriboolTests
 
 - (void)setUp
 {
@@ -49,81 +49,81 @@
 
 - (void)testTriboolConjunction
 {
-    MCTriboolValue yes = MCTriboolValueYes;
-    MCTriboolValue no = MCTriboolValueNo;
-    MCTriboolValue unknown = MCTriboolValueUnknown;
+    MCKTriboolValue yes = MCKTriboolValueYes;
+    MCKTriboolValue no = MCKTriboolValueNo;
+    MCKTriboolValue unknown = MCKTriboolValueUnknown;
     
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool conjunctionOfTriboolValueA:yes triboolValueB:yes], @"+ ∧ + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool conjunctionOfTriboolValueA:yes triboolValueB:unknown], @"+ ∧ 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool conjunctionOfTriboolValueA:yes triboolValueB:no], @"+ ∧ - computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool conjunctionOfTriboolValueA:unknown triboolValueB:yes], @"0 ∧ + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool conjunctionOfTriboolValueA:unknown triboolValueB:unknown], @"0 ∧ 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool conjunctionOfTriboolValueA:unknown triboolValueB:no], @"0 ∧ - computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool conjunctionOfTriboolValueA:no triboolValueB:yes], @"- ∧ + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool conjunctionOfTriboolValueA:no triboolValueB:unknown], @"- ∧ 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool conjunctionOfTriboolValueA:no triboolValueB:no], @"- ∧ - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool conjunctionOfTriboolValueA:yes triboolValueB:yes], @"+ ∧ + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool conjunctionOfTriboolValueA:yes triboolValueB:unknown], @"+ ∧ 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool conjunctionOfTriboolValueA:yes triboolValueB:no], @"+ ∧ - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool conjunctionOfTriboolValueA:unknown triboolValueB:yes], @"0 ∧ + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool conjunctionOfTriboolValueA:unknown triboolValueB:unknown], @"0 ∧ 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool conjunctionOfTriboolValueA:unknown triboolValueB:no], @"0 ∧ - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool conjunctionOfTriboolValueA:no triboolValueB:yes], @"- ∧ + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool conjunctionOfTriboolValueA:no triboolValueB:unknown], @"- ∧ 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool conjunctionOfTriboolValueA:no triboolValueB:no], @"- ∧ - computed incorrectly.");
 }
 
 - (void)testTriboolDisjunction
 {
-    MCTriboolValue yes = MCTriboolValueYes;
-    MCTriboolValue no = MCTriboolValueNo;
-    MCTriboolValue unknown = MCTriboolValueUnknown;
+    MCKTriboolValue yes = MCKTriboolValueYes;
+    MCKTriboolValue no = MCKTriboolValueNo;
+    MCKTriboolValue unknown = MCKTriboolValueUnknown;
     
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool disjunctionOfTriboolValueA:yes triboolValueB:yes], @"+ v + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool disjunctionOfTriboolValueA:yes triboolValueB:unknown], @"+ v 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool disjunctionOfTriboolValueA:yes triboolValueB:no], @"+ v - computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool disjunctionOfTriboolValueA:unknown triboolValueB:yes], @"0 v + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool disjunctionOfTriboolValueA:unknown triboolValueB:unknown], @"0 v 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool disjunctionOfTriboolValueA:unknown triboolValueB:no], @"0 v - computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool disjunctionOfTriboolValueA:no triboolValueB:yes], @"- v + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool disjunctionOfTriboolValueA:no triboolValueB:unknown], @"- v 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool disjunctionOfTriboolValueA:no triboolValueB:no], @"- v - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool disjunctionOfTriboolValueA:yes triboolValueB:yes], @"+ v + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool disjunctionOfTriboolValueA:yes triboolValueB:unknown], @"+ v 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool disjunctionOfTriboolValueA:yes triboolValueB:no], @"+ v - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool disjunctionOfTriboolValueA:unknown triboolValueB:yes], @"0 v + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool disjunctionOfTriboolValueA:unknown triboolValueB:unknown], @"0 v 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool disjunctionOfTriboolValueA:unknown triboolValueB:no], @"0 v - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool disjunctionOfTriboolValueA:no triboolValueB:yes], @"- v + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool disjunctionOfTriboolValueA:no triboolValueB:unknown], @"- v 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool disjunctionOfTriboolValueA:no triboolValueB:no], @"- v - computed incorrectly.");
 }
 
 - (void)testTriboolKleeneImplication
 {
-    MCTriboolValue yes = MCTriboolValueYes;
-    MCTriboolValue no = MCTriboolValueNo;
-    MCTriboolValue unknown = MCTriboolValueUnknown;
+    MCKTriboolValue yes = MCKTriboolValueYes;
+    MCKTriboolValue no = MCKTriboolValueNo;
+    MCKTriboolValue unknown = MCKTriboolValueUnknown;
     
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool kleeneImplicationOfTriboolValueA:yes triboolValueB:yes], @"+ → + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool kleeneImplicationOfTriboolValueA:yes triboolValueB:unknown], @"+ → 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool kleeneImplicationOfTriboolValueA:yes triboolValueB:no], @"+ → - computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool kleeneImplicationOfTriboolValueA:unknown triboolValueB:yes], @"0 → + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool kleeneImplicationOfTriboolValueA:unknown triboolValueB:unknown], @"0 → 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool kleeneImplicationOfTriboolValueA:unknown triboolValueB:no], @"0 → - computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool kleeneImplicationOfTriboolValueA:no triboolValueB:yes], @"- → + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool kleeneImplicationOfTriboolValueA:no triboolValueB:unknown], @"- → 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool kleeneImplicationOfTriboolValueA:no triboolValueB:no], @"- → - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool kleeneImplicationOfTriboolValueA:yes triboolValueB:yes], @"+ → + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool kleeneImplicationOfTriboolValueA:yes triboolValueB:unknown], @"+ → 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool kleeneImplicationOfTriboolValueA:yes triboolValueB:no], @"+ → - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool kleeneImplicationOfTriboolValueA:unknown triboolValueB:yes], @"0 → + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool kleeneImplicationOfTriboolValueA:unknown triboolValueB:unknown], @"0 → 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool kleeneImplicationOfTriboolValueA:unknown triboolValueB:no], @"0 → - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool kleeneImplicationOfTriboolValueA:no triboolValueB:yes], @"- → + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool kleeneImplicationOfTriboolValueA:no triboolValueB:unknown], @"- → 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool kleeneImplicationOfTriboolValueA:no triboolValueB:no], @"- → - computed incorrectly.");
 }
 
 - (void)testTriboolLukasiewiczImplication
 {
-    MCTriboolValue yes = MCTriboolValueYes;
-    MCTriboolValue no = MCTriboolValueNo;
-    MCTriboolValue unknown = MCTriboolValueUnknown;
+    MCKTriboolValue yes = MCKTriboolValueYes;
+    MCKTriboolValue no = MCKTriboolValueNo;
+    MCKTriboolValue unknown = MCKTriboolValueUnknown;
     
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool lukasiewiczImplicationOfTriboolValueA:yes triboolValueB:yes], @"+ → + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool lukasiewiczImplicationOfTriboolValueA:yes triboolValueB:unknown], @"+ → 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool lukasiewiczImplicationOfTriboolValueA:yes triboolValueB:no], @"+ → - computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool lukasiewiczImplicationOfTriboolValueA:unknown triboolValueB:yes], @"0 → + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool lukasiewiczImplicationOfTriboolValueA:unknown triboolValueB:unknown], @"0 → 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool lukasiewiczImplicationOfTriboolValueA:unknown triboolValueB:no], @"0 → - computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool lukasiewiczImplicationOfTriboolValueA:no triboolValueB:yes], @"- → + computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool lukasiewiczImplicationOfTriboolValueA:no triboolValueB:unknown], @"- → 0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool lukasiewiczImplicationOfTriboolValueA:no triboolValueB:no], @"- → - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool lukasiewiczImplicationOfTriboolValueA:yes triboolValueB:yes], @"+ → + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool lukasiewiczImplicationOfTriboolValueA:yes triboolValueB:unknown], @"+ → 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool lukasiewiczImplicationOfTriboolValueA:yes triboolValueB:no], @"+ → - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool lukasiewiczImplicationOfTriboolValueA:unknown triboolValueB:yes], @"0 → + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool lukasiewiczImplicationOfTriboolValueA:unknown triboolValueB:unknown], @"0 → 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool lukasiewiczImplicationOfTriboolValueA:unknown triboolValueB:no], @"0 → - computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool lukasiewiczImplicationOfTriboolValueA:no triboolValueB:yes], @"- → + computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool lukasiewiczImplicationOfTriboolValueA:no triboolValueB:unknown], @"- → 0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool lukasiewiczImplicationOfTriboolValueA:no triboolValueB:no], @"- → - computed incorrectly.");
 }
 
 - (void)testTriboolNegation
 {
-    MCTriboolValue yes = MCTriboolValueYes;
-    MCTriboolValue no = MCTriboolValueNo;
-    MCTriboolValue unknown = MCTriboolValueUnknown;
+    MCKTriboolValue yes = MCKTriboolValueYes;
+    MCKTriboolValue no = MCKTriboolValueNo;
+    MCKTriboolValue unknown = MCKTriboolValueUnknown;
     
-    XCTAssertEqual(MCTriboolValueNo, [MCTribool negationOfTriboolValue:yes], @"¬+ computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueUnknown, [MCTribool negationOfTriboolValue:unknown], @"¬0 computed incorrectly.");
-    XCTAssertEqual(MCTriboolValueYes, [MCTribool negationOfTriboolValue:no], @"¬- computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueNo, [MCKTribool negationOfTriboolValue:yes], @"¬+ computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueUnknown, [MCKTribool negationOfTriboolValue:unknown], @"¬0 computed incorrectly.");
+    XCTAssertEqual(MCKTriboolValueYes, [MCKTribool negationOfTriboolValue:no], @"¬- computed incorrectly.");
 }
 
 @end

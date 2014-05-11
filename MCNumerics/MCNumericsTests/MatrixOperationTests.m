@@ -1,6 +1,6 @@
 //
 //  MatrixOperationTests.m
-//  MCNumerics
+//  MAVNumerics
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -27,7 +27,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MCMatrix.h"
+#import "MAVMatrix.h"
 
 @interface MatrixOperationTests : XCTestCase
 
@@ -60,7 +60,7 @@
     aVals[6] = 7.0;
     aVals[7] = 8.0;
     aVals[8] = 9.0;
-    MCMatrix *a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:3 columns:3];
+    MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:3 columns:3];
     
     double *tVals= malloc(size);
     tVals[0] = 1.0;
@@ -72,7 +72,7 @@
     tVals[6] = 3.0;
     tVals[7] = 6.0;
     tVals[8] = 9.0;
-    MCMatrix *t = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3].transpose;
+    MAVMatrix *t = [MAVMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3].transpose;
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -90,7 +90,7 @@
     aVals[6] = 7.0;
     aVals[7] = 8.0;
     aVals[8] = 9.0;
-    a = [MCMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow];
+    a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow];
     
     tVals= malloc(size);
     tVals[0] = 1.0;
@@ -102,7 +102,7 @@
     tVals[6] = 3.0;
     tVals[7] = 6.0;
     tVals[8] = 9.0;
-    t = [MCMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3 leadingDimension:MCMatrixLeadingDimensionRow].transpose;
+    t = [MAVMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow].transpose;
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
