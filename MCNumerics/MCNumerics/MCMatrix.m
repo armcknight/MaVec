@@ -392,8 +392,8 @@ MCMatrixNorm;
                                                            ? MCMatrixTriangularComponentBoth
                                                            : MCMatrixTriangularComponentLower)
                                                         : (lowerCodiagonals == 0
-                                                           ? MCMatrixTriangularComponentBoth
-                                                           : MCMatrixTriangularComponentUpper)]; // TODO: need to swap ...Both and ...Upper in the else branch of the outer ternary expression
+                                                           ? MCMatrixTriangularComponentUpper
+                                                           : MCMatrixTriangularComponentLower)];
     
     
     matrix.upperCodiagonals = upperCodiagonals;
