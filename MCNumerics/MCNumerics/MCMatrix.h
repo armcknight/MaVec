@@ -157,11 +157,6 @@ typedef enum : UInt8 {
     MCCoordinateAxisZ
 } MCCoordinateAxis;
 
-typedef enum : UInt8 {
-    MCCoordinateSystemHandednessLeft,
-    MCCoordinateSystemHandednessRight
-} MCCoordinateSystemHandedness;
-
 /**
  @class MCMatrix
  @description A class providing storage and operations for matrices of double-precision floating point numbers, where underlying details governing how the two-dimensional structure is reduced to the one-dimensional array containing its values (packing, leading dimension, or other internal value representation method) is abstracted away for any operation or property.
