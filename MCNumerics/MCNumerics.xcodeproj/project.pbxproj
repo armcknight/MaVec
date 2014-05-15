@@ -502,8 +502,9 @@
 		49B68284184D8341006A61D3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = MAV;
 				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = "andrew mcknight";
+				ORGANIZATIONNAME = "Andrew McKnight";
 				TargetAttributes = {
 					49B682A6184D8342006A61D3 = {
 						TestTargetID = 49B6828B184D8342006A61D3;
