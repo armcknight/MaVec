@@ -31,11 +31,11 @@
 #import "MAVEigendecomposition.h"
 #import "MAVVector.h"
 
-@interface EigendecompositionTests : XCTestCase
+@interface MAVEigendecompositionTests : XCTestCase
 
 @end
 
-@implementation EigendecompositionTests
+@implementation MAVEigendecompositionTests
 
 - (void)setUp
 {

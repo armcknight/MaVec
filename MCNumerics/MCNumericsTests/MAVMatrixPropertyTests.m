@@ -1,6 +1,6 @@
 //
-//  MatrixPropertyTests.m
-//  MAVNumerics
+//  MAVMatrixPropertyTests.m
+//  MaVec
 //
 //  Created by andrew mcknight on 3/8/14.
 //
@@ -30,11 +30,11 @@
 #import "MAVMatrix.h"
 #import "MCKTribool.h"
 
-@interface MatrixPropertyTests : XCTestCase
+@interface MAVMatrixPropertyTests : XCTestCase
 
 @end
 
-@implementation MatrixPropertyTests
+@implementation MAVMatrixPropertyTests
 
 - (void)setUp
 {

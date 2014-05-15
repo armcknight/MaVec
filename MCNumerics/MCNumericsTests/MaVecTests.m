@@ -1,6 +1,6 @@
 //
 //  MAVNumericsTests.m
-//  MAVNumericsTests
+//  MaVec
 //
 //  Created by andrew mcknight on 12/2/13.
 //
