@@ -29,6 +29,9 @@
 
 #import "MAVVector.h"
 
+#import "NSNumber+MCKPrecision.h"
+#import "NSData+MCKPrecision.h"
+
 @interface MAVVector()
 
 @property (strong, readwrite, nonatomic) NSNumber *sumOfValues;
@@ -97,7 +100,7 @@
     if (self) {
         _values = values;
         _length = length;
-        _precision = kMAVIsDoubleType(values.length / length) ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
+        _precision = [values containsDoublePrecisionValues:length] ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
     }
     return self;
 }
@@ -109,7 +112,7 @@
         _length = (int)values.count;
         
         for (NSNumber *n in values) {
-            if (kMAVIsDoubleEncoding(n.objCType)) {
+            if (n.isDoublePrecision) {
                 _precision = MCKValuePrecisionDouble;
                 break;
             }
@@ -512,7 +515,7 @@
 
 + (MAVVector *)productOfVector:(MAVVector *)vector scalar:(NSNumber *)scalar
 {
-    BOOL precisionsMatch = (vector.precision == MCKValuePrecisionDouble && kMAVIsDoubleEncoding(scalar.objCType)) || (vector.precision == MCKValuePrecisionSingle && kMAVIsFloatEncoding(scalar.objCType));
+    BOOL precisionsMatch = (vector.precision == MCKValuePrecisionDouble && scalar.isDoublePrecision) || (vector.precision == MCKValuePrecisionSingle && scalar.isSinglePrecision);
     NSAssert(precisionsMatch, @"Precisions do not match");
     
     MAVVector *product;

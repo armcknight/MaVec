@@ -33,7 +33,11 @@
 #import "MAVLUFactorization.h"
 #import "MAVEigendecomposition.h"
 #import "MAVQRFactorization.h"
+
 #import "MCKTribool.h"
+
+#import "NSNumber+MCKPrecision.h"
+#import "NSData+MCKPrecision.h"
 
 #define randomDouble drand48()
 #define randomFloat rand() / RAND_MAX
@@ -156,7 +160,7 @@ MAVMatrixNorm;
                 
             default: break;
         }
-        _precision = kMAVIsDoubleType(values.length / numberOfValues) ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
+        _precision = [values containsDoublePrecisionValues:numberOfValues] ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
     }
     return self;
 }
@@ -170,7 +174,7 @@ MAVMatrixNorm;
     
     MAVMatrix *matrix;
     
-    if (kMAVIsDoubleEncoding(((MAVVector *)columnVectors[0])[0].objCType)) {
+    if (((MAVVector *)columnVectors[0])[0].isDoublePrecision) {
         size_t size = rows * columns * sizeof(double);
         double *values = malloc(size);
         [columnVectors enumerateObjectsUsingBlock:^(MAVVector *columnVector, NSUInteger column, BOOL *stop) {
@@ -212,7 +216,7 @@ MAVMatrixNorm;
     
     MAVMatrix *matrix;
     
-    if (kMAVIsDoubleEncoding(((MAVVector *)rowVectors[0])[0].objCType)) {
+    if (((MAVVector *)rowVectors[0])[0].isDoublePrecision) {
         size_t size = rows * columns * sizeof(double);
         double *values = malloc(size);
         [rowVectors enumerateObjectsUsingBlock:^(MAVVector *rowVector, NSUInteger row, BOOL *stop) {
@@ -399,7 +403,7 @@ MAVMatrixNorm;
     matrix.upperCodiagonals = upperCodiagonals;
     matrix.bandwidth = lowerCodiagonals + upperCodiagonals + 1;
     matrix.numberOfBandValues = matrix.bandwidth * order;
-    matrix.precision = kMAVIsDoubleType(values.length / matrix.numberOfBandValues) ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
+    matrix.precision = [values containsDoublePrecisionValues:matrix.numberOfBandValues] ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
     
     return matrix;
 }
@@ -407,7 +411,7 @@ MAVMatrixNorm;
 + (instancetype)matrixForTwoDimensionalRotationWithAngle:(NSNumber *)angle direction:(MAVAngleDirection)direction
 {
     NSData *valueData;
-    if (kMAVIsDoubleEncoding(angle.objCType)) {
+    if (angle.isDoublePrecision) {
         double directedAngle = angle.doubleValue * (direction == MAVAngleDirectionClockwise ? -1.0 : 1.0);
         size_t size = 4 * sizeof(double);
         double *values = malloc(size);
@@ -434,7 +438,7 @@ MAVMatrixNorm;
                                                  direction:(MAVAngleDirection)direction
 {
     NSData *valueData;
-    if (kMAVIsDoubleEncoding(angle.objCType)) {
+    if (angle.isDoublePrecision) {
         double directedAngle = angle.doubleValue * (direction == MAVAngleDirectionClockwise ? -1.0 : 1.0);
         double *values = calloc(9, sizeof(double));
         switch (axis) {
@@ -726,9 +730,8 @@ MAVMatrixNorm;
 {
     if (_transpose == nil) {
         NSData *aVals = [self valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
-        size_t elementSize = aVals.length / (self.rows * self.columns);
         void *tVals;
-        if (kMAVIsFloatType(elementSize)) {
+        if ([aVals containsSinglePrecisionValues:(self.rows * self.columns)]) {
             tVals = malloc(self.rows * self.columns * sizeof(float));
             vDSP_mtrans(aVals.bytes, 1, tVals, 1, self.columns, self.rows);
         } else  {
@@ -746,7 +749,7 @@ MAVMatrixNorm;
 {
     if (_determinant == nil) {
         if (_rows == 2 && _columns == 2) {
-            if (kMAVIsDoubleEncoding(self[0][0].objCType)) {
+            if (self[0][0].isDoublePrecision) {
                 double a = self[0][0].doubleValue;
                 double b = self[0][1].doubleValue;
                 double c = self[1][0].doubleValue;
@@ -762,7 +765,7 @@ MAVMatrixNorm;
                 _determinant = @(a * d - b * c);
             }
         } else if (_rows == 3 && _columns == 3) {
-            if (kMAVIsDoubleEncoding(self[0][0].objCType)) {
+            if (self[0][0].isDoublePrecision) {
                 double a = self[0][0].doubleValue;
                 double b = self[0][1].doubleValue;
                 double c = self[0][2].doubleValue;
@@ -789,7 +792,7 @@ MAVMatrixNorm;
             }
         } else {
             NSNumber *product = self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues;
-            if (kMAVIsDoubleEncoding(product.objCType)) {
+            if (product.isDoublePrecision) {
                 _determinant = @(self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues.doubleValue * pow(-1.0, self.luFactorization.numberOfPermutations));
             } else {
                 _determinant = @(self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues.floatValue * powf(-1.f, self.luFactorization.numberOfPermutations));
@@ -815,9 +818,8 @@ MAVMatrixNorm;
             
             int info = 0;
             
-            size_t valueType = columnMajorData.length / (m * n);
             void *a;
-            if (kMAVIsDoubleType(valueType)) {
+            if ([columnMajorData containsDoublePrecisionValues:(m * n)]) {
                 a = (double *)columnMajorData.bytes;
                 
                 // compute factorization
@@ -875,8 +877,7 @@ MAVMatrixNorm;
         NSData *rowMajorValues = [self valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
         int m = self.rows;
         int n = self.columns;
-        size_t valueType = rowMajorValues.length / (m * n);
-        if (kMAVIsDoubleType(valueType)) {
+        if ([rowMajorValues containsDoublePrecisionValues:(m * n)]) {
             double *values = (double *)rowMajorValues.bytes;
             double norm = dlange_("1", &m, &n, values, &m, nil);
             
@@ -1027,7 +1028,7 @@ MAVMatrixNorm;
     if (_diagonalValues == nil) {
         int length = MIN(self.rows, self.columns);
         
-        if (kMAVIsDoubleEncoding(self[0][0].objCType)) {
+        if (self[0][0].isDoublePrecision) {
             double *values = malloc(length * sizeof(double));
             for (int i = 0; i < length; i += 1) {
                 values[i] = [self valueAtRow:i column:i].doubleValue;
@@ -1087,8 +1088,7 @@ MAVMatrixNorm;
 - (MAVMatrix *)minorMatrix
 {
     if (_minorMatrix == nil) {
-        size_t valueType = self.values.length / (self.rows * self.columns);
-        if (kMAVIsDoubleType(valueType)) {
+        if ([self.values containsDoublePrecisionValues:(self.rows * self.columns)]) {
             double *minorValues = malloc(self.rows * self.columns * sizeof(double));
             
             int minorIdx = 0;
@@ -1117,7 +1117,7 @@ MAVMatrixNorm;
                                                  rows:self.rows
                                               columns:self.columns
                                      leadingDimension:MAVMatrixLeadingDimensionRow];
-        } else if (kMAVIsFloatType(valueType)) {
+        } else {
             float *minorValues = malloc(self.rows * self.columns * sizeof(float));
             
             int minorIdx = 0;
@@ -1794,7 +1794,7 @@ MAVMatrixNorm;
     
     NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
-    BOOL precisionsMatch = (self.precision == MCKValuePrecisionDouble && kMAVIsDoubleEncoding(value.objCType)) || (self.precision == MCKValuePrecisionSingle && kMAVIsFloatEncoding(value.objCType));
+    BOOL precisionsMatch = (self.precision == MCKValuePrecisionDouble && value.isDoublePrecision ) || (self.precision == MCKValuePrecisionSingle && value.isSinglePrecision);
     NSAssert(precisionsMatch, @"Precisions do not match.");
     
     if (self.precision == MCKValuePrecisionDouble) {
