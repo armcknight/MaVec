@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EE08E73D-5CF8-47C1-9453-62629ED1AA74</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MaVec</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>56C2283B-A8EB-483E-AD10-BF3B933663A6</key>
+		<string>https://github.com/sixstringtheory/MaVec.git</string>
+		<key>CBCCAD97-3939-47A3-BA29-64A063328960</key>
+		<string>https://github.com/Raizlabs/RZCollectionList.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MaVec.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>56C2283B-A8EB-483E-AD10-BF3B933663A6</key>
+		<string>../..</string>
+		<key>CBCCAD97-3939-47A3-BA29-64A063328960</key>
+		<string>../../External/RZCollectionList</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/sixstringtheory/MaVec.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>56C2283B-A8EB-483E-AD10-BF3B933663A6</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>56C2283B-A8EB-483E-AD10-BF3B933663A6</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MaVec</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CBCCAD97-3939-47A3-BA29-64A063328960</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RZCollectionList</string>
+		</dict>
+	</array>
+</dict>
+</plist>
