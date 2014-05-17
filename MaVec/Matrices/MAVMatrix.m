@@ -795,7 +795,7 @@ MAVMatrixNorm;
             if (product.isDoublePrecision) {
                 _determinant = @(self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues.doubleValue * pow(-1.0, self.luFactorization.numberOfPermutations));
             } else {
-                _determinant = @(self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues.floatValue * powf(-1.f, self.luFactorization.numberOfPermutations));
+                _determinant = @(self.luFactorization.upperTriangularMatrix.diagonalValues.productOfValues.floatValue * powf(-1.0f, self.luFactorization.numberOfPermutations));
             }
         }
     }
@@ -915,7 +915,7 @@ MAVMatrixNorm;
             free(work);
             free(iwork);
             
-            _conditionNumber = @(1.f / conditionReciprocal);
+            _conditionNumber = @(1.0f / conditionReciprocal);
         }
     }
     
@@ -1181,7 +1181,7 @@ MAVMatrixNorm;
             for (int row = 0; row < self.rows; row += 1) {
                 for (int col = 0; col < self.columns; col += 1) {
                     float minor = self.minorMatrix[row][col].floatValue;
-                    float multiplier = powf(-1.f, row + col + 2.f);
+                    float multiplier = powf(-1.0f, row + col + 2.0f);
                     cofactors[cofactorIdx++] = minor * multiplier;
                 }
             }
