@@ -1,5 +1,5 @@
 //
-//  MAVNumericsTests.m
+//  MaVecTests.m
 //  MaVec
 //
 //  Created by andrew mcknight on 12/2/13.
@@ -35,11 +35,11 @@
 #import "MAVEigendecomposition.h"
 #import "MAVQRFactorization.h"
 
-@interface MAVNumericsTests : XCTestCase
+@interface MaVecTests : XCTestCase
 
 @end
 
-@implementation MAVNumericsTests
+@implementation MaVecTests
 
 - (void)setUp
 {

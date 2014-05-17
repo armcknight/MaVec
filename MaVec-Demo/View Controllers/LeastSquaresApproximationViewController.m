@@ -1,6 +1,6 @@
 //
 //  LinearApproximationViewController.m
-//  MAVNumerics
+//  MaVec-Demo
 //
 //  Created by andrew mcknight on 12/3/13.
 //

@@ -1,6 +1,6 @@
 //
 //  ApproximationView.m
-//  MAVNumerics
+//  MaVec-Demo
 //
 //  Created by andrew mcknight on 12/19/13.
 //

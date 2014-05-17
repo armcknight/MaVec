@@ -1,6 +1,6 @@
 //
 //  SVDImageCompressionViewController.m
-//  MAVNumerics
+//  MaVec-Demo
 //
 //  Created by andrew mcknight on 3/30/14.
 //
