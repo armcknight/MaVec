@@ -83,7 +83,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        [self.navigationController pushViewController:[[LeastSquaresApproximationViewController alloc] initWithNibName:@"LinearApproximationViewController" bundle:[NSBundle mainBundle]] animated:YES];
+        [self.navigationController pushViewController:[[LeastSquaresApproximationViewController alloc] initWithNibName:@"LeastSquaresApproximationViewController" bundle:[NSBundle mainBundle]] animated:YES];
     } else if (indexPath.row == 1) {
         [self.navigationController pushViewController:[[SVDImageCompressionViewController alloc] initWithNibName:@"SVDImageCompressionViewController" bundle:[NSBundle mainBundle]] animated:YES];
     }
