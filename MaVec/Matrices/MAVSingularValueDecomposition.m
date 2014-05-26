@@ -88,9 +88,13 @@
             free(singularValues);
             
             if (info == 0) {
-                _u = [MAVMatrix matrixWithValues:[NSData dataWithBytes:uValues length:uSize] rows:m columns:m];
-                _vT = [MAVMatrix matrixWithValues:[NSData dataWithBytes:vTValues length:vTSize] rows:n columns:n];
-                _s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:sValues length:sSize] rows:m columns:n];
+                _u = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:uValues length:uSize] rows:m columns:m];
+                _vT = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:vTValues length:vTSize] rows:n columns:n];
+                _s = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:sValues length:sSize] rows:m columns:n];
+            } else {
+                free(uValues);
+                free(vTValues);
+                free(sValues);
             }
         } else {
             float workSize;
@@ -136,9 +140,13 @@
             free(singularValues);
             
             if (info == 0) {
-                _u = [MAVMatrix matrixWithValues:[NSData dataWithBytes:uValues length:uSize] rows:m columns:m];
-                _vT = [MAVMatrix matrixWithValues:[NSData dataWithBytes:vTValues length:vTSize] rows:n columns:n];
-                _s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:sValues length:sSize] rows:m columns:n];
+                _u = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:uValues length:uSize] rows:m columns:m];
+                _vT = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:vTValues length:vTSize] rows:n columns:n];
+                _s = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:sValues length:sSize] rows:m columns:n];
+            } else {
+                free(uValues);
+                free(vTValues);
+                free(sValues);
             }
         }
     }

@@ -91,7 +91,7 @@
             free(tau);
             free(work);
             
-            data = [NSData dataWithBytes:a length:size];
+            data = [NSData dataWithBytesNoCopy:a length:size];
         } else {
             size_t size = m * m * sizeof(float);
             float *a = malloc(size);
@@ -126,7 +126,7 @@
             free(tau);
             free(work);
             
-            data = [NSData dataWithBytes:a length:size];
+            data = [NSData dataWithBytesNoCopy:a length:size];
         }
         
         // use output from dorgqr to build the q mcmatrix object

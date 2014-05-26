@@ -124,14 +124,14 @@
             [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
                 valuesArray[idx] = value.doubleValue;
             }];
-            _values = [NSData dataWithBytes:valuesArray length:size];
+            _values = [NSData dataWithBytesNoCopy:valuesArray length:size];
         } else {
             NSUInteger size = values.count * sizeof(float);
             float *valuesArray = malloc(size);
             [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
                 valuesArray[idx] = value.floatValue;
             }];
-            _values = [NSData dataWithBytes:valuesArray length:size];
+            _values = [NSData dataWithBytesNoCopy:valuesArray length:size];
         }
     }
     return self;
@@ -150,12 +150,12 @@
 
 + (instancetype)vectorWithValues:(NSData *)values length:(int)length
 {
-    return [[MAVVector alloc] initWithValues:values length:length vectorFormat:MAVVectorFormatColumnVector];
+    return [[self alloc] initWithValues:values length:length vectorFormat:MAVVectorFormatColumnVector];
 }
 
 + (instancetype)vectorWithValues:(NSData *)values length:(int)length vectorFormat:(MAVVectorFormat)vectorFormat
 {
-    return [[MAVVector alloc] initWithValues:values length:length vectorFormat:vectorFormat];
+    return [[self alloc] initWithValues:values length:length vectorFormat:vectorFormat];
 }
 
 - (instancetype)initWithValuesInArray:(NSArray *)values vectorFormat:(MAVVectorFormat)vectorFormat
@@ -169,12 +169,12 @@
 
 + (instancetype)vectorWithValuesInArray:(NSArray *)values
 {
-    return [[MAVVector alloc] initWithValuesInArray:values vectorFormat:MAVVectorFormatColumnVector];
+    return [[self alloc] initWithValuesInArray:values vectorFormat:MAVVectorFormatColumnVector];
 }
 
 + (instancetype)vectorWithValuesInArray:(NSArray *)values vectorFormat:(MAVVectorFormat)vectorFormat
 {
-    return [[MAVVector alloc] initWithValuesInArray:values vectorFormat:vectorFormat];
+    return [[self alloc] initWithValuesInArray:values vectorFormat:vectorFormat];
 }
 
 + (instancetype)randomVectorOfLength:(int)length
@@ -187,14 +187,14 @@
         for (int i = 0; i < length; i++) {
             values[i] = drand48();
         }
-        return [MAVVector vectorWithValues:[NSData dataWithBytes:values length:size] length:length vectorFormat:vectorFormat];
+        return [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:length vectorFormat:vectorFormat];
     } else {
         NSUInteger size = length * sizeof(float);
         float *values = malloc(size);
         for (int i = 0; i < length; i++) {
             values[i] = rand() / RAND_MAX;
         }
-        return [MAVVector vectorWithValues:[NSData dataWithBytes:values length:size] length:length vectorFormat:vectorFormat];
+        return [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:length vectorFormat:vectorFormat];
     }
 }
 
@@ -372,14 +372,14 @@
             size_t size = self.length * sizeof(double);
             double *absoluteValues = malloc(size);
             vDSP_vabsD(self.values.bytes, 1, absoluteValues, 1, self.length);
-            _absoluteVector = [MAVVector vectorWithValues:[NSData dataWithBytes:absoluteValues length:size]
+            _absoluteVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:absoluteValues length:size]
                                                   length:self.length
                                             vectorFormat:self.vectorFormat];
         } else {
             size_t size = self.length * sizeof(float);
             float *absoluteValues = malloc(size);
             vDSP_vabs(self.values.bytes, 1, absoluteValues, 1, self.length);
-            _absoluteVector = [MAVVector vectorWithValues:[NSData dataWithBytes:absoluteValues length:size]
+            _absoluteVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:absoluteValues length:size]
                                                   length:self.length
                                             vectorFormat:self.vectorFormat];
         }
@@ -525,13 +525,13 @@
         for (int i = 0; i < vector.length; i++) {
             newValues[i] = scalar.doubleValue * ((double *)vector.values.bytes)[i];
         }
-        product = [MAVVector vectorWithValues:[NSData dataWithBytes:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
+        product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
     } else {
         float *newValues = malloc(vector.length * sizeof(float));
         for (int i = 0; i < vector.length; i++) {
             newValues[i] = scalar.floatValue * ((float *)vector.values.bytes)[i];
         }
-        product = [MAVVector vectorWithValues:[NSData dataWithBytes:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
+        product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
     }
     
     return product;
@@ -547,11 +547,11 @@
     if (vectorA.precision == MCKValuePrecisionDouble) {
         double *sum = malloc(vectorA.length * sizeof(double));
         vDSP_vaddD(vectorA.values.bytes, 1, vectorB.values.bytes, 1, sum, 1, vectorA.length);
-        sumVector = [MAVVector vectorWithValues:[NSData dataWithBytes:sum length:vectorA.values.length] length:vectorA.length];
+        sumVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:sum length:vectorA.values.length] length:vectorA.length];
     } else {
         float *sum = malloc(vectorA.length * sizeof(float));
         vDSP_vadd(vectorA.values.bytes, 1, vectorB.values.bytes, 1, sum, 1, vectorA.length);
-        sumVector = [MAVVector vectorWithValues:[NSData dataWithBytes:sum length:vectorA.values.length] length:vectorA.length];
+        sumVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:sum length:vectorA.values.length] length:vectorA.length];
     }
     
     return sumVector;
@@ -567,11 +567,11 @@
     if (vectorSubtrahend.precision == MCKValuePrecisionDouble) {
         double *diff = malloc(vectorMinuend.length * sizeof(double));
         vDSP_vsubD(vectorSubtrahend.values.bytes, 1, vectorMinuend.values.bytes, 1, diff, 1, vectorMinuend.length);
-        differenceVector = [MAVVector vectorWithValues:[NSData dataWithBytes:diff length:vectorSubtrahend.values.length] length:vectorMinuend.length];
+        differenceVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:diff length:vectorSubtrahend.values.length] length:vectorMinuend.length];
     } else {
         float *diff = malloc(vectorMinuend.length * sizeof(float));
         vDSP_vsub(vectorSubtrahend.values.bytes, 1, vectorMinuend.values.bytes, 1, diff, 1, vectorMinuend.length);
-        differenceVector = [MAVVector vectorWithValues:[NSData dataWithBytes:diff length:vectorSubtrahend.values.length] length:vectorMinuend.length];
+        differenceVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:diff length:vectorSubtrahend.values.length] length:vectorMinuend.length];
     }
     
     return differenceVector;
@@ -587,11 +587,11 @@
     if (vectorA.precision == MCKValuePrecisionDouble) {
         double *product = malloc(vectorA.length * sizeof(double));
         vDSP_vmulD(vectorA.values.bytes, 1, vectorB.values.bytes, 1, product, 1, vectorA.length);
-        productVector = [MAVVector vectorWithValues:[NSData dataWithBytes:product length:vectorA.values.length] length:vectorA.length];
+        productVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:product length:vectorA.values.length] length:vectorA.length];
     } else {
         float *product = malloc(vectorA.length * sizeof(float));
         vDSP_vmul(vectorA.values.bytes, 1, vectorB.values.bytes, 1, product, 1, vectorA.length);
-        productVector = [MAVVector vectorWithValues:[NSData dataWithBytes:product length:vectorA.values.length] length:vectorA.length];
+        productVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:product length:vectorA.values.length] length:vectorA.length];
     }
     
     return productVector;
@@ -607,11 +607,11 @@
     if (vectorDividend.precision == MCKValuePrecisionDouble) {
         double *quotient = malloc(vectorDividend.length * sizeof(double));
         vDSP_vdivD(vectorDivisor.values.bytes, 1, vectorDividend.values.bytes, 1, quotient, 1, vectorDividend.length);
-        quotientVector = [MAVVector vectorWithValues:[NSData dataWithBytes:quotient length:vectorDividend.values.length] length:vectorDividend.length];
+        quotientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:quotient length:vectorDividend.values.length] length:vectorDividend.length];
     } else {
         float *quotient = malloc(vectorDividend.length * sizeof(float));
         vDSP_vdiv(vectorDivisor.values.bytes, 1, vectorDividend.values.bytes, 1, quotient, 1, vectorDividend.length);
-        quotientVector = [MAVVector vectorWithValues:[NSData dataWithBytes:quotient length:vectorDividend.values.length] length:vectorDividend.length];
+        quotientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:quotient length:vectorDividend.values.length] length:vectorDividend.length];
     }
     
     return quotientVector;
@@ -649,13 +649,13 @@
         values[0] = [vectorA valueAtIndex:1].doubleValue * [vectorB valueAtIndex:2].doubleValue - [vectorA valueAtIndex:2].doubleValue * [vectorB valueAtIndex:1].doubleValue;
         values[1] = [vectorA valueAtIndex:2].doubleValue * [vectorB valueAtIndex:0].doubleValue - [vectorA valueAtIndex:0].doubleValue * [vectorB valueAtIndex:2].doubleValue;
         values[2] = [vectorA valueAtIndex:0].doubleValue * [vectorB valueAtIndex:1].doubleValue - [vectorA valueAtIndex:1].doubleValue * [vectorB valueAtIndex:0].doubleValue;
-        crossProduct = [MAVVector vectorWithValues:[NSData dataWithBytes:values length:vectorA.values.length] length:vectorA.length];
+        crossProduct = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:vectorA.values.length] length:vectorA.length];
     } else {
         float *values = malloc(vectorA.length * sizeof(float));
         values[0] = [vectorA valueAtIndex:1].floatValue * [vectorB valueAtIndex:2].floatValue - [vectorA valueAtIndex:2].floatValue * [vectorB valueAtIndex:1].floatValue;
         values[1] = [vectorA valueAtIndex:2].floatValue * [vectorB valueAtIndex:0].floatValue - [vectorA valueAtIndex:0].floatValue * [vectorB valueAtIndex:2].floatValue;
         values[2] = [vectorA valueAtIndex:0].floatValue * [vectorB valueAtIndex:1].floatValue - [vectorA valueAtIndex:1].floatValue * [vectorB valueAtIndex:0].floatValue;
-        crossProduct = [MAVVector vectorWithValues:[NSData dataWithBytes:values length:vectorA.values.length] length:vectorA.length];
+        crossProduct = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:vectorA.values.length] length:vectorA.length];
     }
     
     return crossProduct;
@@ -682,17 +682,17 @@
         for (int i = 0; i < vector.length; i++) {
             powerValues[i] = pow([vector valueAtIndex:i].doubleValue, power);
         }
-        powerVector = [MAVVector vectorWithValues:[NSData dataWithBytes:powerValues length:vector.values.length]
-                                          length:vector.length
-                                    vectorFormat:vector.vectorFormat];
+		powerVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:powerValues length:vector.values.length]
+		                                   length:vector.length
+		                             vectorFormat:vector.vectorFormat];
     } else {
         float *powerValues = malloc(vector.length * sizeof(float));
         for (int i = 0; i < vector.length; i++) {
             powerValues[i] = powf([vector valueAtIndex:i].floatValue, power);
         }
-        powerVector = [MAVVector vectorWithValues:[NSData dataWithBytes:powerValues length:vector.values.length]
-                                          length:vector.length
-                                    vectorFormat:vector.vectorFormat];
+		powerVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:powerValues length:vector.values.length]
+		                                   length:vector.length
+		                             vectorFormat:vector.vectorFormat];
     }
     
     return powerVector;

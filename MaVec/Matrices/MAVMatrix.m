@@ -182,12 +182,12 @@ MAVMatrixNorm;
                 values[column * rows + i] = columnVector[i].doubleValue;
             }
         }];
-        matrix = [[MAVMatrix alloc] initWithValues:[NSData dataWithBytes:values length:size]
-                                             rows:rows
-                                          columns:columns
-                                 leadingDimension:MAVMatrixLeadingDimensionColumn
-                                    packingMethod:MAVMatrixValuePackingMethodConventional
-                              triangularComponent:MAVMatrixTriangularComponentBoth];
+		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:values length:size]
+		                                 rows:rows
+		                              columns:columns
+		                     leadingDimension:MAVMatrixLeadingDimensionColumn
+		                        packingMethod:MAVMatrixValuePackingMethodConventional
+		                  triangularComponent:MAVMatrixTriangularComponentBoth];
         matrix.precision = MCKValuePrecisionDouble;
     } else {
         size_t size = rows * columns * sizeof(float);
@@ -197,12 +197,12 @@ MAVMatrixNorm;
                 values[column * rows + i] = columnVector[i].floatValue;
             }
         }];
-        matrix = [[MAVMatrix alloc] initWithValues:[NSData dataWithBytes:values length:size]
-                                             rows:rows
-                                          columns:columns
-                                 leadingDimension:MAVMatrixLeadingDimensionColumn
-                                    packingMethod:MAVMatrixValuePackingMethodConventional
-                              triangularComponent:MAVMatrixTriangularComponentBoth];
+		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:values length:size]
+		                                 rows:rows
+		                              columns:columns
+		                     leadingDimension:MAVMatrixLeadingDimensionColumn
+		                        packingMethod:MAVMatrixValuePackingMethodConventional
+		                  triangularComponent:MAVMatrixTriangularComponentBoth];
         matrix.precision = MCKValuePrecisionSingle;
     }
     
@@ -225,12 +225,12 @@ MAVMatrixNorm;
                 values[row * columns + i] = value.doubleValue;
             }
         }];
-        matrix = [[MAVMatrix alloc] initWithValues:[NSData dataWithBytes:values length:size]
-                                             rows:rows
-                                          columns:columns
-                                 leadingDimension:MAVMatrixLeadingDimensionRow
-                                    packingMethod:MAVMatrixValuePackingMethodConventional
-                              triangularComponent:MAVMatrixTriangularComponentBoth];
+		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:values length:size]
+		                                 rows:rows
+		                              columns:columns
+		                     leadingDimension:MAVMatrixLeadingDimensionRow
+		                        packingMethod:MAVMatrixValuePackingMethodConventional
+		                  triangularComponent:MAVMatrixTriangularComponentBoth];
     } else {
         size_t size = rows * columns * sizeof(float);
         float *values = malloc(size);
@@ -240,12 +240,12 @@ MAVMatrixNorm;
                 values[row * columns + i] = value.floatValue;
             }
         }];
-        matrix = [[MAVMatrix alloc] initWithValues:[NSData dataWithBytes:values length:size]
-                                             rows:rows
-                                          columns:columns
-                                 leadingDimension:MAVMatrixLeadingDimensionRow
-                                    packingMethod:MAVMatrixValuePackingMethodConventional
-                              triangularComponent:MAVMatrixTriangularComponentBoth];
+		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:values length:size]
+		                                 rows:rows
+		                              columns:columns
+		                     leadingDimension:MAVMatrixLeadingDimensionRow
+		                        packingMethod:MAVMatrixValuePackingMethodConventional
+		                  triangularComponent:MAVMatrixTriangularComponentBoth];
     }
     
     return matrix;
@@ -259,20 +259,20 @@ MAVMatrixNorm;
     
     if (precision == MCKValuePrecisionDouble) {
         NSUInteger size = rows * columns * sizeof(double);
-        matrix = [[MAVMatrix alloc] initWithValues:[NSData dataWithBytes:malloc(size) length:size]
-                                             rows:rows
-                                          columns:columns
-                                 leadingDimension:MAVMatrixLeadingDimensionColumn
-                                    packingMethod:MAVMatrixValuePackingMethodConventional
-                              triangularComponent:MAVMatrixTriangularComponentBoth];
+		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:malloc(size) length:size]
+		                                 rows:rows
+		                              columns:columns
+		                     leadingDimension:MAVMatrixLeadingDimensionColumn
+		                        packingMethod:MAVMatrixValuePackingMethodConventional
+		                  triangularComponent:MAVMatrixTriangularComponentBoth];
     } else {
         NSUInteger size = rows * columns * sizeof(float);
-        matrix = [[MAVMatrix alloc] initWithValues:[NSData dataWithBytes:malloc(size) length:size]
-                                             rows:rows
-                                          columns:columns
-                                 leadingDimension:MAVMatrixLeadingDimensionColumn
-                                    packingMethod:MAVMatrixValuePackingMethodConventional
-                              triangularComponent:MAVMatrixTriangularComponentBoth];
+		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:malloc(size) length:size]
+		                                 rows:rows
+		                              columns:columns
+		                     leadingDimension:MAVMatrixLeadingDimensionColumn
+		                        packingMethod:MAVMatrixValuePackingMethodConventional
+		                  triangularComponent:MAVMatrixTriangularComponentBoth];
     }
     
     return matrix;
@@ -292,12 +292,12 @@ MAVMatrixNorm;
                             rows:(int)rows
                          columns:(int)columns
 {
-    return [[MAVMatrix alloc] initWithValues:values
-                                       rows:rows
-                                    columns:columns
-                           leadingDimension:MAVMatrixLeadingDimensionColumn
-                              packingMethod:MAVMatrixValuePackingMethodConventional
-                        triangularComponent:MAVMatrixTriangularComponentBoth];
+	return [[self alloc] initWithValues:values
+	                               rows:rows
+	                            columns:columns
+	                   leadingDimension:MAVMatrixLeadingDimensionColumn
+	                      packingMethod:MAVMatrixValuePackingMethodConventional
+	                triangularComponent:MAVMatrixTriangularComponentBoth];
 }
 
 + (instancetype)matrixWithValues:(NSData *)values
@@ -305,12 +305,12 @@ MAVMatrixNorm;
                          columns:(int)columns
                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
 {
-    return [[MAVMatrix alloc] initWithValues:values
-                                       rows:rows
-                                    columns:columns
-                           leadingDimension:leadingDimension
-                              packingMethod:MAVMatrixValuePackingMethodConventional
-                        triangularComponent:MAVMatrixTriangularComponentBoth];
+	return [[self alloc] initWithValues:values
+	                               rows:rows
+	                            columns:columns
+	                   leadingDimension:leadingDimension
+	                      packingMethod:MAVMatrixValuePackingMethodConventional
+	                triangularComponent:MAVMatrixTriangularComponentBoth];
 }
 
 + (instancetype)identityMatrixOfOrder:(int)order
@@ -326,9 +326,9 @@ MAVMatrixNorm;
                 values[i * order + j] = i == j ? 1.0 : 0.0;
             }
         }
-        matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
-                                       rows:order
-                                    columns:order];
+		matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:values length:size]
+		                                rows:order
+		                             columns:order];
     } else {
         NSUInteger size = order * order * sizeof(float);
         float *values = malloc(size);
@@ -337,9 +337,9 @@ MAVMatrixNorm;
                 values[i * order + j] = i == j ? 1.0 : 0.0;
             }
         }
-        matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
-                                       rows:order
-                                    columns:order];
+		matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:values length:size]
+		                                rows:order
+		                             columns:order];
     }
     
     return matrix;
@@ -356,12 +356,12 @@ MAVMatrixNorm;
                                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
                                            order:(int)order
 {
-    MAVMatrix *matrix = [[MAVMatrix alloc] initWithValues:values
-                                                   rows:order
-                                                columns:order
-                                       leadingDimension:leadingDimension
-                                          packingMethod:MAVMatrixValuePackingMethodPacked
-                                    triangularComponent:triangularComponent];
+	MAVMatrix *matrix = [[self alloc] initWithValues:values
+	                                            rows:order
+	                                         columns:order
+	                                leadingDimension:leadingDimension
+	                                   packingMethod:MAVMatrixValuePackingMethodPacked
+	                             triangularComponent:triangularComponent];
     matrix.isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueNo];
     return matrix;
 }
@@ -371,12 +371,12 @@ MAVMatrixNorm;
                                leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
                                           order:(int)order
 {
-    MAVMatrix *matrix = [[MAVMatrix alloc] initWithValues:values
-                                                   rows:order
-                                                columns:order
-                                       leadingDimension:leadingDimension
-                                          packingMethod:MAVMatrixValuePackingMethodPacked
-                                    triangularComponent:triangularComponent];
+	MAVMatrix *matrix = [[self alloc] initWithValues:values
+	                                            rows:order
+	                                         columns:order
+	                                leadingDimension:leadingDimension
+	                                   packingMethod:MAVMatrixValuePackingMethodPacked
+	                             triangularComponent:triangularComponent];
     matrix.isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueYes];
     return matrix;
 }
@@ -386,18 +386,18 @@ MAVMatrixNorm;
                     upperCodiagonals:(int)upperCodiagonals
                     lowerCodiagonals:(int)lowerCodiagonals
 {
-    MAVMatrix *matrix = [[MAVMatrix alloc] initWithValues:values
-                                                   rows:order
-                                                columns:order
-                                       leadingDimension:MAVMatrixLeadingDimensionColumn
-                                          packingMethod:MAVMatrixValuePackingMethodBand
-                                    triangularComponent:upperCodiagonals == 0
-                                                        ? (lowerCodiagonals == 0
-                                                           ? MAVMatrixTriangularComponentBoth
-                                                           : MAVMatrixTriangularComponentLower)
-                                                        : (lowerCodiagonals == 0
-                                                           ? MAVMatrixTriangularComponentUpper
-                                                           : MAVMatrixTriangularComponentLower)];
+	MAVMatrix *matrix = [[self alloc] initWithValues:values
+	                                            rows:order
+	                                         columns:order
+	                                leadingDimension:MAVMatrixLeadingDimensionColumn
+	                                   packingMethod:MAVMatrixValuePackingMethodBand
+	                             triangularComponent:upperCodiagonals == 0
+                                                    ? (lowerCodiagonals == 0
+                                                       ? MAVMatrixTriangularComponentBoth
+                                                       : MAVMatrixTriangularComponentLower)
+                                                    :(lowerCodiagonals == 0
+                                                       ? MAVMatrixTriangularComponentUpper
+                                                       : MAVMatrixTriangularComponentLower)];
     
     
     matrix.upperCodiagonals = upperCodiagonals;
@@ -419,7 +419,7 @@ MAVMatrixNorm;
         values[1] = -sin(directedAngle);
         values[2] = sin(directedAngle);
         values[3] = cos(directedAngle);
-        valueData = [NSData dataWithBytes:values length:size];
+        valueData = [NSData dataWithBytesNoCopy:values length:size];
     } else {
         float directedAngle = angle.floatValue * (direction == MAVAngleDirectionClockwise ? -1.0f : 1.0f);
         size_t size = 4 * sizeof(float);
@@ -428,7 +428,7 @@ MAVMatrixNorm;
         values[1] = -sinf(directedAngle);
         values[2] = sinf(directedAngle);
         values[3] = cosf(directedAngle);
-        valueData = [NSData dataWithBytes:values length:size];
+        valueData = [NSData dataWithBytesNoCopy:values length:size];
     }
     return [MAVMatrix matrixWithValues:valueData rows:2 columns:2 leadingDimension:MAVMatrixLeadingDimensionRow];
 }
@@ -469,7 +469,7 @@ MAVMatrixNorm;
                 
             default: break;
         }
-        valueData = [NSData dataWithBytes:values length:9 * sizeof(double)];
+        valueData = [NSData dataWithBytesNoCopy:values length:9 * sizeof(double)];
     } else {
         float directedAngle = angle.floatValue * (direction == MAVAngleDirectionClockwise ? -1.0f : 1.0f);
         float *values = calloc(9, sizeof(float));
@@ -501,7 +501,7 @@ MAVMatrixNorm;
                 
             default: break;
         }
-        valueData = [NSData dataWithBytes:values length:9 * sizeof(float)];
+        valueData = [NSData dataWithBytesNoCopy:values length:9 * sizeof(float)];
     }
     return [MAVMatrix matrixWithValues:valueData rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow];
 }
@@ -510,18 +510,18 @@ MAVMatrixNorm;
                              columns:(int)columns
                            precision:(MCKValuePrecision)precision
 {
-    return [MAVMatrix matrixWithValues:[self randomArrayOfSize:rows * columns precision:precision]
-                                 rows:rows
-                              columns:columns];
+	return [MAVMatrix matrixWithValues:[self randomArrayOfSize:rows * columns precision:precision]
+	                              rows:rows
+	                           columns:columns];
 }
 
 + (instancetype)randomSymmetricMatrixOfOrder:(int)order
                                    precision:(MCKValuePrecision)precision
 {
-    return [MAVMatrix symmetricMatrixWithPackedValues:[self randomArrayOfSize:(order * (order + 1))/2 precision:precision]
-                                 triangularComponent:MAVMatrixTriangularComponentUpper
-                                    leadingDimension:MAVMatrixLeadingDimensionColumn
-                                               order:order];
+	return [MAVMatrix symmetricMatrixWithPackedValues:[self randomArrayOfSize:(order * (order + 1)) / 2 precision:precision]
+	                              triangularComponent:MAVMatrixTriangularComponentUpper
+	                                 leadingDimension:MAVMatrixLeadingDimensionColumn
+	                                            order:order];
 }
 
 + (instancetype)randomDiagonalMatrixOfOrder:(int)order
@@ -535,10 +535,10 @@ MAVMatrixNorm;
                           triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                     precision:(MCKValuePrecision)precision
 {
-    return [MAVMatrix triangularMatrixWithPackedValues:[self randomArrayOfSize:(order * (order + 1))/2 precision:precision]
-                                ofTriangularComponent:triangularComponent
-                                     leadingDimension:MAVMatrixLeadingDimensionColumn
-                                                order:order];
+	return [MAVMatrix triangularMatrixWithPackedValues:[self randomArrayOfSize:(order * (order + 1)) / 2 precision:precision]
+	                             ofTriangularComponent:triangularComponent
+	                                  leadingDimension:MAVMatrixLeadingDimensionColumn
+	                                             order:order];
 }
 
 + (instancetype)randomBandMatrixOfOrder:(int)order
@@ -547,10 +547,10 @@ MAVMatrixNorm;
                               precision:(MCKValuePrecision)precision
 {
     int numberOfBandValues = (upperCodiagonals + lowerCodiagonals + 1) * order;
-    return [MAVMatrix bandMatrixWithValues:[self randomArrayOfSize:numberOfBandValues precision:precision]
-                                    order:order
-                         upperCodiagonals:upperCodiagonals
-                         lowerCodiagonals:lowerCodiagonals];
+	return [MAVMatrix bandMatrixWithValues:[self randomArrayOfSize:numberOfBandValues precision:precision]
+	                                 order:order
+	                      upperCodiagonals:upperCodiagonals
+	                      lowerCodiagonals:lowerCodiagonals];
 }
 
 + (instancetype)randomMatrixOfOrder:(int)order
@@ -580,7 +580,7 @@ MAVMatrixNorm;
                         positive = !positive;
                     }
                 }
-                valueData = [NSData dataWithBytes:values length:length];
+                valueData = [NSData dataWithBytesNoCopy:values length:length];
             } else {
                 size_t length = order * sizeof(float);
                 float *values = malloc(length);
@@ -595,7 +595,7 @@ MAVMatrixNorm;
                         positive = !positive;
                     }
                 }
-                valueData = [NSData dataWithBytes:values length:length];
+                valueData = [NSData dataWithBytesNoCopy:values length:length];
             }
             matrix = [MAVMatrix diagonalMatrixWithValues:valueData order:order];
         } break;
@@ -633,7 +633,7 @@ MAVMatrixNorm;
                         }
                     }
                 }
-                valueData = [NSData dataWithBytes:values length:length];
+                valueData = [NSData dataWithBytesNoCopy:values length:length];
             } else {
                 size_t length = order * sizeof(float);
                 float *values = malloc(length);
@@ -647,7 +647,7 @@ MAVMatrixNorm;
                         }
                     }
                 }
-                valueData = [NSData dataWithBytes:values length:length];
+                valueData = [NSData dataWithBytesNoCopy:values length:length];
             }
             matrix = [MAVMatrix diagonalMatrixWithValues:valueData order:order];
         } break;
@@ -668,7 +668,7 @@ MAVMatrixNorm;
                         }
                     }
                 }
-                valueData = [NSData dataWithBytes:values length:length];
+                valueData = [NSData dataWithBytesNoCopy:values length:length];
             } else {
                 size_t length = order * sizeof(float);
                 float *values = malloc(length);
@@ -682,7 +682,7 @@ MAVMatrixNorm;
                         }
                     }
                 }
-                valueData = [NSData dataWithBytes:values length:length];
+                valueData = [NSData dataWithBytesNoCopy:values length:length];
             }
             matrix = [MAVMatrix diagonalMatrixWithValues:valueData order:order];
         } break;
@@ -730,16 +730,15 @@ MAVMatrixNorm;
 {
     if (_transpose == nil) {
         NSData *aVals = [self valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
-        void *tVals;
         if ([aVals containsSinglePrecisionValues:(self.rows * self.columns)]) {
-            tVals = malloc(self.rows * self.columns * sizeof(float));
+            float *tVals = malloc(self.rows * self.columns * sizeof(float));
             vDSP_mtrans(aVals.bytes, 1, tVals, 1, self.columns, self.rows);
+            _transpose = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:tVals length:aVals.length] rows:self.columns columns:self.rows];
         } else  {
-            tVals = malloc(self.rows * self.columns * sizeof(double));
+            double *tVals = malloc(self.rows * self.columns * sizeof(double));
             vDSP_mtransD(aVals.bytes, 1, tVals, 1, self.columns, self.rows);
+            _transpose = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:tVals length:aVals.length] rows:self.columns columns:self.rows];
         }
-        
-        _transpose = [MAVMatrix matrixWithValues:[NSData dataWithBytes:tVals length:aVals.length] rows:self.columns columns:self.rows];
     }
     
     return _transpose;
@@ -861,10 +860,10 @@ MAVMatrixNorm;
                 free(work);
             }
             
-            _inverse = [MAVMatrix matrixWithValues:[NSData dataWithBytes:a length:columnMajorData.length]
-                                             rows:_rows
-                                          columns:_columns
-                               leadingDimension:MAVMatrixLeadingDimensionColumn];
+			_inverse = [MAVMatrix matrixWithValues:[NSData dataWithBytes:a length:columnMajorData.length]
+			                                  rows:_rows
+			                               columns:_columns
+			                      leadingDimension:MAVMatrixLeadingDimensionColumn];
         }
     }
     
@@ -1033,13 +1032,13 @@ MAVMatrixNorm;
             for (int i = 0; i < length; i += 1) {
                 values[i] = [self valueAtRow:i column:i].doubleValue;
             }
-            _diagonalValues = [MAVVector vectorWithValues:[NSData dataWithBytes:values length:length * sizeof(double)] length:length vectorFormat:MAVVectorFormatRowVector];
+            _diagonalValues = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:length * sizeof(double)] length:length vectorFormat:MAVVectorFormatRowVector];
         } else {
             float *values = malloc(length * sizeof(float));
             for (int i = 0; i < length; i += 1) {
                 values[i] = [self valueAtRow:i column:i].floatValue;
             }
-            _diagonalValues = [MAVVector vectorWithValues:[NSData dataWithBytes:values length:length * sizeof(float)] length:length vectorFormat:MAVVectorFormatRowVector];
+            _diagonalValues = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:length * sizeof(float)] length:length vectorFormat:MAVVectorFormatRowVector];
         }
     }
     return _diagonalValues;
@@ -1094,10 +1093,10 @@ MAVMatrixNorm;
             int minorIdx = 0;
             for (int row = 0; row < self.rows; row += 1) {
                 for (int col = 0; col < self.columns; col += 1) {
-                    MAVMatrix *submatrix = [MAVMatrix matrixWithRows:self.rows - 1
-                                                           columns:self.columns - 1
-                                                         precision:MCKValuePrecisionDouble
-                                                  leadingDimension:self.leadingDimension];
+					MAVMatrix *submatrix = [MAVMatrix matrixWithRows:self.rows - 1
+					                                         columns:self.columns - 1
+					                                       precision:MCKValuePrecisionDouble
+					                                leadingDimension:self.leadingDimension];
                     
                     for (int i = 0; i < self.rows; i++) {
                         for (int j = 0; j < self.rows; j++) {
@@ -1113,20 +1112,20 @@ MAVMatrixNorm;
                 }
             }
             
-            _minorMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:minorValues length:self.values.length]
-                                                 rows:self.rows
-                                              columns:self.columns
-                                     leadingDimension:MAVMatrixLeadingDimensionRow];
+			_minorMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:minorValues length:self.values.length]
+			                                      rows:self.rows
+			                                   columns:self.columns
+			                          leadingDimension:MAVMatrixLeadingDimensionRow];
         } else {
             float *minorValues = malloc(self.rows * self.columns * sizeof(float));
             
             int minorIdx = 0;
             for (int row = 0; row < self.rows; row += 1) {
                 for (int col = 0; col < self.columns; col += 1) {
-                    MAVMatrix *submatrix = [MAVMatrix matrixWithRows:self.rows - 1
-                                                           columns:self.columns - 1
-                                                         precision:MCKValuePrecisionSingle
-                                                  leadingDimension:self.leadingDimension];
+					MAVMatrix *submatrix = [MAVMatrix matrixWithRows:self.rows - 1
+					                                         columns:self.columns - 1
+					                                       precision:MCKValuePrecisionSingle
+					                                leadingDimension:self.leadingDimension];
                     
                     for (int i = 0; i < self.rows; i++) {
                         for (int j = 0; j < self.rows; j++) {
@@ -1142,10 +1141,10 @@ MAVMatrixNorm;
                 }
             }
             
-            _minorMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:minorValues length:self.values.length]
-                                                 rows:self.rows
-                                              columns:self.columns
-                                     leadingDimension:MAVMatrixLeadingDimensionRow];
+			_minorMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:minorValues length:self.values.length]
+			                                      rows:self.rows
+			                                   columns:self.columns
+			                          leadingDimension:MAVMatrixLeadingDimensionRow];
         }
         
     }
@@ -1169,10 +1168,10 @@ MAVMatrixNorm;
                 }
             }
             
-            _cofactorMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:cofactors length:size]
-                                                    rows:self.rows
-                                                 columns:self.columns
-                                        leadingDimension:MAVMatrixLeadingDimensionRow];
+			_cofactorMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:cofactors length:size]
+			                                         rows:self.rows
+			                                      columns:self.columns
+			                             leadingDimension:MAVMatrixLeadingDimensionRow];
         } else {
             size_t size = self.rows * self.columns * sizeof(float);
             float *cofactors = malloc(size);
@@ -1186,10 +1185,10 @@ MAVMatrixNorm;
                 }
             }
             
-            _cofactorMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:cofactors length:size]
-                                                    rows:self.rows
-                                                 columns:self.columns
-                                        leadingDimension:MAVMatrixLeadingDimensionRow];
+			_cofactorMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:cofactors length:size]
+			                                         rows:self.rows
+			                                      columns:self.columns
+			                             leadingDimension:MAVMatrixLeadingDimensionRow];
         }
     }
     
@@ -1297,7 +1296,7 @@ MAVMatrixNorm;
                         }
                     }
                 }
-                data = [NSData dataWithBytes:values length:size];
+                data = [NSData dataWithBytesNoCopy:values length:size];
             } else {
                 size_t size = self.rows * self.columns * sizeof(float);
                 float *values = malloc(size);
@@ -1315,7 +1314,7 @@ MAVMatrixNorm;
                         }
                     }
                 }
-                data = [NSData dataWithBytes:values length:size];
+                data = [NSData dataWithBytesNoCopy:values length:size];
             }
         } break;
             
@@ -1369,9 +1368,10 @@ MAVMatrixNorm;
                             i++;
                         }
                     }
+                    free(values);
                     values = cvalues;
                 }
-                data = [NSData dataWithBytes:values length:size];
+                data = [NSData dataWithBytesNoCopy:values length:size];
             } else {
                 size_t size = self.rows * self.columns * sizeof(float);
                 float *values = malloc(size);
@@ -1403,9 +1403,10 @@ MAVMatrixNorm;
                             i++;
                         }
                     }
+                    free(values);
                     values = cvalues;
                 }
-                data = [NSData dataWithBytes:values length:size];
+                data = [NSData dataWithBytesNoCopy:values length:size];
             }
         } break;
             
@@ -1452,7 +1453,7 @@ MAVMatrixNorm;
                         }
                     }
                 }
-                data = [NSData dataWithBytes:values length:size];
+                data = [NSData dataWithBytesNoCopy:values length:size];
             } else {
                 size_t size = self.rows * self.columns * sizeof(float);
                 float *values = malloc(size);
@@ -1467,7 +1468,7 @@ MAVMatrixNorm;
                         }
                     }
                 }
-                data = [NSData dataWithBytes:values length:size];
+                data = [NSData dataWithBytesNoCopy:values length:size];
             }
         } break;
             
@@ -1509,7 +1510,7 @@ MAVMatrixNorm;
                 }
             }
         }
-        data = [NSData dataWithBytes:values length:size];
+        data = [NSData dataWithBytesNoCopy:values length:size];
     } else {
         size_t size = numberOfValues * sizeof(float);
         float *values = malloc(size);
@@ -1529,7 +1530,7 @@ MAVMatrixNorm;
                 }
             }
         }
-        data = [NSData dataWithBytes:values length:size];
+        data = [NSData dataWithBytesNoCopy:values length:size];
     }
     
     return data;
@@ -1572,7 +1573,7 @@ MAVMatrixNorm;
                 }
             }
         }
-        data = [NSData dataWithBytes:values length:size];
+        data = [NSData dataWithBytesNoCopy:values length:size];
     } else {
         size_t size = numberOfValues * sizeof(float);
         float *values = malloc(size);
@@ -1597,7 +1598,7 @@ MAVMatrixNorm;
                 }
             }
         }
-        data = [NSData dataWithBytes:values length:size];
+        data = [NSData dataWithBytesNoCopy:values length:size];
     }
     
     return data;
@@ -1691,14 +1692,14 @@ MAVMatrixNorm;
         for (int col = 0; col < self.columns; col += 1) {
             values[col] = [self valueAtRow:row column:col].doubleValue;
         }
-        vector = [MAVVector vectorWithValues:[NSData dataWithBytes:values length:size] length:self.columns vectorFormat:MAVVectorFormatRowVector];
+        vector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:self.columns vectorFormat:MAVVectorFormatRowVector];
     } else {
         size_t size = self.columns * sizeof(float);
         float *values = malloc(size);
         for (int col = 0; col < self.columns; col += 1) {
             values[col] = [self valueAtRow:row column:col].floatValue;
         }
-        vector = [MAVVector vectorWithValues:[NSData dataWithBytes:values length:size] length:self.columns vectorFormat:MAVVectorFormatRowVector];
+        vector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:self.columns vectorFormat:MAVVectorFormatRowVector];
     }
     
     return vector;
@@ -1716,14 +1717,14 @@ MAVMatrixNorm;
         for (int row = 0; row < self.rows; row += 1) {
             values[row] = [self valueAtRow:row column:column].doubleValue;
         }
-        vector = [MAVVector vectorWithValues:[NSData dataWithBytes:values length:size] length:self.rows vectorFormat:MAVVectorFormatColumnVector];
+        vector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:self.rows vectorFormat:MAVVectorFormatColumnVector];
     } else {
         size_t size = self.rows * sizeof(float);
         float *values = malloc(size);
         for (int row = 0; row < self.rows; row += 1) {
             values[row] = [self valueAtRow:row column:column].floatValue;
         }
-        vector = [MAVVector vectorWithValues:[NSData dataWithBytes:values length:size] length:self.rows vectorFormat:MAVVectorFormatColumnVector];
+        vector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:self.rows vectorFormat:MAVVectorFormatColumnVector];
     }
     
     return vector;
@@ -1828,12 +1829,12 @@ MAVMatrixNorm;
         size_t size = matrixA.rows * matrixB.columns * sizeof(double);
         double *cVals = malloc(size);
         vDSP_mmulD(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
-        matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:cVals length:size] rows:matrixA.rows columns:matrixB.columns leadingDimension:MAVMatrixLeadingDimensionRow];
+        matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:cVals length:size] rows:matrixA.rows columns:matrixB.columns leadingDimension:MAVMatrixLeadingDimensionRow];
     } else {
         size_t size = matrixA.rows * matrixB.columns * sizeof(float);
         float *cVals = malloc(size);
         vDSP_mmul(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
-        matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:cVals length:size] rows:matrixA.rows columns:matrixB.columns leadingDimension:MAVMatrixLeadingDimensionRow];
+        matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:cVals length:size] rows:matrixA.rows columns:matrixB.columns leadingDimension:MAVMatrixLeadingDimensionRow];
     }
     
     return matrix;
@@ -1926,9 +1927,9 @@ MAVMatrixNorm;
                 free(ipiv);
                 free(a);
                 free(b);
-                matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:size]
-                                               rows:n
-                                            columns:1];
+				matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size]
+				                                rows:n
+				                             columns:1];
             }
         } else {
             float *a = malloc(n * n * sizeof(float));
@@ -1956,9 +1957,9 @@ MAVMatrixNorm;
                 free(ipiv);
                 free(a);
                 free(b);
-                matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:size]
-                                               rows:n
-                                            columns:1];
+				matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size]
+				                                rows:n
+				                             columns:1];
             }
         }
     } else {
@@ -2020,9 +2021,9 @@ MAVMatrixNorm;
                 free(a);
                 free(b);
                 free(work);
-                matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:size]
-                                               rows:n
-                                            columns:1];
+				matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size]
+				                                rows:n
+				                             columns:1];
             }
         } else {
             float wkopt;
@@ -2059,9 +2060,9 @@ MAVMatrixNorm;
                 free(a);
                 free(b);
                 free(work);
-                matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solutionValues length:size]
-                                               rows:n
-                                            columns:1];
+				matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size]
+				                                rows:n
+				                             columns:1];
             }
         }
     }
@@ -2084,11 +2085,11 @@ MAVMatrixNorm;
     if (matrix.precision == MCKValuePrecisionDouble) {
         double *result = calloc(vector.length, sizeof(double));
         cblas_dgemv(order, transpose, rows, cols, 1.0, matrix.values.bytes, rows, vector.values.bytes, 1, 1.0, result, 1);
-        product = [MAVVector vectorWithValues:[NSData dataWithBytes:result length:vector.values.length] length:vector.length];
+        product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:result length:vector.values.length] length:vector.length];
     } else {
         float *result = calloc(vector.length, sizeof(float));
         cblas_sgemv(order, transpose, rows, cols, 1.0f, matrix.values.bytes, rows, vector.values.bytes, 1, 1.0f, result, 1);
-        product = [MAVVector vectorWithValues:[NSData dataWithBytes:result length:vector.values.length] length:vector.length];
+        product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:result length:vector.values.length] length:vector.length];
     }
     
     return product;
@@ -2105,10 +2106,10 @@ MAVMatrixNorm;
         for (int i = 0; i < valueCount; i++) {
             values[i] = ((double *)matrix.values.bytes)[i] * scalar.doubleValue;
         }
-        product = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
-                                        rows:matrix.rows
-                                     columns:matrix.columns
-                            leadingDimension:matrix.leadingDimension];
+		product = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:values length:size]
+		                                 rows:matrix.rows
+		                              columns:matrix.columns
+		                     leadingDimension:matrix.leadingDimension];
     }
     else {
         size_t size = valueCount * sizeof(float);
@@ -2116,10 +2117,10 @@ MAVMatrixNorm;
         for (int i = 0; i < valueCount; i++) {
             values[i] = ((float *)matrix.values.bytes)[i] * scalar.floatValue;
         }
-        product = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:size]
-                                        rows:matrix.rows
-                                     columns:matrix.columns
-                            leadingDimension:matrix.leadingDimension];
+		product = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:values length:size]
+		                                 rows:matrix.rows
+		                              columns:matrix.columns
+		                     leadingDimension:matrix.leadingDimension];
     }
     
     return product;
@@ -2162,13 +2163,13 @@ MAVMatrixNorm;
         for (int i = 0; i < _values.length / sizeof(double); i++) {
             values[i] = ((double *)_values.bytes)[i];
         }
-        matrixCopy->_values = [NSData dataWithBytes:values length:_values.length];
+        matrixCopy->_values = [NSData dataWithBytesNoCopy:values length:_values.length];
     } else {
         float *values = malloc(_values.length);
         for (int i = 0; i < _values.length / sizeof(float); i++) {
             values[i] = ((float *)_values.bytes)[i];
         }
-        matrixCopy->_values = [NSData dataWithBytes:values length:_values.length];
+        matrixCopy->_values = [NSData dataWithBytesNoCopy:values length:_values.length];
     }
     
     matrixCopy->_transpose = _transpose.copy;
@@ -2210,14 +2211,14 @@ MAVMatrixNorm;
         for (int i = 0; i < size; i += 1) {
             values[i] = randomDouble;
         }
-        data = [NSData dataWithBytes:values length:dataSize];
+        data = [NSData dataWithBytesNoCopy:values length:dataSize];
     } else {
         NSUInteger dataSize = size * sizeof(float);
         float *values = malloc(dataSize);
         for (int i = 0; i < size; i += 1) {
             values[i] = randomFloat;
         }
-        data = [NSData dataWithBytes:values length:dataSize];
+        data = [NSData dataWithBytesNoCopy:values length:dataSize];
     }
     
     return data;

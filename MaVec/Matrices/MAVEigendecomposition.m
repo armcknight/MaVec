@@ -66,8 +66,10 @@
                 free(iwork);
                 
                 if (info == 0) {
-                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytes:w length:size] length:n];
+                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:w length:size] length:n];
                     _eigenvectors = [MAVMatrix matrixWithValues:a rows:n columns:n];
+                } else {
+                    free(w);
                 }
             } else {
                 size_t size = n * sizeof(float);
@@ -85,8 +87,10 @@
                 free(iwork);
                 
                 if (info == 0) {
-                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytes:w length:size] length:n];
+                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:w length:size] length:n];
                     _eigenvectors = [MAVMatrix matrixWithValues:a rows:n columns:n];
+                } else {
+                    free(w);
                 }
             }
         } else {
@@ -117,8 +121,11 @@
                 free(work);
                 
                 if (info == 0) {
-                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
-                    _eigenvectors = [MAVMatrix matrixWithValues:[NSData dataWithBytes:vr length:n * size] rows:n columns:n];
+                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:wr length:size] length:n];
+                    _eigenvectors = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:vr length:n * size] rows:n columns:n];
+                } else {
+                    free(wr);
+                    free(vr);
                 }
             } else {
                 size_t size = n * sizeof(float);
@@ -138,8 +145,11 @@
                 free(work);
                 
                 if (info == 0) {
-                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytes:wr length:size] length:n];
-                    _eigenvectors = [MAVMatrix matrixWithValues:[NSData dataWithBytes:vr length:n * size] rows:n columns:n];
+                    _eigenvalues = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:wr length:size] length:n];
+                    _eigenvectors = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:vr length:n * size] rows:n columns:n];
+                } else {
+                    free(wr);
+                    free(vr);
                 }
             }
             
