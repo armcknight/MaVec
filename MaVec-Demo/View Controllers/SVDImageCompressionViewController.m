@@ -149,7 +149,7 @@
 //    CGImageRelease(imageRef); // bad access
     free(rawData);
     
-    MAVMatrix *grayscaleMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:grayscaleValues length:numberOfPixels*sizeof(double)] rows:(int)height columns:(int)width];
+    MAVMatrix *grayscaleMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:grayscaleValues length:numberOfPixels*sizeof(double)] rows:(int)height columns:(int)width];
     
     return grayscaleMatrix;
 }
@@ -185,6 +185,10 @@
     return croppedImage;
 }
 
+void freePixelValues(void *info, const void *data, size_t size) {
+    free((unsigned char *)data);
+}
+
 // adapted from http://stackoverflow.com/questions/4545237/creating-uiimage-from-raw-rgba-data
 - (UIImage *)compressedImageWithSingularValues:(int)singularValues
 {
@@ -212,7 +216,7 @@
         pixelValues[4 * i + 3] = 255;
     }
     
-    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, pixelValues, size * 4, NULL);
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, pixelValues, size * 4, (CGDataProviderReleaseDataCallback)&freePixelValues);
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGImageRef imageRef = CGImageCreate(sum.columns,
                                         sum.rows,

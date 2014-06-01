@@ -108,8 +108,8 @@
             bVals[i] = ((MAVPoint *)self.points[i]).y;
         }
         
-        MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:(int)self.points.count columns:self.order leadingDimension:MAVMatrixLeadingDimensionRow];
-        MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:(int)self.points.count columns:1];
+        MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:aVals length:aSize] rows:(int)self.points.count columns:self.order leadingDimension:MAVMatrixLeadingDimensionRow];
+        MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:bVals length:bSize] rows:(int)self.points.count columns:1];
         
         MAVMatrix *coefficients = [MAVMatrix solveLinearSystemWithMatrixA:a valuesB:b];
         
