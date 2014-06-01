@@ -205,9 +205,10 @@
     unsigned char *pixelValues = malloc(size * 4);
     for (int i = 0; i < size; i++) {
         double grayscaleValue = ((double *)sum.values.bytes)[i];
-        pixelValues[4 * i] = grayscaleValue * 255;
-        pixelValues[4 * i + 1] = grayscaleValue * 255;
-        pixelValues[4 * i + 2] = grayscaleValue * 255;
+        double bitValue = MIN(255.0, MAX(0.0, grayscaleValue * 255));
+        pixelValues[4 * i] = bitValue;
+        pixelValues[4 * i + 1] = bitValue;
+        pixelValues[4 * i + 2] = bitValue;
         pixelValues[4 * i + 3] = 255;
     }
     
