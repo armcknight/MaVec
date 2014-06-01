@@ -146,7 +146,7 @@
     
     CGContextRelease(context);
     CGColorSpaceRelease(colorSpace);
-    CGImageRelease(imageRef);
+//    CGImageRelease(imageRef); // bad access
     free(rawData);
     
     MAVMatrix *grayscaleMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:grayscaleValues length:numberOfPixels*sizeof(double)] rows:(int)height columns:(int)width];
@@ -230,7 +230,7 @@
     CGImageRelease(imageRef);
     CGDataProviderRelease(provider);
     CGColorSpaceRelease(colorSpace);
-//    free(pixelValues);
+//    free(pixelValues); // bad access
     
     return compressedImage;
 }
