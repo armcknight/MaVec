@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491FF1A5193BC6FA00A5F3CE /* MAVMutableMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */; };
+		491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */; };
 		499734AF192594DF0004A8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734AE192594DF0004A8E5 /* Foundation.framework */; };
 		499734B1192594DF0004A8E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B0192594DF0004A8E5 /* CoreGraphics.framework */; };
 		499734B3192594DF0004A8E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B2192594DF0004A8E5 /* UIKit.framework */; };
@@ -72,6 +74,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableMatrix.h; sourceTree = "<group>"; };
+		491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableMatrix.m; sourceTree = "<group>"; };
+		491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAVMutableVector.h; path = ../Matrices/MAVMutableVector.h; sourceTree = "<group>"; };
+		491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAVMutableVector.m; path = ../Matrices/MAVMutableVector.m; sourceTree = "<group>"; };
 		499734AB192594DF0004A8E5 /* MaVec-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		499734AE192594DF0004A8E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		499734B0192594DF0004A8E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -351,6 +357,8 @@
 				4997352E192596BE0004A8E5 /* MAVLUFactorization.m */,
 				4997352F192596BE0004A8E5 /* MAVMatrix.h */,
 				49973530192596BE0004A8E5 /* MAVMatrix.m */,
+				491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */,
+				491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */,
 				49973531192596BE0004A8E5 /* MAVQRFactorization.h */,
 				49973532192596BE0004A8E5 /* MAVQRFactorization.m */,
 				49973533192596BE0004A8E5 /* MAVSingularValueDecomposition.h */,
@@ -362,6 +370,8 @@
 		49973535192596BE0004A8E5 /* Vectors */ = {
 			isa = PBXGroup;
 			children = (
+				491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */,
+				491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */,
 				49973536192596BE0004A8E5 /* MAVVector.h */,
 				49973537192596BE0004A8E5 /* MAVVector.m */,
 			);
@@ -578,6 +588,7 @@
 			files = (
 				499735C01925A0290004A8E5 /* MCKQuadratic.m in Sources */,
 				49973524192596B70004A8E5 /* LeastSquaresApproximationViewController.m in Sources */,
+				491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */,
 				49973563192599AB0004A8E5 /* RZObserverCollection.m in Sources */,
 				49973539192596BE0004A8E5 /* MAVLUFactorization.m in Sources */,
 				4997355F192599AB0004A8E5 /* RZCollectionListTableViewDataSource.m in Sources */,
@@ -590,6 +601,7 @@
 				4997353C192596BE0004A8E5 /* MAVSingularValueDecomposition.m in Sources */,
 				4997355C192599AB0004A8E5 /* RZBaseCollectionList.m in Sources */,
 				499735BF1925A0290004A8E5 /* MCKPolynomial.m in Sources */,
+				491FF1A5193BC6FA00A5F3CE /* MAVMutableMatrix.m in Sources */,
 				49973562192599AB0004A8E5 /* RZFilteredCollectionList.m in Sources */,
 				499735BB1925A0290004A8E5 /* MCKComplexNumber.m in Sources */,
 				49973523192596B70004A8E5 /* DemoChoiceTableViewController.m in Sources */,
