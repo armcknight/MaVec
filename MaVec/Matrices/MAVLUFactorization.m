@@ -29,6 +29,7 @@
 
 #import "MAVLUFactorization.h"
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MCKNumberFormats.h"
 
 @implementation MAVLUFactorization
@@ -48,9 +49,9 @@
         int lda = m;
         int *ipiv = malloc(MIN(m, n) * sizeof(int));
         int info = 0;
-        MAVMatrix *l = [MAVMatrix matrixWithRows:m columns:n precision:matrix.precision];
-        MAVMatrix *u = [MAVMatrix matrixWithRows:n columns:m precision:matrix.precision];
-        MAVMatrix *p = [MAVMatrix identityMatrixOfOrder:MIN(m, n) precision:matrix.precision];
+        MAVMutableMatrix *l = [MAVMutableMatrix matrixWithRows:m columns:n precision:matrix.precision];
+        MAVMutableMatrix *u = [MAVMutableMatrix matrixWithRows:n columns:m precision:matrix.precision];
+        MAVMutableMatrix *p = [MAVMutableMatrix identityMatrixOfOrder:MIN(m, n) precision:matrix.precision];
         
         if (matrix.precision == MCKValuePrecisionDouble) {
             dgetrf_(&m, &n, (double *)columnMajorValues.bytes, &lda, ipiv, &info);

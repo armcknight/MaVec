@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 
 @interface MAVMatrixCopyAndEqualityTests : XCTestCase
 
@@ -73,8 +74,8 @@
     for (int i = 0; i < size; i++) {
         cValues[i] = i;
     }
-    MAVMatrix *c = [MAVMatrix matrixWithValues:[NSData dataWithBytes:cValues length:16*sizeof(double)] rows:4 columns:4];
-    MAVMatrix *cr = [MAVMatrix matrixWithValues:[c valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow] rows:c.rows columns:c.columns leadingDimension:MAVMatrixLeadingDimensionRow];
+    MAVMutableMatrix *c = [MAVMutableMatrix matrixWithValues:[NSData dataWithBytes:cValues length:16*sizeof(double)] rows:4 columns:4];
+    MAVMutableMatrix *cr = [MAVMutableMatrix matrixWithValues:[c valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow] rows:c.rows columns:c.columns leadingDimension:MAVMatrixLeadingDimensionRow];
     
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
