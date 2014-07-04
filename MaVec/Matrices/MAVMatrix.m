@@ -1937,55 +1937,71 @@ MAVMatrixNorm;
 {
     MAVMatrix *matrixCopy = [[self class] allocWithZone:zone];
     
-    matrixCopy->_columns = _columns;
-    matrixCopy->_rows = _rows;
-    matrixCopy->_leadingDimension = _leadingDimension;
-    matrixCopy->_triangularComponent = _triangularComponent;
-    matrixCopy->_packingMethod = _packingMethod;
-    matrixCopy->_definiteness = _definiteness;
-    matrixCopy->_precision = _precision;
-    
-    if (_precision == MCKValuePrecisionDouble) {
-        double *values = malloc(_values.length);
-        for (int i = 0; i < _values.length / sizeof(double); i++) {
-            values[i] = ((double *)_values.bytes)[i];
-        }
-        matrixCopy->_values = [NSData dataWithBytesNoCopy:values length:_values.length];
-    } else {
-        float *values = malloc(_values.length);
-        for (int i = 0; i < _values.length / sizeof(float); i++) {
-            values[i] = ((float *)_values.bytes)[i];
-        }
-        matrixCopy->_values = [NSData dataWithBytesNoCopy:values length:_values.length];
-    }
-    
-    matrixCopy->_transpose = _transpose.copy;
-    matrixCopy->_determinant = _determinant.copy;
-    matrixCopy->_inverse = _inverse.copy;
-    matrixCopy->_adjugate = _adjugate.copy;
-    matrixCopy->_conditionNumber = _conditionNumber.copy;
-    matrixCopy->_qrFactorization = _qrFactorization.copy;
-    matrixCopy->_luFactorization = _luFactorization.copy;
-    matrixCopy->_singularValueDecomposition = _singularValueDecomposition.copy;
-    matrixCopy->_eigendecomposition = _eigendecomposition.copy;
-    matrixCopy->_diagonalValues = _diagonalValues.copy;
-    matrixCopy->_minorMatrix = _minorMatrix.copy;
-    matrixCopy->_cofactorMatrix = _cofactorMatrix.copy;
-    matrixCopy->_isSymmetric = _isSymmetric.copy;
-    matrixCopy->_trace = _trace.copy;
-    matrixCopy->_normInfinity = _normInfinity.copy;
-    matrixCopy->_normL1 = _normL1.copy;
-    matrixCopy->_normFroebenius = _normFroebenius.copy;
-    matrixCopy->_normMax = _normMax.copy;
-    
-    matrixCopy->_bandwidth = _bandwidth;
-    matrixCopy->_numberOfBandValues = _numberOfBandValues;
-    matrixCopy->_upperCodiagonals = _upperCodiagonals;
+    [self deepCopyMatrix:self intoNewMatrix:matrixCopy];
     
     return matrixCopy;
 }
 
+#pragma mark - NSMutableCopying
+
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+    MAVMutableMatrix *mutableCopy = [MAVMutableMatrix allocWithZone:zone];
+    
+    [self deepCopyMatrix:self intoNewMatrix:mutableCopy];
+    
+    return mutableCopy;
+}
+
 #pragma mark - Private interface
+
+- (void)deepCopyMatrix:(MAVMatrix *)matrix intoNewMatrix:(MAVMatrix *)newMatrix
+{
+    newMatrix->_columns = matrix->_columns;
+    newMatrix->_rows = matrix->_rows;
+    newMatrix->_leadingDimension = matrix->_leadingDimension;
+    newMatrix->_triangularComponent = matrix->_triangularComponent;
+    newMatrix->_packingMethod = matrix->_packingMethod;
+    newMatrix->_definiteness = matrix->_definiteness;
+    newMatrix->_precision = matrix->_precision;
+    
+    if (_precision == MCKValuePrecisionDouble) {
+        double *values = malloc(matrix->_values.length);
+        for (int i = 0; i < matrix->_values.length / sizeof(double); i++) {
+            values[i] = ((double *)matrix->_values.bytes)[i];
+        }
+        newMatrix->_values = [NSData dataWithBytesNoCopy:values length:matrix->_values.length];
+    } else {
+        float *values = malloc(matrix->_values.length);
+        for (int i = 0; i < matrix->_values.length / sizeof(float); i++) {
+            values[i] = ((float *)matrix->_values.bytes)[i];
+        }
+        newMatrix->_values = [NSData dataWithBytesNoCopy:values length:matrix->_values.length];
+    }
+    
+    newMatrix->_transpose = matrix->_transpose.copy;
+    newMatrix->_determinant = matrix->_determinant.copy;
+    newMatrix->_inverse = matrix->_inverse.copy;
+    newMatrix->_adjugate = matrix->_adjugate.copy;
+    newMatrix->_conditionNumber = matrix->_conditionNumber.copy;
+    newMatrix->_qrFactorization = matrix->_qrFactorization.copy;
+    newMatrix->_luFactorization = matrix->_luFactorization.copy;
+    newMatrix->_singularValueDecomposition = matrix->_singularValueDecomposition.copy;
+    newMatrix->_eigendecomposition = matrix->_eigendecomposition.copy;
+    newMatrix->_diagonalValues = matrix->_diagonalValues.copy;
+    newMatrix->_minorMatrix = matrix->_minorMatrix.copy;
+    newMatrix->_cofactorMatrix = matrix->_cofactorMatrix.copy;
+    newMatrix->_isSymmetric = matrix->_isSymmetric.copy;
+    newMatrix->_trace = matrix->_trace.copy;
+    newMatrix->_normInfinity = matrix->_normInfinity.copy;
+    newMatrix->_normL1 = matrix->_normL1.copy;
+    newMatrix->_normFroebenius = matrix->_normFroebenius.copy;
+    newMatrix->_normMax = matrix->_normMax.copy;
+    
+    newMatrix->_bandwidth = matrix->_bandwidth;
+    newMatrix->_numberOfBandValues = matrix->_numberOfBandValues;
+    newMatrix->_upperCodiagonals = matrix->_upperCodiagonals;
+}
 
 + (NSData *)randomArrayOfSize:(int)size
                     precision:(MCKValuePrecision)precision

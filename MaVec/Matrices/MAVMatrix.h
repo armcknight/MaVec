@@ -187,7 +187,7 @@ MAVCoordinateAxis;
  @class MAVMatrix
  @description A class providing storage and operations for matrices of double-precision floating point numbers, where underlying details governing how the two-dimensional structure is reduced to the one-dimensional array containing its values (packing, leading dimension, or other internal value representation method) is abstracted away for any operation or property.
  */
-@interface MAVMatrix : NSObject <NSCopying>
+@interface MAVMatrix : NSObject <NSCopying, NSMutableCopying>
 
 /**
  @property rows 
