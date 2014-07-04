@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVSingularValueDecomposition.h"
 
 @interface MAVSingularValueDecompositionTests : XCTestCase
@@ -63,8 +64,7 @@
     
     MAVSingularValueDecomposition *svd = a.singularValueDecomposition;
     
-    MAVMatrix *intermediate = [MAVMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
-    MAVMatrix *original = [MAVMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
+    MAVMatrix *original = [[[svd.u mutableCopy] multiplyByMatrix:svd.s] multiplyByMatrix:svd.vT];
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 2; j++) {
@@ -90,8 +90,7 @@
     
     MAVSingularValueDecomposition *svd = a.singularValueDecomposition;
     
-    MAVMatrix *intermediate = [MAVMatrix productOfMatrixA:svd.u andMatrixB:svd.s];
-    MAVMatrix *original = [MAVMatrix productOfMatrixA:intermediate andMatrixB:svd.vT];
+    MAVMatrix *original = [[[svd.u mutableCopy] multiplyByMatrix:svd.s] multiplyByMatrix:svd.vT];
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 4; j++) {

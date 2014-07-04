@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVEigendecomposition.h"
 #import "MAVVector.h"
 
@@ -66,7 +67,7 @@
     for (int i = 0; i < 5; i += 1) {
         MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
-        MAVVector *left = [MAVMatrix productOfMatrix:o andVector:eigenvector];
+        MAVVector *left = [[[o mutableCopy] multiplyByVector:eigenvector] columnVectorForColumn:0];
         MAVVector *right = [MAVVector productOfVector:eigenvector scalar:eigenvalue];
         for (int j = 0; j < 5; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
@@ -93,7 +94,7 @@
     for (int i = 0; i < 4; i += 1) {
         MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
-        MAVVector *left = [MAVMatrix productOfMatrix:source andVector:eigenvector];
+        MAVVector *left = [[[source mutableCopy] multiplyByVector:eigenvector] columnVectorForColumn:0];
         MAVVector *right = [MAVVector productOfVector:eigenvector scalar:eigenvalue];
         for (int j = 0; j < 4; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;

@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVVector.h"
 
 @interface MAVMatrixMultiplicationTests : XCTestCase
@@ -65,7 +66,7 @@
     MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:size] rows:2 columns:2];
     MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bVals length:size] rows:2 columns:2];
     
-    MAVMatrix *p = [MAVMatrix productOfMatrixA:a andMatrixB:b];
+    MAVMatrix *p = [[a mutableCopy] multiplyByMatrix:b];
     
     double *solution = malloc(size);
     solution[0] = 22.0;
@@ -107,7 +108,7 @@
     MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:2 columns:3];
     MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bVals length:bSize] rows:3 columns:3];
     
-    MAVMatrix *p = [MAVMatrix productOfMatrixA:a andMatrixB:b];
+    MAVMatrix *p = [[a mutableCopy] multiplyByMatrix:b];
     
     double *solution = malloc(aSize);
     solution[0] = -3.0;
@@ -142,7 +143,7 @@
     };
     MAVVector *vector = [MAVVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3*sizeof(double)] length:3];
     
-    MAVVector *product = [MAVMatrix productOfMatrix:matrix andVector:vector];
+    MAVVector *product = [[matrix mutableCopy] multiplyByVector:vector];
     double productSolution[3] = {
         -77.0, -15.0, 21.0
     };
@@ -163,7 +164,7 @@
                                           columns:3
                                  leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    MAVMatrix *product = [MAVMatrix productOfMatrix:matrix andScalar:@7.2];
+    MAVMatrix *product = [[matrix mutableCopy] multiplyByScalar:@7.2];
     
     double solutionValues[9] = {
         -64.8, 28.8, -64.8,
@@ -190,7 +191,7 @@
                                           columns:3
                                  leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    MAVMatrix *power = [MAVMatrix raiseMatrix:matrix toPower:4];
+    MAVMatrix *power = [[matrix mutableCopy] raiseToPower:4];
     
     double solutionValues[9] = {
         -12317.0, 8660.0, -16241.0,

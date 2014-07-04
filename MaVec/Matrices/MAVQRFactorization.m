@@ -29,6 +29,7 @@
 
 #import "MAVQRFactorization.h"
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MCKNumberFormats.h"
 
 @interface MAVQRFactorization ()
@@ -133,7 +134,7 @@
         _q = [MAVMatrix matrixWithValues:data rows:m columns:m leadingDimension:MAVMatrixLeadingDimensionColumn];
         
         // compute r by multiplying the transpose of q by the input matrix
-        _r = [MAVMatrix productOfMatrixA:_q.transpose andMatrixB:matrix];
+        _r = [[_q.transpose mutableCopy] multiplyByMatrix:matrix];
     }
     return self;
 }

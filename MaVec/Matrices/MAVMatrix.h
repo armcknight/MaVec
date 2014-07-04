@@ -685,53 +685,11 @@ MAVCoordinateAxis;
 #pragma mark - Class-level operations
 
 /**
- @description Performs matrix multiplication on matrices A and B. Note that matrix multiplication is not commutative--in general, A x B ¬= B x A. Raises an NSInvalidArgumentException if A and B are not of compatible dimensions for matrix multiplication.
- @return A new MAVMatrix object representing the product of the expression A x B.
- */
-+ (MAVMatrix *)productOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB;
-
-/**
- @description Raises an NSInvalidArgumentException if A and B are not of equal dimension.
- @return A new MAVMatrix object representing the sum (A + B) of the supplied matrices.
- */
-+ (MAVMatrix *)sumOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB;
-
-/**
- @description Raises an NSInvalidArgumentException if A and B are not of equal dimension.
- @return A new MAVMatrix object representing the difference (A - B) of the supplied matrices.
- */
-+ (MAVMatrix *)differenceOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB;
-
-/**
  @description Good documentation for solving Ax=b where A is a square matrix located  at http://www.netlib.org/lapack/double/dgesv.f and example at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgesv_ex.c.htm. When A is a general m x n matrix, see documentation at http://www.netlib.org/lapack/double/dgels.f and example at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgels_ex.c.htm
  @return A column vector containing coefficients for unknows to solve a linear system Ax=B, or nil if the system cannot be solved. Raises an NSInvalidArgumentException if A and B are of incompatible dimension.
  */
 + (MAVMatrix *)solveLinearSystemWithMatrixA:(MAVMatrix *)A
                                    valuesB:(MAVMatrix*)B;
-
-/**
- @brief Performs a multiplication with the supplied matrix and vector, whose dimensions must agree according to the rules of matrix-vector multiplication: for A * b = c, A: m x p, b: p x 1 and C: m x 1.
- @param matrix The matrix to multiply with the vector.
- @param vector The vector to multiply with the matrix.
- @return A new MAVVector object representing the product of the matrix-vector multiplication.
- */
-+ (MAVVector *)productOfMatrix:(MAVMatrix *)matrix andVector:(MAVVector *)vector;
-
-/**
- @brief Multiplies each value in a matrix by a scalar value.
- @param matrix The matrix whose values are to be multiplied.
- @param scalar The scalar to multiply each value in the matrix by.
- @return A new MAVMatrix object containing the results of the multiplication.
- */
-+ (MAVMatrix *)productOfMatrix:(MAVMatrix *)matrix andScalar:(NSNumber *)scalar;
-
-/**
- @brief Raises a given matrix to specified power. If power = 0, returns the identity matrix of the same dimension; otherwise, the matrix is multiplied by itself power number of times, and must therefore be a square matrix. Throws an exception if this requirement is not met.
- @param matrix The matrix to raise to the specified power.
- @param power The power to raise the input matrix. Essentially the number of times the matrix will be multiplied by itself.
- @return A matrix of same dimension as input matrix, representing the product of the matrix multiplied by itself power number of times.
- */
-+ (MAVMatrix *)raiseMatrix:(MAVMatrix *)matrix toPower:(NSUInteger)power;
 
 /**
  @brief Multiplies an array of matrices together. Uses the Hu-Shing polygon partitioning method to determine the optimum order of multiplication to minimize the amount of operations. http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0213017.pdf

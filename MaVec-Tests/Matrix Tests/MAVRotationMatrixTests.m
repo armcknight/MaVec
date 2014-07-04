@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVVector.h"
 
 @interface MAVRotationMatrixTests : XCTestCase
@@ -20,24 +21,24 @@
 - (void)testTwoDimensionalRotations
 {
     // 90 degrees clockwise
-    MAVMatrix *matrix = [MAVMatrix matrixForTwoDimensionalRotationWithAngle:@(90.0)
-                                                                direction:MAVAngleDirectionClockwise];
+    MAVMutableMatrix *matrix = [MAVMutableMatrix matrixForTwoDimensionalRotationWithAngle:@(90.0)
+                                                                                direction:MAVAngleDirectionClockwise];
     
     MAVVector *point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0]
                                            vectorFormat:MAVVectorFormatColumnVector];
     
-    MAVVector *rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
+    MAVVector *rotatedPoint = [[matrix multiplyByVector:point] columnVectorForColumn:0];
     
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@3.0, @(-2.0)] vectorFormat:MAVVectorFormatColumnVector];
     
     // 90 degrees counterclockwise
-    matrix = [MAVMatrix matrixForTwoDimensionalRotationWithAngle:@(90.0)
-                                                      direction:MAVAngleDirectionCounterClockwise];
+    matrix = [MAVMutableMatrix matrixForTwoDimensionalRotationWithAngle:@(90.0)
+                                                              direction:MAVAngleDirectionCounterClockwise];
     
     point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0]
-                                 vectorFormat:MAVVectorFormatColumnVector];
+                                  vectorFormat:MAVVectorFormatColumnVector];
     
-    rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
+    rotatedPoint = [[matrix multiplyByVector:point] columnVectorForColumn:0];
     
     solution = [MAVVector vectorWithValuesInArray:@[@(-3.0), @2.0] vectorFormat:MAVVectorFormatColumnVector];
 }
@@ -48,11 +49,11 @@
     MAVVector *point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
                                            vectorFormat:MAVVectorFormatColumnVector];
     
-    MAVMatrix *matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                                  aboutAxis:MAVCoordinateAxisX
-                                                                  direction:MAVAngleDirectionClockwise];
+	MAVMutableMatrix *matrix = [MAVMutableMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+	                                                                              aboutAxis:MAVCoordinateAxisX
+	                                                                              direction:MAVAngleDirectionClockwise];
     
-    MAVVector *rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
+    MAVVector *rotatedPoint = [[matrix multiplyByVector:point] columnVectorForColumn:0];
     
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@2.0, @(-5.0), @3.0]
                                               vectorFormat:MAVVectorFormatColumnVector];
@@ -61,11 +62,11 @@
     point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
                                  vectorFormat:MAVVectorFormatColumnVector];
     
-    matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                        aboutAxis:MAVCoordinateAxisX
-                                                        direction:MAVAngleDirectionCounterClockwise];
+	matrix = [MAVMutableMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+	                                                            aboutAxis:MAVCoordinateAxisX
+	                                                            direction:MAVAngleDirectionCounterClockwise];
     
-    rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
+    rotatedPoint = [[matrix multiplyByVector:point] columnVectorForColumn:0];
     
     solution = [MAVVector vectorWithValuesInArray:@[@2.0, @5.0, @(-3.0)]
                                     vectorFormat:MAVVectorFormatColumnVector];
@@ -77,11 +78,11 @@
     MAVVector *point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
                                            vectorFormat:MAVVectorFormatColumnVector];
     
-    MAVMatrix *matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                                  aboutAxis:MAVCoordinateAxisY
-                                                                  direction:MAVAngleDirectionClockwise];
+	MAVMutableMatrix *matrix = [MAVMutableMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+	                                                                              aboutAxis:MAVCoordinateAxisY
+	                                                                              direction:MAVAngleDirectionClockwise];
     
-    MAVVector *rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
+    MAVVector *rotatedPoint = [[matrix multiplyByVector:point] columnVectorForColumn:0];
     
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@5.0, @3.0, @(-2.0)]
                                               vectorFormat:MAVVectorFormatColumnVector];
@@ -90,11 +91,11 @@
     point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
                                  vectorFormat:MAVVectorFormatColumnVector];
     
-    matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                        aboutAxis:MAVCoordinateAxisY
-                                                        direction:MAVAngleDirectionCounterClockwise];
+	matrix = [MAVMutableMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+	                                                            aboutAxis:MAVCoordinateAxisY
+	                                                            direction:MAVAngleDirectionCounterClockwise];
     
-    rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
+    rotatedPoint = [[matrix multiplyByVector:point] columnVectorForColumn:0];
     
     solution = [MAVVector vectorWithValuesInArray:@[@(-5.0), @3.0, @2.0]
                                     vectorFormat:MAVVectorFormatColumnVector];
@@ -106,11 +107,11 @@
     MAVVector *point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
                                            vectorFormat:MAVVectorFormatColumnVector];
     
-    MAVMatrix *matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                                  aboutAxis:MAVCoordinateAxisZ
-                                                                  direction:MAVAngleDirectionClockwise];
+	MAVMutableMatrix *matrix = [MAVMutableMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+	                                                                              aboutAxis:MAVCoordinateAxisZ
+	                                                                              direction:MAVAngleDirectionClockwise];
     
-    MAVVector *rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
+    MAVVector *rotatedPoint = [[matrix multiplyByVector:point] columnVectorForColumn:0];
     
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@(-3.0), @2.0, @5.0]
                                               vectorFormat:MAVVectorFormatColumnVector];
@@ -119,11 +120,11 @@
     point = [MAVVector vectorWithValuesInArray:@[@2.0, @3.0, @5.0]
                                  vectorFormat:MAVVectorFormatColumnVector];
     
-    matrix = [MAVMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
-                                                        aboutAxis:MAVCoordinateAxisZ
-                                                        direction:MAVAngleDirectionCounterClockwise];
+	matrix = [MAVMutableMatrix matrixForThreeDimensionalRotationWithAngle:@90.0
+	                                                            aboutAxis:MAVCoordinateAxisZ
+	                                                            direction:MAVAngleDirectionCounterClockwise];
     
-    rotatedPoint = [MAVMatrix productOfMatrix:matrix andVector:point];
+    rotatedPoint = [[matrix multiplyByVector:point] columnVectorForColumn:0];
     
     solution = [MAVVector vectorWithValuesInArray:@[@3.0, @(-2.0), @5.0]
                                     vectorFormat:MAVVectorFormatColumnVector];

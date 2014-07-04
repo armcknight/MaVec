@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 #import <Accelerate/Accelerate.h>
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVVector.h"
 #import "MAVSingularValueDecomposition.h"
 #import "MAVLUFactorization.h"
@@ -83,7 +84,7 @@
     MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:4 columns:4];
     MAVVector *b = [MAVVector vectorWithValues:[NSData dataWithBytes:bVals length:bSize] length:4];
     
-    MAVVector *product = [MAVMatrix productOfMatrix:a andVector:b];
+    MAVVector *product = [[[a mutableCopy] multiplyByVector:b] columnVectorForColumn:0];
     
     double *solution = malloc(bSize);
     solution[0] = -15.6;

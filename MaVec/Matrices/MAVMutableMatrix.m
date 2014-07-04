@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 AMProductions. All rights reserved.
 //
 
+#import <Accelerate/Accelerate.h>
+
+#import "MAVMatrix_Private.h"
 #import "MAVMutableMatrix.h"
 #import "MAVVector.h"
 
@@ -92,5 +95,119 @@
     [self setRowVector:obj atRow:idx];
 }
 
+#pragma mark - Mathematical operations
+
+- (MAVMutableMatrix *)multiplyByMatrix:(MAVMatrix *)matrix
+{
+    NSAssert(self.columns == matrix.rows, @"self does not have an equal amount of columns as rows in matrix");
+    NSAssert(self.precision == matrix.precision, @"Precisions do not match.");
+    
+    NSData *aVals = [self valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
+    NSData *bVals = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
+    
+    if (self.precision == MCKValuePrecisionDouble) {
+        size_t size = self.rows * matrix.columns * sizeof(double);
+        double *cVals = malloc(size);
+        vDSP_mmulD(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, self.rows, matrix.columns, self.columns);
+        self.values = [NSData dataWithBytesNoCopy:cVals length:size];
+    } else {
+        size_t size = self.rows * matrix.columns * sizeof(float);
+        float *cVals = malloc(size);
+        vDSP_mmul(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, self.rows, matrix.columns, self.columns);
+    }
+    
+    return self;
+}
+
+- (MAVMutableMatrix *)addMatrix:(MAVMatrix *)matrix
+{
+    NSAssert(self.rows == matrix.rows, @"Matrices have mismatched amounts of rows.");
+    NSAssert(self.columns == matrix.columns, @"Matrices have mismatched amounts of columns.");
+    NSAssert(self.precision == matrix.precision, @"Precisions do not match.");
+    
+    for (int i = 0; i < self.rows; i++) {
+        for (int j = 0; j < self.columns; j++) {
+            if (self.precision == MCKValuePrecisionDouble) {
+                [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].doubleValue + [matrix valueAtRow:i column:j].doubleValue)];
+            } else {
+                [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].floatValue + [matrix valueAtRow:i column:j].floatValue)];
+            }
+        }
+    }
+    
+    return self;
+}
+
+- (MAVMutableMatrix *)subtractMatrix:(MAVMatrix *)matrix
+{
+    NSAssert(self.rows == matrix.rows, @"Matrices have mismatched amounts of rows.");
+    NSAssert(self.columns == matrix.columns, @"Matrices have mismatched amounts of columns.");
+    NSAssert(self.precision == matrix.precision, @"Precisions do not match.");
+    
+    for (int i = 0; i < self.rows; i++) {
+        for (int j = 0; j < self.columns; j++) {
+            if (self.precision == MCKValuePrecisionDouble) {
+                [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].doubleValue - [matrix valueAtRow:i column:j].doubleValue)];
+            } else {
+                [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].floatValue - [matrix valueAtRow:i column:j].floatValue)];
+            }
+        }
+    }
+    
+    return self;
+}
+
+- (MAVMutableMatrix *)multiplyByVector:(MAVVector *)vector
+{
+    NSAssert(self.columns == vector.length, @"self must have same amount of columns as vector length.");
+    NSAssert(self.precision == vector.precision, @"Precisions do not match.");
+    
+    short order = self.leadingDimension == MAVMatrixLeadingDimensionColumn ? CblasColMajor : CblasRowMajor;
+    short transpose = CblasNoTrans;
+    int rows = self.rows;
+    int cols = self.columns;
+    
+    if (self.precision == MCKValuePrecisionDouble) {
+        double *result = calloc(vector.length, sizeof(double));
+        cblas_dgemv(order, transpose, rows, cols, 1.0, self.values.bytes, rows, vector.values.bytes, 1, 1.0, result, 1);
+    } else {
+        float *result = calloc(vector.length, sizeof(float));
+        cblas_sgemv(order, transpose, rows, cols, 1.0f, self.values.bytes, rows, vector.values.bytes, 1, 1.0f, result, 1);
+    }
+    
+    return self;
+}
+
+- (MAVMutableMatrix *)multiplyByScalar:(NSNumber *)scalar
+{
+    int valueCount = self.rows * self.columns;
+    if (self.precision == MCKValuePrecisionDouble) {
+        size_t size = valueCount * sizeof(double);
+        double *values = malloc(size);
+        for (int i = 0; i < valueCount; i++) {
+            values[i] = ((double *)self.values.bytes)[i] * scalar.doubleValue;
+        }
+    }
+    else {
+        size_t size = valueCount * sizeof(float);
+        float *values = malloc(size);
+        for (int i = 0; i < valueCount; i++) {
+            values[i] = ((float *)self.values.bytes)[i] * scalar.floatValue;
+        }
+    }
+    
+    return self;
+}
+
+- (MAVMutableMatrix *)raiseToPower:(NSUInteger)power
+{
+    NSAssert(self.rows == self.columns, @"Cannot raise a non-square matrix to exponents.");
+    
+    for (int i = 0; i < power - 1; i += 1) {
+        [self multiplyByMatrix:self];
+    }
+    
+    return self;
+}
 
 @end

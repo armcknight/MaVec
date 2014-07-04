@@ -28,6 +28,7 @@
 #import <Accelerate/Accelerate.h>
 
 #import "MAVMatrix.h"
+#import "MAVMatrix_Private.h"
 #import "MAVVector.h"
 #import "MAVSingularValueDecomposition.h"
 #import "MAVLUFactorization.h"
@@ -70,35 +71,6 @@ typedef enum : UInt8 {
 MAVMatrixNorm;
 
 @interface MAVMatrix ()
-
-// public readonly properties redeclared as readwrite
-@property (strong, readwrite, nonatomic) NSData *values;
-@property (strong, readwrite, nonatomic) MAVMatrix *transpose;
-@property (strong, readwrite, nonatomic) MAVQRFactorization *qrFactorization;
-@property (strong, readwrite, nonatomic) MAVLUFactorization *luFactorization;
-@property (strong, readwrite, nonatomic) MAVSingularValueDecomposition *singularValueDecomposition;
-@property (strong, readwrite, nonatomic) MAVEigendecomposition *eigendecomposition;
-@property (strong, readwrite, nonatomic) MAVMatrix *inverse;
-@property (strong, readwrite, nonatomic) NSNumber *determinant;
-@property (strong, readwrite, nonatomic) NSNumber *conditionNumber;
-@property (assign, readwrite, nonatomic) MAVMatrixDefiniteness definiteness;
-@property (strong, readwrite, nonatomic) MCKTribool *isSymmetric;
-@property (strong, readwrite, nonatomic) MAVVector *diagonalValues;
-@property (strong, readwrite, nonatomic) NSNumber *trace;
-@property (strong, readwrite, nonatomic) MAVMatrix *adjugate;
-@property (strong, readwrite, nonatomic) MAVMatrix *minorMatrix;
-@property (strong, readwrite, nonatomic) MAVMatrix *cofactorMatrix;
-@property (strong, readwrite, nonatomic) NSNumber *normL1;
-@property (strong, readwrite, nonatomic) NSNumber *normInfinity;
-@property (strong, readwrite, nonatomic) NSNumber *normFroebenius;
-@property (strong, readwrite, nonatomic) NSNumber *normMax;
-@property (assign, readwrite, nonatomic) MAVMatrixTriangularComponent triangularComponent;
-@property (assign, readwrite, nonatomic) MCKValuePrecision precision;
-
-// private properties for band matrices
-@property (assign, nonatomic) int bandwidth;
-@property (assign, nonatomic) int numberOfBandValues;
-@property (assign, nonatomic) int upperCodiagonals;
 
 /**
  @brief Generates specified number of floating-point values.
@@ -603,14 +575,16 @@ MAVMatrixNorm;
             
         case MAVMatrixDefinitenessPositiveDefinite: {
             // A is pos. def. if A = B^T * B, B is nonsingular square
-            MAVMatrix *start = [MAVMatrix randomMatrixWithRows:order columns:order precision:precision];
-            matrix = [self productOfMatrixA:start andMatrixB:start.transpose];
+            MAVMutableMatrix *start = [MAVMutableMatrix randomMatrixWithRows:order columns:order precision:precision];
+            [start multiplyByMatrix:start.transpose];
+            matrix = start;
         } break;
             
         case MAVMatrixDefinitenessNegativeDefinite: {
             // A is neg. def. if A = B^T * B, B is nonsingular square with all negative values
-            MAVMatrix *start = [MAVMatrix randomMatrixWithRows:order columns:order precision:precision];
-            matrix = [self productOfMatrix:[MAVMatrix productOfMatrixA:start andMatrixB:start.transpose] andScalar:precision == MCKValuePrecisionDouble ? @(-1.0) : @(-1.0f)];
+            MAVMutableMatrix *start = [MAVMutableMatrix randomMatrixWithRows:order columns:order precision:precision];
+            [[start multiplyByMatrix:start.transpose] multiplyByScalar:precision == MCKValuePrecisionDouble ? @(-1.0) : @(-1.0f)];
+            matrix = start;
         } break;
             
         /*
@@ -1760,71 +1734,6 @@ MAVMatrixNorm;
 
 #pragma mark - Class-level matrix operations
 
-+ (MAVMatrix *)productOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB
-{
-    NSAssert(matrixA.columns == matrixB.rows, @"matrixA does not have an equal amount of columns as rows in matrixB");
-    NSAssert(matrixA.precision == matrixB.precision, @"Precisions do not match.");
-    
-    MAVMatrix *matrix;
-    
-    NSData *aVals = [matrixA valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
-    NSData *bVals = [matrixB valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
-    
-    if (matrixA.precision == MCKValuePrecisionDouble) {
-        size_t size = matrixA.rows * matrixB.columns * sizeof(double);
-        double *cVals = malloc(size);
-        vDSP_mmulD(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
-        matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:cVals length:size] rows:matrixA.rows columns:matrixB.columns leadingDimension:MAVMatrixLeadingDimensionRow];
-    } else {
-        size_t size = matrixA.rows * matrixB.columns * sizeof(float);
-        float *cVals = malloc(size);
-        vDSP_mmul(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, matrixA.rows, matrixB.columns, matrixA.columns);
-        matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:cVals length:size] rows:matrixA.rows columns:matrixB.columns leadingDimension:MAVMatrixLeadingDimensionRow];
-    }
-    
-    return matrix;
-}
-
-+ (MAVMatrix *)sumOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB
-{
-    NSAssert(matrixA.rows == matrixB.rows, @"Matrices have mismatched amounts of rows.");
-    NSAssert(matrixA.columns == matrixB.columns, @"Matrices have mismatched amounts of columns.");
-    NSAssert(matrixA.precision == matrixB.precision, @"Precisions do not match.");
-    
-    MAVMutableMatrix *sum = [MAVMutableMatrix matrixWithRows:matrixA.rows columns:matrixA.columns precision:matrixA.precision];
-    for (int i = 0; i < matrixA.rows; i++) {
-        for (int j = 0; j < matrixA.columns; j++) {
-            if (matrixA.precision == MCKValuePrecisionDouble) {
-                [sum setEntryAtRow:i column:j toValue:@([matrixA valueAtRow:i column:j].doubleValue + [matrixB valueAtRow:i column:j].doubleValue)];
-            } else {
-                [sum setEntryAtRow:i column:j toValue:@([matrixA valueAtRow:i column:j].floatValue + [matrixB valueAtRow:i column:j].floatValue)];
-            }
-        }
-    }
-    
-    return sum;
-}
-
-+ (MAVMatrix *)differenceOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB
-{
-    NSAssert(matrixA.rows == matrixB.rows, @"Matrices have mismatched amounts of rows.");
-    NSAssert(matrixA.columns == matrixB.columns, @"Matrices have mismatched amounts of columns.");
-    NSAssert(matrixA.precision == matrixB.precision, @"Precisions do not match.");
-    
-    MAVMutableMatrix *sum = [MAVMutableMatrix matrixWithRows:matrixA.rows columns:matrixA.columns precision:matrixA.precision];
-    for (int i = 0; i < matrixA.rows; i++) {
-        for (int j = 0; j < matrixA.columns; j++) {
-            if (matrixA.precision == MCKValuePrecisionDouble) {
-                [sum setEntryAtRow:i column:j toValue:@([matrixA valueAtRow:i column:j].doubleValue - [matrixB valueAtRow:i column:j].doubleValue)];
-            } else {
-                [sum setEntryAtRow:i column:j toValue:@([matrixA valueAtRow:i column:j].floatValue - [matrixB valueAtRow:i column:j].floatValue)];
-            }
-        }
-    }
-    
-    return sum;
-}
-
 // TODO: this should really return a vector instead of a matrix
 + (MAVMatrix *)solveLinearSystemWithMatrixA:(MAVMatrix *)A
                                    valuesB:(MAVMatrix *)B
@@ -2013,73 +1922,6 @@ MAVMatrixNorm;
     }
     
     return matrix;
-}
-
-+ (MAVVector *)productOfMatrix:(MAVMatrix *)matrix andVector:(MAVVector *)vector
-{
-    NSAssert(matrix.columns == vector.length, @"Matrix must have same amount of columns as vector length.");
-    NSAssert(matrix.precision == vector.precision, @"Precisions do not match.");
-    
-    MAVVector *product;
-    
-    short order = matrix.leadingDimension == MAVMatrixLeadingDimensionColumn ? CblasColMajor : CblasRowMajor;
-    short transpose = CblasNoTrans;
-    int rows = matrix.rows;
-    int cols = matrix.columns;
-    
-    if (matrix.precision == MCKValuePrecisionDouble) {
-        double *result = calloc(vector.length, sizeof(double));
-        cblas_dgemv(order, transpose, rows, cols, 1.0, matrix.values.bytes, rows, vector.values.bytes, 1, 1.0, result, 1);
-        product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:result length:vector.values.length] length:vector.length];
-    } else {
-        float *result = calloc(vector.length, sizeof(float));
-        cblas_sgemv(order, transpose, rows, cols, 1.0f, matrix.values.bytes, rows, vector.values.bytes, 1, 1.0f, result, 1);
-        product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:result length:vector.values.length] length:vector.length];
-    }
-    
-    return product;
-}
-
-+ (MAVMatrix *)productOfMatrix:(MAVMatrix *)matrix andScalar:(NSNumber *)scalar
-{
-    MAVMatrix *product;
-    
-    int valueCount = matrix.rows * matrix.columns;
-    if (matrix.precision == MCKValuePrecisionDouble) {
-        size_t size = valueCount * sizeof(double);
-        double *values = malloc(size);
-        for (int i = 0; i < valueCount; i++) {
-            values[i] = ((double *)matrix.values.bytes)[i] * scalar.doubleValue;
-        }
-		product = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:values length:size]
-		                                 rows:matrix.rows
-		                              columns:matrix.columns
-		                     leadingDimension:matrix.leadingDimension];
-    }
-    else {
-        size_t size = valueCount * sizeof(float);
-        float *values = malloc(size);
-        for (int i = 0; i < valueCount; i++) {
-            values[i] = ((float *)matrix.values.bytes)[i] * scalar.floatValue;
-        }
-		product = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:values length:size]
-		                                 rows:matrix.rows
-		                              columns:matrix.columns
-		                     leadingDimension:matrix.leadingDimension];
-    }
-    
-    return product;
-}
-
-+ (MAVMatrix *)raiseMatrix:(MAVMatrix *)matrix toPower:(NSUInteger)power
-{
-    NSAssert(matrix.rows == matrix.columns, @"Cannot raise a non-square matrix to exponents.");
-    
-    MAVMatrix *product = [MAVMatrix productOfMatrixA:matrix andMatrixB:matrix];
-    for (int i = 0; i < power - 2; i += 1) {
-        product = [MAVMatrix productOfMatrixA:matrix andMatrixB:product];
-    }
-    return product;
 }
 
 + (MAVMatrix *)productOfMatrices:(NSArray *)matrices

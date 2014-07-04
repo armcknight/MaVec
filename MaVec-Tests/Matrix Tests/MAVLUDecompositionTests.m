@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVLUFactorization.h"
 
 @interface MAVLUDecompositionTests : XCTestCase
@@ -67,10 +68,7 @@
     
     MAVLUFactorization *f = m.luFactorization;
     
-    //    MAVMatrix *i = [MAVMatrix productOfMatrixA:f.lowerTriangularMatrix andMatrixB:f.upperTriangularMatrix];
-    //    MAVMatrix *product = [MAVMatrix productOfMatrixA:i andMatrixB:f.permutationMatrix];
-    MAVMatrix *pl = [MAVMatrix productOfMatrixA:f.permutationMatrix andMatrixB:f.lowerTriangularMatrix];
-    MAVMatrix *product = [MAVMatrix productOfMatrixA:pl andMatrixB:f.upperTriangularMatrix];
+    MAVMatrix *product = [[[f.permutationMatrix mutableCopy] multiplyByMatrix:f.lowerTriangularMatrix] multiplyByMatrix:f.upperTriangularMatrix];
     
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -95,8 +93,7 @@
     
     MAVLUFactorization *f = m.luFactorization;
     
-    MAVMatrix *pl = [MAVMatrix productOfMatrixA:f.permutationMatrix andMatrixB:f.lowerTriangularMatrix];
-    MAVMatrix *product = [MAVMatrix productOfMatrixA:pl andMatrixB:f.upperTriangularMatrix];
+    MAVMatrix *product = [[[f.permutationMatrix mutableCopy] multiplyByMatrix:f.lowerTriangularMatrix] multiplyByMatrix:f.upperTriangularMatrix];
     
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {

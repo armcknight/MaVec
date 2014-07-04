@@ -28,6 +28,7 @@
 #import "SVDImageCompressionViewController.h"
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVVector.h"
 #import "MAVSingularValueDecomposition.h"
 
@@ -193,16 +194,16 @@ void freePixelValues(void *info, const void *data, size_t size) {
 - (UIImage *)compressedImageWithSingularValues:(int)singularValues
 {
     MAVVector *partialSum = [MAVVector productOfVector:[self.imageSVD.u columnVectorForColumn:0] scalar:[self.imageSVD.s.diagonalValues valueAtIndex:0]];
-    MAVMatrix *leftMultiplicand = [MAVMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
+    MAVMutableMatrix *leftMultiplicand = [MAVMutableMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
     MAVVector *rightMultiplicandVector = [self.imageSVD.vT rowVectorForRow:0];
     MAVMatrix *rightMultiplicand = [MAVMatrix matrixWithValues:rightMultiplicandVector.values rows:1 columns:rightMultiplicandVector.length];
-    MAVMatrix *sum = [MAVMatrix productOfMatrixA:leftMultiplicand andMatrixB:rightMultiplicand];
+    MAVMutableMatrix *sum = [[leftMultiplicand mutableCopy] multiplyByMatrix:rightMultiplicand];
     for (int i = singularValues - 1; i >= 0; i--) {
         partialSum = [MAVVector productOfVector:[self.imageSVD.u columnVectorForColumn:i] scalar:[self.imageSVD.s.diagonalValues valueAtIndex:i]];
-        leftMultiplicand = [MAVMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
+        leftMultiplicand = [MAVMutableMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
         rightMultiplicandVector = [self.imageSVD.vT rowVectorForRow:i];
         rightMultiplicand = [MAVMatrix matrixWithValues:rightMultiplicandVector.values rows:1 columns:rightMultiplicandVector.length];
-        sum = [MAVMatrix sumOfMatrixA:sum andMatrixB:[MAVMatrix productOfMatrixA:leftMultiplicand andMatrixB:rightMultiplicand]];
+        [sum multiplyByMatrix:[leftMultiplicand multiplyByMatrix:rightMultiplicand]];
     }
     
     int size = sum.rows * sum.columns;
