@@ -30,7 +30,7 @@
 @class MAVMatrix;
 @class MAVVector;
 
-@interface MAVEigendecomposition : NSObject
+@interface MAVEigendecomposition : NSObject <NSCopying>
 
 /**
  @property eigenvectors

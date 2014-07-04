@@ -163,4 +163,16 @@
     return [[MAVEigendecomposition alloc] initWithMatrix:matrix];
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    MAVEigendecomposition *copy = [[self class] allocWithZone:zone];
+    
+    copy->_eigenvalues = _eigenvalues;
+    copy->_eigenvectors = _eigenvectors;
+    
+    return copy;
+}
+
 @end
