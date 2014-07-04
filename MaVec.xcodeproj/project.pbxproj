@@ -11,14 +11,12 @@
 		491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */; };
 		499734AF192594DF0004A8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734AE192594DF0004A8E5 /* Foundation.framework */; };
 		499734B1192594DF0004A8E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B0192594DF0004A8E5 /* CoreGraphics.framework */; };
-		499734B3192594DF0004A8E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B2192594DF0004A8E5 /* UIKit.framework */; };
 		499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734B7192594DF0004A8E5 /* InfoPlist.strings */; };
 		499734BB192594DF0004A8E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BA192594DF0004A8E5 /* main.m */; };
 		499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BE192594DF0004A8E5 /* AppDelegate.m */; };
 		499734C1192594DF0004A8E5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 499734C0192594DF0004A8E5 /* Images.xcassets */; };
 		499734E0192595230004A8E5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734C7192594DF0004A8E5 /* XCTest.framework */; };
 		499734E1192595230004A8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734AE192594DF0004A8E5 /* Foundation.framework */; };
-		499734E2192595230004A8E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B2192594DF0004A8E5 /* UIKit.framework */; };
 		499734E8192595230004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734E6192595230004A8E5 /* InfoPlist.strings */; };
 		499734FF1925969A0004A8E5 /* MAVEigendecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734F01925969A0004A8E5 /* MAVEigendecompositionTests.m */; };
 		499735001925969A0004A8E5 /* MAVLeastSquaresSolutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734F11925969A0004A8E5 /* MAVLeastSquaresSolutionTests.m */; };
@@ -81,7 +79,6 @@
 		499734AB192594DF0004A8E5 /* MaVec-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		499734AE192594DF0004A8E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		499734B0192594DF0004A8E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		499734B2192594DF0004A8E5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		499734B6192594DF0004A8E5 /* MaVec-Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaVec-Demo-Info.plist"; sourceTree = "<group>"; };
 		499734B8192594DF0004A8E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		499734BA192594DF0004A8E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -189,7 +186,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				499734B1192594DF0004A8E5 /* CoreGraphics.framework in Frameworks */,
-				499734B3192594DF0004A8E5 /* UIKit.framework in Frameworks */,
 				499734AF192594DF0004A8E5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -199,7 +195,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				499734E0192595230004A8E5 /* XCTest.framework in Frameworks */,
-				499734E2192595230004A8E5 /* UIKit.framework in Frameworks */,
 				499734E1192595230004A8E5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,7 +228,6 @@
 			children = (
 				499734AE192594DF0004A8E5 /* Foundation.framework */,
 				499734B0192594DF0004A8E5 /* CoreGraphics.framework */,
-				499734B2192594DF0004A8E5 /* UIKit.framework */,
 				499734C7192594DF0004A8E5 /* XCTest.framework */,
 			);
 			name = Frameworks;
