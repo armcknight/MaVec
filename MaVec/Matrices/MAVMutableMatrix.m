@@ -120,6 +120,9 @@
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:cVals length:size];
     }
     
+    self.columns = matrix.columns;
+    self.leadingDimension = MAVMatrixLeadingDimensionRow;
+    
     return self;
 }
 
@@ -180,6 +183,15 @@
         cblas_sgemv(order, transpose, rows, cols, 1.0f, self.values.bytes, rows, vector.values.bytes, 1, 1.0f, result, 1);
         [self.values replaceBytesInRange:NSMakeRange(0, vector.values.length) withBytes:result length:vector.values.length];
     }
+    
+    if (vector.vectorFormat == MAVVectorFormatColumnVector) {
+        self.leadingDimension = MAVMatrixLeadingDimensionColumn;
+        self.columns = 1;
+    } else {
+        self.leadingDimension = MAVMatrixLeadingDimensionRow;
+        self.columns = vector.length;
+    }
+    
     
     return self;
 }
