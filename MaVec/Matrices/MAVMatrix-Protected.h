@@ -1,5 +1,5 @@
 //
-//  MAVMatrix_Private.h
+//  MAVMatrix-Protected.h
 //  MaVec
 //
 //  Created by Andrew McKnight on 6/22/14.

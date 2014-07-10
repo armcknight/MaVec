@@ -8,7 +8,7 @@
 
 #import <Accelerate/Accelerate.h>
 
-#import "MAVMatrix_Private.h"
+#import "MAVMatrix-Protected.h"
 #import "MAVMutableMatrix.h"
 #import "MAVVector.h"
 

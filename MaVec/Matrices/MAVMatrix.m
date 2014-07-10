@@ -28,7 +28,7 @@
 #import <Accelerate/Accelerate.h>
 
 #import "MAVMatrix.h"
-#import "MAVMatrix_Private.h"
+#import "MAVMatrix-Protected.h"
 #import "MAVVector.h"
 #import "MAVSingularValueDecomposition.h"
 #import "MAVLUFactorization.h"
