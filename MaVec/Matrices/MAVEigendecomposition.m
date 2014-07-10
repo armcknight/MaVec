@@ -163,6 +163,11 @@
     return [[MAVEigendecomposition alloc] initWithMatrix:matrix];
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"\nEigenvectors:%@\nEigenvalues:%@", self.eigenvectors.description, self.eigenvalues.description];
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone

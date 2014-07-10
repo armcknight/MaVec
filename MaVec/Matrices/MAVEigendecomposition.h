@@ -58,4 +58,6 @@
  */
 + (instancetype)eigendecompositionOfMatrix:(MAVMatrix *)matrix;
 
+- (NSString *)description;
+
 @end

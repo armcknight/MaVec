@@ -74,5 +74,7 @@
  */
 + (instancetype)luFactorizationOfMatrix:(MAVMatrix *)matrix;
 
+- (NSString *)description;
+
 @end
 

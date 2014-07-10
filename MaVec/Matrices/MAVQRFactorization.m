@@ -144,6 +144,11 @@
     return [[MAVQRFactorization alloc] initWithMatrix:matrix];
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"Q:%@\nR:%@", self.q.description, self.r.description];
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone

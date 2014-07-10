@@ -75,4 +75,6 @@
  */
 - (MAVQRFactorization *)thinFactorization;
 
+- (NSString *)description;
+
 @end

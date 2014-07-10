@@ -145,6 +145,11 @@
     return [[MAVLUFactorization alloc] initWithMatrix:matrix];
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"\nL:%@\nU:%@\nP:%@", self.lowerTriangularMatrix.description, self.upperTriangularMatrix.description, self.permutationMatrix.description];
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
