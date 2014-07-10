@@ -80,11 +80,11 @@
                                                         rows:3
                                                      columns:3];
     
-    MAVMatrix *sum = [a multiplyByMatrix:b];
+    [a addMatrix:b];
     
     for (int i = 0; i < 3; i++) {
         for (int j; j < 3; j++) {
-            XCTAssertEqual(10.0, [sum valueAtRow:i column:j].doubleValue, @"Value at %u,%u incorrectly added", i, j);
+            XCTAssertEqual(10.0, [a valueAtRow:i column:j].doubleValue, @"Value at %u,%u incorrectly added", i, j);
         }
     }
     
@@ -96,7 +96,7 @@
 	                             columns:5
 	                           precision:MCKValuePrecisionDouble];
     
-    XCTAssertThrows([a multiplyByMatrix:b], @"Should throw an exception for mismatched row amount");
+    XCTAssertThrows([a addMatrix:b], @"Should throw an exception for mismatched row amount");
     
     a = [MAVMutableMatrix matrixWithRows:5
                                  columns:4
@@ -106,7 +106,7 @@
                                  columns:5
                                precision:MCKValuePrecisionDouble];
     
-    XCTAssertThrows([a multiplyByMatrix:b], @"Should throw an exception for mismatched column amount");
+    XCTAssertThrows([a addMatrix:b], @"Should throw an exception for mismatched column amount");
 }
 
 - (void)testMatrixSubtraction
@@ -154,7 +154,7 @@
                                                  rows:3
                                               columns:3];
     
-    MAVMatrix *difference = [a multiplyByMatrix:b];
+    MAVMatrix *difference = [a subtractMatrix:b];
     
     for (int i = 0; i < 3; i++) {
         for (int j; j < 3; j++) {
@@ -170,7 +170,7 @@
                                  columns:5
                                precision:MCKValuePrecisionDouble];
     
-    XCTAssertThrows([a multiplyByMatrix:b], @"Should throw an exception for mismatched row amount");
+    XCTAssertThrows([a subtractMatrix:b], @"Should throw an exception for mismatched row amount");
     
     a = [MAVMutableMatrix matrixWithRows:5
                                  columns:4
@@ -180,7 +180,7 @@
                                  columns:5
                                precision:MCKValuePrecisionDouble];
     
-    XCTAssertThrows([a multiplyByMatrix:b], @"Should throw an exception for mismatched column amount");
+    XCTAssertThrows([a subtractMatrix:b], @"Should throw an exception for mismatched column amount");
 }
 
 @end

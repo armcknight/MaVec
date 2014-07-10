@@ -143,7 +143,7 @@
     };
     MAVVector *vector = [MAVVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3*sizeof(double)] length:3];
     
-    MAVVector *product = [[matrix mutableCopy] multiplyByVector:vector];
+    MAVVector *product = [[[matrix mutableCopy] multiplyByVector:vector] columnVectorForColumn:0];
     double productSolution[3] = {
         -77.0, -15.0, 21.0
     };
