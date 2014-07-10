@@ -57,7 +57,7 @@
         _leadingDimension = leadingDimension;
         _packingMethod = packingMethod;
         _triangularComponent = triangularComponent;
-        _values = values;
+        _values = [[self class] isSubclassOfClass:[MAVMutableMatrix class]] ? [values mutableCopy] : values;
         _rows = rows;
         _columns = columns;
         
