@@ -1834,7 +1834,7 @@
 {
     MAVMatrix *matrixCopy = [[self class] allocWithZone:zone];
     
-    [self deepCopyMatrix:self intoNewMatrix:matrixCopy];
+    [self deepCopyMatrix:self intoNewMatrix:matrixCopy mutable:NO];
     
     return matrixCopy;
 }
@@ -1845,14 +1845,14 @@
 {
     MAVMutableMatrix *mutableCopy = [MAVMutableMatrix allocWithZone:zone];
     
-    [self deepCopyMatrix:self intoNewMatrix:mutableCopy];
+    [self deepCopyMatrix:self intoNewMatrix:mutableCopy mutable:YES];
     
     return mutableCopy;
 }
 
 #pragma mark - Private interface
 
-- (void)deepCopyMatrix:(MAVMatrix *)matrix intoNewMatrix:(MAVMatrix *)newMatrix
+- (void)deepCopyMatrix:(MAVMatrix *)matrix intoNewMatrix:(MAVMatrix *)newMatrix mutable:(BOOL)mutable
 {
     newMatrix->_columns = matrix->_columns;
     newMatrix->_rows = matrix->_rows;
@@ -1867,13 +1867,21 @@
         for (int i = 0; i < matrix->_values.length / sizeof(double); i++) {
             values[i] = ((double *)matrix->_values.bytes)[i];
         }
-        newMatrix->_values = [NSData dataWithBytesNoCopy:values length:matrix->_values.length];
+        if ( mutable ) {
+            newMatrix->_values = [NSMutableData dataWithBytesNoCopy:values length:matrix->_values.length];
+        } else {
+            newMatrix->_values = [NSData dataWithBytesNoCopy:values length:matrix->_values.length];
+        }
     } else {
         float *values = malloc(matrix->_values.length);
         for (int i = 0; i < matrix->_values.length / sizeof(float); i++) {
             values[i] = ((float *)matrix->_values.bytes)[i];
         }
-        newMatrix->_values = [NSData dataWithBytesNoCopy:values length:matrix->_values.length];
+        if ( mutable ) {
+            newMatrix->_values = [NSMutableData dataWithBytesNoCopy:values length:matrix->_values.length];
+        } else {
+            newMatrix->_values = [NSData dataWithBytesNoCopy:values length:matrix->_values.length];
+        }
     }
     
     newMatrix->_transpose = matrix->_transpose.copy;

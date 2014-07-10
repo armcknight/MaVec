@@ -14,6 +14,9 @@
 
 #import "NSNumber+MCKPrecision.h"
 
+@property (strong, nonatomic, readwrite) NSMutableData *values;
+
+
 @implementation MAVMutableMatrix
 
 // TODO: invalidate all calculated properties when mutating matrix values
@@ -109,11 +112,12 @@
         size_t size = self.rows * matrix.columns * sizeof(double);
         double *cVals = malloc(size);
         vDSP_mmulD(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, self.rows, matrix.columns, self.columns);
-        self.values = [NSData dataWithBytesNoCopy:cVals length:size];
+        [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:cVals length:size];
     } else {
         size_t size = self.rows * matrix.columns * sizeof(float);
         float *cVals = malloc(size);
         vDSP_mmul(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, self.rows, matrix.columns, self.columns);
+        [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:cVals length:size];
     }
     
     return self;
@@ -170,9 +174,11 @@
     if (self.precision == MCKValuePrecisionDouble) {
         double *result = calloc(vector.length, sizeof(double));
         cblas_dgemv(order, transpose, rows, cols, 1.0, self.values.bytes, rows, vector.values.bytes, 1, 1.0, result, 1);
+        [self.values replaceBytesInRange:NSMakeRange(0, vector.values.length) withBytes:result length:vector.values.length];
     } else {
         float *result = calloc(vector.length, sizeof(float));
         cblas_sgemv(order, transpose, rows, cols, 1.0f, self.values.bytes, rows, vector.values.bytes, 1, 1.0f, result, 1);
+        [self.values replaceBytesInRange:NSMakeRange(0, vector.values.length) withBytes:result length:vector.values.length];
     }
     
     return self;
@@ -187,6 +193,7 @@
         for (int i = 0; i < valueCount; i++) {
             values[i] = ((double *)self.values.bytes)[i] * scalar.doubleValue;
         }
+        [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:values];
     }
     else {
         size_t size = valueCount * sizeof(float);
@@ -194,6 +201,7 @@
         for (int i = 0; i < valueCount; i++) {
             values[i] = ((float *)self.values.bytes)[i] * scalar.floatValue;
         }
+        [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:values];
     }
     
     return self;
