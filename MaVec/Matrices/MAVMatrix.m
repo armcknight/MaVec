@@ -1998,28 +1998,30 @@
 + (NSData *)dataFromVectors:(NSArray *)vectors
 {
     MAVVector *firstVector = vectors.firstObject;
-    int rows = firstVector.vectorFormat == MAVVectorFormatRowVector ? (int)vectors.count : firstVector.length;
-    int columns = firstVector.vectorFormat == MAVVectorFormatRowVector ? firstVector.length : (int)vectors.count;
+    BOOL isRowVector = firstVector.vectorFormat == MAVVectorFormatRowVector;
+    int rows = isRowVector ? (int)vectors.count : firstVector.length;
+    int columns = isRowVector ? firstVector.length : (int)vectors.count;
 
     NSData * data;
 
+    int innerLoopLimit = isRowVector ? columns : rows;
     if (((MAVVector *)vectors[0])[0].isDoublePrecision) {
         size_t size = rows * columns * sizeof(double);
         double *values = malloc(size);
-        [vectors enumerateObjectsUsingBlock:^(MAVVector *rowVector, NSUInteger row, BOOL *stop) {
-            for(int i = 0; i < columns; i++) {
-                NSNumber *value = [rowVector valueAtIndex:i];
-                values[row * columns + i] = value.doubleValue;
+        [vectors enumerateObjectsUsingBlock:^(MAVVector *vector, NSUInteger index, BOOL *stop) {
+            for(int i = 0; i < innerLoopLimit; i++) {
+                NSNumber *value = [vector valueAtIndex:i];
+                values[index * innerLoopLimit + i] = value.doubleValue;
             }
         }];
         data = [NSData dataWithBytesNoCopy:values length:size];
     } else {
         size_t size = rows * columns * sizeof(float);
         float *values = malloc(size);
-        [vectors enumerateObjectsUsingBlock:^(MAVVector *rowVector, NSUInteger row, BOOL *stop) {
-            for(int i = 0; i < columns; i++) {
-                NSNumber *value = [rowVector valueAtIndex:i];
-                values[row * columns + i] = value.floatValue;
+        [vectors enumerateObjectsUsingBlock:^(MAVVector *vector, NSUInteger index, BOOL *stop) {
+            for(int i = 0; i < innerLoopLimit; i++) {
+                NSNumber *value = [vector valueAtIndex:i];
+                values[index * innerLoopLimit + i] = value.floatValue;
             }
         }];
         data = [NSData dataWithBytesNoCopy:values length:size];
