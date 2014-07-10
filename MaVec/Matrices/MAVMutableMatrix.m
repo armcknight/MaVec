@@ -223,8 +223,9 @@
 {
     NSAssert(self.rows == self.columns, @"Cannot raise a non-square matrix to exponents.");
     
+    MAVMatrix *original = [self copy];
     for (int i = 0; i < power - 1; i += 1) {
-        [self multiplyByMatrix:self];
+        [self multiplyByMatrix:original];
     }
     
     return self;
