@@ -145,39 +145,15 @@ MAVMatrixNorm;
     int columns = (int)columnVectors.count;
     int rows = ((MAVVector *)columnVectors.firstObject).length;
     
-    MAVMatrix *matrix;
+    BOOL isDoublePrecision = ((MAVVector *)columnVectors[0])[0].isDoublePrecision;
     
-    if (((MAVVector *)columnVectors[0])[0].isDoublePrecision) {
-        size_t size = rows * columns * sizeof(double);
-        double *values = malloc(size);
-        [columnVectors enumerateObjectsUsingBlock:^(MAVVector *columnVector, NSUInteger column, BOOL *stop) {
-            for(int i = 0; i < rows; i++) {
-                values[column * rows + i] = columnVector[i].doubleValue;
-            }
-        }];
-		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:values length:size]
-		                                 rows:rows
-		                              columns:columns
-		                     leadingDimension:MAVMatrixLeadingDimensionColumn
-		                        packingMethod:MAVMatrixValuePackingMethodConventional
-		                  triangularComponent:MAVMatrixTriangularComponentBoth];
-        matrix.precision = MCKValuePrecisionDouble;
-    } else {
-        size_t size = rows * columns * sizeof(float);
-        float *values = malloc(size);
-        [columnVectors enumerateObjectsUsingBlock:^(MAVVector *columnVector, NSUInteger column, BOOL *stop) {
-            for(int i = 0; i < rows; i++) {
-                values[column * rows + i] = columnVector[i].floatValue;
-            }
-        }];
-		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:values length:size]
-		                                 rows:rows
-		                              columns:columns
-		                     leadingDimension:MAVMatrixLeadingDimensionColumn
-		                        packingMethod:MAVMatrixValuePackingMethodConventional
-		                  triangularComponent:MAVMatrixTriangularComponentBoth];
-        matrix.precision = MCKValuePrecisionSingle;
-    }
+	MAVMatrix *matrix = [[self alloc] initWithValues:[self dataFromVectors:columnVectors]
+	                                            rows:rows
+	                                         columns:columns
+	                                leadingDimension:MAVMatrixLeadingDimensionColumn
+	                                   packingMethod:MAVMatrixValuePackingMethodConventional
+	                             triangularComponent:MAVMatrixTriangularComponentBoth];
+    matrix.precision = isDoublePrecision ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
     
     return matrix;
 }
@@ -187,39 +163,15 @@ MAVMatrixNorm;
     int rows = (int)rowVectors.count;
     int columns = ((MAVVector *)rowVectors.firstObject).length;
     
-    MAVMatrix *matrix;
+    BOOL isDoublePrecision = ((MAVVector *)rowVectors[0])[0].isDoublePrecision;
     
-    if (((MAVVector *)rowVectors[0])[0].isDoublePrecision) {
-        size_t size = rows * columns * sizeof(double);
-        double *values = malloc(size);
-        [rowVectors enumerateObjectsUsingBlock:^(MAVVector *rowVector, NSUInteger row, BOOL *stop) {
-            for(int i = 0; i < columns; i++) {
-                NSNumber *value = [rowVector valueAtIndex:i];
-                values[row * columns + i] = value.doubleValue;
-            }
-        }];
-		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:values length:size]
-		                                 rows:rows
-		                              columns:columns
-		                     leadingDimension:MAVMatrixLeadingDimensionRow
-		                        packingMethod:MAVMatrixValuePackingMethodConventional
-		                  triangularComponent:MAVMatrixTriangularComponentBoth];
-    } else {
-        size_t size = rows * columns * sizeof(float);
-        float *values = malloc(size);
-        [rowVectors enumerateObjectsUsingBlock:^(MAVVector *rowVector, NSUInteger row, BOOL *stop) {
-            for(int i = 0; i < columns; i++) {
-                NSNumber *value = [rowVector valueAtIndex:i];
-                values[row * columns + i] = value.floatValue;
-            }
-        }];
-		matrix = [[self alloc] initWithValues:[NSData dataWithBytesNoCopy:values length:size]
-		                                 rows:rows
-		                              columns:columns
-		                     leadingDimension:MAVMatrixLeadingDimensionRow
-		                        packingMethod:MAVMatrixValuePackingMethodConventional
-		                  triangularComponent:MAVMatrixTriangularComponentBoth];
-    }
+	MAVMatrix *matrix = [[self alloc] initWithValues:[self dataFromVectors:rowVectors]
+	                                            rows:rows
+	                                         columns:columns
+	                                leadingDimension:MAVMatrixLeadingDimensionRow
+	                                   packingMethod:MAVMatrixValuePackingMethodConventional
+	                             triangularComponent:MAVMatrixTriangularComponentBoth];
+    matrix.precision = isDoublePrecision ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
     
     return matrix;
 }
@@ -2088,6 +2040,39 @@ MAVMatrixNorm;
     }
     
     return normResult;
+}
+
++ (NSData *)dataFromVectors:(NSArray *)vectors
+{
+    MAVVector *firstVector = vectors.firstObject;
+    int rows = firstVector.vectorFormat == MAVVectorFormatRowVector ? (int)vectors.count : firstVector.length;
+    int columns = firstVector.vectorFormat == MAVVectorFormatRowVector ? firstVector.length : (int)vectors.count;
+
+    NSData * data;
+
+    if (((MAVVector *)vectors[0])[0].isDoublePrecision) {
+        size_t size = rows * columns * sizeof(double);
+        double *values = malloc(size);
+        [vectors enumerateObjectsUsingBlock:^(MAVVector *rowVector, NSUInteger row, BOOL *stop) {
+            for(int i = 0; i < columns; i++) {
+                NSNumber *value = [rowVector valueAtIndex:i];
+                values[row * columns + i] = value.doubleValue;
+            }
+        }];
+        data = [NSData dataWithBytesNoCopy:values length:size];
+    } else {
+        size_t size = rows * columns * sizeof(float);
+        float *values = malloc(size);
+        [vectors enumerateObjectsUsingBlock:^(MAVVector *rowVector, NSUInteger row, BOOL *stop) {
+            for(int i = 0; i < columns; i++) {
+                NSNumber *value = [rowVector valueAtIndex:i];
+                values[row * columns + i] = value.floatValue;
+            }
+        }];
+        data = [NSData dataWithBytesNoCopy:values length:size];
+    }
+    
+    return data;
 }
 
 @end
