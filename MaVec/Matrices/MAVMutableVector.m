@@ -8,6 +8,7 @@
 
 #import <Accelerate/Accelerate.h>
 
+#import "MAVVector-Protected.h"
 #import "MAVMutableVector.h"
 
 #import "NSNumber+MCKPrecision.h"
