@@ -434,20 +434,7 @@
 {
     MAVVector *vectorCopy = [[self class] allocWithZone:zone];
     
-    vectorCopy->_length = _length;
-    vectorCopy->_vectorFormat = _vectorFormat;
-    vectorCopy->_minimumValueIndex = _minimumValueIndex;
-    vectorCopy->_maximumValueIndex = _maximumValueIndex;
-    vectorCopy->_precision = _precision;
-    
-    vectorCopy->_values = _values.copy;
-    vectorCopy->_l1Norm = _l1Norm.copy;
-    vectorCopy->_l2Norm = _l2Norm.copy;
-    vectorCopy->_l3Norm = _l3Norm.copy;
-    vectorCopy->_infinityNorm = _infinityNorm.copy;
-    vectorCopy->_minimumValue = _minimumValue.copy;
-    vectorCopy->_maximumValue = _maximumValue.copy;
-    vectorCopy->_absoluteVector = _absoluteVector.copy;
+    [self deepCopyVector:self intoNewVector:vectorCopy mutable:NO];
     
     return vectorCopy;
 }
@@ -455,8 +442,14 @@
 #pragma mark - Inspection
 
 - (NSNumber *)valueAtIndex:(int)index
+- (void)deepCopyVector:(MAVVector *)vector intoNewVector:(MAVVector *)newVector mutable:(BOOL)mutable
 {
     NSNumber *value;
+    newVector->_length = vector->_length;
+    newVector->_vectorFormat = vector->_vectorFormat;
+    newVector->_minimumValueIndex = vector->_minimumValueIndex;
+    newVector->_maximumValueIndex = vector->_maximumValueIndex;
+    newVector->_precision = vector->_precision;
     
     if (self.precision == MCKValuePrecisionDouble) {
         value = @(((double *)self.values.bytes)[index]);
@@ -487,17 +480,41 @@
         double *newValues = malloc(vector.length * sizeof(double));
         for (int i = 0; i < vector.length; i++) {
             newValues[i] = scalar.doubleValue * ((double *)vector.values.bytes)[i];
+    if (vector->_precision == MCKValuePrecisionDouble) {
+        double *values = malloc(vector->_values.length);
+        for (int i = 0; i < vector->_values.length / sizeof(double); i++) {
+            values[i] = ((double *)vector->_values.bytes)[i];
+        }
+        if ( mutable ) {
+            newVector->_values = [NSMutableData dataWithBytesNoCopy:values length:vector->_values.length];
+        } else {
+            newVector->_values = [NSData dataWithBytesNoCopy:values length:vector->_values.length];
         }
         product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
     } else {
         float *newValues = malloc(vector.length * sizeof(float));
         for (int i = 0; i < vector.length; i++) {
             newValues[i] = scalar.floatValue * ((float *)vector.values.bytes)[i];
+        float *values = malloc(vector->_values.length);
+        for (int i = 0; i < vector->_values.length / sizeof(float); i++) {
+            values[i] = ((float *)vector->_values.bytes)[i];
+        }
+        if ( mutable ) {
+            newVector->_values = [NSMutableData dataWithBytesNoCopy:values length:vector->_values.length];
+        } else {
+            newVector->_values = [NSData dataWithBytesNoCopy:values length:vector->_values.length];
         }
         product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
     }
     
     return product;
+    newVector->_l1Norm = vector->_l1Norm.copy;
+    newVector->_l2Norm = vector->_l2Norm.copy;
+    newVector->_l3Norm = vector->_l3Norm.copy;
+    newVector->_infinityNorm = vector->_infinityNorm.copy;
+    newVector->_minimumValue = vector->_minimumValue.copy;
+    newVector->_maximumValue = vector->_maximumValue.copy;
+    newVector->_absoluteVector = vector->_absoluteVector.copy;
 }
 
 + (MAVVector *)sumOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB
@@ -519,13 +536,17 @@
     
     return sumVector;
 }
+#pragma mark - NSMutableCopying
 
 + (MAVVector *)differenceOfVectorMinuend:(MAVVector *)vectorMinuend vectorSubtrahend:(MAVVector *)vectorSubtrahend
+- (id)mutableCopyWithZone:(NSZone *)zone
 {
     NSAssert(vectorMinuend.length == vectorSubtrahend.length, @"Vector dimensions do not match");
     NSAssert(vectorMinuend.precision == vectorSubtrahend.precision, @"Vector precisions do not match");
+    MAVMutableVector *newVector = [MAVMutableVector allocWithZone:zone];
     
     MAVVector *differenceVector;
+    [self deepCopyVector:self intoNewVector:newVector mutable:YES];
     
     if (vectorSubtrahend.precision == MCKValuePrecisionDouble) {
         double *diff = malloc(vectorMinuend.length * sizeof(double));
@@ -538,6 +559,7 @@
     }
     
     return differenceVector;
+    return newVector;
 }
 
 + (MAVVector *)productOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB

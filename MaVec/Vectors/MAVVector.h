@@ -49,7 +49,7 @@ MAVVectorFormat;
  @class MAVVector
  @description A class providing storage and operations for vectors of double precision floating-point numbers, where underlying details about the internal representation (e.g. row- or column- orientation are abstracted away).
  */
-@interface MAVVector : NSObject<NSCopying>
+@interface MAVVector : NSObject<NSCopying, NSMutableCopying>
 
 /**
  @property vectorFormat
