@@ -445,34 +445,14 @@
     return vectorCopy;
 }
 
-#pragma mark - Inspection
-
-- (NSNumber *)valueAtIndex:(int)index
 - (void)deepCopyVector:(MAVVector *)vector intoNewVector:(MAVVector *)newVector mutable:(BOOL)mutable
 {
-    NSNumber *value;
     newVector->_length = vector->_length;
     newVector->_vectorFormat = vector->_vectorFormat;
     newVector->_minimumValueIndex = vector->_minimumValueIndex;
     newVector->_maximumValueIndex = vector->_maximumValueIndex;
     newVector->_precision = vector->_precision;
     
-    if (self.precision == MCKValuePrecisionDouble) {
-        value = @(((double *)self.values.bytes)[index]);
-    } else {
-        value = @(((float *)self.values.bytes)[index]);
-    }
-    
-    return value;
-}
-
-#pragma mark - Subscripting
-
-- (NSNumber *)objectAtIndexedSubscript:(NSUInteger)idx
-{
-    return [self valueAtIndex:(int)idx];
-}
-
     if (vector->_precision == MCKValuePrecisionDouble) {
         double *values = malloc(vector->_values.length);
         for (int i = 0; i < vector->_values.length / sizeof(double); i++) {
@@ -514,17 +494,34 @@
     return newVector;
 }
 
+#pragma mark - Inspection
+
+- (NSNumber *)valueAtIndex:(int)index
 {
+    NSNumber *value;
     
+    if (self.precision == MCKValuePrecisionDouble) {
+        value = @(((double *)self.values.bytes)[index]);
     } else {
+        value = @(((float *)self.values.bytes)[index]);
     }
     
+    return value;
 }
 
+#pragma mark - Subscripting
+
+- (NSNumber *)objectAtIndexedSubscript:(NSUInteger)idx
 {
+    return [self valueAtIndex:(int)idx];
 }
 
+#pragma mark - Instance Operations
+
+- (NSNumber *)dotProductWithVector:(MAVVector *)vector
 {
+    NSAssert(self.length == vector.length, @"Vector dimensions do not match");
+    NSAssert(self.precision == vector.precision, @"Vector precisions do not match");
     
     NSNumber *dotProduct;
     
