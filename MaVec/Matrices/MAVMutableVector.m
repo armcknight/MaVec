@@ -23,11 +23,36 @@
 
 - (void)setValue:(NSNumber *)value atIndex:(NSUInteger)index
 {
+    NSAssert(index >= 0 && index < self.length, @"index = %lu out of the range of values in the vector (%u)", (unsigned long)index, self.length);
+    NSAssert(value.precision && self.precision,
+             @"Precision of vector (%@) does not match precision of values (%@)",
+             self.precision == MCKValuePrecisionSingle ? @"single" : @"double",
+             value.precision == MCKValuePrecisionSingle ? @"single" : @"double");
     
+    if ([value isDoublePrecision]) {
+        double *bytes = malloc(sizeof(double));
+        bytes[0] = value.doubleValue;
+        [self.values replaceBytesInRange:NSMakeRange(index * sizeof(double), sizeof(double)) withBytes:bytes];
+    } else {
+        float *bytes = malloc(sizeof(float));
+        bytes[0] = value.doubleValue;
+        [self.values replaceBytesInRange:NSMakeRange(index * sizeof(float), sizeof(float)) withBytes:bytes];
+    }
 }
 
 - (void)setValues:(NSArray *)values inRange:(NSRange)range
 {
+    NSAssert(values.count == range.length, @"Mismatch between amount of values (%lu) and range length (%lu)", (unsigned long)values.count, (unsigned long)range.length);
+    for (NSUInteger i = 0; i < values.count; i++) {
+        self[i+range.location] = values[i];
+    }
+}
+
+- (void)setObject:(NSNumber *)obj atIndexedSubscript:(NSUInteger)idx
+{
+    [self setValue:obj atIndex:idx];
+}
+
 #pragma mark - Arithmetic
 
 - (MAVMutableVector *)multiplyByScalar:(NSNumber *)scalar
@@ -124,7 +149,6 @@
     return self;
 }
 
-- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx
 - (MAVMutableVector *)raiseToPower:(NSUInteger)power
 {
     MAVVector *original = [self copy];
