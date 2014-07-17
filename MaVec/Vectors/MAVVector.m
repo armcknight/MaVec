@@ -29,6 +29,7 @@
 
 #import "MAVVector.h"
 #import "MAVVector-Protected.h"
+#import "MAVMutableVector.h"
 
 #import "NSNumber+MCKPrecision.h"
 #import "NSData+MCKPrecision.h"
@@ -61,7 +62,7 @@
 {
     self = [self init];
     if (self) {
-        _values = values;
+        _values = [[self class] isSubclassOfClass:[MAVMutableVector class]] ? [values mutableCopy] : values;
         _length = length;
         _precision = [values containsDoublePrecisionValues:length] ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
     }
@@ -88,6 +89,9 @@
                 valuesArray[idx] = value.doubleValue;
             }];
             _values = [NSData dataWithBytesNoCopy:valuesArray length:size];
+            if ([[self class] isSubclassOfClass:[MAVMutableVector class]]) {
+                _values = [_values mutableCopy];
+            }
         } else {
             NSUInteger size = values.count * sizeof(float);
             float *valuesArray = malloc(size);
@@ -95,6 +99,9 @@
                 valuesArray[idx] = value.floatValue;
             }];
             _values = [NSData dataWithBytesNoCopy:valuesArray length:size];
+            if ([[self class] isSubclassOfClass:[MAVMutableVector class]]) {
+                _values = [_values mutableCopy];
+            }
         }
     }
     return self;

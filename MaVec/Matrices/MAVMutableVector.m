@@ -8,6 +8,12 @@
 
 #import "MAVMutableVector.h"
 
+@interface MAVMutableVector ()
+
+@property (strong, nonatomic, readwrite) NSMutableData *values;
+
+@end
+
 @implementation MAVMutableVector
 
 - (void)setValue:(NSNumber *)value atIndex:(NSUInteger)index
