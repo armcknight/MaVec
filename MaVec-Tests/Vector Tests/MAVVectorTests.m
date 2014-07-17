@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVVector.h"
+#import "MAVMutableVector.h"
 
 @interface MAVVectorTests : XCTestCase
 
@@ -49,36 +50,36 @@
 
 - (void)testVectorDotProduct
 {
-    NSNumber *dotProduct = [MAVVector dotProductOfVectorA:[MAVVector vectorWithValuesInArray:@[
-                                                                                          @1.0,
-                                                                                          @3.0,
-                                                                                          @(-5.0)]]
-                                           vectorB:[MAVVector vectorWithValuesInArray:@[
-                                                                                          @4.0,
-                                                                                          @(-2.0),
-                                                                                          @(-1.0)]]];
+    NSNumber *dotProduct = [[MAVMutableVector vectorWithValuesInArray:@[
+                                                                        @1.0,
+                                                                        @3.0,
+                                                                        @(-5.0)]]
+                            dotProductWithVector:[MAVVector vectorWithValuesInArray:@[
+                                                                                      @4.0,
+                                                                                      @(-2.0),
+                                                                                      @(-1.0)]]];
     XCTAssertEqual(dotProduct.doubleValue, 3.0, @"Dot product not computed correctly");
     
-    dotProduct = [MAVVector dotProductOfVectorA:[MAVVector vectorWithValuesInArray:@[
-                                                                                   @0.0,
-                                                                                   @0.0,
-                                                                                   @1.0]]
-                                    vectorB:[MAVVector vectorWithValuesInArray:@[
-                                                                                   @0.0,
-                                                                                   @1.0,
-                                                                                   @0.0]]];
+    dotProduct = [[MAVMutableVector vectorWithValuesInArray:@[
+                                                              @0.0,
+                                                              @0.0,
+                                                              @1.0]]
+                  dotProductWithVector:[MAVVector vectorWithValuesInArray:@[
+                                                                            @0.0,
+                                                                            @1.0,
+                                                                            @0.0]]];
     XCTAssertEqual(dotProduct.doubleValue, 0.0, @"Dot product not computed correctly");
     
     @try {
-        dotProduct = [MAVVector dotProductOfVectorA:[MAVVector vectorWithValuesInArray:@[
-                                                                                       @0.0,
-                                                                                       @0.0,
-                                                                                       @1.0]]
-                                        vectorB:[MAVVector vectorWithValuesInArray:@[
-                                                                                       @0.0,
-                                                                                       @1.0,
-                                                                                       @0.0,
-                                                                                       @1.0]]];
+        dotProduct = [[MAVMutableVector vectorWithValuesInArray:@[
+                                                                  @0.0,
+                                                                  @0.0,
+                                                                  @1.0]]
+                      dotProductWithVector:[MAVVector vectorWithValuesInArray:@[
+                                                                                @0.0,
+                                                                                @1.0,
+                                                                                @0.0,
+                                                                                @1.0]]];
     }
     @catch (NSException *exception) {
         XCTAssert([exception.name isEqualToString:NSInternalInconsistencyException], @"Did not detect dimension mismatch in MAVVector dot product method");
@@ -87,69 +88,79 @@
 
 - (void)testVectorAddition
 {
-    MAVVector *a = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
+    MAVMutableVector *a = [MAVMutableVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
     MAVVector *b = [MAVVector vectorWithValuesInArray:@[@5.0, @6.0, @7.0, @8.0]];
     MAVVector *c = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
-    MAVVector *sum = [MAVVector sumOfVectorA:a vectorB:b];
+    [a addVector:b];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@6.0, @8.0, @10.0, @12.0]];
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqual([sum valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not added correctly", i);
+        XCTAssertEqual([a valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not added correctly", i);
     }
     
-    XCTAssertThrows([MAVVector sumOfVectorA:a vectorB:c], @"Should throw a mismatched dimension exception");
+    XCTAssertThrows([a addVector:c], @"Should throw a mismatched dimension exception");
 }
 
 - (void)testVectorSubtraction
 {
-    MAVVector *a = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
-    MAVVector *b = [MAVVector vectorWithValuesInArray:@[@5.0, @6.0, @7.0, @8.0]];
+    MAVMutableVector *a = [MAVMutableVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
+    MAVMutableVector *b = [MAVMutableVector vectorWithValuesInArray:@[@5.0, @6.0, @7.0, @8.0]];
     MAVVector *c = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
-    MAVVector *diff = [MAVVector differenceOfVectorMinuend:b vectorSubtrahend:a];
+    [b subtractVector:a];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@4.0, @4.0, @4.0, @4.0]];
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqual([diff valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not subtracted correctly", i);
+        XCTAssertEqual([b valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not subtracted correctly", i);
     }
     
-    XCTAssertThrows([MAVVector differenceOfVectorMinuend:a vectorSubtrahend:c], @"Should throw a mismatched dimension exception");
+    XCTAssertThrows([a subtractVector:c], @"Should throw a mismatched dimension exception");
 }
 
 - (void)testVectorMultiplication
 {
-    MAVVector *a = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
+    MAVMutableVector *a = [MAVMutableVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
     MAVVector *b = [MAVVector vectorWithValuesInArray:@[@5.0, @6.0, @7.0, @8.0]];
     MAVVector *c = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
-    MAVVector *prod = [MAVVector productOfVectorA:a vectorB:b];
+    [a multiplyByVector:b];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@5.0, @12.0, @21.0, @32.0]];
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqual([prod valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not multiplied correctly", i);
+        XCTAssertEqual([a valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not multiplied correctly", i);
     }
     
-    XCTAssertThrows([MAVVector productOfVectorA:a vectorB:c], @"Should throw a mismatched dimension exception");
+    XCTAssertThrows([a multiplyByVector:c], @"Should throw a mismatched dimension exception");
 }
 
 - (void)testVectorDivision
 {
-    MAVVector *a = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
-    MAVVector *b = [MAVVector vectorWithValuesInArray:@[@5.0, @6.0, @9.0, @8.0]];
+    MAVMutableVector *a = [MAVMutableVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0]];
+    MAVMutableVector *b = [MAVMutableVector vectorWithValuesInArray:@[@5.0, @6.0, @9.0, @8.0]];
     MAVVector *c = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
     
-    MAVVector *quotient = [MAVVector quotientOfVectorDividend:b vectorDivisor:a];
+    [b divideByVector:a];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@5.0, @3.0, @3.0, @2.0]];
     for (int i = 0; i < 4; i++) {
-        XCTAssertEqual([quotient valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not divided correctly", i);
+        XCTAssertEqual([b valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not divided correctly", i);
     }
     
-    XCTAssertThrows([MAVVector quotientOfVectorDividend:a vectorDivisor:c], @"Should throw a mismatched dimension exception");
+    XCTAssertThrows([a divideByVector:c], @"Should throw a mismatched dimension exception");
+}
+
+- (void)testVectorPower
+{
+    MAVMutableVector *a = [MAVMutableVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0, @5.0]];
+    [a raiseToPower:3];
+    MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@1.0, @8.0, @27.0, @64.0, @125.0]];
+    for (int i = 0; i < 5; i++) {
+        XCTAssertEqual(a[i].doubleValue, solution[i].doubleValue, @"element at index %i = %f but expected %f", i, a[i].doubleValue, solution[i].doubleValue);
+    }
 }
 
 - (void)testVectorCrossProduct
 {
-    MAVVector *a = [MAVVector vectorWithValuesInArray:@[@3.0, @(-3.0), @1.0]];
+    MAVMutableVector *a = [MAVMutableVector vectorWithValuesInArray:@[@3.0, @(-3.0), @1.0]];
     MAVVector *b = [MAVVector vectorWithValuesInArray:@[@4.0, @9.0, @2.0]];
-    MAVVector *c = [MAVVector crossProductOfVectorA:a vectorB:b];
+    MAVVector *c = [a crossProductWithVector:b];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@(-15.0), @(-2.0), @39.0]];
     XCTAssertTrue([c isEqualToVector:solution], @"Cross product not computed correctly.");
 }

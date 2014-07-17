@@ -68,7 +68,7 @@
         MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
         MAVVector *left = [[[o mutableCopy] multiplyByVector:eigenvector] columnVectorForColumn:0];
-        MAVVector *right = [MAVVector productOfVector:eigenvector scalar:eigenvalue];
+        MAVVector *right = [[eigenvector mutableCopy] multiplyByScalar:eigenvalue];
         for (int j = 0; j < 5; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
             double b = [right valueAtIndex:j].doubleValue;
@@ -95,7 +95,7 @@
         MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
         MAVVector *left = [[[source mutableCopy] multiplyByVector:eigenvector] columnVectorForColumn:0];
-        MAVVector *right = [MAVVector productOfVector:eigenvector scalar:eigenvalue];
+        MAVVector *right = [[eigenvector mutableCopy] multiplyByScalar:eigenvalue];
         for (int j = 0; j < 4; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
             double b = [right valueAtIndex:j].doubleValue;
