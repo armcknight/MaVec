@@ -125,12 +125,16 @@
 
 + (instancetype)vectorWithValues:(NSData *)values length:(int)length
 {
-    return [[self alloc] initWithValues:values length:length vectorFormat:MAVVectorFormatColumnVector];
+    return [[self alloc] initWithValues:values
+                                 length:length
+                           vectorFormat:MAVVectorFormatColumnVector];
 }
 
 + (instancetype)vectorWithValues:(NSData *)values length:(int)length vectorFormat:(MAVVectorFormat)vectorFormat
 {
-    return [[self alloc] initWithValues:values length:length vectorFormat:vectorFormat];
+    return [[self alloc] initWithValues:values
+                                 length:length
+                           vectorFormat:vectorFormat];
 }
 
 - (instancetype)initWithValuesInArray:(NSArray *)values vectorFormat:(MAVVectorFormat)vectorFormat
@@ -144,12 +148,14 @@
 
 + (instancetype)vectorWithValuesInArray:(NSArray *)values
 {
-    return [[self alloc] initWithValuesInArray:values vectorFormat:MAVVectorFormatColumnVector];
+    return [[self alloc] initWithValuesInArray:values
+                                  vectorFormat:MAVVectorFormatColumnVector];
 }
 
 + (instancetype)vectorWithValuesInArray:(NSArray *)values vectorFormat:(MAVVectorFormat)vectorFormat
 {
-    return [[self alloc] initWithValuesInArray:values vectorFormat:vectorFormat];
+    return [[self alloc] initWithValuesInArray:values
+                                  vectorFormat:vectorFormat];
 }
 
 + (instancetype)randomVectorOfLength:(int)length
@@ -162,14 +168,18 @@
         for (int i = 0; i < length; i++) {
             values[i] = drand48();
         }
-        return [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:length vectorFormat:vectorFormat];
+        return [[self class] vectorWithValues:[NSData dataWithBytesNoCopy:values length:size]
+                                       length:length
+                                 vectorFormat:vectorFormat];
     } else {
         NSUInteger size = length * sizeof(float);
         float *values = malloc(size);
         for (int i = 0; i < length; i++) {
             values[i] = rand() / RAND_MAX;
         }
-        return [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:length vectorFormat:vectorFormat];
+        return [[self class] vectorWithValues:[NSData dataWithBytesNoCopy:values length:size]
+                                       length:length
+                                 vectorFormat:vectorFormat];
     }
 }
 
@@ -181,7 +191,8 @@
     for (int i = 0; i < length; i++) {
         [values addObject:value];
     }
-    return [MAVVector vectorWithValuesInArray:values vectorFormat:vectorFormat];
+    return [[self class] vectorWithValuesInArray:values
+                                    vectorFormat:vectorFormat];
 }
 
 #pragma mark - Lazy loaded properties
