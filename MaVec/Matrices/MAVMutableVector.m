@@ -72,7 +72,7 @@ MAVVectorMutatingOperationType;
 
 @implementation MAVMutableVector
 
-- (void)setValue:(NSNumber *)value atIndex:(NSUInteger)index
+- (void)setValue:(NSNumber *)value atIndex:(int)index
 {
     NSAssert(index >= 0 && index < self.length, @"index = %lu out of the range of values in the vector (%u)", (unsigned long)index, self.length);
     NSAssert(value.precision && self.precision,

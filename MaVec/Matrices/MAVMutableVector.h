@@ -16,7 +16,7 @@
  *  @param value The value to set in this vector.
  *  @param index The position at which to set the supplied value.
  */
-- (void)setValue:(NSNumber *)value atIndex:(NSUInteger)index;
+- (void)setValue:(NSNumber *)value atIndex:(int)index;
 
 /**
  *  Enable bracketed subscripting to values into this vector.
