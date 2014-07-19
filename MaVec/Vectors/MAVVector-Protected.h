@@ -24,12 +24,6 @@
 @property (assign, readwrite, nonatomic) MCKValuePrecision precision;
 
 /**
- @brief Sets all properties to default states.
- @return A new instance of MAVVector in a default state with no values or length.
- */
-- (instancetype)init;
-
-/**
  @brief Constructs new instance by calling [self init] and sets the supplied values and length.
  @param values C array of floating-point values.
  @param length The length of the C array.
@@ -43,5 +37,11 @@
  @return A new instance of MAVVector in a default state.
  */
 - (instancetype)initWithValuesInArray:(NSArray *)values;
+
+/**
+ *  Sets any computed values or structures that may change with variation in 
+ *  vector values to their default values (nil, -1, etc).
+ */
+- (void)resetToDefaultState;
 
 @end

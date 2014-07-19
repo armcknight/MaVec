@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		491FF1A5193BC6FA00A5F3CE /* MAVMutableMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */; };
 		491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */; };
+		4941980C197AF207008CF78E /* MAVMutableVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980B197AF207008CF78E /* MAVMutableVectorTests.m */; };
+		4941980F197B058E008CF78E /* NSNumber+MCKRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980E197B058E008CF78E /* NSNumber+MCKRandom.m */; };
 		499734AF192594DF0004A8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734AE192594DF0004A8E5 /* Foundation.framework */; };
 		499734B1192594DF0004A8E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B0192594DF0004A8E5 /* CoreGraphics.framework */; };
 		499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734B7192594DF0004A8E5 /* InfoPlist.strings */; };
@@ -304,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				4997350F192596A10004A8E5 /* MAVVectorTests.m */,
+				4941980B197AF207008CF78E /* MAVMutableVectorTests.m */,
 			);
 			path = "Vector Tests";
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				499735061925969A0004A8E5 /* MAVMatrixMultiplicationTests.m in Sources */,
 				499734FF1925969A0004A8E5 /* MAVEigendecompositionTests.m in Sources */,
 				49973515192596AB0004A8E5 /* MaVecTests.m in Sources */,
+				4941980C197AF207008CF78E /* MAVMutableVectorTests.m in Sources */,
 				4997350C1925969A0004A8E5 /* MAVRotationMatrixTests.m in Sources */,
 				4997350A1925969A0004A8E5 /* MAVMinorCofactorAdjugateTests.m in Sources */,
 				499735031925969A0004A8E5 /* MAVMatrixConstructionTests.m in Sources */,

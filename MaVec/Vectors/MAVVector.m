@@ -36,27 +36,17 @@
 
 @implementation MAVVector
 
-#pragma mark - Private constructor helpers
-
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _sumOfValues = nil;
-        _productOfValues = nil;
-        _l1Norm = nil;
-        _l2Norm = nil;
-        _l3Norm = nil;
-        _infinityNorm = nil;
-        _minimumValue = nil;
-        _maximumValue = nil;
-        _minimumValueIndex = -1;
-        _maximumValueIndex = -1;
-        _absoluteVector = nil;
+        [self resetToDefaultState];
         _precision = MCKValuePrecisionSingle;
     }
     return self;
 }
+
+#pragma mark - Private
 
 - (instancetype)initWithValues:(NSData *)values length:(int)length
 {
@@ -105,6 +95,21 @@
         }
     }
     return self;
+}
+
+- (void)resetToDefaultState
+{
+    _sumOfValues = nil;
+    _productOfValues = nil;
+    _l1Norm = nil;
+    _l2Norm = nil;
+    _l3Norm = nil;
+    _infinityNorm = nil;
+    _minimumValue = nil;
+    _maximumValue = nil;
+    _minimumValueIndex = -1;
+    _maximumValueIndex = -1;
+    _absoluteVector = nil;
 }
 
 #pragma mark - Constructors
