@@ -79,6 +79,7 @@
 		491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAVMutableVector.h; path = ../Matrices/MAVMutableVector.h; sourceTree = "<group>"; };
 		491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAVMutableVector.m; path = ../Matrices/MAVMutableVector.m; sourceTree = "<group>"; };
 		493974F01977659C001F6CA0 /* MAVVector-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVVector-Protected.h"; sourceTree = "<group>"; };
+		4941980B197AF207008CF78E /* MAVMutableVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableVectorTests.m; sourceTree = "<group>"; };
 		499734AB192594DF0004A8E5 /* MaVec-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		499734AE192594DF0004A8E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		499734B0192594DF0004A8E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
