@@ -57,7 +57,10 @@ MAVVectorMutatingOperationType;
 
 @interface MAVMutableVector ()
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-property-synthesis"
 @property (strong, nonatomic, readwrite) NSMutableData *values;
+#pragma clang diagnostic pop
 
 /**
  *  Reset the calculated state data of this vector if a mutable operation invalidates it.
