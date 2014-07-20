@@ -86,10 +86,12 @@ MAVVectorMutatingOperationType;
         double *bytes = malloc(sizeof(double));
         bytes[0] = value.doubleValue;
         [self.values replaceBytesInRange:NSMakeRange(index * sizeof(double), sizeof(double)) withBytes:bytes];
+        free(bytes);
     } else {
         float *bytes = malloc(sizeof(float));
         bytes[0] = value.doubleValue;
         [self.values replaceBytesInRange:NSMakeRange(index * sizeof(float), sizeof(float)) withBytes:bytes];
+        free(bytes);
     }
 }
 
@@ -121,12 +123,14 @@ MAVVectorMutatingOperationType;
             newValues[i] = scalar.doubleValue * ((double *)self.values.bytes)[i];
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:newValues];
+        free(newValues);
     } else {
         float *newValues = malloc(self.length * sizeof(float));
         for (int i = 0; i < self.length; i++) {
             newValues[i] = scalar.floatValue * ((float *)self.values.bytes)[i];
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:newValues];
+        free(newValues);
     }
     
     return self;
@@ -143,10 +147,12 @@ MAVVectorMutatingOperationType;
         double *sum = malloc(self.length * sizeof(double));
         vDSP_vaddD(self.values.bytes, 1, vector.values.bytes, 1, sum, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:sum];
+        free(sum);
     } else {
         float *sum = malloc(self.length * sizeof(float));
         vDSP_vadd(self.values.bytes, 1, vector.values.bytes, 1, sum, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:sum];
+        free(sum);
     }
     
     return self;
@@ -163,10 +169,12 @@ MAVVectorMutatingOperationType;
         double *diff = malloc(self.length * sizeof(double));
         vDSP_vsubD(vector.values.bytes, 1, self.values.bytes, 1, diff, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:diff];
+        free(diff);
     } else {
         float *diff = malloc(self.length * sizeof(float));
         vDSP_vsub(vector.values.bytes, 1, self.values.bytes, 1, diff, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:diff];
+        free(diff);
     }
     
     return self;
@@ -183,10 +191,12 @@ MAVVectorMutatingOperationType;
         double *product = malloc(self.length * sizeof(double));
         vDSP_vmulD(self.values.bytes, 1, vector.values.bytes, 1, product, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:product];
+        free(product);
     } else {
         float *product = malloc(self.length * sizeof(float));
         vDSP_vmul(self.values.bytes, 1, vector.values.bytes, 1, product, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:product];
+        free(product);
     }
     
     return self;
@@ -203,10 +213,12 @@ MAVVectorMutatingOperationType;
         double *quotient = malloc(self.length * sizeof(double));
         vDSP_vdivD(vector.values.bytes, 1, self.values.bytes, 1, quotient, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:quotient];
+        free(quotient);
     } else {
         float *quotient = malloc(self.length * sizeof(float));
         vDSP_vdiv(vector.values.bytes, 1, self.values.bytes, 1, quotient, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:quotient];
+        free(quotient);
     }
     
     return self;
@@ -224,12 +236,14 @@ MAVVectorMutatingOperationType;
             powerValues[i] = pow([original valueAtIndex:i].doubleValue, power);
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:powerValues];
+        free(powerValues);
     } else {
         float *powerValues = malloc(original.length * sizeof(float));
         for (int i = 0; i < original.length; i++) {
             powerValues[i] = powf([original valueAtIndex:i].floatValue, power);
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:powerValues];
+        free(powerValues);
     }
     
     return self;
