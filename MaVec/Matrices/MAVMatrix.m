@@ -1631,13 +1631,12 @@
 
 #pragma mark - Class-level matrix operations
 
-// TODO: this should really return a vector instead of a matrix
-+ (MAVMatrix *)solveLinearSystemWithMatrixA:(MAVMatrix *)A
-                                   valuesB:(MAVMatrix *)B
++ (MAVVector *)solveLinearSystemWithMatrixA:(MAVMatrix *)A
+                                    valuesB:(MAVVector *)B
 {
     NSAssert(A.precision == B.precision, @"Precisions do not match.");
     
-    MAVMatrix *matrix;
+    MAVVector *coefficientVector;
     
     NSData *aData = [A valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
     
@@ -1650,7 +1649,7 @@
         int ldb = n;
         int info;
         int *ipiv = malloc(n * sizeof(int));
-        int nb = B.rows;
+        int nb = B.length;
         
         if (A.precision == MCKValuePrecisionDouble) {
             double *a = malloc(n * n * sizeof(double));
@@ -1678,9 +1677,7 @@
                 free(ipiv);
                 free(a);
                 free(b);
-				matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size]
-				                                rows:n
-				                             columns:1];
+				coefficientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size] length:n];
             }
         } else {
             float *a = malloc(n * n * sizeof(float));
@@ -1708,9 +1705,7 @@
                 free(ipiv);
                 free(a);
                 free(b);
-				matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size]
-				                                rows:n
-				                             columns:1];
+				coefficientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size] length:n];
             }
         }
     } else {
@@ -1735,7 +1730,7 @@
         int ldb = A.rows;
         int info;
         int lwork = -1;
-        int nb = B.rows;
+        int nb = B.length;
         
         if (A.precision == MCKValuePrecisionDouble) {
             double wkopt;
@@ -1772,9 +1767,7 @@
                 free(a);
                 free(b);
                 free(work);
-				matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size]
-				                                rows:n
-				                             columns:1];
+				coefficientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size] length:n];
             }
         } else {
             float wkopt;
@@ -1811,14 +1804,12 @@
                 free(a);
                 free(b);
                 free(work);
-				matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size]
-				                                rows:n
-				                             columns:1];
+				coefficientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:solutionValues length:size] length:n];
             }
         }
     }
     
-    return matrix;
+    return coefficientVector;
 }
 
 + (MAVMatrix *)productOfMatrices:(NSArray *)matrices

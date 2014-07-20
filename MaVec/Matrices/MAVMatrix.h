@@ -688,8 +688,8 @@ MAVCoordinateAxis;
  @description Good documentation for solving Ax=b where A is a square matrix located  at http://www.netlib.org/lapack/double/dgesv.f and example at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgesv_ex.c.htm. When A is a general m x n matrix, see documentation at http://www.netlib.org/lapack/double/dgels.f and example at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgels_ex.c.htm
  @return A column vector containing coefficients for unknows to solve a linear system Ax=B, or nil if the system cannot be solved. Raises an NSInvalidArgumentException if A and B are of incompatible dimension.
  */
-+ (MAVMatrix *)solveLinearSystemWithMatrixA:(MAVMatrix *)A
-                                   valuesB:(MAVMatrix*)B;
++ (MAVVector *)solveLinearSystemWithMatrixA:(MAVMatrix *)A
+                                    valuesB:(MAVVector *)B;
 
 /**
  @brief Multiplies an array of matrices together. Uses the Hu-Shing polygon partitioning method to determine the optimum order of multiplication to minimize the amount of operations. http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0213017.pdf
