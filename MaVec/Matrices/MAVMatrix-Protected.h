@@ -8,9 +8,6 @@
 
 #import "MAVMatrix.h"
 
-#define randomDouble drand48()
-#define randomFloat rand() / RAND_MAX
-
 typedef enum : UInt8 {
     /**
      The maximum absolute column sum of the matrix.

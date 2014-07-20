@@ -39,6 +39,7 @@
 #import "MCKTribool.h"
 
 #import "NSNumber+MCKPrecision.h"
+#import "NSNumber+MCKRandom.h"
 #import "NSData+MCKPrecision.h"
 
 @implementation MAVMatrix
@@ -443,9 +444,9 @@
                     if (shouldHaveZero && i == zeroIndex) {
                         values[i] = 0.0;
                     } else {
-                        values[i] = fabs(randomDouble) * (positive ? 1.0 : -1.0);
+                        values[i] = fabs([NSNumber mck_randomDouble].doubleValue) * (positive ? 1.0 : -1.0);
                         while (values[i] == 0.0 || values[i] == -0.0) {
-                            values[i] = fabs(randomDouble) * (positive ? 1.0 : -1.0);
+                            values[i] = fabs([NSNumber mck_randomDouble].doubleValue) * (positive ? 1.0 : -1.0);
                         }
                         positive = !positive;
                     }
@@ -458,9 +459,9 @@
                     if (shouldHaveZero && i == zeroIndex) {
                         values[i] = 0.0f;
                     } else {
-                        values[i] = fabsf(randomFloat) * (positive ? 1.0f : -1.0f);
+                        values[i] = fabsf([NSNumber mck_randomFloat].floatValue) * (positive ? 1.0f : -1.0f);
                         while (values[i] == 0.0f || values[i] == -0.0f) {
-                            values[i] = fabsf(randomFloat) * (positive ? 1.0f : -1.0f);
+                            values[i] = fabsf([NSNumber mck_randomFloat].floatValue) * (positive ? 1.0f : -1.0f);
                         }
                         positive = !positive;
                     }
@@ -499,9 +500,9 @@
                     if (i == zeroIndex) {
                         values[i] = 0.0;
                     } else {
-                        values[i] = fabs(randomDouble);
+                        values[i] = fabs([NSNumber mck_randomDouble].doubleValue);
                         while (values[i] == 0.0 || values[i] == -0.0) {
-                            values[i] = fabs(randomDouble);
+                            values[i] = fabs([NSNumber mck_randomDouble].doubleValue);
                         }
                     }
                 }
@@ -513,9 +514,9 @@
                     if (i == zeroIndex) {
                         values[i] = 0.0f;
                     } else {
-                        values[i] = fabsf(randomFloat);
+                        values[i] = fabsf([NSNumber mck_randomFloat].floatValue);
                         while (values[i] == 0.0f || values[i] == -0.0f) {
-                            values[i] = fabsf(randomFloat);
+                            values[i] = fabsf([NSNumber mck_randomFloat].floatValue);
                         }
                     }
                 }
@@ -534,9 +535,9 @@
                     if (i == zeroIndex) {
                         values[i] = 0.0;
                     } else {
-                        values[i] = -fabs(randomDouble);
+                        values[i] = -fabs([NSNumber mck_randomDouble].doubleValue);
                         while (values[i] == 0.0 || values[i] == -0.0) {
-                            values[i] = -fabs(randomDouble);
+                            values[i] = -fabs([NSNumber mck_randomDouble].doubleValue);
                         }
                     }
                 }
@@ -548,9 +549,9 @@
                     if (i == zeroIndex) {
                         values[i] = 0.0f;
                     } else {
-                        values[i] = -fabsf(randomFloat);
+                        values[i] = -fabsf([NSNumber mck_randomFloat].floatValue);
                         while (values[i] == 0.0f || values[i] == -0.0f) {
-                            values[i] = -fabsf(randomFloat);
+                            values[i] = -fabsf([NSNumber mck_randomFloat].floatValue);
                         }
                     }
                 }
@@ -1908,14 +1909,14 @@
         NSUInteger dataSize = size * sizeof(double);
         double *values = malloc(dataSize);
         for (int i = 0; i < size; i += 1) {
-            values[i] = randomDouble;
+            values[i] = [NSNumber mck_randomDouble].doubleValue;
         }
         data = [NSData dataWithBytesNoCopy:values length:dataSize];
     } else {
         NSUInteger dataSize = size * sizeof(float);
         float *values = malloc(dataSize);
         for (int i = 0; i < size; i += 1) {
-            values[i] = randomFloat;
+            values[i] = [NSNumber mck_randomFloat].floatValue;
         }
         data = [NSData dataWithBytesNoCopy:values length:dataSize];
     }
