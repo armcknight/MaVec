@@ -21,7 +21,7 @@ end
 #
 
 task :test do
-  sh("xctool -workspace '#{TEST_WORKSPACE_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator build test") rescue nil
+  sh("xctool -workspace '#{TEST_PROJ_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator build test") rescue nil
   exit $?.exitstatus
 end
 
@@ -30,7 +30,7 @@ end
 #
 
 task :analyze do
-  sh("xctool -workspace '#{TEST_WORKSPACE_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator analyze -failOnWarnings") rescue nil
+  sh("xctool -workspace '#{TEST_PROJ_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator analyze -failOnWarnings") rescue nil
   exit $?.exitstatus
 end
 
