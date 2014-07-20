@@ -1,7 +1,20 @@
 
 TEST_PROJ_PATH="MaVec.xcodeproj"
-TEST_WORKSPACE_PATH="MaVec.xcworkspace"
 TEST_SCHEME="MaVec-Tests"
+
+namespace :install do
+
+  task :tools do
+    # don't care if this fails on travis
+    sh("brew update") rescue nil
+    sh("brew upgrade xctool") rescue nil
+  end
+
+end
+
+task :install do
+  Rake::Task['install:tools'].invoke
+end
 
 #
 # Test
