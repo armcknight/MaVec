@@ -101,13 +101,13 @@
     
     diagonal = [MAVMatrix diagonalMatrixWithValues:[NSData dataWithBytes:vectorAValues length:3*sizeof(double)] order:3];
     
-    identity = [MAVMatrix identityMatrixOfOrder:3 precision:MCKValuePrecisionDouble];
+    identity = [MAVMatrix identityMatrixOfOrder:3 precision:MCKPrecisionDouble];
     
-    randomTriangular = [MAVMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MAVMatrixTriangularComponentUpper precision:MCKValuePrecisionDouble];
+    randomTriangular = [MAVMatrix randomTriangularMatrixOfOrder:3 triangularComponent:MAVMatrixTriangularComponentUpper precision:MCKPrecisionDouble];
     
-    randomSymmetric = [MAVMatrix randomSymmetricMatrixOfOrder:3 precision:MCKValuePrecisionDouble];
+    randomSymmetric = [MAVMatrix randomSymmetricMatrixOfOrder:3 precision:MCKPrecisionDouble];
     
-    randomTridiagonal = [MAVMatrix randomBandMatrixOfOrder:3 upperCodiagonals:1 lowerCodiagonals:1 precision:MCKValuePrecisionDouble];
+    randomTridiagonal = [MAVMatrix randomBandMatrixOfOrder:3 upperCodiagonals:1 lowerCodiagonals:1 precision:MCKPrecisionDouble];
     
     NSLog(@"so far so good!");
     

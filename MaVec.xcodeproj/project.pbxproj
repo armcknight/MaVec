@@ -152,7 +152,6 @@
 		499735A81925A0290004A8E5 /* NSNumber+MCKMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCKMath.m"; sourceTree = "<group>"; };
 		499735AA1925A0290004A8E5 /* MCKComplexNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKComplexNumber.h; sourceTree = "<group>"; };
 		499735AB1925A0290004A8E5 /* MCKComplexNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKComplexNumber.m; sourceTree = "<group>"; };
-		499735AC1925A0290004A8E5 /* MCKNumberFormats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKNumberFormats.h; sourceTree = "<group>"; };
 		499735AD1925A0290004A8E5 /* MCKPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKPair.h; sourceTree = "<group>"; };
 		499735AE1925A0290004A8E5 /* MCKPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKPair.m; sourceTree = "<group>"; };
 		499735AF1925A0290004A8E5 /* MCKRealNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKRealNumber.h; sourceTree = "<group>"; };
@@ -436,7 +435,6 @@
 			children = (
 				499735AA1925A0290004A8E5 /* MCKComplexNumber.h */,
 				499735AB1925A0290004A8E5 /* MCKComplexNumber.m */,
-				499735AC1925A0290004A8E5 /* MCKNumberFormats.h */,
 				499735AD1925A0290004A8E5 /* MCKPair.h */,
 				499735AE1925A0290004A8E5 /* MCKPair.m */,
 				499735AF1925A0290004A8E5 /* MCKRealNumber.h */,

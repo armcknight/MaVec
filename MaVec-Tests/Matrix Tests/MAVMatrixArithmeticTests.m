@@ -83,10 +83,10 @@
         }
     }
     
-    XCTAssertThrows([MAVMatrix sumOfMatrixA:[MAVMatrix matrixWithRows:4 columns:5 precision:MCKValuePrecisionDouble]
-                                andMatrixB:[MAVMatrix matrixWithRows:5 columns:5 precision:MCKValuePrecisionDouble]], @"Should throw an exception for mismatched row amount");
-    XCTAssertThrows([MAVMatrix sumOfMatrixA:[MAVMatrix matrixWithRows:5 columns:4 precision:MCKValuePrecisionDouble]
-                                andMatrixB:[MAVMatrix matrixWithRows:5 columns:5 precision:MCKValuePrecisionDouble]], @"Should throw an exception for mismatched column amount");
+    XCTAssertThrows([MAVMatrix sumOfMatrixA:[MAVMatrix matrixWithRows:4 columns:5 precision:MCKPrecisionDouble]
+                                andMatrixB:[MAVMatrix matrixWithRows:5 columns:5 precision:MCKPrecisionDouble]], @"Should throw an exception for mismatched row amount");
+    XCTAssertThrows([MAVMatrix sumOfMatrixA:[MAVMatrix matrixWithRows:5 columns:4 precision:MCKPrecisionDouble]
+                                andMatrixB:[MAVMatrix matrixWithRows:5 columns:5 precision:MCKPrecisionDouble]], @"Should throw an exception for mismatched column amount");
 }
 
 - (void)testMatrixSubtraction
@@ -136,10 +136,10 @@
         }
     }
     
-    XCTAssertThrows([MAVMatrix sumOfMatrixA:[MAVMatrix matrixWithRows:4 columns:5 precision:MCKValuePrecisionDouble]
-                                andMatrixB:[MAVMatrix matrixWithRows:5 columns:5 precision:MCKValuePrecisionDouble]], @"Should throw an exception for mismatched row amount");
-    XCTAssertThrows([MAVMatrix sumOfMatrixA:[MAVMatrix matrixWithRows:5 columns:4 precision:MCKValuePrecisionDouble]
-                                andMatrixB:[MAVMatrix matrixWithRows:5 columns:5 precision:MCKValuePrecisionDouble]], @"Should throw an exception for mismatched column amount");
+    XCTAssertThrows([MAVMatrix sumOfMatrixA:[MAVMatrix matrixWithRows:4 columns:5 precision:MCKPrecisionDouble]
+                                andMatrixB:[MAVMatrix matrixWithRows:5 columns:5 precision:MCKPrecisionDouble]], @"Should throw an exception for mismatched row amount");
+    XCTAssertThrows([MAVMatrix sumOfMatrixA:[MAVMatrix matrixWithRows:5 columns:4 precision:MCKPrecisionDouble]
+                                andMatrixB:[MAVMatrix matrixWithRows:5 columns:5 precision:MCKPrecisionDouble]], @"Should throw an exception for mismatched column amount");
 }
 
 @end

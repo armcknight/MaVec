@@ -87,7 +87,7 @@
 
 - (void)testIdentityMatrixCreation
 {
-    MAVMatrix *identity = [MAVMatrix identityMatrixOfOrder:4 precision:MCKValuePrecisionDouble];
+    MAVMatrix *identity = [MAVMatrix identityMatrixOfOrder:4 precision:MCKPrecisionDouble];
     
     size_t size = 16 * sizeof(double);
     double *solution = malloc(size);
@@ -450,31 +450,31 @@
     
     int order = 3;
     for(int i = 0; i < numberOfTests; i++) {
-        MAVMatrix *positiveDefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessPositiveDefinite precision:MCKValuePrecisionDouble];
+        MAVMatrix *positiveDefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessPositiveDefinite precision:MCKPrecisionDouble];
         test = [MAVMatrix matrixWithValues:[positiveDefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
         if (test.definiteness != MAVMatrixDefinitenessPositiveDefinite) {
             positiveDefiniteFails++;
         }
         
-        MAVMatrix *negativeDefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessNegativeDefinite precision:MCKValuePrecisionDouble];
+        MAVMatrix *negativeDefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessNegativeDefinite precision:MCKPrecisionDouble];
         test = [MAVMatrix matrixWithValues:[negativeDefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
         if (test.definiteness != MAVMatrixDefinitenessNegativeDefinite) {
             negativeDefiniteFails++;
         }
         
-        MAVMatrix *positiveSemidefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessPositiveSemidefinite precision:MCKValuePrecisionDouble];
+        MAVMatrix *positiveSemidefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessPositiveSemidefinite precision:MCKPrecisionDouble];
         test = [MAVMatrix matrixWithValues:[positiveSemidefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
         if (test.definiteness != MAVMatrixDefinitenessPositiveSemidefinite) {
             positiveSemidefiniteFails++;
         }
         
-        MAVMatrix *negativeSemidefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessNegativeSemidefinite precision:MCKValuePrecisionDouble];
+        MAVMatrix *negativeSemidefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessNegativeSemidefinite precision:MCKPrecisionDouble];
         test = [MAVMatrix matrixWithValues:[negativeSemidefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
         if (test.definiteness != MAVMatrixDefinitenessNegativeSemidefinite) {
             negativeSemidefiniteFails++;
         }
         
-        MAVMatrix *indefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessIndefinite precision:MCKValuePrecisionDouble];
+        MAVMatrix *indefinite = [MAVMatrix randomMatrixOfOrder:order definiteness:MAVMatrixDefinitenessIndefinite precision:MCKPrecisionDouble];
         test = [MAVMatrix matrixWithValues:[indefinite valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn] rows:order columns:order];
         if (test.definiteness != MAVMatrixDefinitenessIndefinite) {
             indefiniteFails++;
@@ -498,7 +498,7 @@
     
     int order = 3;
     for(int i = 0; i < numberOfTests; i++) {
-        MAVMatrix *singular = [MAVMatrix randomSingularMatrixOfOrder:order precision:MCKValuePrecisionDouble];
+        MAVMatrix *singular = [MAVMatrix randomSingularMatrixOfOrder:order precision:MCKPrecisionDouble];
         if ([singular.determinant compare:@0.0] != NSOrderedSame) {
             singularFails++;
         }
@@ -516,7 +516,7 @@
     
     int order = 3;
     for(int i = 0; i < numberOfTests; i++) {
-        MAVMatrix *nonsingular = [MAVMatrix randomNonsigularMatrixOfOrder:order precision:MCKValuePrecisionDouble];
+        MAVMatrix *nonsingular = [MAVMatrix randomNonsigularMatrixOfOrder:order precision:MCKPrecisionDouble];
         if ([nonsingular.determinant compare:@0.0] == NSOrderedSame) {
             nonsingularFails++;
         }

@@ -29,7 +29,7 @@
 
 #import "MAVSingularValueDecomposition.h"
 #import "MAVMatrix.h"
-#import "MCKNumberFormats.h"
+#import "NSNumber+MCKPrecision.h"
 
 @implementation MAVSingularValueDecomposition
 
@@ -44,7 +44,7 @@
         int *iwork = malloc(8 * numSingularValues);
         int info = 0;
         
-        if (matrix.precision == MCKValuePrecisionDouble) {
+        if (matrix.precision == MCKPrecisionDouble) {
             double workSize;
             double *work = &workSize;
             double *singularValues = malloc(numSingularValues * sizeof(double));

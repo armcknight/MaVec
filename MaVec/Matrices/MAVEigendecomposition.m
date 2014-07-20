@@ -31,7 +31,7 @@
 #import "MAVMatrix.h"
 #import "MAVVector.h"
 #import "MCKTribool.h"
-#import "MCKNumberFormats.h"
+#import "NSNumber+MCKPrecision.h"
 
 @implementation MAVEigendecomposition
 
@@ -50,7 +50,7 @@
                                              leadingDimension:MAVMatrixLeadingDimensionColumn
                                                 packingMethod:MAVMatrixValuePackingMethodConventional];
             
-            if (matrix.precision == MCKValuePrecisionDouble) {
+            if (matrix.precision == MCKPrecisionDouble) {
                 size_t size = n * sizeof(double);
                 double *w = malloc(size);
                 double wkopt;
@@ -103,7 +103,7 @@
             
             NSData *a = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
             
-            if (matrix.precision == MCKValuePrecisionDouble) {
+            if (matrix.precision == MCKPrecisionDouble) {
                 size_t size = n * sizeof(double);
                 double *wr= malloc(size);
                 double *wi= malloc(size);

@@ -89,7 +89,7 @@
         _minimumValueIndex = -1;
         _maximumValueIndex = -1;
         _absoluteVector = nil;
-        _precision = MCKValuePrecisionSingle;
+        _precision = MCKPrecisionSingle;
     }
     return self;
 }
@@ -100,7 +100,7 @@
     if (self) {
         _values = values;
         _length = length;
-        _precision = [values containsDoublePrecisionValues:length] ? MCKValuePrecisionDouble : MCKValuePrecisionSingle;
+        _precision = [values containsDoublePrecisionValues:length] ? MCKPrecisionDouble : MCKPrecisionSingle;
     }
     return self;
 }
@@ -113,12 +113,12 @@
         
         for (NSNumber *n in values) {
             if (n.isDoublePrecision) {
-                _precision = MCKValuePrecisionDouble;
+                _precision = MCKPrecisionDouble;
                 break;
             }
         }
         
-        if (_precision == MCKValuePrecisionDouble) {
+        if (_precision == MCKPrecisionDouble) {
             NSUInteger size = values.count * sizeof(double);
             double *valuesArray = malloc(size);
             [values enumerateObjectsUsingBlock:^(NSNumber *value, NSUInteger idx, BOOL *stop) {
@@ -181,7 +181,7 @@
                         vectorFormat:(MAVVectorFormat)vectorFormat
                            precision:(MCKValuePrecision)precision
 {
-    if (precision == MCKValuePrecisionDouble) {
+    if (precision == MCKPrecisionDouble) {
         NSUInteger size = length * sizeof(double);
         double *values = malloc(size);
         for (int i = 0; i < length; i++) {
@@ -214,7 +214,7 @@
 - (NSNumber *)sumOfValues
 {
     if (_sumOfValues == nil) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             double sum = 0.0;
             for (int i = 0; i < self.length; i += 1) {
                 sum += ((double *)self.values.bytes)[i];
@@ -234,7 +234,7 @@
 - (NSNumber *)l1Norm
 {
     if (_l1Norm == nil) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             double norm;
             vDSP_svemgD(self.values.bytes, 1, &norm, self.length);
             _l1Norm = @(norm);
@@ -250,7 +250,7 @@
 - (NSNumber *)l2Norm
 {
     if (_l2Norm == nil) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             double squaredSum;
             vDSP_svesqD(self.values.bytes, 1, &squaredSum, self.length);
             _l2Norm = @(sqrt(squaredSum));
@@ -266,7 +266,7 @@
 - (NSNumber *)l3Norm
 {
     if (_l3Norm == nil) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             MAVVector *cubedVector = [MAVVector vectorByRaisingVector:self power:3];
             double cubedSum;
             vDSP_svemgD(cubedVector.values.bytes, 1, &cubedSum, self.length);
@@ -292,7 +292,7 @@
 - (NSNumber *)productOfValues
 {
     if (_productOfValues == nil) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             double product = 1.0;
             for (int i = 0; i < self.length; i += 1) {
                 product *= ((double *)self.values.bytes)[i];
@@ -312,7 +312,7 @@
 - (NSNumber *)maximumValue
 {
     if (_maximumValue == nil) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             double max = DBL_MIN;
             for (int i = 0; i < self.length; i++) {
                 double value = ((double *)self.values.bytes)[i];
@@ -340,7 +340,7 @@
 - (NSNumber *)minimumValue
 {
     if (_minimumValue == nil) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             double min = DBL_MAX;
             for (int i = 0; i < self.length; i++) {
                 double value = ((double *)self.values.bytes)[i];
@@ -368,7 +368,7 @@
 - (MAVVector *)absoluteVector
 {
     if (_absoluteVector == nil) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             size_t size = self.length * sizeof(double);
             double *absoluteValues = malloc(size);
             vDSP_vabsD(self.values.bytes, 1, absoluteValues, 1, self.length);
@@ -420,7 +420,7 @@
 {
     int padding = 0;
     if (self.vectorFormat == MAVVectorFormatColumnVector) {
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             double max = DBL_MIN;
             for (int i = 0; i < self.length; i++) {
                 max = MAX(max, fabs(((double *)self.values.bytes)[i]));
@@ -439,7 +439,7 @@
     
     for (int j = 0; j < self.length; j++) {
         NSString *valueString;
-        if (self.precision == MCKValuePrecisionDouble) {
+        if (self.precision == MCKPrecisionDouble) {
             valueString = [NSString stringWithFormat:@"%.1f", ((double *)self.values.bytes)[j]];
         } else {
             valueString = [NSString stringWithFormat:@"%.1f", ((float *)self.values.bytes)[j]];
@@ -495,7 +495,7 @@
 {
     NSNumber *value;
     
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         value = @(((double *)self.values.bytes)[index]);
     } else {
         value = @(((float *)self.values.bytes)[index]);
@@ -515,12 +515,12 @@
 
 + (MAVVector *)productOfVector:(MAVVector *)vector scalar:(NSNumber *)scalar
 {
-    BOOL precisionsMatch = (vector.precision == MCKValuePrecisionDouble && scalar.isDoublePrecision) || (vector.precision == MCKValuePrecisionSingle && scalar.isSinglePrecision);
+    BOOL precisionsMatch = (vector.precision == MCKPrecisionDouble && scalar.isDoublePrecision) || (vector.precision == MCKPrecisionSingle && scalar.isSinglePrecision);
     NSAssert(precisionsMatch, @"Precisions do not match");
     
     MAVVector *product;
     
-    if (vector.precision == MCKValuePrecisionDouble) {
+    if (vector.precision == MCKPrecisionDouble) {
         double *newValues = malloc(vector.length * sizeof(double));
         for (int i = 0; i < vector.length; i++) {
             newValues[i] = scalar.doubleValue * ((double *)vector.values.bytes)[i];
@@ -544,7 +544,7 @@
     
     MAVVector *sumVector;
     
-    if (vectorA.precision == MCKValuePrecisionDouble) {
+    if (vectorA.precision == MCKPrecisionDouble) {
         double *sum = malloc(vectorA.length * sizeof(double));
         vDSP_vaddD(vectorA.values.bytes, 1, vectorB.values.bytes, 1, sum, 1, vectorA.length);
         sumVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:sum length:vectorA.values.length] length:vectorA.length];
@@ -564,7 +564,7 @@
     
     MAVVector *differenceVector;
     
-    if (vectorSubtrahend.precision == MCKValuePrecisionDouble) {
+    if (vectorSubtrahend.precision == MCKPrecisionDouble) {
         double *diff = malloc(vectorMinuend.length * sizeof(double));
         vDSP_vsubD(vectorSubtrahend.values.bytes, 1, vectorMinuend.values.bytes, 1, diff, 1, vectorMinuend.length);
         differenceVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:diff length:vectorSubtrahend.values.length] length:vectorMinuend.length];
@@ -584,7 +584,7 @@
     
     MAVVector *productVector;
     
-    if (vectorA.precision == MCKValuePrecisionDouble) {
+    if (vectorA.precision == MCKPrecisionDouble) {
         double *product = malloc(vectorA.length * sizeof(double));
         vDSP_vmulD(vectorA.values.bytes, 1, vectorB.values.bytes, 1, product, 1, vectorA.length);
         productVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:product length:vectorA.values.length] length:vectorA.length];
@@ -604,7 +604,7 @@
     
     MAVVector *quotientVector;
     
-    if (vectorDividend.precision == MCKValuePrecisionDouble) {
+    if (vectorDividend.precision == MCKPrecisionDouble) {
         double *quotient = malloc(vectorDividend.length * sizeof(double));
         vDSP_vdivD(vectorDivisor.values.bytes, 1, vectorDividend.values.bytes, 1, quotient, 1, vectorDividend.length);
         quotientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:quotient length:vectorDividend.values.length] length:vectorDividend.length];
@@ -624,7 +624,7 @@
     
     NSNumber *dotProduct;
     
-    if (vectorA.precision == MCKValuePrecisionDouble) {
+    if (vectorA.precision == MCKPrecisionDouble) {
         double dotProductValue;
         vDSP_dotprD(vectorA.values.bytes, 1,vectorB.values.bytes, 1, &dotProductValue, vectorA.length);
         dotProduct = @(dotProductValue);
@@ -644,7 +644,7 @@
     
     MAVVector *crossProduct;
     
-    if (vectorA.precision == MCKValuePrecisionDouble) {
+    if (vectorA.precision == MCKPrecisionDouble) {
         double *values = malloc(vectorA.length * sizeof(double));
         values[0] = [vectorA valueAtIndex:1].doubleValue * [vectorB valueAtIndex:2].doubleValue - [vectorA valueAtIndex:2].doubleValue * [vectorB valueAtIndex:1].doubleValue;
         values[1] = [vectorA valueAtIndex:2].doubleValue * [vectorB valueAtIndex:0].doubleValue - [vectorA valueAtIndex:0].doubleValue * [vectorB valueAtIndex:2].doubleValue;
@@ -677,7 +677,7 @@
 {
     MAVVector *powerVector;
     
-    if (vector.precision == MCKValuePrecisionDouble) {
+    if (vector.precision == MCKPrecisionDouble) {
         double *powerValues = malloc(vector.length * sizeof(double));
         for (int i = 0; i < vector.length; i++) {
             powerValues[i] = pow([vector valueAtIndex:i].doubleValue, power);

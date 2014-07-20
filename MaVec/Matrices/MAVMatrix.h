@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MCKNumberFormats.h"
+#import "NSNumber+MCKPrecision.h"
 
 @class MAVSingularValueDecomposition;
 @class MAVLUFactorization;
