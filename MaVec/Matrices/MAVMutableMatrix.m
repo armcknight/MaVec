@@ -121,11 +121,13 @@
         double *cVals = malloc(size);
         vDSP_mmulD(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, self.rows, matrix.columns, self.columns);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:cVals length:size];
+        free(cVals);
     } else {
         size_t size = self.rows * matrix.columns * sizeof(float);
         float *cVals = malloc(size);
         vDSP_mmul(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, self.rows, matrix.columns, self.columns);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:cVals length:size];
+        free(cVals);
     }
     
     self.columns = matrix.columns;
@@ -186,10 +188,12 @@
         double *result = calloc(vector.length, sizeof(double));
         cblas_dgemv(order, transpose, rows, cols, 1.0, self.values.bytes, rows, vector.values.bytes, 1, 1.0, result, 1);
         [self.values replaceBytesInRange:NSMakeRange(0, vector.values.length) withBytes:result length:vector.values.length];
+        free(result);
     } else {
         float *result = calloc(vector.length, sizeof(float));
         cblas_sgemv(order, transpose, rows, cols, 1.0f, self.values.bytes, rows, vector.values.bytes, 1, 1.0f, result, 1);
         [self.values replaceBytesInRange:NSMakeRange(0, vector.values.length) withBytes:result length:vector.values.length];
+        free(result);
     }
     
     if (vector.vectorFormat == MAVVectorFormatColumnVector) {
@@ -214,6 +218,7 @@
             values[i] = ((double *)self.values.bytes)[i] * scalar.doubleValue;
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:values];
+        free(values);
     }
     else {
         size_t size = valueCount * sizeof(float);
@@ -222,6 +227,7 @@
             values[i] = ((float *)self.values.bytes)[i] * scalar.floatValue;
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:values];
+        free(values);
     }
     
     return self;
