@@ -1,6 +1,7 @@
 
 TEST_PROJ_PATH="MaVec.xcodeproj"
-TEST_SCHEME="MaVec-Tests"
+TEST_WORKSPACE_PATH="MaVec.workspace"
+TEST_SCHEME="MaVec-Demo"
 
 namespace :install do
 
@@ -21,7 +22,7 @@ end
 #
 
 task :test do
-  sh("xctool -workspace '#{TEST_WORKSPACE_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator build test") rescue nil
+  sh("xctool -project '#{TEST_PROJECT_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator build test") rescue nil
   exit $?.exitstatus
 end
 
@@ -30,7 +31,7 @@ end
 #
 
 task :analyze do
-  sh("xctool -workspace '#{TEST_WORKSPACE_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator analyze -failOnWarnings") rescue nil
+  sh("xctool -project '#{TEST_PROJECT_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator analyze -failOnWarnings") rescue nil
   exit $?.exitstatus
 end
 
