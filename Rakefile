@@ -1,6 +1,6 @@
 
 TEST_PROJ_PATH="MaVec.xcodeproj"
-TEST_SCHEME="MaVec-Tests"
+TEST_SCHEME="MaVec-Demo"
 
 namespace :install do
 
