@@ -7,16 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		499734AF192594DF0004A8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734AE192594DF0004A8E5 /* Foundation.framework */; };
-		499734B1192594DF0004A8E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B0192594DF0004A8E5 /* CoreGraphics.framework */; };
-		499734B3192594DF0004A8E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B2192594DF0004A8E5 /* UIKit.framework */; };
 		499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734B7192594DF0004A8E5 /* InfoPlist.strings */; };
 		499734BB192594DF0004A8E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BA192594DF0004A8E5 /* main.m */; };
 		499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BE192594DF0004A8E5 /* AppDelegate.m */; };
 		499734C1192594DF0004A8E5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 499734C0192594DF0004A8E5 /* Images.xcassets */; };
-		499734E0192595230004A8E5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734C7192594DF0004A8E5 /* XCTest.framework */; };
-		499734E1192595230004A8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734AE192594DF0004A8E5 /* Foundation.framework */; };
-		499734E2192595230004A8E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734B2192594DF0004A8E5 /* UIKit.framework */; };
 		499734E8192595230004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734E6192595230004A8E5 /* InfoPlist.strings */; };
 		499734FF1925969A0004A8E5 /* MAVEigendecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734F01925969A0004A8E5 /* MAVEigendecompositionTests.m */; };
 		499735001925969A0004A8E5 /* MAVLeastSquaresSolutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734F11925969A0004A8E5 /* MAVLeastSquaresSolutionTests.m */; };
@@ -181,9 +175,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				499734B1192594DF0004A8E5 /* CoreGraphics.framework in Frameworks */,
-				499734B3192594DF0004A8E5 /* UIKit.framework in Frameworks */,
-				499734AF192594DF0004A8E5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,9 +182,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				499734E0192595230004A8E5 /* XCTest.framework in Frameworks */,
-				499734E2192595230004A8E5 /* UIKit.framework in Frameworks */,
-				499734E1192595230004A8E5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
