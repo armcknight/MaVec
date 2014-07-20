@@ -21,7 +21,7 @@
 @property (assign, readwrite, nonatomic) int minimumValueIndex;
 @property (assign, readwrite, nonatomic) int maximumValueIndex;
 @property (strong, readwrite, nonatomic) MAVVector *absoluteVector;
-@property (assign, readwrite, nonatomic) MCKValuePrecision precision;
+@property (assign, readwrite, nonatomic) MCKPrecision precision;
 
 /**
  @brief Constructs new instance by calling [self init] and sets the supplied values and length.

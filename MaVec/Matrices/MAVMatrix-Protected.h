@@ -60,7 +60,7 @@ MAVMatrixNorm;
 @property (strong, readwrite, nonatomic) NSNumber *normFroebenius;
 @property (strong, readwrite, nonatomic) NSNumber *normMax;
 @property (assign, readwrite, nonatomic) MAVMatrixTriangularComponent triangularComponent;
-@property (assign, readwrite, nonatomic) MCKValuePrecision precision;
+@property (assign, readwrite, nonatomic) MCKPrecision precision;
 
 // private properties for band matrices
 @property (assign, nonatomic) int bandwidth;
@@ -73,7 +73,7 @@ MAVMatrixNorm;
  @return C array point containing specified number of random values.
  */
 + (NSData *)randomArrayOfSize:(int)size
-                    precision:(MCKValuePrecision)precision;
+                    precision:(MCKPrecision)precision;
 
 /**
  @brief Sets all properties to default states.

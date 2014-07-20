@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MCKNumberFormats.h"
+#import "NSNumber+MCKPrecision.h"
 
 @class MAVSingularValueDecomposition;
 @class MAVLUFactorization;
@@ -345,7 +345,7 @@ MAVCoordinateAxis;
  @property precision
  @brief The precision of the numeric values in the matrix, either single- or double-precision floating point.
  */
-@property (nonatomic, readonly, assign) MCKValuePrecision precision;
+@property (nonatomic, readonly, assign) MCKPrecision precision;
 
 
 #pragma mark - Constructors
@@ -379,7 +379,7 @@ MAVCoordinateAxis;
  */
 + (instancetype)matrixWithRows:(int)rows
                        columns:(int)columns
-                     precision:(MCKValuePrecision)precision;
+                     precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns and storage format, but without supplying values.
@@ -392,7 +392,7 @@ MAVCoordinateAxis;
  */
 + (instancetype)matrixWithRows:(int)rows
                        columns:(int)columns
-                     precision:(MCKValuePrecision)precision
+                     precision:(MCKPrecision)precision
               leadingDimension:(MAVMatrixLeadingDimension)leadingDimension;
 
 /**
@@ -429,7 +429,7 @@ MAVCoordinateAxis;
  @return New instance of MAVMatrix representing the identity matrix of dimension size x size.
  */
 + (instancetype)identityMatrixOfOrder:(int)order
-                            precision:(MCKValuePrecision)precision;
+                            precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square matrix with the specified diagonal values.
@@ -522,7 +522,7 @@ MAVCoordinateAxis;
  */
 + (instancetype)randomMatrixWithRows:(int)rows
                              columns:(int)columns
-                           precision:(MCKValuePrecision)precision;
+                           precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square symmetric matrix with the specified order containing random double-precision floating-point values.
@@ -531,7 +531,7 @@ MAVCoordinateAxis;
  @return A new square symmetric instance of MAVMatrix containing random values.
  */
 + (instancetype)randomSymmetricMatrixOfOrder:(int)order
-                                   precision:(MCKValuePrecision)precision;
+                                   precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square diagonal matrix with the specified order containing random double-precision floating-point values.
@@ -540,7 +540,7 @@ MAVCoordinateAxis;
  @return A new square diagonal instance of MAVMatrix containing random values.
  */
 + (instancetype)randomDiagonalMatrixOfOrder:(int)order
-                                  precision:(MCKValuePrecision)precision;
+                                  precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square triangular matrix with the specified order containing random double-precision floating-point values.
@@ -551,7 +551,7 @@ MAVCoordinateAxis;
  */
 + (instancetype)randomTriangularMatrixOfOrder:(int)order
                           triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
-                                    precision:(MCKValuePrecision)precision;
+                                    precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square band matrix with the specified order containing random double-precision floating-point values.
@@ -564,7 +564,7 @@ MAVCoordinateAxis;
 + (instancetype)randomBandMatrixOfOrder:(int)order
                        upperCodiagonals:(int)upperCodiagonals
                        lowerCodiagonals:(int)lowerCodiagonals
-                              precision:(MCKValuePrecision)precision;
+                              precision:(MCKPrecision)precision;
 
 /**
  @brief Generate a square matrix of random values with the specified definiteness and precision. Random semidefinite matrices are currently generated as diagonal matrices, the others have random values throughout.
@@ -575,7 +575,7 @@ MAVCoordinateAxis;
  */
 + (instancetype)randomMatrixOfOrder:(int)order
                        definiteness:(MAVMatrixDefiniteness)definiteness
-                          precision:(MCKValuePrecision)precision;
+                          precision:(MCKPrecision)precision;
 
 /**
  @brief Generate a square matrix of random values with a determinant of 0, accomplished by making an entire row or column (randomly chosen) with 0 values.
@@ -583,7 +583,7 @@ MAVCoordinateAxis;
  @param precision Either single- or double-precision floating point values.
  @return New instance of MAVMatrix with random values and determinant == 0.
  */
-+ (instancetype)randomSingularMatrixOfOrder:(int)order precision:(MCKValuePrecision)precision;
++ (instancetype)randomSingularMatrixOfOrder:(int)order precision:(MCKPrecision)precision;
 
 /**
  @brief Generate a square matrix of random values with a determinant not equal to 0.
@@ -591,7 +591,7 @@ MAVCoordinateAxis;
  @param precision Either single- or double-precision floating point values.
  @return New instance of MAVMatrix with random values and determinant != 0.
  */
-+ (instancetype)randomNonsigularMatrixOfOrder:(int)order precision:(MCKValuePrecision)precision;
++ (instancetype)randomNonsigularMatrixOfOrder:(int)order precision:(MCKPrecision)precision;
 
 #pragma mark - NSObject overrides
 

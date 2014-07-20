@@ -63,10 +63,10 @@
     
     NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
-    BOOL precisionsMatch = (self.precision == MCKValuePrecisionDouble && value.isDoublePrecision ) || (self.precision == MCKValuePrecisionSingle && value.isSinglePrecision);
+    BOOL precisionsMatch = (self.precision == MCKPrecisionDouble && value.isDoublePrecision ) || (self.precision == MCKPrecisionSingle && value.isSinglePrecision);
     NSAssert(precisionsMatch, @"Precisions do not match.");
     
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
             ((double *)self.values.bytes)[row * self.columns + column] = value.doubleValue;
         } else {
@@ -116,7 +116,7 @@
     NSData *aVals = [self valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     NSData *bVals = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         size_t size = self.rows * matrix.columns * sizeof(double);
         double *cVals = malloc(size);
         vDSP_mmulD(aVals.bytes, 1, bVals.bytes, 1, cVals, 1, self.rows, matrix.columns, self.columns);
@@ -144,7 +144,7 @@
     
     for (int i = 0; i < self.rows; i++) {
         for (int j = 0; j < self.columns; j++) {
-            if (self.precision == MCKValuePrecisionDouble) {
+            if (self.precision == MCKPrecisionDouble) {
                 [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].doubleValue + [matrix valueAtRow:i column:j].doubleValue)];
             } else {
                 [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].floatValue + [matrix valueAtRow:i column:j].floatValue)];
@@ -163,7 +163,7 @@
     
     for (int i = 0; i < self.rows; i++) {
         for (int j = 0; j < self.columns; j++) {
-            if (self.precision == MCKValuePrecisionDouble) {
+            if (self.precision == MCKPrecisionDouble) {
                 [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].doubleValue - [matrix valueAtRow:i column:j].doubleValue)];
             } else {
                 [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].floatValue - [matrix valueAtRow:i column:j].floatValue)];
@@ -184,7 +184,7 @@
     int rows = self.rows;
     int cols = self.columns;
     
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         double *result = calloc(vector.length, sizeof(double));
         cblas_dgemv(order, transpose, rows, cols, 1.0, self.values.bytes, rows, vector.values.bytes, 1, 1.0, result, 1);
         [self.values replaceBytesInRange:NSMakeRange(0, vector.values.length) withBytes:result length:vector.values.length];
@@ -211,7 +211,7 @@
 - (MAVMutableMatrix *)multiplyByScalar:(NSNumber *)scalar
 {
     int valueCount = self.rows * self.columns;
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         size_t size = valueCount * sizeof(double);
         double *values = malloc(size);
         for (int i = 0; i < valueCount; i++) {

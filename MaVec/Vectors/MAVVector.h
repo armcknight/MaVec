@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MCKNumberFormats.h"
+#import "NSNumber+MCKPrecision.h"
 
 typedef enum : UInt8 {
     /**
@@ -139,7 +139,7 @@ MAVVectorFormat;
  @property precision
  @brief The precision of the numeric values in the vector, either single- or double-precision floating point.
  */
-@property (assign, readonly, nonatomic) MCKValuePrecision precision;
+@property (assign, readonly, nonatomic) MCKPrecision precision;
 
 #pragma mark - Constructors
 
@@ -201,7 +201,7 @@ MAVVectorFormat;
  */
 + (instancetype)randomVectorOfLength:(int)length
                         vectorFormat:(MAVVectorFormat)vectorFormat
-                           precision:(MCKValuePrecision)precision;
+                           precision:(MCKPrecision)precision;
 
 /**
  @brief Create a vector of specified length and vector format, whose values are all equal to the specified value.

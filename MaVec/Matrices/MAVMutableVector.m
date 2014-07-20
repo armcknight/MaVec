@@ -77,8 +77,8 @@ MAVVectorMutatingOperationType;
     NSAssert(index >= 0 && index < self.length, @"index = %lu out of the range of values in the vector (%u)", (unsigned long)index, self.length);
     NSAssert(value.precision && self.precision,
              @"Precision of vector (%@) does not match precision of values (%@)",
-             self.precision == MCKValuePrecisionSingle ? @"single" : @"double",
-             value.precision == MCKValuePrecisionSingle ? @"single" : @"double");
+             self.precision == MCKPrecisionSingle ? @"single" : @"double",
+             value.precision == MCKPrecisionSingle ? @"single" : @"double");
     
     [self resetToDefaultIfOperation:MAVVectorMutatingOperationTypeAssignment notIdempotentWithInput:value atIndex:index];
     
@@ -110,12 +110,12 @@ MAVVectorMutatingOperationType;
 
 - (MAVMutableVector *)multiplyByScalar:(NSNumber *)scalar
 {
-    BOOL precisionsMatch = (self.precision == MCKValuePrecisionDouble && scalar.isDoublePrecision) || (self.precision == MCKValuePrecisionSingle && scalar.isSinglePrecision);
+    BOOL precisionsMatch = (self.precision == MCKPrecisionDouble && scalar.isDoublePrecision) || (self.precision == MCKPrecisionSingle && scalar.isSinglePrecision);
     NSAssert(precisionsMatch, @"Precisions do not match");
     
     [self resetToDefaultIfOperation:MAVVectorMutatingOperationTypeMultiplicationScalar notIdempotentWithInput:scalar atIndex:0];
     
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         double *newValues = malloc(self.length * sizeof(double));
         for (int i = 0; i < self.length; i++) {
             newValues[i] = scalar.doubleValue * ((double *)self.values.bytes)[i];
@@ -139,7 +139,7 @@ MAVVectorMutatingOperationType;
     
     [self resetToDefaultIfOperation:MAVVectorMutatingOperationTypeAddition notIdempotentWithInput:vector atIndex:0];
     
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         double *sum = malloc(self.length * sizeof(double));
         vDSP_vaddD(self.values.bytes, 1, vector.values.bytes, 1, sum, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:sum];
@@ -159,7 +159,7 @@ MAVVectorMutatingOperationType;
     
     [self resetToDefaultIfOperation:MAVVectorMutatingOperationTypeSubtraction notIdempotentWithInput:vector atIndex:0];
     
-    if (vector.precision == MCKValuePrecisionDouble) {
+    if (vector.precision == MCKPrecisionDouble) {
         double *diff = malloc(self.length * sizeof(double));
         vDSP_vsubD(vector.values.bytes, 1, self.values.bytes, 1, diff, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:diff];
@@ -179,7 +179,7 @@ MAVVectorMutatingOperationType;
     
     [self resetToDefaultIfOperation:MAVVectorMutatingOperationTypeMultiplicationVector notIdempotentWithInput:vector atIndex:0];
     
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         double *product = malloc(self.length * sizeof(double));
         vDSP_vmulD(self.values.bytes, 1, vector.values.bytes, 1, product, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:product];
@@ -199,7 +199,7 @@ MAVVectorMutatingOperationType;
     
     [self resetToDefaultIfOperation:MAVVectorMutatingOperationTypeDivision notIdempotentWithInput:vector atIndex:0];
     
-    if (self.precision == MCKValuePrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         double *quotient = malloc(self.length * sizeof(double));
         vDSP_vdivD(vector.values.bytes, 1, self.values.bytes, 1, quotient, 1, self.length);
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:quotient];
@@ -218,7 +218,7 @@ MAVVectorMutatingOperationType;
     
     MAVVector *original = [self copy];
     
-    if (original.precision == MCKValuePrecisionDouble) {
+    if (original.precision == MCKPrecisionDouble) {
         double *powerValues = malloc(original.length * sizeof(double));
         for (int i = 0; i < original.length; i++) {
             powerValues[i] = pow([original valueAtIndex:i].doubleValue, power);
@@ -245,7 +245,7 @@ MAVVectorMutatingOperationType;
         case MAVVectorMutatingOperationTypeAddition:
         case MAVVectorMutatingOperationTypeSubtraction: {
             MAVVector *vector = input;
-            isIdempotent = [vector isEqualToVector:[MAVVector vectorFilledWithValue:(vector.precision == MCKValuePrecisionDouble ? @0.0 : @0.0f)
+            isIdempotent = [vector isEqualToVector:[MAVVector vectorFilledWithValue:(vector.precision == MCKPrecisionDouble ? @0.0 : @0.0f)
                                                                              length:vector.length
                                                                        vectorFormat:vector.vectorFormat]];
             break;
@@ -254,7 +254,7 @@ MAVVectorMutatingOperationType;
         case MAVVectorMutatingOperationTypeMultiplicationVector:
         case MAVVectorMutatingOperationTypeDivision: {
             MAVVector *vector = input;
-            isIdempotent = [vector isEqualToVector:[MAVVector vectorFilledWithValue:(vector.precision == MCKValuePrecisionDouble ? @1.0 : @1.0f)
+            isIdempotent = [vector isEqualToVector:[MAVVector vectorFilledWithValue:(vector.precision == MCKPrecisionDouble ? @1.0 : @1.0f)
                                                                              length:vector.length
                                                                        vectorFormat:vector.vectorFormat]];
             break;

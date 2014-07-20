@@ -30,7 +30,7 @@
 #import "MAVQRFactorization.h"
 #import "MAVMatrix.h"
 #import "MAVMutableMatrix.h"
-#import "MCKNumberFormats.h"
+#import "NSNumber+MCKPrecision.h"
 
 @interface MAVQRFactorization ()
 
@@ -58,7 +58,7 @@
         
         NSData *data;
         
-        if (matrix.precision == MCKValuePrecisionDouble) {
+        if (matrix.precision == MCKPrecisionDouble) {
             size_t size = m * m * sizeof(double);
             double *a = malloc(size);
             for (int i = 0; i < m * n; i += 1) {

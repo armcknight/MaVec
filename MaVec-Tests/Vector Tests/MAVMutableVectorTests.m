@@ -34,7 +34,7 @@
 {
 	self.vector1 = [MAVMutableVector randomVectorOfLength:5
 	                                         vectorFormat:MAVVectorFormatColumnVector
-	                                            precision:MCKValuePrecisionDouble];
+	                                            precision:MCKPrecisionDouble];
     
     self.sumOfValues = self.vector1.sumOfValues;
     self.productOfValues = self.vector1.productOfValues;

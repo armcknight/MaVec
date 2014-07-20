@@ -90,21 +90,21 @@
     
     a = [MAVMutableMatrix matrixWithRows:4
                                  columns:5
-                               precision:MCKValuePrecisionDouble];
+                               precision:MCKPrecisionDouble];
     
 	b = [MAVMutableMatrix matrixWithRows:5
 	                             columns:5
-	                           precision:MCKValuePrecisionDouble];
+	                           precision:MCKPrecisionDouble];
     
     XCTAssertThrows([a addMatrix:b], @"Should throw an exception for mismatched row amount");
     
     a = [MAVMutableMatrix matrixWithRows:5
                                  columns:4
-                               precision:MCKValuePrecisionDouble];
+                               precision:MCKPrecisionDouble];
     
     b = [MAVMutableMatrix matrixWithRows:5
                                  columns:5
-                               precision:MCKValuePrecisionDouble];
+                               precision:MCKPrecisionDouble];
     
     XCTAssertThrows([a addMatrix:b], @"Should throw an exception for mismatched column amount");
 }
@@ -164,21 +164,21 @@
     
     a = [MAVMutableMatrix matrixWithRows:4
                                  columns:5
-                               precision:MCKValuePrecisionDouble];
+                               precision:MCKPrecisionDouble];
     
     b = [MAVMutableMatrix matrixWithRows:5
                                  columns:5
-                               precision:MCKValuePrecisionDouble];
+                               precision:MCKPrecisionDouble];
     
     XCTAssertThrows([a subtractMatrix:b], @"Should throw an exception for mismatched row amount");
     
     a = [MAVMutableMatrix matrixWithRows:5
                                  columns:4
-                               precision:MCKValuePrecisionDouble];
+                               precision:MCKPrecisionDouble];
     
     b = [MAVMutableMatrix matrixWithRows:5
                                  columns:5
-                               precision:MCKValuePrecisionDouble];
+                               precision:MCKPrecisionDouble];
     
     XCTAssertThrows([a subtractMatrix:b], @"Should throw an exception for mismatched column amount");
 }

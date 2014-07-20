@@ -1,7 +1,31 @@
 
 TEST_PROJ_PATH="MaVec.xcodeproj"
 TEST_WORKSPACE_PATH="MaVec.xcworkspace"
-TEST_SCHEME="MaVec-Tests"
+TEST_SCHEME="MaVec-Demo"
+
+#
+# Install
+#
+
+namespace :install do
+
+  task :tools do
+    # don't care if this fails on travis
+    sh("brew update") rescue nil
+    sh("brew upgrade xctool") rescue nil
+    sh("gem install cocoapods --no-rdoc --no-ri --no-document --quiet") rescue nil
+  end
+
+  task :pods do
+    sh("cd Tests && pod install")
+  end
+
+end
+
+task :install do
+  Rake::Task['install:tools'].invoke
+  Rake::Task['install:pods'].invoke
+end
 
 #
 # Test
@@ -26,14 +50,21 @@ end
 #
 
 namespace :clean do
-  
+
+  task :pods do
+    sh("rm -f Podfile.lock")
+    sh "rm -rf Pods"
+    sh("rm -rf *.xcworkspace")
+  end
+
   task :tests do
     sh("xctool -project '#{TEST_PROJ_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator clean") rescue nil
   end
-    
+
 end
 
 task :clean do
+  Rake::Task['clean:pods'].invoke
   Rake::Task['clean:tests'].invoke
 end
 
@@ -44,11 +75,13 @@ end
 
 task :usage do
   puts "Usage:"
-  puts "  rake install       -- install all dependencies (xctool)"
+  puts "  rake install       -- install all dependencies (xctool, cocoapods)"
+  puts "  rake install:pods  -- install cocoapods for tests"
   puts "  rake install:tools -- install build tool dependencies"
   puts "  rake test          -- run unit tests"
   puts "  rake clean         -- clean everything"
   puts "  rake clean:tests   -- clean the test project build artifacts"
+  puts "  rake clean:pods    -- clean up cocoapods artifacts"
   puts "  rake usage         -- print this message"
 end
 

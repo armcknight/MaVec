@@ -30,7 +30,7 @@
 #import "MAVLUFactorization.h"
 #import "MAVMatrix.h"
 #import "MAVMutableMatrix.h"
-#import "MCKNumberFormats.h"
+#import "NSNumber+MCKPrecision.h"
 
 @implementation MAVLUFactorization
 
@@ -53,7 +53,7 @@
         MAVMutableMatrix *u = [MAVMutableMatrix matrixWithRows:n columns:m precision:matrix.precision];
         MAVMutableMatrix *p = [MAVMutableMatrix identityMatrixOfOrder:MIN(m, n) precision:matrix.precision];
         
-        if (matrix.precision == MCKValuePrecisionDouble) {
+        if (matrix.precision == MCKPrecisionDouble) {
             dgetrf_(&m, &n, (double *)columnMajorValues.bytes, &lda, ipiv, &info);
             
             // extract L from values array

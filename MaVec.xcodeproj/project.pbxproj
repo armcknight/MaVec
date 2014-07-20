@@ -17,8 +17,6 @@
 		499734BB192594DF0004A8E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BA192594DF0004A8E5 /* main.m */; };
 		499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BE192594DF0004A8E5 /* AppDelegate.m */; };
 		499734C1192594DF0004A8E5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 499734C0192594DF0004A8E5 /* Images.xcassets */; };
-		499734E0192595230004A8E5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734C7192594DF0004A8E5 /* XCTest.framework */; };
-		499734E1192595230004A8E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734AE192594DF0004A8E5 /* Foundation.framework */; };
 		499734E8192595230004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734E6192595230004A8E5 /* InfoPlist.strings */; };
 		499734FF1925969A0004A8E5 /* MAVEigendecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734F01925969A0004A8E5 /* MAVEigendecompositionTests.m */; };
 		499735001925969A0004A8E5 /* MAVLeastSquaresSolutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734F11925969A0004A8E5 /* MAVLeastSquaresSolutionTests.m */; };
@@ -167,7 +165,6 @@
 		499735A81925A0290004A8E5 /* NSNumber+MCKMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCKMath.m"; sourceTree = "<group>"; };
 		499735AA1925A0290004A8E5 /* MCKComplexNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKComplexNumber.h; sourceTree = "<group>"; };
 		499735AB1925A0290004A8E5 /* MCKComplexNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKComplexNumber.m; sourceTree = "<group>"; };
-		499735AC1925A0290004A8E5 /* MCKNumberFormats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKNumberFormats.h; sourceTree = "<group>"; };
 		499735AD1925A0290004A8E5 /* MCKPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKPair.h; sourceTree = "<group>"; };
 		499735AE1925A0290004A8E5 /* MCKPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCKPair.m; sourceTree = "<group>"; };
 		499735AF1925A0290004A8E5 /* MCKRealNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKRealNumber.h; sourceTree = "<group>"; };
@@ -191,8 +188,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				499734B1192594DF0004A8E5 /* CoreGraphics.framework in Frameworks */,
-				499734AF192594DF0004A8E5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,8 +195,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				499734E0192595230004A8E5 /* XCTest.framework in Frameworks */,
-				499734E1192595230004A8E5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +457,6 @@
 			children = (
 				499735AA1925A0290004A8E5 /* MCKComplexNumber.h */,
 				499735AB1925A0290004A8E5 /* MCKComplexNumber.m */,
-				499735AC1925A0290004A8E5 /* MCKNumberFormats.h */,
 				499735AD1925A0290004A8E5 /* MCKPair.h */,
 				499735AE1925A0290004A8E5 /* MCKPair.m */,
 				499735AF1925A0290004A8E5 /* MCKRealNumber.h */,
