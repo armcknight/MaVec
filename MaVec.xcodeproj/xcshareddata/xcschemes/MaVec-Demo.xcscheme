@@ -32,16 +32,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49143DAE197CB0620009D648"
-               BuildableName = "MaVec-DemoTests.xctest"
-               BlueprintName = "MaVec-DemoTests"
-               ReferencedContainer = "container:MaVec.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "499734DE192595220004A8E5"
                BuildableName = "MaVec-Tests.xctest"
                BlueprintName = "MaVec-Tests"
