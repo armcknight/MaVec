@@ -93,7 +93,7 @@
     solution[3] = 4.5;
     MAVVector *s = [MAVVector vectorWithValues:[NSData dataWithBytes:solution length:bSize] length:4];
     
-    for (int i = 0; i < 4; i++) {
+    for (unsigned int i = 0; i < 4; i++) {
         XCTAssertEqualWithAccuracy([s valueAtIndex:i].doubleValue, [product valueAtIndex:i].doubleValue, 0.0005, @"Coefficient %u incorrect", i);
     }
 }

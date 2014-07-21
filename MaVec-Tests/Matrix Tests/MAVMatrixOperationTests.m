@@ -74,8 +74,8 @@
     tVals[8] = 9.0;
     MAVMatrix *t = [MAVMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3].transpose;
     
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             XCTAssertEqual([a valueAtRow:i column:j].doubleValue, [t valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
@@ -104,8 +104,8 @@
     tVals[8] = 9.0;
     t = [MAVMatrix matrixWithValues:[NSData dataWithBytes:tVals length:size] rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow].transpose;
     
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             XCTAssertEqual([a valueAtRow:i column:j].doubleValue, [t valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }

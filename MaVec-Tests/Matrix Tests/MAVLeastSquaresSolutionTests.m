@@ -75,7 +75,7 @@
     solution[1] = 3.0 / 4.0;
     MAVVector *s = [MAVVector vectorWithValues:[NSData dataWithBytes:solution length:solutionSize] length:2];
     
-    for (int i = 0; i < 2; i++) {
+    for (unsigned int i = 0; i < 2; i++) {
         XCTAssertEqualWithAccuracy(s[i].doubleValue, coefficients[i].doubleValue, __DBL_EPSILON__ * 10.0, @"Coefficient %u incorrect", i);
     }
 }
@@ -120,7 +120,7 @@
     solution[3] = 1.125;
     MAVVector *s = [MAVVector vectorWithValues:[NSData dataWithBytes:solution length:solutionSize] length:4];
     
-    for (int i = 0; i < 4; i++) {
+    for (unsigned int i = 0; i < 4; i++) {
         XCTAssertEqualWithAccuracy(s[i].doubleValue, coefficients[i].doubleValue, 0.0005, @"Coefficient %u incorrect", i);
     }
 }

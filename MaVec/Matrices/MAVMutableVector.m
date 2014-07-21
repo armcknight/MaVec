@@ -78,7 +78,7 @@ MAVVectorMutatingOperationType;
 
 - (void)setValue:(NSNumber *)value atIndex:(__CLPK_integer)index
 {
-    NSAssert(index >= 0 && index < self.length, @"index = %lu out of the range of values in the vector (%u)", (unsigned long)index, self.length);
+    NSAssert(index >= 0 && index < self.length, @"index = %lld out of the range of values in the vector (%lld)", (long long int)index, (long long int)self.length);
     NSAssert(value.precision && self.precision,
              @"Precision of vector (%@) does not match precision of values (%@)",
              self.precision == MCKPrecisionSingle ? @"single" : @"double",

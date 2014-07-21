@@ -94,7 +94,7 @@
     
     [a addVector:b];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@6.0, @8.0, @10.0, @12.0]];
-    for (int i = 0; i < 4; i++) {
+    for (unsigned int i = 0; i < 4; i++) {
         XCTAssertEqual([a valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not added correctly", i);
     }
     
@@ -109,7 +109,7 @@
     
     [b subtractVector:a];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@4.0, @4.0, @4.0, @4.0]];
-    for (int i = 0; i < 4; i++) {
+    for (unsigned int i = 0; i < 4; i++) {
         XCTAssertEqual([b valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not subtracted correctly", i);
     }
     
@@ -124,7 +124,7 @@
     
     [a multiplyByVector:b];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@5.0, @12.0, @21.0, @32.0]];
-    for (int i = 0; i < 4; i++) {
+    for (unsigned int i = 0; i < 4; i++) {
         XCTAssertEqual([a valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not multiplied correctly", i);
     }
     
@@ -139,7 +139,7 @@
     
     [b divideByVector:a];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@5.0, @3.0, @3.0, @2.0]];
-    for (int i = 0; i < 4; i++) {
+    for (unsigned int i = 0; i < 4; i++) {
         XCTAssertEqual([b valueAtIndex:i].doubleValue, [solution valueAtIndex:i].doubleValue, @"Value at index %u not divided correctly", i);
     }
     
@@ -151,8 +151,8 @@
     MAVMutableVector *a = [MAVMutableVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0, @4.0, @5.0]];
     [a raiseToPower:3];
     MAVVector *solution = [MAVVector vectorWithValuesInArray:@[@1.0, @8.0, @27.0, @64.0, @125.0]];
-    for (int i = 0; i < 5; i++) {
-        XCTAssertEqual(a[i].doubleValue, solution[i].doubleValue, @"element at index %i = %f but expected %f", i, a[i].doubleValue, solution[i].doubleValue);
+    for (unsigned int i = 0; i < 5; i++) {
+        XCTAssertEqual(a[i].doubleValue, solution[i].doubleValue, @"element at index %u = %f but expected %f", i, a[i].doubleValue, solution[i].doubleValue);
     }
 }
 

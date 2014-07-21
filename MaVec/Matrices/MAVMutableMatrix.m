@@ -31,8 +31,8 @@
 
 - (void)swapRowA:(__CLPK_integer)rowA withRowB:(__CLPK_integer)rowB
 {
-    NSAssert1(rowA < self.rows, @"rowA = %u is outside the range of possible rows.", rowA);
-    NSAssert1(rowB < self.rows, @"rowB = %u is outside the range of possible rows.", rowB);
+    NSAssert1(rowA < self.rows, @"rowA = %lld is outside the range of possible rows.", (long long int)rowA);
+    NSAssert1(rowB < self.rows, @"rowB = %lld is outside the range of possible rows.", (long long int)rowB);
     
     // TODO: implement using cblas_dswap
     
@@ -45,8 +45,8 @@
 
 - (void)swapColumnA:(__CLPK_integer)columnA withColumnB:(__CLPK_integer)columnB
 {
-    NSAssert1(columnA < self.columns, @"columnA = %u is outside the range of possible columns.", columnA);
-    NSAssert1(columnB < self.columns, @"columnB = %u is outside the range of possible columns.", columnB);
+    NSAssert1(columnA < self.columns, @"columnA = %lld is outside the range of possible columns.", (long long int)columnA);
+    NSAssert1(columnB < self.columns, @"columnB = %lld is outside the range of possible columns.", (long long int)columnB);
     
     // TODO: implement using cblas_dswap
     
@@ -61,8 +61,8 @@
 {
     // TODO: take into account internal representation b/t conventional, packed and band, row- vs. col- major, triangular component, bandwidth, start/finish band offset
     
-    NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
-    NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
+    NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
+    NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
     BOOL precisionsMatch = (self.precision == MCKPrecisionDouble && value.isDoublePrecision ) || (self.precision == MCKPrecisionSingle && value.isSinglePrecision);
     NSAssert(precisionsMatch, @"Precisions do not match.");
     
@@ -83,8 +83,8 @@
 
 - (void)setRowVector:(MAVVector *)vector atRow:(__CLPK_integer)row
 {
-    NSAssert2(vector.length == self.columns, @"Vector length (%u) must equal amount of columns in this matrix (%u)", vector.length, self.columns);
-    NSAssert2(row < self.rows, @"row (%lu) must be < the amount of rows in this matrix (%u)", (unsigned long)row, self.rows);
+    NSAssert2(vector.length == self.columns, @"Vector length (%lld) must equal amount of columns in this matrix (%lld)", (long long int)vector.length, (long long int)self.columns);
+    NSAssert2(row < self.rows, @"row (%lld) must be < the amount of rows in this matrix (%lld)", (long long int)row, (long long int)self.rows);
     
     for (__CLPK_integer i = 0; i < self.columns; i++) {
         [self setEntryAtRow:row column:i toValue:vector[i]];
@@ -93,8 +93,8 @@
 
 - (void)setColumnVector:(MAVVector *)vector atColumn:(__CLPK_integer)column
 {
-    NSAssert2(vector.length == self.rows, @"Vector length (%u) must equal amount of rows in this matrix (%u)", vector.length, self.rows);
-    NSAssert2(column < self.columns, @"column (%lu) must be < the amount of columns in this matrix (%u)", (unsigned long)column, self.columns);
+    NSAssert2(vector.length == self.rows, @"Vector length (%lld) must equal amount of rows in this matrix (%lld)", (long long int)vector.length, (long long int)self.rows);
+    NSAssert2(column < self.columns, @"column (%lld) must be < the amount of columns in this matrix (%lld)", (long long int)column, (long long int)self.columns);
     
     for (__CLPK_integer i = 0; i < self.rows; i++) {
         [self setEntryAtRow:i column:column toValue:vector[i]];

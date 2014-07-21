@@ -76,8 +76,8 @@
     
     MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:2 columns:2];
     
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 2; j++) {
+    for (unsigned int i = 0; i < 2; i++) {
+        for (unsigned int j = 0; j < 2; j++) {
             XCTAssertEqual([p valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
@@ -119,8 +119,8 @@
     solution[5] = 12.0;
     MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:aSize] rows:2 columns:3];
     
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 2; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             XCTAssertEqual([p valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }

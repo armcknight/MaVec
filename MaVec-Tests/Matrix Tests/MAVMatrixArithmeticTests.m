@@ -82,8 +82,8 @@
     
     [a addMatrix:b];
     
-    for (int i = 0; i < 3; i++) {
-        for (int j; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j; j < 3; j++) {
             XCTAssertEqual(10.0, [a valueAtRow:i column:j].doubleValue, @"Value at %u,%u incorrectly added", i, j);
         }
     }
@@ -156,8 +156,8 @@
     
     MAVMatrix *difference = [a subtractMatrix:b];
     
-    for (int i = 0; i < 3; i++) {
-        for (int j; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j; j < 3; j++) {
             XCTAssertEqual([solution valueAtRow:i column:j].doubleValue, [difference valueAtRow:i column:j].doubleValue, @"Value at %u,%u incorrectly subtracted", i, j);
         }
     }

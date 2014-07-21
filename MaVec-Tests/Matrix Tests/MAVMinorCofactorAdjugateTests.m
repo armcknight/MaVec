@@ -82,8 +82,8 @@
                                                   columns:3
                                          leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 3; row += 1) {
-        for (int col = 0; col < 3; col += 1) {
+    for (unsigned int row = 0; row < 3; row += 1) {
+        for (unsigned int col = 0; col < 3; col += 1) {
             double a = [minorMatrix valueAtRow:row column:col].doubleValue;
             double b = [minorSolutions valueAtRow:row column:col].doubleValue;
             XCTAssertEqual(a, b, @"Minor at (%u, %u) calculated incorrectly", row, col);
@@ -121,8 +121,8 @@
                                                      columns:3
                                             leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 3; row += 1) {
-        for (int col = 0; col < 3; col += 1) {
+    for (unsigned int row = 0; row < 3; row += 1) {
+        for (unsigned int col = 0; col < 3; col += 1) {
             double a = [cofactorMatrix valueAtRow:row column:col].doubleValue;
             double b = [cofactorSolutions valueAtRow:row column:col].doubleValue;
             XCTAssertEqual(a, b, @"Cofactor at (%u, %u) calculated incorrectly", row, col);
@@ -155,8 +155,8 @@
                                                      columns:3
                                             leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 3; row += 1) {
-        for (int col = 0; col < 3; col += 1) {
+    for (unsigned int row = 0; row < 3; row += 1) {
+        for (unsigned int col = 0; col < 3; col += 1) {
             double a = [adjugate valueAtRow:row column:col].doubleValue;
             double b = [adjugateSolutions valueAtRow:row column:col].doubleValue;
             XCTAssertEqual(a, b, @"Adjugate value at (%u, %u) calculated incorrectly", row, col);

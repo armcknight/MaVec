@@ -1479,8 +1479,8 @@
 
 - (NSNumber *)valueAtRow:(__CLPK_integer)row column:(__CLPK_integer)column
 {
-    NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
-    NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
+    NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
+    NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
     
     switch (self.packingMethod) {
             
@@ -1555,7 +1555,7 @@
 
 - (MAVVector *)rowVectorForRow:(__CLPK_integer)row
 {
-    NSAssert1(row >= 0 && row < self.rows, @"row = %u is outside the range of possible rows.", row);
+    NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
     
     MAVVector *vector;
     
@@ -1580,7 +1580,7 @@
 
 - (MAVVector *)columnVectorForColumn:(__CLPK_integer)column
 {
-    NSAssert1(column >= 0 && column < self.columns, @"column = %u is outside the range of possible columns.", column);
+    NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
     
     MAVVector *vector;
     
@@ -1625,7 +1625,7 @@
 
 - (MAVVector *)objectAtIndexedSubscript:(__CLPK_integer)idx
 {
-    NSAssert1(idx >= 0 && idx < self.rows, @"idx = %u is outside the range of possible rows.", idx);
+    NSAssert1(idx >= 0 && idx < self.rows, @"idx = %lld is outside the range of possible rows.", (long long int)idx);
     
     return [self rowVectorForRow:idx];
 }

@@ -66,8 +66,8 @@
     
     MAVMatrix *original = [[[svd.u mutableCopy] multiplyByMatrix:svd.s] multiplyByMatrix:svd.vT];
     
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 2; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 2; j++) {
             XCTAssertEqualWithAccuracy([a valueAtRow:i column:j].doubleValue, [original valueAtRow:i column:j].doubleValue, __DBL_EPSILON__ * 10.0, @"Value at row %u and column %u incorrect", i, j);
         }
     }
@@ -92,8 +92,8 @@
     
     MAVMatrix *original = [[[svd.u mutableCopy] multiplyByMatrix:svd.s] multiplyByMatrix:svd.vT];
     
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (unsigned int i = 0; i < 2; i++) {
+        for (unsigned int j = 0; j < 4; j++) {
             XCTAssertEqualWithAccuracy([a valueAtRow:i column:j].doubleValue, [original valueAtRow:i column:j].doubleValue, __DBL_EPSILON__ * 10.0, @"Value at row %u and column %u incorrect", i, j);
         }
     }

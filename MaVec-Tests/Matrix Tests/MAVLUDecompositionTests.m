@@ -70,8 +70,8 @@
     
     MAVMatrix *product = [[[f.permutationMatrix mutableCopy] multiplyByMatrix:f.lowerTriangularMatrix] multiplyByMatrix:f.upperTriangularMatrix];
     
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             double a = [m valueAtRow:i column:j].doubleValue;
             double b = [product valueAtRow:i column:j].doubleValue;
             XCTAssertEqualWithAccuracy(a, b, 0.0000000000000003, @"Value at row %i and column %i was not recomputed correctly", i, j);
@@ -95,11 +95,11 @@
     
     MAVMatrix *product = [[[f.permutationMatrix mutableCopy] multiplyByMatrix:f.lowerTriangularMatrix] multiplyByMatrix:f.upperTriangularMatrix];
     
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 2; j++) {
+    for (unsigned int i = 0; i < 2; i++) {
+        for (unsigned int j = 0; j < 2; j++) {
             double a = [m valueAtRow:i column:j].doubleValue;
             double b = [product valueAtRow:i column:j].doubleValue;
-            XCTAssertEqualWithAccuracy(a, b, 0.0000000000000003, @"Value at row %i and column %i was not recomputed correctly", i, j);
+            XCTAssertEqualWithAccuracy(a, b, 0.0000000000000003, @"Value at row %u and column %u was not recomputed correctly", i, j);
         }
     }
 }

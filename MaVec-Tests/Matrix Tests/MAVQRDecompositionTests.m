@@ -63,8 +63,8 @@
     
     MAVMatrix *qrProduct = [[qrFactorization.q mutableCopy] multiplyByMatrix:qrFactorization.r];
     
-    for(int row = 0; row < qrProduct.rows; row += 1) {
-        for(int col = 0; col < qrProduct.columns; col += 1) {
+    for (unsigned int row = 0; row < qrProduct.rows; row += 1) {
+        for (unsigned int col = 0; col < qrProduct.columns; col += 1) {
             double a = [source valueAtRow:row column:col].doubleValue;
             double b = [qrProduct valueAtRow:row column:col].doubleValue;
             double accuracy = 1.0e-10;
@@ -89,8 +89,8 @@
     // need to take the 'thin QR factorization' of the general rectangular matrix
     MAVMatrix *qrProduct = [[qrFactorization.q mutableCopy] multiplyByMatrix:qrFactorization.r];
     
-    for(int row = 0; row < qrProduct.rows; row += 1) {
-        for(int col = 0; col < qrProduct.columns; col += 1) {
+    for (unsigned int row = 0; row < qrProduct.rows; row += 1) {
+        for (unsigned int col = 0; col < qrProduct.columns; col += 1) {
             double a = [source valueAtRow:row column:col].doubleValue;
             double b = [qrProduct valueAtRow:row column:col].doubleValue;
             double accuracy = 1.0e-10;

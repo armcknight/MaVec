@@ -65,12 +65,12 @@
     MAVMatrix *o = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:25*sizeof(double)] rows:5 columns:5 leadingDimension:MAVMatrixLeadingDimensionRow];
     MAVEigendecomposition *e = o.eigendecomposition;
     
-    for (int i = 0; i < 5; i += 1) {
+    for (unsigned int i = 0; i < 5; i += 1) {
         MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
         MAVVector *left = [[[o mutableCopy] multiplyByVector:eigenvector] columnVectorForColumn:0];
         MAVVector *right = [(MAVMutableVector *)[eigenvector mutableCopy] multiplyByScalar:eigenvalue];
-        for (int j = 0; j < 5; j += 1) {
+        for (unsigned int j = 0; j < 5; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
             double b = [right valueAtIndex:j].doubleValue;
             double accuracy = 0.0000000001;
@@ -92,12 +92,12 @@
     MAVMatrix *source = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MAVMatrixLeadingDimensionRow];
     MAVEigendecomposition *e = source.eigendecomposition;
     
-    for (int i = 0; i < 4; i += 1) {
+    for (unsigned int i = 0; i < 4; i += 1) {
         MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
         MAVVector *left = [[[source mutableCopy] multiplyByVector:eigenvector] columnVectorForColumn:0];
         MAVVector *right = [(MAVMutableVector *)[eigenvector mutableCopy] multiplyByScalar:eigenvalue];
-        for (int j = 0; j < 4; j += 1) {
+        for (unsigned int j = 0; j < 4; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
             double b = [right valueAtIndex:j].doubleValue;
             double accuracy = 1.0e-6;

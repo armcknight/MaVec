@@ -52,11 +52,11 @@
 {
     int size = 16;
     double *aValues = malloc(size * sizeof(double));
-    for (int i = 0; i < size; i++) {
+    for (unsigned int i = 0; i < size; i++) {
         aValues[i] = i;
     }
     double *bValues = malloc(size * sizeof(double));
-    for (int i = 0; i < size; i++) {
+    for (unsigned int i = 0; i < size; i++) {
         bValues[i] = i;
     }
     
@@ -71,14 +71,14 @@
     XCTAssertEqual([a isEqualToMatrix:b], YES, @"Couldn't tell different MAVMatrix instances with identical values were equal using isEqualToMatrix:");
     
     double *cValues = malloc(size * sizeof(double));
-    for (int i = 0; i < size; i++) {
+    for (unsigned int i = 0; i < size; i++) {
         cValues[i] = i;
     }
     MAVMutableMatrix *c = [MAVMutableMatrix matrixWithValues:[NSData dataWithBytes:cValues length:16*sizeof(double)] rows:4 columns:4];
     MAVMutableMatrix *cr = [MAVMutableMatrix matrixWithValues:[c valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow] rows:c.rows columns:c.columns leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (unsigned int i = 0; i < 4; i++) {
+        for (unsigned int j = 0; j < 4; j++) {
             NSNumber *oldCValue = [c valueAtRow:i column:j];
             [c setEntryAtRow:i column:j toValue:@(-1.0)];
             NSNumber *oldCRValue = [cr valueAtRow:i column:j];
@@ -94,14 +94,14 @@
     
     int smallerSize = 12;
     double *dValues = malloc(smallerSize * sizeof(double));
-    for (int i = 0; i < smallerSize; i++) {
+    for (unsigned int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
     MAVMatrix *d = [MAVMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:4 columns:3];
     XCTAssert(![a isEqual:d], @"Couldn't tell two MAVMatrix objects with different amounts of columns are unequal using isEqual:");
     XCTAssert(![a isEqualToMatrix:d], @"Couldn't tell two MAVMatrix objects with different amounts of columns are unequal using isEqualToMatrix:");
     dValues = malloc(smallerSize * sizeof(double));
-    for (int i = 0; i < smallerSize; i++) {
+    for (unsigned int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
     d = [MAVMatrix matrixWithValues:[NSData dataWithBytes:dValues length:12*sizeof(double)] rows:3 columns:4];
@@ -110,7 +110,7 @@
     
     smallerSize = 9;
     dValues = malloc(smallerSize * sizeof(double));
-    for (int i = 0; i < smallerSize; i++) {
+    for (unsigned int i = 0; i < smallerSize; i++) {
         dValues[i] = i;
     }
     d = [MAVMatrix matrixWithValues:[NSData dataWithBytes:dValues length:9*sizeof(double)] rows:3 columns:3];
