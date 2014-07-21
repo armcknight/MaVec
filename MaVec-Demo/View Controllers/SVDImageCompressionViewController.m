@@ -85,7 +85,7 @@
     __CLPK_integer singularValues = (__CLPK_integer)((UISlider *)sender).value;
     if (self.currentAmountOfSingularValues != singularValues) {
         self.currentAmountOfSingularValues = singularValues;
-        __weak typeof(self) wself = self;
+        __weak SVDImageCompressionViewController *wself = self;
         [self setProgressViewVisible:YES completion:^{
             wself.imageView.image = [wself compressedImageWithSingularValues:singularValues];
             [wself setProgressViewVisible:NO completion:nil];
