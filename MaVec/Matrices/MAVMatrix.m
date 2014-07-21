@@ -1235,7 +1235,7 @@
                     double *cvalues = malloc(self.rows * self.columns * sizeof(double));
                     size_t i = 0;
                     for (__CLPK_integer j = 0; j < self.columns; j++) {
-                        for (__CLPK_integer k = 0; k < self.rows; k++) {
+                        for (__CLPK_integer row = 0; row < self.rows; row++) {
                             size_t idx = ((i * self.columns) % (self.columns * self.rows)) + j;
                             cvalues[i] = values[idx];
                             i++;
@@ -1270,7 +1270,7 @@
                     float *cvalues = malloc(self.rows * self.columns * sizeof(float));
                     size_t i = 0;
                     for (__CLPK_integer j = 0; j < self.columns; j++) {
-                        for (__CLPK_integer k = 0; k < self.rows; k++) {
+                        for (__CLPK_integer row = 0; row < self.rows; row++) {
                             size_t idx = ((i * self.columns) % (self.columns * self.rows)) + j;
                             cvalues[i] = values[idx];
                             i++;

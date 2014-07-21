@@ -283,11 +283,11 @@ MAVVectorMutatingOperationType;
             
         case MAVVectorMutatingOperationTypeMultiplicationScalar:
         case MAVVectorMutatingOperationTypePower:
-            isIdempotent = [input compare:@1] == NSOrderedSame;
+            isIdempotent = [(NSNumber *)input compare:@1] == NSOrderedSame;
             break;
             
         case MAVVectorMutatingOperationTypeAssignment:
-            isIdempotent = [input compare:[self valueAtIndex:index]] == NSOrderedSame;
+            isIdempotent = [(NSNumber *)input compare:[self valueAtIndex:index]] == NSOrderedSame;
             break;
             
         default:

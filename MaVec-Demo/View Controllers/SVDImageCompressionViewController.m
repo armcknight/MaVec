@@ -46,6 +46,8 @@
 
 @property (assign, nonatomic) int currentAmountOfSingularValues;
 
+void freePixelValues(void *info, const void *data, size_t size);
+
 @end
 
 @implementation SVDImageCompressionViewController
