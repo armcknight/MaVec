@@ -427,6 +427,12 @@
      3  6  9 ]
      */
     MAVMatrix *a = [MAVMatrix matrixWithColumnVectors:@[v1, v2, v3]];
+    for (__CLPK_integer i = 0; i < 3; i++) {
+        for (__CLPK_integer j = 0; j < 3; j++) {
+            MAVVector *vector = j == 0 ? v1 : j == 1 ? v2 : v3;
+            XCTAssertEqual(a[i][j].doubleValue, vector[i].doubleValue, @"Value incorrect at [%d][%d]", i, j);
+        }
+    }
     
     /* create the matrix
      [ 1  2  3
@@ -434,6 +440,12 @@
      7  8  9 ]
      */
     MAVMatrix *b = [MAVMatrix matrixWithRowVectors:@[v1, v2, v3]];
+    for (__CLPK_integer i = 0; i < 3; i++) {
+        MAVVector *vector = i == 0 ? v1 : i == 1 ? v2 : v3;
+        for (__CLPK_integer j = 0; j < 3; j++) {
+            XCTAssertEqual(b[i][j].doubleValue, vector[j].doubleValue, @"Value incorrect at [%d][%d]", i, j);
+        }
+    }
 }
 
 - (void)testRandomDefiniteMatrices
