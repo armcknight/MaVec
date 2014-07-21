@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sixstringtheory/MaVec.svg?branch=master)](https://travis-ci.org/sixstringtheory/MaVec)
+[![Build Status](https://travis-ci.org/sixstringtheory/MaVec.svg?branch=mutableClasses)](https://travis-ci.org/sixstringtheory/MaVec)
 MaVec
 ===
 
