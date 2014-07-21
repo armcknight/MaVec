@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		49143DB0197CB0630009D648 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734C7192594DF0004A8E5 /* XCTest.framework */; };
-		49143DB1197CB0630009D648 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499734AE192594DF0004A8E5 /* Foundation.framework */; };
-		49143DB3197CB0630009D648 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49143DB2197CB0630009D648 /* UIKit.framework */; };
-		49143DB9197CB0630009D648 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 49143DB7197CB0630009D648 /* InfoPlist.strings */; };
-		49143DBB197CB0630009D648 /* MaVec_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49143DBA197CB0630009D648 /* MaVec_DemoTests.m */; };
 		491FF1A5193BC6FA00A5F3CE /* MAVMutableMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */; };
 		491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */; };
 		4941980C197AF207008CF78E /* MAVMutableVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980B197AF207008CF78E /* MAVMutableVectorTests.m */; };
@@ -74,24 +69,9 @@
 		499735C61925A1D80004A8E5 /* NSData+MCKPrecision.m in Sources */ = {isa = PBXBuildFile; fileRef = 499735C51925A1D80004A8E5 /* NSData+MCKPrecision.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		49143DBD197CB0630009D648 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 499734A1192594B00004A8E5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 499734AA192594DF0004A8E5;
-			remoteInfo = "MaVec-Demo";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		49143DAA197C91760009D648 /* MAVConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAVConstants.h; sourceTree = "<group>"; };
-		49143DAF197CB0620009D648 /* MaVec-DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MaVec-DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49143DB2197CB0630009D648 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		49143DB6197CB0630009D648 /* MaVec-DemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaVec-DemoTests-Info.plist"; sourceTree = "<group>"; };
-		49143DB8197CB0630009D648 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		49143DBA197CB0630009D648 /* MaVec_DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaVec_DemoTests.m; sourceTree = "<group>"; };
-		49143DBC197CB0630009D648 /* MaVec-DemoTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MaVec-DemoTests-Prefix.pch"; sourceTree = "<group>"; };
 		491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableMatrix.h; sourceTree = "<group>"; };
 		491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableMatrix.m; sourceTree = "<group>"; };
 		491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAVMutableVector.h; path = ../Matrices/MAVMutableVector.h; sourceTree = "<group>"; };
@@ -204,16 +184,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		49143DAC197CB0620009D648 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				49143DB0197CB0630009D648 /* XCTest.framework in Frameworks */,
-				49143DB3197CB0630009D648 /* UIKit.framework in Frameworks */,
-				49143DB1197CB0630009D648 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		499734A8192594DF0004A8E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,25 +209,6 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		49143DB4197CB0630009D648 /* MaVec-DemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				49143DBA197CB0630009D648 /* MaVec_DemoTests.m */,
-				49143DB5197CB0630009D648 /* Supporting Files */,
-			);
-			path = "MaVec-DemoTests";
-			sourceTree = SOURCE_ROOT;
-		};
-		49143DB5197CB0630009D648 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				49143DB6197CB0630009D648 /* MaVec-DemoTests-Info.plist */,
-				49143DB7197CB0630009D648 /* InfoPlist.strings */,
-				49143DBC197CB0630009D648 /* MaVec-DemoTests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		499734A0192594B00004A8E5 = {
 			isa = PBXGroup;
 			children = (
@@ -275,7 +226,6 @@
 			children = (
 				499734AB192594DF0004A8E5 /* MaVec-Demo.app */,
 				499734DF192595230004A8E5 /* MaVec-Tests.xctest */,
-				49143DAF197CB0620009D648 /* MaVec-DemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -294,7 +244,6 @@
 		499734B4192594DF0004A8E5 /* MaVec-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				49143DB4197CB0630009D648 /* MaVec-DemoTests */,
 				49973516192596B70004A8E5 /* View Controllers */,
 				499734BD192594DF0004A8E5 /* AppDelegate.h */,
 				499734BE192594DF0004A8E5 /* AppDelegate.m */,
@@ -542,24 +491,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		49143DAE197CB0620009D648 /* MaVec-DemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 49143DBF197CB0630009D648 /* Build configuration list for PBXNativeTarget "MaVec-DemoTests" */;
-			buildPhases = (
-				49143DAB197CB0620009D648 /* Sources */,
-				49143DAC197CB0620009D648 /* Frameworks */,
-				49143DAD197CB0620009D648 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				49143DBE197CB0630009D648 /* PBXTargetDependency */,
-			);
-			name = "MaVec-DemoTests";
-			productName = "MaVec-DemoTests";
-			productReference = 49143DAF197CB0620009D648 /* MaVec-DemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		499734AA192594DF0004A8E5 /* MaVec-Demo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 499734D5192594E00004A8E5 /* Build configuration list for PBXNativeTarget "MaVec-Demo" */;
@@ -604,9 +535,6 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = AMProductions;
 				TargetAttributes = {
-					49143DAE197CB0620009D648 = {
-						TestTargetID = 499734AA192594DF0004A8E5;
-					};
 					499734DE192595220004A8E5 = {
 						TestTargetID = 499734AA192594DF0004A8E5;
 					};
@@ -626,20 +554,11 @@
 			targets = (
 				499734AA192594DF0004A8E5 /* MaVec-Demo */,
 				499734DE192595220004A8E5 /* MaVec-Tests */,
-				49143DAE197CB0620009D648 /* MaVec-DemoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		49143DAD197CB0620009D648 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				49143DB9197CB0630009D648 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		499734A9192594DF0004A8E5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -663,14 +582,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		49143DAB197CB0620009D648 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				49143DBB197CB0630009D648 /* MaVec_DemoTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		499734A7192594DF0004A8E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -741,23 +652,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		49143DBE197CB0630009D648 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 499734AA192594DF0004A8E5 /* MaVec-Demo */;
-			targetProxy = 49143DBD197CB0630009D648 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
-		49143DB7197CB0630009D648 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				49143DB8197CB0630009D648 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		499734B7192594DF0004A8E5 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -982,14 +877,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		49143DBF197CB0630009D648 /* Build configuration list for PBXNativeTarget "MaVec-DemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				49143DC0197CB0630009D648 /* Debug */,
-				49143DC1197CB0630009D648 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		499734A4192594B00004A8E5 /* Build configuration list for PBXProject "MaVec" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
