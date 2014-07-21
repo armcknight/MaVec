@@ -194,13 +194,13 @@ void freePixelValues(void *info, const void *data, size_t size) {
 // adapted from http://stackoverflow.com/questions/4545237/creating-uiimage-from-raw-rgba-data
 - (UIImage *)compressedImageWithSingularValues:(int)singularValues
 {
-    MAVMutableVector *partialSum = [[[self.imageSVD.u columnVectorForColumn:0] mutableCopy] multiplyByScalar:[self.imageSVD.s.diagonalValues valueAtIndex:0]];
+    MAVMutableVector *partialSum = [(MAVMutableVector *)[[self.imageSVD.u columnVectorForColumn:0] mutableCopy] multiplyByScalar:[self.imageSVD.s.diagonalValues valueAtIndex:0]];
     MAVMutableMatrix *leftMultiplicand = [MAVMutableMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
     MAVVector *rightMultiplicandVector = [self.imageSVD.vT rowVectorForRow:0];
     MAVMatrix *rightMultiplicand = [MAVMatrix matrixWithValues:rightMultiplicandVector.values rows:1 columns:rightMultiplicandVector.length];
     MAVMutableMatrix *sum = [[leftMultiplicand mutableCopy] multiplyByMatrix:rightMultiplicand];
     for (int i = singularValues - 1; i >= 0; i--) {
-        partialSum = [[[self.imageSVD.u columnVectorForColumn:i] mutableCopy] multiplyByScalar:[self.imageSVD.s.diagonalValues valueAtIndex:i]];
+        partialSum = [(MAVMutableVector *)[[self.imageSVD.u columnVectorForColumn:i] mutableCopy] multiplyByScalar:[self.imageSVD.s.diagonalValues valueAtIndex:i]];
         leftMultiplicand = [MAVMutableMatrix matrixWithValues:partialSum.values rows:partialSum.length columns:1];
         rightMultiplicandVector = [self.imageSVD.vT rowVectorForRow:i];
         rightMultiplicand = [MAVMatrix matrixWithValues:rightMultiplicandVector.values rows:1 columns:rightMultiplicandVector.length];
