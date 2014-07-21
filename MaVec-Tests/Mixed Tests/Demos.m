@@ -113,10 +113,13 @@
     NSLog(@"so far so good!");
     
     MAVMatrix *product = [[matrixA mutableCopy] multiplyByMatrix:matrixB];
+    NSLog(@"%@", product.description);
     
     MAVQRFactorization *qrfactorization = [MAVQRFactorization qrFactorizationOfMatrix:matrixA];
+    NSLog(@"%@", qrfactorization.description);
     
     MAVEigendecomposition *eigenDecomposition = [MAVEigendecomposition eigendecompositionOfMatrix:matrixA];
+    NSLog(@"%@", eigenDecomposition.description);
     
     NSLog(@"whew!");
 }
