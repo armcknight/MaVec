@@ -410,13 +410,13 @@
             for (int i = 0; i < self.length; i++) {
                 max = MAX(max, fabs(((double *)self.values.bytes)[i]));
             }
-            padding = floor(log10(max)) + 5;
+            padding = (__CLPK_integer)floor(log10(max)) + 5;
         } else {
             float max = FLT_MIN;
             for (int i = 0; i < self.length; i++) {
                 max = MAX(max, fabsf(((float *)self.values.bytes)[i]));
             }
-            padding = floorf(log10f(max)) + 5;
+            padding = (__CLPK_integer)floorf(log10f(max)) + 5;
         }
     }
     

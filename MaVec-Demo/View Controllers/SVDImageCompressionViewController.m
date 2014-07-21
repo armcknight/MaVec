@@ -76,13 +76,13 @@
 
 - (IBAction)compressionSliderValueChanged:(id)sender
 {
-    int singularValues = ((UISlider *)sender).value;
+    __CLPK_integer singularValues = (__CLPK_integer)((UISlider *)sender).value;
     self.compressionLabel.text = [NSString stringWithFormat:@"Singular values: %d/%d", singularValues, self.imageSVD.s.diagonalValues.length];
 }
 
 - (IBAction)compressionSliderFinishedChangingValue:(id)sender
 {
-    int singularValues = ((UISlider *)sender).value;
+    __CLPK_integer singularValues = (__CLPK_integer)((UISlider *)sender).value;
     if (self.currentAmountOfSingularValues != singularValues) {
         self.currentAmountOfSingularValues = singularValues;
         __weak typeof(self) wself = self;
@@ -211,7 +211,7 @@ void freePixelValues(void *info, const void *data, size_t size) {
     unsigned char *pixelValues = malloc(size * 4);
     for (int i = 0; i < size; i++) {
         double grayscaleValue = ((double *)sum.values.bytes)[i];
-        double bitValue = MIN(255.0, MAX(0.0, grayscaleValue * 255));
+        unsigned char bitValue = (unsigned char)MIN(255, MAX(0, (int)(grayscaleValue * 255)));
         pixelValues[4 * i] = bitValue;
         pixelValues[4 * i + 1] = bitValue;
         pixelValues[4 * i + 2] = bitValue;

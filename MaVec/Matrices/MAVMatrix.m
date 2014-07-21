@@ -703,7 +703,7 @@
                 // query optimal workspace size
                 dgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
                 
-                lwork = wkopt;
+                lwork = (__CLPK_integer)wkopt;
                 double *work = malloc(lwork * sizeof(double));
                 
                 // calculate the inverse
@@ -723,7 +723,7 @@
                 // query optimal workspace size
                 sgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
                 
-                lwork = wkopt;
+                lwork = (__CLPK_integer)wkopt;
                 float *work = malloc(lwork * sizeof(float));
                 
                 // calculate the inverse
@@ -771,7 +771,7 @@
         } else {
             float *values = (float *)rowMajorValues.bytes;
             
-            float norm = slange_("1", &m, &n, values, &m, nil);
+            float norm = (float)slange_("1", &m, &n, values, &m, nil);
             
             __CLPK_integer lda = self.rows;
             __CLPK_integer *ipiv = malloc(m * sizeof(__CLPK_integer));
@@ -1115,13 +1115,13 @@
         for (size_t i = 0; i < self.rows * self.columns; i++) {
             max = MAX(max, fabs(((double *)self.values.bytes)[i]));
         }
-        padding = floor(log10(max)) + 5;
+        padding = (__CLPK_integer)floor(log10(max)) + 5;
     } else {
-        float max = DBL_MIN;
+        float max = FLT_MIN;
         for (size_t i = 0; i < self.rows * self.columns; i++) {
-            max = MAX(max, fabs(((float *)self.values.bytes)[i]));
+            max = MAX(max, fabsf(((float *)self.values.bytes)[i]));
         }
-        padding = floorf(log10f(max)) + 5;
+        padding = (__CLPK_integer)floorf(log10f(max)) + 5;
     }
     
     NSMutableString *description = [@"\n" mutableCopy];

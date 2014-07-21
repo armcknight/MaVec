@@ -71,7 +71,7 @@
             // query the optimal workspace size
             dgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
             
-            lwork = wkopt;
+            lwork = (__CLPK_integer)wkopt;
             double *work = malloc(lwork * sizeof(double));
             
             // perform the factorization
@@ -84,7 +84,7 @@
             dorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
             
             // extract the matrix
-            lwork = wkopt;
+            lwork = (__CLPK_integer)wkopt;
             free(work);
             work = malloc(lwork * sizeof(double));
             dorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
@@ -106,7 +106,7 @@
             // query the optimal workspace size
             sgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
             
-            lwork = wkopt;
+            lwork = (__CLPK_integer)wkopt;
             float *work = malloc(lwork * sizeof(float));
             
             // perform the factorization
@@ -119,7 +119,7 @@
             sorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
             
             // extract the matrix
-            lwork = wkopt;
+            lwork = (__CLPK_integer)wkopt;
             free(work);
             work = malloc(lwork * sizeof(float));
             sorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);

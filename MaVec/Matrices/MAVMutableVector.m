@@ -93,7 +93,7 @@ MAVVectorMutatingOperationType;
         free(bytes);
     } else {
         float *bytes = malloc(sizeof(float));
-        bytes[0] = value.doubleValue;
+        bytes[0] = value.floatValue;
         [self.values replaceBytesInRange:NSMakeRange(index * sizeof(float), sizeof(float)) withBytes:bytes];
         free(bytes);
     }

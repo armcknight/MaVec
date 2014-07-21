@@ -63,7 +63,7 @@
             // call first with lwork = -1 to determine optimal size of working array
             dgesvd_("A", "A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, &info);
             
-            lwork = workSize;
+            lwork = (__CLPK_integer)workSize;
             work = malloc(lwork * sizeof(double));
             
             // now run the actual decomposition
@@ -115,7 +115,7 @@
             // call first with lwork = -1 to determine optimal size of working array
             sgesvd_("A", "A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, &info);
             
-            lwork = workSize;
+            lwork = (__CLPK_integer)workSize;
             work = malloc(lwork * sizeof(float));
             
             // now run the actual decomposition
