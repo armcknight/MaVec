@@ -40,12 +40,12 @@
     self = [super init];
     if (self) {
         if (matrix.isSymmetric.isYes) {
-            int n = matrix.rows;
-            int lda = n;
-            int lwork = -1;
-            int iwkopt;
-            int liwork = -1;
-            int info;
+            __CLPK_integer n = matrix.rows;
+            __CLPK_integer lda = n;
+            __CLPK_integer lwork = -1;
+            __CLPK_integer iwkopt;
+            __CLPK_integer liwork = -1;
+            __CLPK_integer info;
             NSData *a = [matrix valuesFromTriangularComponent:MAVMatrixTriangularComponentLower
                                              leadingDimension:MAVMatrixLeadingDimensionColumn
                                                 packingMethod:MAVMatrixValuePackingMethodConventional];
@@ -56,10 +56,10 @@
                 double wkopt;
                 dsyevd_("V", "L", &n, (double*)a.bytes, &lda, w, &wkopt, &lwork, &iwkopt, &liwork, &info);
                 
-                lwork = (int)wkopt;
+                lwork = (__CLPK_integer)wkopt;
                 double *work = malloc(lwork * sizeof(double));
                 liwork = iwkopt;
-                int *iwork = malloc(liwork * sizeof(int));
+                __CLPK_integer *iwork = malloc(liwork * sizeof(__CLPK_integer));
                 dsyevd_("V", "L", &n, (double *)a.bytes, &lda, w, work, &lwork, iwork, &liwork, &info);
                 
                 free(work);
@@ -77,10 +77,10 @@
                 float wkopt;
                 ssyevd_("V", "L", &n, (float*)a.bytes, &lda, w, &wkopt, &lwork, &iwkopt, &liwork, &info);
                 
-                lwork = (int)wkopt;
+                lwork = (__CLPK_integer)wkopt;
                 float *work = malloc(lwork * sizeof(float));
                 liwork = iwkopt;
-                int *iwork = malloc(liwork * sizeof(int));
+                __CLPK_integer *iwork = malloc(liwork * sizeof(__CLPK_integer));
                 ssyevd_("V", "L", &n, (float *)a.bytes, &lda, w, work, &lwork, iwork, &liwork, &info);
                 
                 free(work);
@@ -94,12 +94,12 @@
                 }
             }
         } else {
-            int n = matrix.rows;
-            int lda = n;
-            int ldvl = n;
-            int ldvr = n;
-            int lwork = -1;
-            int info;
+            __CLPK_integer n = matrix.rows;
+            __CLPK_integer lda = n;
+            __CLPK_integer ldvl = n;
+            __CLPK_integer ldvr = n;
+            __CLPK_integer lwork = -1;
+            __CLPK_integer info;
             
             NSData *a = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
             
@@ -112,7 +112,7 @@
                 double wkopt;
                 dgeev_("V", "V", &n, (double *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
                 
-                lwork = (int)wkopt;
+                lwork = (__CLPK_integer)wkopt;
                 double *work = malloc(lwork * sizeof(double));
                 dgeev_("V", "V", &n, (double *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
                 
@@ -136,7 +136,7 @@
                 float wkopt;
                 sgeev_("V", "V", &n, (float *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, &wkopt, &lwork, &info);
                 
-                lwork = (int)wkopt;
+                lwork = (__CLPK_integer)wkopt;
                 float *work = malloc(lwork * sizeof(float));
                 sgeev_("V", "V", &n, (float *)a.bytes, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
                 

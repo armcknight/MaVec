@@ -38,8 +38,8 @@ MAVMatrixNorm;
 
 // public readonly properties redeclared as readwrite
 @property (strong, readwrite, nonatomic) NSData *values;
-@property (assign, readwrite, nonatomic) int rows;
-@property (assign, readwrite, nonatomic) int columns;
+@property (assign, readwrite, nonatomic) __CLPK_integer rows;
+@property (assign, readwrite, nonatomic) __CLPK_integer columns;
 @property (strong, readwrite, nonatomic) MAVMatrix *transpose;
 @property (strong, readwrite, nonatomic) MAVQRFactorization *qrFactorization;
 @property (strong, readwrite, nonatomic) MAVLUFactorization *luFactorization;
@@ -63,16 +63,16 @@ MAVMatrixNorm;
 @property (assign, readwrite, nonatomic) MCKPrecision precision;
 
 // private properties for band matrices
-@property (assign, nonatomic) int bandwidth;
-@property (assign, nonatomic) int numberOfBandValues;
-@property (assign, nonatomic) int upperCodiagonals;
+@property (assign, nonatomic) __CLPK_integer bandwidth;
+@property (assign, nonatomic) __CLPK_integer numberOfBandValues;
+@property (assign, nonatomic) __CLPK_integer upperCodiagonals;
 
 /**
  @brief Generates specified number of floating-point values.
  @param size Amount of random values to generate.
  @return C array point containing specified number of random values.
  */
-+ (NSData *)randomArrayOfSize:(int)size
++ (NSData *)randomArrayOfSize:(size_t)size
                     precision:(MCKPrecision)precision;
 
 /**

@@ -34,8 +34,8 @@
 
 @interface MAVQRFactorization ()
 
-@property (assign, nonatomic) int rows;
-@property (assign, nonatomic) int columns;
+@property (assign, nonatomic) __CLPK_integer rows;
+@property (assign, nonatomic) __CLPK_integer columns;
 
 @end
 
@@ -48,12 +48,12 @@
     // usage can be found at http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_hdgeqrf.htm
     self = [super init];
     if (self) {
-        int m = matrix.rows;
-        int n = matrix.columns;
+        __CLPK_integer m = matrix.rows;
+        __CLPK_integer n = matrix.columns;
         _rows = m;
         _columns = n;
-        int lwork = -1;
-        int info;
+        __CLPK_integer lwork = -1;
+        __CLPK_integer info;
         NSData *values = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
         
         NSData *data;
@@ -61,10 +61,10 @@
         if (matrix.precision == MCKPrecisionDouble) {
             size_t size = m * m * sizeof(double);
             double *a = malloc(size);
-            for (int i = 0; i < m * n; i += 1) {
+            for (__CLPK_integer i = 0; i < m * n; i += 1) {
                 a[i] = ((double *)values.bytes)[i];
             }
-            int lda = m;
+            __CLPK_integer lda = m;
             double *tau = malloc(MIN(m, n) * sizeof(double));
             double wkopt;
             
@@ -96,10 +96,10 @@
         } else {
             size_t size = m * m * sizeof(float);
             float *a = malloc(size);
-            for (int i = 0; i < m * n; i += 1) {
+            for (__CLPK_integer i = 0; i < m * n; i += 1) {
                 a[i] = ((float *)values.bytes)[i];
             }
-            int lda = m;
+            __CLPK_integer lda = m;
             float *tau = malloc(MIN(m, n) * sizeof(float));
             float wkopt;
             
@@ -170,7 +170,7 @@
     MAVQRFactorization *thin = [self copy];
     NSMutableArray *qColumnVectors = [NSMutableArray array];
     NSMutableArray *rRowVectors = [NSMutableArray array];
-    for (int i = 0; i < self.columns; i += 1) {
+    for (__CLPK_integer i = 0; i < self.columns; i += 1) {
         [qColumnVectors addObject:[self.q columnVectorForColumn:i]];
         [rRowVectors addObject:[self.r rowVectorForRow:i]];
     }

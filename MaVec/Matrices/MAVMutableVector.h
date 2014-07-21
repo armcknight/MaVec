@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 AMProductions. All rights reserved.
 //
 
+#import <Accelerate/Accelerate.h>
+
 #import "MAVVector.h"
 
 @interface MAVMutableVector : MAVVector
@@ -16,7 +18,7 @@
  *  @param value The value to set in this vector.
  *  @param index The position at which to set the supplied value.
  */
-- (void)setValue:(NSNumber *)value atIndex:(int)index;
+- (void)setValue:(NSNumber *)value atIndex:(__CLPK_integer)index;
 
 /**
  *  Enable bracketed subscripting to values into this vector.
@@ -24,7 +26,7 @@
  *  @param obj The value to insert.
  *  @param idx The position in the vector to place the value. Must be lesser than the vector's length.
  */
-- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
+- (void)setObject:(id)obj atIndexedSubscript:(__CLPK_integer)idx;
 
 /**
  *  Set a contiguous range of values at the specified range.

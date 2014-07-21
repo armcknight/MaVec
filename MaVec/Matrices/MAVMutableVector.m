@@ -12,6 +12,7 @@
 #import "MAVMutableVector.h"
 
 #import "NSNumber+MCKPrecision.h"
+#import "MAVConstants.h"
 
 typedef enum {
     /**
@@ -69,13 +70,13 @@ MAVVectorMutatingOperationType;
  *  @param input     The input to the mutating operation.
  *  @param index     The index being mutated, if operation is element-wise.
  */
-- (void)resetToDefaultIfOperation:(MAVVectorMutatingOperationType)operation notIdempotentWithInput:(id)input atIndex:(int)index;
+- (void)resetToDefaultIfOperation:(MAVVectorMutatingOperationType)operation notIdempotentWithInput:(id)input atIndex:(__CLPK_integer)index;
 
 @end
 
 @implementation MAVMutableVector
 
-- (void)setValue:(NSNumber *)value atIndex:(int)index
+- (void)setValue:(NSNumber *)value atIndex:(__CLPK_integer)index
 {
     NSAssert(index >= 0 && index < self.length, @"index = %lu out of the range of values in the vector (%u)", (unsigned long)index, self.length);
     NSAssert(value.precision && self.precision,
@@ -101,12 +102,15 @@ MAVVectorMutatingOperationType;
 - (void)setValues:(NSArray *)values inRange:(NSRange)range
 {
     NSAssert(values.count == range.length, @"Mismatch between amount of values (%lu) and range length (%lu)", (unsigned long)values.count, (unsigned long)range.length);
+    NSAssert2(range.location <= MAV_CLPK_INTEGER_MAX, @"Starting location must be lesser than __CLPK_integer (%lld) but got %lu.", (long long int)MAV_CLPK_INTEGER_MAX, range.location);
+    NSAssert2(range.location + range.length <= MAV_CLPK_INTEGER_MAX, @"Ending location must be lesser than __CLPK_integer (%lld) but got %lu.", (long long int)MAV_CLPK_INTEGER_MAX, range.location + range.length);
+    
     for (NSUInteger i = 0; i < values.count; i++) {
         self[i+range.location] = values[i];
     }
 }
 
-- (void)setObject:(NSNumber *)obj atIndexedSubscript:(NSUInteger)idx
+- (void)setObject:(NSNumber *)obj atIndexedSubscript:(__CLPK_integer)idx
 {
     [self setValue:obj atIndex:idx];
 }
@@ -122,14 +126,14 @@ MAVVectorMutatingOperationType;
     
     if (self.precision == MCKPrecisionDouble) {
         double *newValues = malloc(self.length * sizeof(double));
-        for (int i = 0; i < self.length; i++) {
+        for (__CLPK_integer i = 0; i < self.length; i++) {
             newValues[i] = scalar.doubleValue * ((double *)self.values.bytes)[i];
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:newValues];
         free(newValues);
     } else {
         float *newValues = malloc(self.length * sizeof(float));
-        for (int i = 0; i < self.length; i++) {
+        for (__CLPK_integer i = 0; i < self.length; i++) {
             newValues[i] = scalar.floatValue * ((float *)self.values.bytes)[i];
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:newValues];
@@ -235,14 +239,14 @@ MAVVectorMutatingOperationType;
     
     if (original.precision == MCKPrecisionDouble) {
         double *powerValues = malloc(original.length * sizeof(double));
-        for (int i = 0; i < original.length; i++) {
+        for (__CLPK_integer i = 0; i < original.length; i++) {
             powerValues[i] = pow([original valueAtIndex:i].doubleValue, power);
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:powerValues];
         free(powerValues);
     } else {
         float *powerValues = malloc(original.length * sizeof(float));
-        for (int i = 0; i < original.length; i++) {
+        for (__CLPK_integer i = 0; i < original.length; i++) {
             powerValues[i] = powf([original valueAtIndex:i].floatValue, power);
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:powerValues];
@@ -254,7 +258,7 @@ MAVVectorMutatingOperationType;
 
 #pragma mark - Private
 
-- (void)resetToDefaultIfOperation:(MAVVectorMutatingOperationType)operation notIdempotentWithInput:(id)input atIndex:(int)index
+- (void)resetToDefaultIfOperation:(MAVVectorMutatingOperationType)operation notIdempotentWithInput:(id)input atIndex:(__CLPK_integer)index
 {
     BOOL isIdempotent;
     

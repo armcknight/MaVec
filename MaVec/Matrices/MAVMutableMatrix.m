@@ -29,35 +29,35 @@
 
 // TODO: invalidate all calculated properties when mutating matrix values
 
-- (void)swapRowA:(int)rowA withRowB:(int)rowB
+- (void)swapRowA:(__CLPK_integer)rowA withRowB:(__CLPK_integer)rowB
 {
     NSAssert1(rowA < self.rows, @"rowA = %u is outside the range of possible rows.", rowA);
     NSAssert1(rowB < self.rows, @"rowB = %u is outside the range of possible rows.", rowB);
     
     // TODO: implement using cblas_dswap
     
-    for (int i = 0; i < self.columns; i++) {
+    for (__CLPK_integer i = 0; i < self.columns; i++) {
         NSNumber *temp = [self valueAtRow:rowA column:i];
         [self setEntryAtRow:rowA column:i toValue:[self valueAtRow:rowB column:i]];
         [self setEntryAtRow:rowB column:i toValue:temp];
     }
 }
 
-- (void)swapColumnA:(int)columnA withColumnB:(int)columnB
+- (void)swapColumnA:(__CLPK_integer)columnA withColumnB:(__CLPK_integer)columnB
 {
     NSAssert1(columnA < self.columns, @"columnA = %u is outside the range of possible columns.", columnA);
     NSAssert1(columnB < self.columns, @"columnB = %u is outside the range of possible columns.", columnB);
     
     // TODO: implement using cblas_dswap
     
-    for (int i = 0; i < self.rows; i++) {
+    for (__CLPK_integer i = 0; i < self.rows; i++) {
         NSNumber *temp = [self valueAtRow:i column:columnA];
         [self setEntryAtRow:i column:columnA toValue:[self valueAtRow:i column:columnB]];
         [self setEntryAtRow:i column:columnB toValue:temp];
     }
 }
 
-- (void)setEntryAtRow:(int)row column:(int)column toValue:(NSNumber *)value
+- (void)setEntryAtRow:(__CLPK_integer)row column:(__CLPK_integer)column toValue:(NSNumber *)value
 {
     // TODO: take into account internal representation b/t conventional, packed and band, row- vs. col- major, triangular component, bandwidth, start/finish band offset
     
@@ -81,27 +81,27 @@
     }
 }
 
-- (void)setRowVector:(MAVVector *)vector atRow:(NSUInteger)row
+- (void)setRowVector:(MAVVector *)vector atRow:(__CLPK_integer)row
 {
     NSAssert2(vector.length == self.columns, @"Vector length (%u) must equal amount of columns in this matrix (%u)", vector.length, self.columns);
     NSAssert2(row < self.rows, @"row (%lu) must be < the amount of rows in this matrix (%u)", (unsigned long)row, self.rows);
     
-    for (int i = 0; i < self.columns; i++) {
+    for (__CLPK_integer i = 0; i < self.columns; i++) {
         [self setEntryAtRow:row column:i toValue:vector[i]];
     }
 }
 
-- (void)setColumnVector:(MAVVector *)vector atColumn:(NSUInteger)column
+- (void)setColumnVector:(MAVVector *)vector atColumn:(__CLPK_integer)column
 {
     NSAssert2(vector.length == self.rows, @"Vector length (%u) must equal amount of rows in this matrix (%u)", vector.length, self.rows);
     NSAssert2(column < self.columns, @"column (%lu) must be < the amount of columns in this matrix (%u)", (unsigned long)column, self.columns);
     
-    for (int i = 0; i < self.rows; i++) {
+    for (__CLPK_integer i = 0; i < self.rows; i++) {
         [self setEntryAtRow:i column:column toValue:vector[i]];
     }
 }
 
-- (void)setObject:(MAVVector *)obj atIndexedSubscript:(NSUInteger)idx
+- (void)setObject:(MAVVector *)obj atIndexedSubscript:(__CLPK_integer)idx
 {
     [self setRowVector:obj atRow:idx];
 }
@@ -142,8 +142,8 @@
     NSAssert(self.columns == matrix.columns, @"Matrices have mismatched amounts of columns.");
     NSAssert(self.precision == matrix.precision, @"Precisions do not match.");
     
-    for (int i = 0; i < self.rows; i++) {
-        for (int j = 0; j < self.columns; j++) {
+    for (__CLPK_integer i = 0; i < self.rows; i++) {
+        for (__CLPK_integer j = 0; j < self.columns; j++) {
             if (self.precision == MCKPrecisionDouble) {
                 [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].doubleValue + [matrix valueAtRow:i column:j].doubleValue)];
             } else {
@@ -161,8 +161,8 @@
     NSAssert(self.columns == matrix.columns, @"Matrices have mismatched amounts of columns.");
     NSAssert(self.precision == matrix.precision, @"Precisions do not match.");
     
-    for (int i = 0; i < self.rows; i++) {
-        for (int j = 0; j < self.columns; j++) {
+    for (__CLPK_integer i = 0; i < self.rows; i++) {
+        for (__CLPK_integer j = 0; j < self.columns; j++) {
             if (self.precision == MCKPrecisionDouble) {
                 [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].doubleValue - [matrix valueAtRow:i column:j].doubleValue)];
             } else {
@@ -181,8 +181,8 @@
     
     short order = self.leadingDimension == MAVMatrixLeadingDimensionColumn ? CblasColMajor : CblasRowMajor;
     short transpose = CblasNoTrans;
-    int rows = self.rows;
-    int cols = self.columns;
+    __CLPK_integer rows = self.rows;
+    __CLPK_integer cols = self.columns;
     
     if (self.precision == MCKPrecisionDouble) {
         double *result = calloc(vector.length, sizeof(double));
@@ -210,11 +210,11 @@
 
 - (MAVMutableMatrix *)multiplyByScalar:(NSNumber *)scalar
 {
-    int valueCount = self.rows * self.columns;
+    size_t valueCount = self.rows * self.columns;
     if (self.precision == MCKPrecisionDouble) {
         size_t size = valueCount * sizeof(double);
         double *values = malloc(size);
-        for (int i = 0; i < valueCount; i++) {
+        for (size_t i = 0; i < valueCount; i++) {
             values[i] = ((double *)self.values.bytes)[i] * scalar.doubleValue;
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:values];
@@ -223,7 +223,7 @@
     else {
         size_t size = valueCount * sizeof(float);
         float *values = malloc(size);
-        for (int i = 0; i < valueCount; i++) {
+        for (size_t i = 0; i < valueCount; i++) {
             values[i] = ((float *)self.values.bytes)[i] * scalar.floatValue;
         }
         [self.values replaceBytesInRange:NSMakeRange(0, self.values.length) withBytes:values];
@@ -238,7 +238,7 @@
     NSAssert(self.rows == self.columns, @"Cannot raise a non-square matrix to exponents.");
     
     MAVMatrix *original = [self copy];
-    for (int i = 0; i < power - 1; i += 1) {
+    for (NSUInteger i = 0; i < power - 1; i += 1) {
         [self multiplyByMatrix:original];
     }
     

@@ -70,6 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		49143DAA197C91760009D648 /* MAVConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAVConstants.h; sourceTree = "<group>"; };
 		491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableMatrix.h; sourceTree = "<group>"; };
 		491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableMatrix.m; sourceTree = "<group>"; };
 		491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAVMutableVector.h; path = ../Matrices/MAVMutableVector.h; sourceTree = "<group>"; };
@@ -199,6 +200,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49143DA8197C90BE0009D648 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				49143DAA197C91760009D648 /* MAVConstants.h */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		499734A0192594B00004A8E5 = {
 			isa = PBXGroup;
 			children = (
@@ -335,6 +344,7 @@
 		49973529192596BE0004A8E5 /* MaVec */ = {
 			isa = PBXGroup;
 			children = (
+				49143DA8197C90BE0009D648 /* Utilities */,
 				4997352A192596BE0004A8E5 /* Matrices */,
 				49973535192596BE0004A8E5 /* Vectors */,
 			);
