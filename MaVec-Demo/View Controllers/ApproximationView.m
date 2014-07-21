@@ -28,6 +28,7 @@
 #import "ApproximationView.h"
 #import "MCKPolynomial.h"
 #import "MAVMatrix.h"
+#import "MAVVector.h"
 
 @interface MAVPoint : NSObject
 
@@ -109,13 +110,13 @@
         }
         
         MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:aVals length:aSize] rows:(int)self.points.count columns:self.order leadingDimension:MAVMatrixLeadingDimensionRow];
-        MAVMatrix *b = [MAVMatrix matrixWithValues:[NSData dataWithBytesNoCopy:bVals length:bSize] rows:(int)self.points.count columns:1];
+        MAVVector *b = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:bVals length:bSize] length:(int)self.points.count];
         
-        MAVMatrix *coefficients = [MAVMatrix solveLinearSystemWithMatrixA:a valuesB:b];
+        MAVVector *coefficients = [MAVMatrix solveLinearSystemWithMatrixA:a valuesB:b];
         
         NSMutableArray *cArray = [NSMutableArray array];
         for (int i = 0; i < self.order; i++) {
-            [cArray addObject:[coefficients valueAtRow:i column:0]];
+            [cArray addObject:coefficients[i]];
         }
         
         self.polynomial = [MCKPolynomial polynomialWithCoefficients:cArray];
