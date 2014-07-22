@@ -28,77 +28,31 @@
 #import <Accelerate/Accelerate.h>
 
 #import "MAVVector.h"
+#import "MAVVector-Protected.h"
+#import "MAVMutableVector.h"
 
 #import "NSNumber+MCKPrecision.h"
 #import "NSData+MCKPrecision.h"
 
-@interface MAVVector()
-
-@property (strong, readwrite, nonatomic) NSNumber *sumOfValues;
-@property (strong, readwrite, nonatomic) NSNumber *productOfValues;
-@property (strong, readwrite, nonatomic) NSNumber *l1Norm;
-@property (strong, readwrite, nonatomic) NSNumber *l2Norm;
-@property (strong, readwrite, nonatomic) NSNumber *l3Norm;
-@property (strong, readwrite, nonatomic) NSNumber *infinityNorm;
-@property (strong, readwrite, nonatomic) NSNumber *minimumValue;
-@property (strong, readwrite, nonatomic) NSNumber *maximumValue;
-@property (assign, readwrite, nonatomic) int minimumValueIndex;
-@property (assign, readwrite, nonatomic) int maximumValueIndex;
-@property (strong, readwrite, nonatomic) MAVVector *absoluteVector;
-@property (assign, readwrite, nonatomic) MCKValuePrecision precision;
-
-/**
- @brief Sets all properties to default states.
- @return A new instance of MAVVector in a default state with no values or length.
- */
-- (instancetype)init;
-
-/**
- @brief Constructs new instance by calling [self init] and sets the supplied values and length.
- @param values C array of floating-point values.
- @param length The length of the C array.
- @return A new instance of MAVVector in a default state.
- */
-- (instancetype)initWithValues:(NSData *)values length:(int)length;
-
-/**
- @brief Constructs new instance by calling [self init] and sets the supplied values and inferred length.
- @param values An NSArray of NSNumbers.
- @return A new instance of MAVVector in a default state.
- */
-- (instancetype)initWithValuesInArray:(NSArray *)values;
-
-@end
-
 @implementation MAVVector
-
-#pragma mark - Private constructor helpers
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _sumOfValues = nil;
-        _productOfValues = nil;
-        _l1Norm = nil;
-        _l2Norm = nil;
-        _l3Norm = nil;
-        _infinityNorm = nil;
-        _minimumValue = nil;
-        _maximumValue = nil;
-        _minimumValueIndex = -1;
-        _maximumValueIndex = -1;
-        _absoluteVector = nil;
+        [self resetToDefaultState];
         _precision = MCKPrecisionSingle;
     }
     return self;
 }
 
+#pragma mark - Private
+
 - (instancetype)initWithValues:(NSData *)values length:(int)length
 {
     self = [self init];
     if (self) {
-        _values = values;
+        _values = [[self class] isSubclassOfClass:[MAVMutableVector class]] ? [values mutableCopy] : values;
         _length = length;
         _precision = [values containsDoublePrecisionValues:length] ? MCKPrecisionDouble : MCKPrecisionSingle;
     }
@@ -125,6 +79,9 @@
                 valuesArray[idx] = value.doubleValue;
             }];
             _values = [NSData dataWithBytesNoCopy:valuesArray length:size];
+            if ([[self class] isSubclassOfClass:[MAVMutableVector class]]) {
+                _values = [_values mutableCopy];
+            }
         } else {
             NSUInteger size = values.count * sizeof(float);
             float *valuesArray = malloc(size);
@@ -132,9 +89,27 @@
                 valuesArray[idx] = value.floatValue;
             }];
             _values = [NSData dataWithBytesNoCopy:valuesArray length:size];
+            if ([[self class] isSubclassOfClass:[MAVMutableVector class]]) {
+                _values = [_values mutableCopy];
+            }
         }
     }
     return self;
+}
+
+- (void)resetToDefaultState
+{
+    _sumOfValues = nil;
+    _productOfValues = nil;
+    _l1Norm = nil;
+    _l2Norm = nil;
+    _l3Norm = nil;
+    _infinityNorm = nil;
+    _minimumValue = nil;
+    _maximumValue = nil;
+    _minimumValueIndex = -1;
+    _maximumValueIndex = -1;
+    _absoluteVector = nil;
 }
 
 #pragma mark - Constructors
@@ -150,12 +125,16 @@
 
 + (instancetype)vectorWithValues:(NSData *)values length:(int)length
 {
-    return [[self alloc] initWithValues:values length:length vectorFormat:MAVVectorFormatColumnVector];
+    return [[self alloc] initWithValues:values
+                                 length:length
+                           vectorFormat:MAVVectorFormatColumnVector];
 }
 
 + (instancetype)vectorWithValues:(NSData *)values length:(int)length vectorFormat:(MAVVectorFormat)vectorFormat
 {
-    return [[self alloc] initWithValues:values length:length vectorFormat:vectorFormat];
+    return [[self alloc] initWithValues:values
+                                 length:length
+                           vectorFormat:vectorFormat];
 }
 
 - (instancetype)initWithValuesInArray:(NSArray *)values vectorFormat:(MAVVectorFormat)vectorFormat
@@ -169,17 +148,19 @@
 
 + (instancetype)vectorWithValuesInArray:(NSArray *)values
 {
-    return [[self alloc] initWithValuesInArray:values vectorFormat:MAVVectorFormatColumnVector];
+    return [[self alloc] initWithValuesInArray:values
+                                  vectorFormat:MAVVectorFormatColumnVector];
 }
 
 + (instancetype)vectorWithValuesInArray:(NSArray *)values vectorFormat:(MAVVectorFormat)vectorFormat
 {
-    return [[self alloc] initWithValuesInArray:values vectorFormat:vectorFormat];
+    return [[self alloc] initWithValuesInArray:values
+                                  vectorFormat:vectorFormat];
 }
 
 + (instancetype)randomVectorOfLength:(int)length
                         vectorFormat:(MAVVectorFormat)vectorFormat
-                           precision:(MCKValuePrecision)precision
+                           precision:(MCKPrecision)precision
 {
     if (precision == MCKPrecisionDouble) {
         NSUInteger size = length * sizeof(double);
@@ -187,14 +168,18 @@
         for (int i = 0; i < length; i++) {
             values[i] = drand48();
         }
-        return [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:length vectorFormat:vectorFormat];
+        return [[self class] vectorWithValues:[NSData dataWithBytesNoCopy:values length:size]
+                                       length:length
+                                 vectorFormat:vectorFormat];
     } else {
         NSUInteger size = length * sizeof(float);
         float *values = malloc(size);
         for (int i = 0; i < length; i++) {
             values[i] = rand() / RAND_MAX;
         }
-        return [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:length vectorFormat:vectorFormat];
+        return [[self class] vectorWithValues:[NSData dataWithBytesNoCopy:values length:size]
+                                       length:length
+                                 vectorFormat:vectorFormat];
     }
 }
 
@@ -206,7 +191,8 @@
     for (int i = 0; i < length; i++) {
         [values addObject:value];
     }
-    return [MAVVector vectorWithValuesInArray:values vectorFormat:vectorFormat];
+    return [[self class] vectorWithValuesInArray:values
+                                    vectorFormat:vectorFormat];
 }
 
 #pragma mark - Lazy loaded properties
@@ -266,13 +252,12 @@
 - (NSNumber *)l3Norm
 {
     if (_l3Norm == nil) {
+        MAVVector *cubedVector = [[self mutableCopy] raiseToPower:3];
         if (self.precision == MCKPrecisionDouble) {
-            MAVVector *cubedVector = [MAVVector vectorByRaisingVector:self power:3];
             double cubedSum;
             vDSP_svemgD(cubedVector.values.bytes, 1, &cubedSum, self.length);
             _l3Norm = @(cbrt(cubedSum));
         } else {
-            MAVVector *cubedVector = [MAVVector vectorByRaisingVector:self power:3];
             float cubedSum;
             vDSP_svemg(cubedVector.values.bytes, 1, &cubedSum, self.length);
             _l3Norm = @(cbrtf(cubedSum));
@@ -425,13 +410,13 @@
             for (int i = 0; i < self.length; i++) {
                 max = MAX(max, fabs(((double *)self.values.bytes)[i]));
             }
-            padding = floor(log10(max)) + 5;
+            padding = (__CLPK_integer)floor(log10(max)) + 5;
         } else {
             float max = FLT_MIN;
             for (int i = 0; i < self.length; i++) {
                 max = MAX(max, fabsf(((float *)self.values.bytes)[i]));
             }
-            padding = floorf(log10f(max)) + 5;
+            padding = (__CLPK_integer)floorf(log10f(max)) + 5;
         }
     }
     
@@ -471,22 +456,58 @@
 {
     MAVVector *vectorCopy = [[self class] allocWithZone:zone];
     
-    vectorCopy->_length = _length;
-    vectorCopy->_vectorFormat = _vectorFormat;
-    vectorCopy->_minimumValueIndex = _minimumValueIndex;
-    vectorCopy->_maximumValueIndex = _maximumValueIndex;
-    vectorCopy->_precision = _precision;
-    
-    vectorCopy->_values = _values.copy;
-    vectorCopy->_l1Norm = _l1Norm.copy;
-    vectorCopy->_l2Norm = _l2Norm.copy;
-    vectorCopy->_l3Norm = _l3Norm.copy;
-    vectorCopy->_infinityNorm = _infinityNorm.copy;
-    vectorCopy->_minimumValue = _minimumValue.copy;
-    vectorCopy->_maximumValue = _maximumValue.copy;
-    vectorCopy->_absoluteVector = _absoluteVector.copy;
+    [self deepCopyVector:self intoNewVector:vectorCopy mutable:NO];
     
     return vectorCopy;
+}
+
+- (void)deepCopyVector:(MAVVector *)vector intoNewVector:(MAVVector *)newVector mutable:(BOOL)mutable
+{
+    newVector->_length = vector->_length;
+    newVector->_vectorFormat = vector->_vectorFormat;
+    newVector->_minimumValueIndex = vector->_minimumValueIndex;
+    newVector->_maximumValueIndex = vector->_maximumValueIndex;
+    newVector->_precision = vector->_precision;
+    
+    if (vector->_precision == MCKPrecisionDouble) {
+        double *values = malloc(vector->_values.length);
+        for (int i = 0; i < vector->_values.length / sizeof(double); i++) {
+            values[i] = ((double *)vector->_values.bytes)[i];
+        }
+        if ( mutable ) {
+            newVector->_values = [NSMutableData dataWithBytesNoCopy:values length:vector->_values.length];
+        } else {
+            newVector->_values = [NSData dataWithBytesNoCopy:values length:vector->_values.length];
+        }
+    } else {
+        float *values = malloc(vector->_values.length);
+        for (int i = 0; i < vector->_values.length / sizeof(float); i++) {
+            values[i] = ((float *)vector->_values.bytes)[i];
+        }
+        if ( mutable ) {
+            newVector->_values = [NSMutableData dataWithBytesNoCopy:values length:vector->_values.length];
+        } else {
+            newVector->_values = [NSData dataWithBytesNoCopy:values length:vector->_values.length];
+        }
+    }
+    newVector->_l1Norm = vector->_l1Norm.copy;
+    newVector->_l2Norm = vector->_l2Norm.copy;
+    newVector->_l3Norm = vector->_l3Norm.copy;
+    newVector->_infinityNorm = vector->_infinityNorm.copy;
+    newVector->_minimumValue = vector->_minimumValue.copy;
+    newVector->_maximumValue = vector->_maximumValue.copy;
+    newVector->_absoluteVector = vector->_absoluteVector.copy;
+}
+    
+#pragma mark - NSMutableCopying
+
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+    MAVMutableVector *newVector = [MAVMutableVector allocWithZone:zone];
+    
+    [self deepCopyVector:self intoNewVector:newVector mutable:YES];
+    
+    return newVector;
 }
 
 #pragma mark - Inspection
@@ -511,191 +532,64 @@
     return [self valueAtIndex:(int)idx];
 }
 
-#pragma mark - Class Operations
+#pragma mark - Instance Operations
 
-+ (MAVVector *)productOfVector:(MAVVector *)vector scalar:(NSNumber *)scalar
+- (NSNumber *)dotProductWithVector:(MAVVector *)vector
 {
-    BOOL precisionsMatch = (vector.precision == MCKPrecisionDouble && scalar.isDoublePrecision) || (vector.precision == MCKPrecisionSingle && scalar.isSinglePrecision);
-    NSAssert(precisionsMatch, @"Precisions do not match");
-    
-    MAVVector *product;
-    
-    if (vector.precision == MCKPrecisionDouble) {
-        double *newValues = malloc(vector.length * sizeof(double));
-        for (int i = 0; i < vector.length; i++) {
-            newValues[i] = scalar.doubleValue * ((double *)vector.values.bytes)[i];
-        }
-        product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
-    } else {
-        float *newValues = malloc(vector.length * sizeof(float));
-        for (int i = 0; i < vector.length; i++) {
-            newValues[i] = scalar.floatValue * ((float *)vector.values.bytes)[i];
-        }
-        product = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:newValues length:vector.values.length] length:vector.length vectorFormat:vector.vectorFormat];
-    }
-    
-    return product;
-}
-
-+ (MAVVector *)sumOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB
-{
-    NSAssert(vectorA.length == vectorB.length, @"Vector dimensions do not match");
-    NSAssert(vectorA.precision == vectorB.precision, @"Vector precisions do not match");
-    
-    MAVVector *sumVector;
-    
-    if (vectorA.precision == MCKPrecisionDouble) {
-        double *sum = malloc(vectorA.length * sizeof(double));
-        vDSP_vaddD(vectorA.values.bytes, 1, vectorB.values.bytes, 1, sum, 1, vectorA.length);
-        sumVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:sum length:vectorA.values.length] length:vectorA.length];
-    } else {
-        float *sum = malloc(vectorA.length * sizeof(float));
-        vDSP_vadd(vectorA.values.bytes, 1, vectorB.values.bytes, 1, sum, 1, vectorA.length);
-        sumVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:sum length:vectorA.values.length] length:vectorA.length];
-    }
-    
-    return sumVector;
-}
-
-+ (MAVVector *)differenceOfVectorMinuend:(MAVVector *)vectorMinuend vectorSubtrahend:(MAVVector *)vectorSubtrahend
-{
-    NSAssert(vectorMinuend.length == vectorSubtrahend.length, @"Vector dimensions do not match");
-    NSAssert(vectorMinuend.precision == vectorSubtrahend.precision, @"Vector precisions do not match");
-    
-    MAVVector *differenceVector;
-    
-    if (vectorSubtrahend.precision == MCKPrecisionDouble) {
-        double *diff = malloc(vectorMinuend.length * sizeof(double));
-        vDSP_vsubD(vectorSubtrahend.values.bytes, 1, vectorMinuend.values.bytes, 1, diff, 1, vectorMinuend.length);
-        differenceVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:diff length:vectorSubtrahend.values.length] length:vectorMinuend.length];
-    } else {
-        float *diff = malloc(vectorMinuend.length * sizeof(float));
-        vDSP_vsub(vectorSubtrahend.values.bytes, 1, vectorMinuend.values.bytes, 1, diff, 1, vectorMinuend.length);
-        differenceVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:diff length:vectorSubtrahend.values.length] length:vectorMinuend.length];
-    }
-    
-    return differenceVector;
-}
-
-+ (MAVVector *)productOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB
-{
-    NSAssert(vectorA.length == vectorB.length, @"Vector dimensions do not match");
-    NSAssert(vectorA.precision == vectorB.precision, @"Vector precisions do not match");
-    
-    MAVVector *productVector;
-    
-    if (vectorA.precision == MCKPrecisionDouble) {
-        double *product = malloc(vectorA.length * sizeof(double));
-        vDSP_vmulD(vectorA.values.bytes, 1, vectorB.values.bytes, 1, product, 1, vectorA.length);
-        productVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:product length:vectorA.values.length] length:vectorA.length];
-    } else {
-        float *product = malloc(vectorA.length * sizeof(float));
-        vDSP_vmul(vectorA.values.bytes, 1, vectorB.values.bytes, 1, product, 1, vectorA.length);
-        productVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:product length:vectorA.values.length] length:vectorA.length];
-    }
-    
-    return productVector;
-}
-
-+ (MAVVector *)quotientOfVectorDividend:(MAVVector *)vectorDividend vectorDivisor:(MAVVector *)vectorDivisor
-{
-    NSAssert(vectorDividend.length == vectorDivisor.length, @"Vector dimensions do not match");
-    NSAssert(vectorDividend.precision == vectorDivisor.precision, @"Vector precisions do not match");
-    
-    MAVVector *quotientVector;
-    
-    if (vectorDividend.precision == MCKPrecisionDouble) {
-        double *quotient = malloc(vectorDividend.length * sizeof(double));
-        vDSP_vdivD(vectorDivisor.values.bytes, 1, vectorDividend.values.bytes, 1, quotient, 1, vectorDividend.length);
-        quotientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:quotient length:vectorDividend.values.length] length:vectorDividend.length];
-    } else {
-        float *quotient = malloc(vectorDividend.length * sizeof(float));
-        vDSP_vdiv(vectorDivisor.values.bytes, 1, vectorDividend.values.bytes, 1, quotient, 1, vectorDividend.length);
-        quotientVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:quotient length:vectorDividend.values.length] length:vectorDividend.length];
-    }
-    
-    return quotientVector;
-}
-
-+ (NSNumber *)dotProductOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB
-{
-    NSAssert(vectorA.length == vectorB.length, @"Vector dimensions do not match");
-    NSAssert(vectorA.precision == vectorB.precision, @"Vector precisions do not match");
+    NSAssert(self.length == vector.length, @"Vector dimensions do not match");
+    NSAssert(self.precision == vector.precision, @"Vector precisions do not match");
     
     NSNumber *dotProduct;
     
-    if (vectorA.precision == MCKPrecisionDouble) {
+    if (self.precision == MCKPrecisionDouble) {
         double dotProductValue;
-        vDSP_dotprD(vectorA.values.bytes, 1,vectorB.values.bytes, 1, &dotProductValue, vectorA.length);
+        vDSP_dotprD(self.values.bytes, 1,vector.values.bytes, 1, &dotProductValue, self.length);
         dotProduct = @(dotProductValue);
     } else {
         float dotProductValue;
-        vDSP_dotpr(vectorA.values.bytes, 1,vectorB.values.bytes, 1, &dotProductValue, vectorA.length);
+        vDSP_dotpr(self.values.bytes, 1,vector.values.bytes, 1, &dotProductValue, self.length);
         dotProduct = @(dotProductValue);
     }
     
     return dotProduct;
 }
 
-+ (MAVVector *)crossProductOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB
+- (MAVMutableVector *)crossProductWithVector:(MAVVector *)vector
 {
-    NSAssert(vectorA.length == 3 && vectorB.length == 3, @"Vectors must both be of length 3 to perform cross products");
-    NSAssert(vectorA.precision == vectorB.precision, @"Vector precisions do not match");
+    NSAssert(self.length == 3 && vector.length == 3, @"Vectors must both be of length 3 to perform cross products");
+    NSAssert(self.precision == vector.precision, @"Vector precisions do not match");
     
-    MAVVector *crossProduct;
+    MAVMutableVector *crossProduct;
     
-    if (vectorA.precision == MCKPrecisionDouble) {
-        double *values = malloc(vectorA.length * sizeof(double));
-        values[0] = [vectorA valueAtIndex:1].doubleValue * [vectorB valueAtIndex:2].doubleValue - [vectorA valueAtIndex:2].doubleValue * [vectorB valueAtIndex:1].doubleValue;
-        values[1] = [vectorA valueAtIndex:2].doubleValue * [vectorB valueAtIndex:0].doubleValue - [vectorA valueAtIndex:0].doubleValue * [vectorB valueAtIndex:2].doubleValue;
-        values[2] = [vectorA valueAtIndex:0].doubleValue * [vectorB valueAtIndex:1].doubleValue - [vectorA valueAtIndex:1].doubleValue * [vectorB valueAtIndex:0].doubleValue;
-        crossProduct = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:vectorA.values.length] length:vectorA.length];
+    if (self.precision == MCKPrecisionDouble) {
+        double *values = malloc(self.length * sizeof(double));
+        values[0] = [self valueAtIndex:1].doubleValue * [vector valueAtIndex:2].doubleValue - [self valueAtIndex:2].doubleValue * [vector valueAtIndex:1].doubleValue;
+        values[1] = [self valueAtIndex:2].doubleValue * [vector valueAtIndex:0].doubleValue - [self valueAtIndex:0].doubleValue * [vector valueAtIndex:2].doubleValue;
+        values[2] = [self valueAtIndex:0].doubleValue * [vector valueAtIndex:1].doubleValue - [self valueAtIndex:1].doubleValue * [vector valueAtIndex:0].doubleValue;
+        crossProduct = [MAVMutableVector vectorWithValues:[NSMutableData dataWithBytesNoCopy:values length:self.values.length] length:self.length];
     } else {
-        float *values = malloc(vectorA.length * sizeof(float));
-        values[0] = [vectorA valueAtIndex:1].floatValue * [vectorB valueAtIndex:2].floatValue - [vectorA valueAtIndex:2].floatValue * [vectorB valueAtIndex:1].floatValue;
-        values[1] = [vectorA valueAtIndex:2].floatValue * [vectorB valueAtIndex:0].floatValue - [vectorA valueAtIndex:0].floatValue * [vectorB valueAtIndex:2].floatValue;
-        values[2] = [vectorA valueAtIndex:0].floatValue * [vectorB valueAtIndex:1].floatValue - [vectorA valueAtIndex:1].floatValue * [vectorB valueAtIndex:0].floatValue;
-        crossProduct = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:vectorA.values.length] length:vectorA.length];
+        float *values = malloc(self.length * sizeof(float));
+        values[0] = [self valueAtIndex:1].floatValue * [vector valueAtIndex:2].floatValue - [self valueAtIndex:2].floatValue * [vector valueAtIndex:1].floatValue;
+        values[1] = [self valueAtIndex:2].floatValue * [vector valueAtIndex:0].floatValue - [self valueAtIndex:0].floatValue * [vector valueAtIndex:2].floatValue;
+        values[2] = [self valueAtIndex:0].floatValue * [vector valueAtIndex:1].floatValue - [self valueAtIndex:1].floatValue * [vector valueAtIndex:0].floatValue;
+        crossProduct = [MAVMutableVector vectorWithValues:[NSMutableData dataWithBytesNoCopy:values length:self.values.length] length:self.length];
     }
     
     return crossProduct;
 }
 
+#pragma mark - Class Operations
+
 + (NSNumber *)scalarTripleProductWithVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB vectorC:(MAVVector *)vectorC
 {
-    MAVVector *crossProduct = [MAVVector crossProductOfVectorA:vectorA vectorB:vectorB];
-    return [MAVVector dotProductOfVectorA:crossProduct vectorB:vectorC];
+    MAVVector *crossProduct = [vectorA crossProductWithVector:vectorB];
+    return [crossProduct dotProductWithVector:vectorC];
 }
 
 + (MAVVector *)vectorTripleProductWithVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB vectorC:(MAVVector *)vectorC
 {
-    MAVVector *crossProduct = [MAVVector crossProductOfVectorA:vectorB vectorB:vectorC];
-    return [MAVVector crossProductOfVectorA:vectorA vectorB:crossProduct];
-}
-
-+ (MAVVector *)vectorByRaisingVector:(MAVVector *)vector power:(NSUInteger)power
-{
-    MAVVector *powerVector;
-    
-    if (vector.precision == MCKPrecisionDouble) {
-        double *powerValues = malloc(vector.length * sizeof(double));
-        for (int i = 0; i < vector.length; i++) {
-            powerValues[i] = pow([vector valueAtIndex:i].doubleValue, power);
-        }
-		powerVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:powerValues length:vector.values.length]
-		                                   length:vector.length
-		                             vectorFormat:vector.vectorFormat];
-    } else {
-        float *powerValues = malloc(vector.length * sizeof(float));
-        for (int i = 0; i < vector.length; i++) {
-            powerValues[i] = powf([vector valueAtIndex:i].floatValue, power);
-        }
-		powerVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:powerValues length:vector.values.length]
-		                                   length:vector.length
-		                             vectorFormat:vector.vectorFormat];
-    }
-    
-    return powerVector;
+    MAVVector *crossProduct = [vectorB crossProductWithVector:vectorC];
+    return [vectorA crossProductWithVector:crossProduct];
 }
 
 @end

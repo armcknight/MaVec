@@ -80,8 +80,8 @@
     
     MAVMatrix *solution = [MAVMatrix matrixWithValues:[NSData dataWithBytes:inverseValues length:81*sizeof(double)] rows:9 columns:9 leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 9; row += 1) {
-        for (int col = 0; col < 9; col += 1) {
+    for (unsigned int row = 0; row < 9; row += 1) {
+        for (unsigned int col = 0; col < 9; col += 1) {
             double a = [inverse valueAtRow:row column:col].doubleValue;
             double b = [solution valueAtRow:row column:col].doubleValue;
             double accuracy = 1.0e-3;

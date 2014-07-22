@@ -29,6 +29,7 @@
 
 #import "MAVLUFactorization.h"
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "NSNumber+MCKPrecision.h"
 
 @implementation MAVLUFactorization
@@ -43,21 +44,21 @@
     if (self) {
         NSData *columnMajorValues = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
         
-        int m = matrix.rows;
-        int n = matrix.columns;
-        int lda = m;
-        int *ipiv = malloc(MIN(m, n) * sizeof(int));
-        int info = 0;
-        MAVMatrix *l = [MAVMatrix matrixWithRows:m columns:n precision:matrix.precision];
-        MAVMatrix *u = [MAVMatrix matrixWithRows:n columns:m precision:matrix.precision];
-        MAVMatrix *p = [MAVMatrix identityMatrixOfOrder:MIN(m, n) precision:matrix.precision];
+        __CLPK_integer m = matrix.rows;
+        __CLPK_integer n = matrix.columns;
+        __CLPK_integer lda = m;
+        __CLPK_integer *ipiv = malloc(MIN(m, n) * sizeof(__CLPK_integer));
+        __CLPK_integer info = 0;
+        MAVMutableMatrix *l = [MAVMutableMatrix matrixWithRows:m columns:n precision:matrix.precision];
+        MAVMutableMatrix *u = [MAVMutableMatrix matrixWithRows:n columns:m precision:matrix.precision];
+        MAVMutableMatrix *p = [MAVMutableMatrix identityMatrixOfOrder:MIN(m, n) precision:matrix.precision];
         
         if (matrix.precision == MCKPrecisionDouble) {
             dgetrf_(&m, &n, (double *)columnMajorValues.bytes, &lda, ipiv, &info);
             
             // extract L from values array
-            for (int i = 0; i < matrix.columns; i++) {
-                for (int j = 0; j < matrix.rows; j++) {
+            for (__CLPK_integer i = 0; i < matrix.columns; i++) {
+                for (__CLPK_integer j = 0; j < matrix.rows; j++) {
                     if (j > i) {
                         [l setEntryAtRow:j column:i toValue:@(((double *)columnMajorValues.bytes)[i * matrix.columns + j])];
                     } else if (j == i) {
@@ -69,8 +70,8 @@
             }
             
             // extract U from values array
-            for (int i = 0; i < matrix.columns; i++) {
-                for (int j = 0; j < matrix.rows; j++) {
+            for (__CLPK_integer i = 0; i < matrix.columns; i++) {
+                for (__CLPK_integer j = 0; j < matrix.rows; j++) {
                     if (j <= i) {
                         [u setEntryAtRow:j column:i toValue:@(((double *)columnMajorValues.bytes)[i * matrix.columns + j])];
                     } else {
@@ -81,9 +82,9 @@
             
             // exchange rows as defined in ipiv to build permutation matrix
             _numberOfPermutations = 0;
-            for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
-                int a = i;
-                int b = ipiv[i] - 1;
+            for (__CLPK_integer i = MIN(m, n) - 1; i >= 0 ; i--) {
+                __CLPK_integer a = i;
+                __CLPK_integer b = ipiv[i] - 1;
                 if (a != b) {
                     [p swapRowA:i withRowB:ipiv[i] - 1];
                     _numberOfPermutations += 1;
@@ -95,8 +96,8 @@
             sgetrf_(&m, &n, (float *)columnMajorValues.bytes, &lda, ipiv, &info);
             
             // extract L from values array
-            for (int i = 0; i < matrix.columns; i++) {
-                for (int j = 0; j < matrix.rows; j++) {
+            for (__CLPK_integer i = 0; i < matrix.columns; i++) {
+                for (__CLPK_integer j = 0; j < matrix.rows; j++) {
                     if (j > i) {
                         [l setEntryAtRow:j column:i toValue:@(((float *)columnMajorValues.bytes)[i * matrix.columns + j])];
                     } else if (j == i) {
@@ -108,8 +109,8 @@
             }
             
             // extract U from values array
-            for (int i = 0; i < matrix.columns; i++) {
-                for (int j = 0; j < matrix.rows; j++) {
+            for (__CLPK_integer i = 0; i < matrix.columns; i++) {
+                for (__CLPK_integer j = 0; j < matrix.rows; j++) {
                     if (j <= i) {
                         [u setEntryAtRow:j column:i toValue:@(((float *)columnMajorValues.bytes)[i * matrix.columns + j])];
                     } else {
@@ -120,9 +121,9 @@
             
             // exchange rows as defined in ipiv to build permutation matrix
             _numberOfPermutations = 0;
-            for (int i = MIN(m, n) - 1; i >= 0 ; i--) {
-                int a = i;
-                int b = ipiv[i] - 1;
+            for (__CLPK_integer i = MIN(m, n) - 1; i >= 0 ; i--) {
+                __CLPK_integer a = i;
+                __CLPK_integer b = ipiv[i] - 1;
                 if (a != b) {
                     [p swapRowA:i withRowB:ipiv[i] - 1];
                     _numberOfPermutations += 1;
@@ -142,6 +143,11 @@
 + (instancetype)luFactorizationOfMatrix:(MAVMatrix *)matrix
 {
     return [[MAVLUFactorization alloc] initWithMatrix:matrix];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"\nL:%@\nU:%@\nP:%@", self.lowerTriangularMatrix.description, self.upperTriangularMatrix.description, self.permutationMatrix.description];
 }
 
 #pragma mark - NSCopying

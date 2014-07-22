@@ -1,6 +1,6 @@
 [submodule "External/RZCollectionList"]
 	path = External/RZCollectionList
-	url = https://sixstringtheory@github.com/Raizlabs/RZCollectionList.git
+	url = git://github.com/Raizlabs/RZCollectionList.git
 [submodule "External/MCKNumerics"]
 	path = External/MCKNumerics
-	url = https://sixstringtheory@github.com/sixstringtheory/MCKNumerics.git
+	url = git://github.com/sixstringtheory/MCKNumerics.git

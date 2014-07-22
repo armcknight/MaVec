@@ -26,6 +26,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Accelerate/Accelerate.h>
 
 #import "NSNumber+MCKPrecision.h"
 
@@ -187,19 +188,19 @@ MAVCoordinateAxis;
  @class MAVMatrix
  @description A class providing storage and operations for matrices of double-precision floating point numbers, where underlying details governing how the two-dimensional structure is reduced to the one-dimensional array containing its values (packing, leading dimension, or other internal value representation method) is abstracted away for any operation or property.
  */
-@interface MAVMatrix : NSObject <NSCopying>
+@interface MAVMatrix : NSObject <NSCopying, NSMutableCopying>
 
 /**
  @property rows 
  @brief The number of rows in the matrix.
  */
-@property (nonatomic, readonly, assign) int rows;
+@property (nonatomic, readonly, assign) __CLPK_integer rows;
 
 /**
  @property columns
  @brief The number of columns in the matrix.
  */
-@property (nonatomic, readonly, assign) int columns;
+@property (nonatomic, readonly, assign) __CLPK_integer columns;
 
 /**
  @property values
@@ -345,7 +346,7 @@ MAVCoordinateAxis;
  @property precision
  @brief The precision of the numeric values in the matrix, either single- or double-precision floating point.
  */
-@property (nonatomic, readonly, assign) MCKValuePrecision precision;
+@property (nonatomic, readonly, assign) MCKPrecision precision;
 
 
 #pragma mark - Constructors
@@ -361,8 +362,8 @@ MAVCoordinateAxis;
  @return A new MAVMatrix object.
  */
 - (instancetype)initWithValues:(NSData *)values
-                          rows:(int)rows
-                       columns:(int)columns
+                          rows:(__CLPK_integer)rows
+                       columns:(__CLPK_integer)columns
               leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
                  packingMethod:(MAVMatrixValuePackingMethod)packingMethod
            triangularComponent:(MAVMatrixTriangularComponent)triangularComponent;
@@ -377,9 +378,9 @@ MAVCoordinateAxis;
  @param precision The precision the matrix values will be stored in.
  @return New instance of MAVMatrix.
  */
-+ (instancetype)matrixWithRows:(int)rows
-                       columns:(int)columns
-                     precision:(MCKValuePrecision)precision;
++ (instancetype)matrixWithRows:(__CLPK_integer)rows
+                       columns:(__CLPK_integer)columns
+                     precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a matrix with the specified number of rows and columns and storage format, but without supplying values.
@@ -390,9 +391,9 @@ MAVCoordinateAxis;
  @param leadingDimension The format to store values in; either row- or column-major.
  @return New instance of MAVMatrix.
  */
-+ (instancetype)matrixWithRows:(int)rows
-                       columns:(int)columns
-                     precision:(MCKValuePrecision)precision
++ (instancetype)matrixWithRows:(__CLPK_integer)rows
+                       columns:(__CLPK_integer)columns
+                     precision:(MCKPrecision)precision
               leadingDimension:(MAVMatrixLeadingDimension)leadingDimension;
 
 /**
@@ -404,8 +405,8 @@ MAVCoordinateAxis;
  @return New instance of MAVMatrix.
  */
 + (instancetype)matrixWithValues:(NSData *)values
-                            rows:(int)rows
-                         columns:(int)columns;
+                            rows:(__CLPK_integer)rows
+                         columns:(__CLPK_integer)columns;
 
 /**
  @brief Class convenience method to create a matrix with the specified values (in the specified storage format) and number of rows and columns.
@@ -417,8 +418,8 @@ MAVCoordinateAxis;
  @return New instance of MAVMatrix.
  */
 + (instancetype)matrixWithValues:(NSData *)values
-                            rows:(int)rows
-                         columns:(int)columns
+                            rows:(__CLPK_integer)rows
+                         columns:(__CLPK_integer)columns
                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension;
 
 /**
@@ -428,8 +429,8 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return New instance of MAVMatrix representing the identity matrix of dimension size x size.
  */
-+ (instancetype)identityMatrixOfOrder:(int)order
-                            precision:(MCKValuePrecision)precision;
++ (instancetype)identityMatrixOfOrder:(__CLPK_integer)order
+                            precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square matrix with the specified diagonal values.
@@ -439,7 +440,7 @@ MAVCoordinateAxis;
  @return New instance of MAVMatrix representing the square matrix of dimension size x size with specified diagonal values.
  */
 + (instancetype)diagonalMatrixWithValues:(NSData *)values
-                                   order:(int)order;
+                                   order:(__CLPK_integer)order;
 
 /**
  @brief Class convenience method to create a matrix from an array of MAVVectors describing the matrix column vectors.
@@ -466,7 +467,7 @@ MAVCoordinateAxis;
 + (instancetype)triangularMatrixWithPackedValues:(NSData *)values
                            ofTriangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
-                                           order:(int)order;
+                                           order:(__CLPK_integer)order;
 
 /**
  @brief Class convenience method to create a square symmetric from an array of values describing a triangular component of a matrix, either upper or lower.
@@ -479,7 +480,7 @@ MAVCoordinateAxis;
 + (instancetype)symmetricMatrixWithPackedValues:(NSData *)values
                             triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
-                                          order:(int)order;
+                                          order:(__CLPK_integer)order;
 
 /**
  @brief Class convenience method to create a square band matrix with supplied (co)diagonal values in band matrix format (see http://www.roguewave.com/Portals/0/products/imsl-numerical-libraries/c-library/docs/6.0/math/default.htm?turl=matrixstoragemodes.htm for a good explanation).
@@ -490,9 +491,9 @@ MAVCoordinateAxis;
  @return A new instance of MAVMatrix representing the band matrix.
  */
 + (instancetype)bandMatrixWithValues:(NSData *)values
-                               order:(int)order
-                    upperCodiagonals:(int)upperCodiagonals
-                    lowerCodiagonals:(int)lowerCodiagonals;
+                               order:(__CLPK_integer)order
+                    upperCodiagonals:(__CLPK_integer)upperCodiagonals
+                    lowerCodiagonals:(__CLPK_integer)lowerCodiagonals;
 
 /**
  @brief Class convenience method to create a matrix describing the rotation of a vector through a fixed two dimensional Cartesian space.
@@ -520,9 +521,9 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new instance of MAVMatrix containing rows * columns random values.
  */
-+ (instancetype)randomMatrixWithRows:(int)rows
-                             columns:(int)columns
-                           precision:(MCKValuePrecision)precision;
++ (instancetype)randomMatrixWithRows:(__CLPK_integer)rows
+                             columns:(__CLPK_integer)columns
+                           precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square symmetric matrix with the specified order containing random double-precision floating-point values.
@@ -530,8 +531,8 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new square symmetric instance of MAVMatrix containing random values.
  */
-+ (instancetype)randomSymmetricMatrixOfOrder:(int)order
-                                   precision:(MCKValuePrecision)precision;
++ (instancetype)randomSymmetricMatrixOfOrder:(__CLPK_integer)order
+                                   precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square diagonal matrix with the specified order containing random double-precision floating-point values.
@@ -539,8 +540,8 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new square diagonal instance of MAVMatrix containing random values.
  */
-+ (instancetype)randomDiagonalMatrixOfOrder:(int)order
-                                  precision:(MCKValuePrecision)precision;
++ (instancetype)randomDiagonalMatrixOfOrder:(__CLPK_integer)order
+                                  precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square triangular matrix with the specified order containing random double-precision floating-point values.
@@ -549,9 +550,9 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new square triangular instance of MAVMatrix containing random values.
  */
-+ (instancetype)randomTriangularMatrixOfOrder:(int)order
++ (instancetype)randomTriangularMatrixOfOrder:(__CLPK_integer)order
                           triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
-                                    precision:(MCKValuePrecision)precision;
+                                    precision:(MCKPrecision)precision;
 
 /**
  @brief Class convenience method to create a square band matrix with the specified order containing random double-precision floating-point values.
@@ -561,10 +562,10 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new square band instance of MAVMatrix containing random values.
  */
-+ (instancetype)randomBandMatrixOfOrder:(int)order
-                       upperCodiagonals:(int)upperCodiagonals
-                       lowerCodiagonals:(int)lowerCodiagonals
-                              precision:(MCKValuePrecision)precision;
++ (instancetype)randomBandMatrixOfOrder:(__CLPK_integer)order
+                       upperCodiagonals:(__CLPK_integer)upperCodiagonals
+                       lowerCodiagonals:(__CLPK_integer)lowerCodiagonals
+                              precision:(MCKPrecision)precision;
 
 /**
  @brief Generate a square matrix of random values with the specified definiteness and precision. Random semidefinite matrices are currently generated as diagonal matrices, the others have random values throughout.
@@ -573,9 +574,9 @@ MAVCoordinateAxis;
  @param precision The precision of the random floating point values to generate, either single- or double-precision.
  @return A square MAVMatrix object containing random floating point values of desired precision that satisfies the specified definiteness criteria.
  */
-+ (instancetype)randomMatrixOfOrder:(int)order
++ (instancetype)randomMatrixOfOrder:(__CLPK_integer)order
                        definiteness:(MAVMatrixDefiniteness)definiteness
-                          precision:(MCKValuePrecision)precision;
+                          precision:(MCKPrecision)precision;
 
 /**
  @brief Generate a square matrix of random values with a determinant of 0, accomplished by making an entire row or column (randomly chosen) with 0 values.
@@ -583,7 +584,7 @@ MAVCoordinateAxis;
  @param precision Either single- or double-precision floating point values.
  @return New instance of MAVMatrix with random values and determinant == 0.
  */
-+ (instancetype)randomSingularMatrixOfOrder:(int)order precision:(MCKValuePrecision)precision;
++ (instancetype)randomSingularMatrixOfOrder:(__CLPK_integer)order precision:(MCKPrecision)precision;
 
 /**
  @brief Generate a square matrix of random values with a determinant not equal to 0.
@@ -591,7 +592,7 @@ MAVCoordinateAxis;
  @param precision Either single- or double-precision floating point values.
  @return New instance of MAVMatrix with random values and determinant != 0.
  */
-+ (instancetype)randomNonsigularMatrixOfOrder:(int)order precision:(MCKValuePrecision)precision;
++ (instancetype)randomNonsigularMatrixOfOrder:(__CLPK_integer)order precision:(MCKPrecision)precision;
 
 #pragma mark - NSObject overrides
 
@@ -638,8 +639,8 @@ MAVCoordinateAxis;
  @param lowerCodiagonal The codiagonal below the main diagonal to use as a boundary for the band.
  @return Pointer to an array of band-format values.
  */
-- (NSData *)valuesInBandBetweenUpperCodiagonal:(int)upperCodiagonal
-                               lowerCodiagonal:(int)lowerCodiagonal;
+- (NSData *)valuesInBandBetweenUpperCodiagonal:(__CLPK_integer)upperCodiagonal
+                               lowerCodiagonal:(__CLPK_integer)lowerCodiagonal;
 
 /**
  @description Get the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.
@@ -647,21 +648,21 @@ MAVCoordinateAxis;
  @param column The column in which the desired value resides.
  @return The value at the specified row and column.
  */
-- (NSNumber *)valueAtRow:(int)row column:(int)column;
+- (NSNumber *)valueAtRow:(__CLPK_integer)row column:(__CLPK_integer)column;
 
 /**
  @brief Extract the values of a column of this matrix.
  @param column The index of the column to extract.
  @return An MAVVector object contaning the values in the specified column.
  */
-- (MAVVector *)columnVectorForColumn:(int)column;
+- (MAVVector *)columnVectorForColumn:(__CLPK_integer)column;
 
 /**
  @brief Extract the values of a row of this matrix.
  @param column The index of the row to extract.
  @return An MAVVector object contaning the values in the specified row.
  */
-- (MAVVector *)rowVectorForRow:(int)row;
+- (MAVVector *)rowVectorForRow:(__CLPK_integer)row;
 
 /**
  @return An array containing MAVVector objects representing the row vectors of the matrix from top to bottom.
@@ -680,82 +681,16 @@ MAVCoordinateAxis;
  @param column The index of the row to extract.
  @return An MAVVector object containing the values in the specified row.
  */
-- (MAVVector *)objectAtIndexedSubscript:(int)idx;
-
-#pragma mark - Mutation
-
-/**
- @brief Exchanges the values in the specified rows.
- @param rowA The index of the first row to exchange.
- @param rowB The index of the first second to exchange.
- */
-- (void)swapRowA:(int)rowA withRowB:(int)rowB;
-
-/**
- @brief Exchanges the values in the specified columns.
- @param columnA  The index of the first column to exchange.
- @param columnB  The index of the second column to exchange.
- */
-- (void)swapColumnA:(int)columnA withColumnB:(int)columnB;
-
-/**
- @description Set the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.
- @param row The row in which the value will be set.
- @param column The column in which the value will be set.
- @param value The value to set at the specified position.
- */
-- (void)setEntryAtRow:(int)row column:(int)column toValue:(NSNumber *)value;
+- (MAVVector *)objectAtIndexedSubscript:(__CLPK_integer)idx;
 
 #pragma mark - Class-level operations
-
-/**
- @description Performs matrix multiplication on matrices A and B. Note that matrix multiplication is not commutative--in general, A x B ¬= B x A. Raises an NSInvalidArgumentException if A and B are not of compatible dimensions for matrix multiplication.
- @return A new MAVMatrix object representing the product of the expression A x B.
- */
-+ (MAVMatrix *)productOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB;
-
-/**
- @description Raises an NSInvalidArgumentException if A and B are not of equal dimension.
- @return A new MAVMatrix object representing the sum (A + B) of the supplied matrices.
- */
-+ (MAVMatrix *)sumOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB;
-
-/**
- @description Raises an NSInvalidArgumentException if A and B are not of equal dimension.
- @return A new MAVMatrix object representing the difference (A - B) of the supplied matrices.
- */
-+ (MAVMatrix *)differenceOfMatrixA:(MAVMatrix *)matrixA andMatrixB:(MAVMatrix *)matrixB;
 
 /**
  @description Good documentation for solving Ax=b where A is a square matrix located  at http://www.netlib.org/lapack/double/dgesv.f and example at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgesv_ex.c.htm. When A is a general m x n matrix, see documentation at http://www.netlib.org/lapack/double/dgels.f and example at http://software.intel.com/sites/products/documentation/doclib/mkl_sa/11/mkl_lapack_examples/dgels_ex.c.htm
  @return A column vector containing coefficients for unknows to solve a linear system Ax=B, or nil if the system cannot be solved. Raises an NSInvalidArgumentException if A and B are of incompatible dimension.
  */
-+ (MAVMatrix *)solveLinearSystemWithMatrixA:(MAVMatrix *)A
-                                   valuesB:(MAVMatrix*)B;
-
-/**
- @brief Performs a multiplication with the supplied matrix and vector, whose dimensions must agree according to the rules of matrix-vector multiplication: for A * b = c, A: m x p, b: p x 1 and C: m x 1.
- @param matrix The matrix to multiply with the vector.
- @param vector The vector to multiply with the matrix.
- @return A new MAVVector object representing the product of the matrix-vector multiplication.
- */
-+ (MAVVector *)productOfMatrix:(MAVMatrix *)matrix andVector:(MAVVector *)vector;
-
-/**
- @brief Multiplies each value in a matrix by a scalar value.
- @param matrix The matrix whose values are to be multiplied.
- @param scalar The scalar to multiply each value in the matrix by.
- @return A new MAVMatrix object containing the results of the multiplication.
- */
-+ (MAVMatrix *)productOfMatrix:(MAVMatrix *)matrix andScalar:(NSNumber *)scalar;
-
-/**
- @brief Raises a given matrix to specified power. If power = 0, returns the identity matrix of the same dimension; otherwise, the matrix is multiplied by itself power number of times, and must therefore be a square matrix. Throws an exception if this requirement is not met.
- @param matrix The matrix to raise to the specified power.
- @param power The power to raise the input matrix. Essentially the number of times the matrix will be multiplied by itself.
- @return A matrix of same dimension as input matrix, representing the product of the matrix multiplied by itself power number of times.
- */
-+ (MAVMatrix *)raiseMatrix:(MAVMatrix *)matrix toPower:(NSUInteger)power;
++ (MAVVector *)solveLinearSystemWithMatrixA:(MAVMatrix *)A
+                                    valuesB:(MAVVector *)B;
 
 /**
  @brief Multiplies an array of matrices together. Uses the Hu-Shing polygon partitioning method to determine the optimum order of multiplication to minimize the amount of operations. http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0213017.pdf

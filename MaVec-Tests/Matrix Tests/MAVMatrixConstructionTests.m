@@ -78,8 +78,8 @@
     solution[15] = 4.0;
     MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:4 columns:4];
     
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (unsigned int i = 0; i < 4; i++) {
+        for (unsigned int j = 0; j < 4; j++) {
             XCTAssertEqual([diagonal valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
@@ -109,8 +109,8 @@
     solution[15] = 1.0;
     MAVMatrix *s = [MAVMatrix matrixWithValues:[NSData dataWithBytes:solution length:size] rows:4 columns:4];
     
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (unsigned int i = 0; i < 4; i++) {
+        for (unsigned int j = 0; j < 4; j++) {
             XCTAssertEqual([identity valueAtRow:i column:j].doubleValue, [s valueAtRow:i column:j].doubleValue, @"Value at row %u and column %u incorrect", i, j);
         }
     }
@@ -136,8 +136,8 @@
                                                 leadingDimension:MAVMatrixLeadingDimensionRow
                                                            order:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             XCTAssertEqual([solutionMatrix valueAtRow:i column:j].doubleValue, [matrix valueAtRow:i column:j].doubleValue, @"Value at %u, %u incorrect.", i, j);
         }
     }
@@ -153,8 +153,8 @@
                                       leadingDimension:MAVMatrixLeadingDimensionRow
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed row-major symmetric matrix constructed incorrectly.");
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             XCTAssertEqual([solutionMatrix valueAtRow:i column:j].doubleValue, [matrix valueAtRow:i column:j].doubleValue, @"Value at %u, %u incorrect.", i, j);
         }
     }
@@ -170,8 +170,8 @@
                                       leadingDimension:MAVMatrixLeadingDimensionColumn
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             XCTAssertEqual([solutionMatrix valueAtRow:i column:j].doubleValue, [matrix valueAtRow:i column:j].doubleValue, @"Value at %u, %u incorrect.", i, j);
         }
     }
@@ -187,8 +187,8 @@
                                       leadingDimension:MAVMatrixLeadingDimensionColumn
                                                  order:3];
     XCTAssert(matrix.isSymmetric, @"Packed column-major symmetric matrix constructed incorrectly.");
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             XCTAssertEqual([solutionMatrix valueAtRow:i column:j].doubleValue, [matrix valueAtRow:i column:j].doubleValue, @"Value at %u, %u incorrect.", i, j);
         }
     }
@@ -290,8 +290,8 @@
                                             columns:5
                                    leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 5; row += 1) {
-        for (int col = 0; col < 5; col += 1) {
+    for (unsigned int row = 0; row < 5; row += 1) {
+        for (unsigned int col = 0; col < 5; col += 1) {
             XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with balanced codiagonals.", row, col);
         }
     }
@@ -320,8 +320,8 @@
                                   columns:5
                          leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 5; row += 1) {
-        for (int col = 0; col < 5; col += 1) {
+    for (unsigned int row = 0; row < 5; row += 1) {
+        for (unsigned int col = 0; col < 5; col += 1) {
             XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with extra upper codiagonal.", row, col);
         }
     }
@@ -350,8 +350,8 @@
                                   columns:5
                          leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 5; row += 1) {
-        for (int col = 0; col < 5; col += 1) {
+    for (unsigned int row = 0; row < 5; row += 1) {
+        for (unsigned int col = 0; col < 5; col += 1) {
             XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
         }
     }
@@ -379,8 +379,8 @@
                                   columns:5
                          leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 5; row += 1) {
-        for (int col = 0; col < 5; col += 1) {
+    for (unsigned int row = 0; row < 5; row += 1) {
+        for (unsigned int col = 0; col < 5; col += 1) {
             XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
         }
     }
@@ -408,8 +408,8 @@
                                   columns:5
                          leadingDimension:MAVMatrixLeadingDimensionRow];
     
-    for (int row = 0; row < 5; row += 1) {
-        for (int col = 0; col < 5; col += 1) {
+    for (unsigned int row = 0; row < 5; row += 1) {
+        for (unsigned int col = 0; col < 5; col += 1) {
             XCTAssertEqual([matrix valueAtRow:row column:col].doubleValue, [solution valueAtRow:row column:col].doubleValue, @"Incorrect value at %u, %u in constructed band matrix with extra lower codiagonal.", row, col);
         }
     }
@@ -427,6 +427,12 @@
      3  6  9 ]
      */
     MAVMatrix *a = [MAVMatrix matrixWithColumnVectors:@[v1, v2, v3]];
+    for (__CLPK_integer i = 0; i < 3; i++) {
+        for (__CLPK_integer j = 0; j < 3; j++) {
+            MAVVector *vector = j == 0 ? v1 : j == 1 ? v2 : v3;
+            XCTAssertEqual(a[i][j].doubleValue, vector[i].doubleValue, @"Value incorrect at [%d][%d]", i, j);
+        }
+    }
     
     /* create the matrix
      [ 1  2  3
@@ -434,6 +440,12 @@
      7  8  9 ]
      */
     MAVMatrix *b = [MAVMatrix matrixWithRowVectors:@[v1, v2, v3]];
+    for (__CLPK_integer i = 0; i < 3; i++) {
+        MAVVector *vector = i == 0 ? v1 : i == 1 ? v2 : v3;
+        for (__CLPK_integer j = 0; j < 3; j++) {
+            XCTAssertEqual(b[i][j].doubleValue, vector[j].doubleValue, @"Value incorrect at [%d][%d]", i, j);
+        }
+    }
 }
 
 - (void)testRandomDefiniteMatrices

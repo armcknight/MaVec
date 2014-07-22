@@ -56,7 +56,7 @@
 /**
  @brief The number of row swaps induced by the permutation matrix.
  */
-@property (nonatomic, readonly, assign) NSUInteger numberOfPermutations;
+@property (nonatomic, readonly, assign) __CLPK_integer numberOfPermutations;
 
 #pragma mark - Init
 
@@ -73,6 +73,8 @@
  @return A new instance of MAVLUFactorization containing the resulting L and U matrices of the factorization.
  */
 + (instancetype)luFactorizationOfMatrix:(MAVMatrix *)matrix;
+
+- (NSString *)description;
 
 @end
 

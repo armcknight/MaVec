@@ -13,18 +13,18 @@ namespace :install do
     # don't care if this fails on travis
     sh("brew update") rescue nil
     sh("brew upgrade xctool") rescue nil
-    sh("gem install cocoapods --no-rdoc --no-ri --no-document --quiet") rescue nil
+#    sh("gem install cocoapods --no-rdoc --no-ri --no-document --quiet") rescue nil
   end
 
-  task :pods do
-    sh("cd Tests && pod install")
-  end
+#  task :pods do
+#    sh("cd Tests && pod install")
+#  end
 
 end
 
 task :install do
   Rake::Task['install:tools'].invoke
-  Rake::Task['install:pods'].invoke
+#  Rake::Task['install:pods'].invoke
 end
 
 #
@@ -51,11 +51,11 @@ end
 
 namespace :clean do
 
-  task :pods do
-    sh("rm -f Podfile.lock")
-    sh "rm -rf Pods"
-    sh("rm -rf *.xcworkspace")
-  end
+#  task :pods do
+#    sh("rm -f Podfile.lock")
+#    sh "rm -rf Pods"
+#    sh("rm -rf *.xcworkspace")
+#  end
 
   task :tests do
     sh("xctool -project '#{TEST_PROJ_PATH}' -scheme '#{TEST_SCHEME}' -sdk iphonesimulator clean") rescue nil
@@ -64,7 +64,7 @@ namespace :clean do
 end
 
 task :clean do
-  Rake::Task['clean:pods'].invoke
+#  Rake::Task['clean:pods'].invoke
   Rake::Task['clean:tests'].invoke
 end
 

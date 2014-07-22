@@ -49,7 +49,7 @@ MAVVectorFormat;
  @class MAVVector
  @description A class providing storage and operations for vectors of double precision floating-point numbers, where underlying details about the internal representation (e.g. row- or column- orientation are abstracted away).
  */
-@interface MAVVector : NSObject<NSCopying>
+@interface MAVVector : NSObject<NSCopying, NSMutableCopying>
 
 /**
  @property vectorFormat
@@ -139,7 +139,7 @@ MAVVectorFormat;
  @property precision
  @brief The precision of the numeric values in the vector, either single- or double-precision floating point.
  */
-@property (assign, readonly, nonatomic) MCKValuePrecision precision;
+@property (assign, readonly, nonatomic) MCKPrecision precision;
 
 #pragma mark - Constructors
 
@@ -201,7 +201,7 @@ MAVVectorFormat;
  */
 + (instancetype)randomVectorOfLength:(int)length
                         vectorFormat:(MAVVectorFormat)vectorFormat
-                           precision:(MCKValuePrecision)precision;
+                           precision:(MCKPrecision)precision;
 
 /**
  @brief Create a vector of specified length and vector format, whose values are all equal to the specified value.
@@ -251,47 +251,7 @@ MAVVectorFormat;
  */
 - (NSNumber *)objectAtIndexedSubscript:(NSUInteger)idx;
 
-#pragma mark - Class Operations
-
-/**
- @brief Multiply a vector by a scalar. Effectively multiplies each element in the vector by the scalar and stores the products in a new vector.
- @param vector Vector to multiply by the scalar.
- @param scalar Value to multiply each element of the vector by.
- @return New instance of MAVVector holding the result of the scalar multiplication with the same vector format as the provided vector.
- */
-+ (MAVVector *)productOfVector:(MAVVector *)vector scalar:(NSNumber *)scalar;
-
-/**
- @brief Add two vectors together. Effectively adds elements in identical positions and stores the sums in a new vector.
- @param vectorA The first vector to be added.
- @param vectorB The second vector to be added.
- @return New instance of MAVVector holding the result of the addition with the same vector format as the provided vectors, or MAVVectorFormatRow if they are different.
- */
-+ (MAVVector *)sumOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB;
-
-/**
- @brief Subtract the subtrahend vector from the minuend vector. Effectively subtracts elements in identical positions and stores the differences in a new vector.
- @param vectorMinuend The vector from which to subtract the subtrahend.
- @param vectorSubtrahend The vector to subtract from the minuend.
- @return New instance of MAVVector holding the result of the subtraction with the same vector format as the provided vectors, or MAVVectorFormatRow if they are different.
- */
-+ (MAVVector *)differenceOfVectorMinuend:(MAVVector *)vectorMinuend vectorSubtrahend:(MAVVector *)vectorSubtrahend;
-
-/**
- @brief Multiply two vectors. Effectively multiplies elements in identical positions and stores the products in a new vector.
- @param vectorA The first vector to be multiplied.
- @param vectorB The first vector to be multiplied.
- @return New instance of MAVVector holding the result of the multiplication with the same vector format as the provided vectors, or MAVVectorFormatRow if they are different.
- */
-+ (MAVVector *)productOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB;
-
-/**
- @brief Divide the dividend vector by the divisor vector. Effectively divides elements in identical positions and stores the quotients in a new vector.
- @param vectorDividend The vector to be divided by the divisor.
- @param vectorDivisor The vector to divide into the dividend.
- @return New instance of MAVVector holding the result of the division with the same vector format as the provided vectors, or MAVVectorFormatRow if they are different.
- */
-+ (MAVVector *)quotientOfVectorDividend:(MAVVector *)vectorDividend vectorDivisor:(MAVVector *)vectorDivisor;
+#pragma mark - Instance Operations
 
 /**
  @brief Compute the dot product of two vectors. Effectively sums the products of elements in identical positions in the vectors.
@@ -299,7 +259,7 @@ MAVVectorFormat;
  @param vectorB The second vector of the dot product.
  @return A scalar value representing the dot product of the vectors.
  */
-+ (NSNumber *)dotProductOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB;
+- (NSNumber *)dotProductWithVector:(MAVVector *)vector;
 
 /**
  @brief Compute the cross product of the vectors, which is orthogonal to both input vectors. Currently only computes the cross product of two 3-dimensional vectors.
@@ -307,7 +267,9 @@ MAVVectorFormat;
  @param vectorB The second vector of the cross product.
  @return A new instance representing the cross product of the two vectors in column format.
  */
-+ (MAVVector *)crossProductOfVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB;
+- (MAVVector *)crossProductWithVector:(MAVVector *)vector;
+
+#pragma mark - Class Operations
 
 /**
  @brief Computes the dot product of the last vector and the cross product of the first two vectors, representing the signed volumn of the parallelepiped defined by the three vectors. ( (A x B) • C )
@@ -326,13 +288,5 @@ MAVVectorFormat;
  @return A new instance of MAVVector holding the result of the nested cross products.
  */
 + (MAVVector *)vectorTripleProductWithVectorA:(MAVVector *)vectorA vectorB:(MAVVector *)vectorB vectorC:(MAVVector *)vectorC;
-
-/**
- @brief Raise a vector to an integer power. Effectively multiplies a vector by itself power number of times.
- @param vector The vector to raise to the power.
- @param power An integer value for the exponent of the vector.
- @return A new instance of MAVVector holding the result of the power computation.
- */
-+ (MAVVector *)vectorByRaisingVector:(MAVVector *)vector power:(NSUInteger)power;
 
 @end

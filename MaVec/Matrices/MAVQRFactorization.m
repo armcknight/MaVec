@@ -29,12 +29,13 @@
 
 #import "MAVQRFactorization.h"
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "NSNumber+MCKPrecision.h"
 
 @interface MAVQRFactorization ()
 
-@property (assign, nonatomic) int rows;
-@property (assign, nonatomic) int columns;
+@property (assign, nonatomic) __CLPK_integer rows;
+@property (assign, nonatomic) __CLPK_integer columns;
 
 @end
 
@@ -47,12 +48,12 @@
     // usage can be found at http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_hdgeqrf.htm
     self = [super init];
     if (self) {
-        int m = matrix.rows;
-        int n = matrix.columns;
+        __CLPK_integer m = matrix.rows;
+        __CLPK_integer n = matrix.columns;
         _rows = m;
         _columns = n;
-        int lwork = -1;
-        int info;
+        __CLPK_integer lwork = -1;
+        __CLPK_integer info;
         NSData *values = [matrix valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
         
         NSData *data;
@@ -60,17 +61,17 @@
         if (matrix.precision == MCKPrecisionDouble) {
             size_t size = m * m * sizeof(double);
             double *a = malloc(size);
-            for (int i = 0; i < m * n; i += 1) {
+            for (__CLPK_integer i = 0; i < m * n; i += 1) {
                 a[i] = ((double *)values.bytes)[i];
             }
-            int lda = m;
+            __CLPK_integer lda = m;
             double *tau = malloc(MIN(m, n) * sizeof(double));
             double wkopt;
             
             // query the optimal workspace size
             dgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
             
-            lwork = wkopt;
+            lwork = (__CLPK_integer)wkopt;
             double *work = malloc(lwork * sizeof(double));
             
             // perform the factorization
@@ -83,7 +84,7 @@
             dorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
             
             // extract the matrix
-            lwork = wkopt;
+            lwork = (__CLPK_integer)wkopt;
             free(work);
             work = malloc(lwork * sizeof(double));
             dorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
@@ -95,17 +96,17 @@
         } else {
             size_t size = m * m * sizeof(float);
             float *a = malloc(size);
-            for (int i = 0; i < m * n; i += 1) {
+            for (__CLPK_integer i = 0; i < m * n; i += 1) {
                 a[i] = ((float *)values.bytes)[i];
             }
-            int lda = m;
+            __CLPK_integer lda = m;
             float *tau = malloc(MIN(m, n) * sizeof(float));
             float wkopt;
             
             // query the optimal workspace size
             sgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
             
-            lwork = wkopt;
+            lwork = (__CLPK_integer)wkopt;
             float *work = malloc(lwork * sizeof(float));
             
             // perform the factorization
@@ -118,7 +119,7 @@
             sorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
             
             // extract the matrix
-            lwork = wkopt;
+            lwork = (__CLPK_integer)wkopt;
             free(work);
             work = malloc(lwork * sizeof(float));
             sorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
@@ -133,7 +134,7 @@
         _q = [MAVMatrix matrixWithValues:data rows:m columns:m leadingDimension:MAVMatrixLeadingDimensionColumn];
         
         // compute r by multiplying the transpose of q by the input matrix
-        _r = [MAVMatrix productOfMatrixA:_q.transpose andMatrixB:matrix];
+        _r = [[_q.transpose mutableCopy] multiplyByMatrix:matrix];
     }
     return self;
 }
@@ -141,6 +142,11 @@
 + (instancetype)qrFactorizationOfMatrix:(MAVMatrix *)matrix
 {
     return [[MAVQRFactorization alloc] initWithMatrix:matrix];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"Q:%@\nR:%@", self.q.description, self.r.description];
 }
 
 #pragma mark - NSCopying
@@ -164,7 +170,7 @@
     MAVQRFactorization *thin = [self copy];
     NSMutableArray *qColumnVectors = [NSMutableArray array];
     NSMutableArray *rRowVectors = [NSMutableArray array];
-    for (int i = 0; i < self.columns; i += 1) {
+    for (__CLPK_integer i = 0; i < self.columns; i += 1) {
         [qColumnVectors addObject:[self.q columnVectorForColumn:i]];
         [rRowVectors addObject:[self.r rowVectorForRow:i]];
     }

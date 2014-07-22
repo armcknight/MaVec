@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVVector.h"
 
 #import "MAVQRFactorization.h"
@@ -111,11 +112,14 @@
     
     NSLog(@"so far so good!");
     
-    MAVMatrix *product = [MAVMatrix productOfMatrixA:matrixA andMatrixB:matrixB];
+    MAVMatrix *product = [[matrixA mutableCopy] multiplyByMatrix:matrixB];
+    NSLog(@"%@", product.description);
     
     MAVQRFactorization *qrfactorization = [MAVQRFactorization qrFactorizationOfMatrix:matrixA];
+    NSLog(@"%@", qrfactorization.description);
     
     MAVEigendecomposition *eigenDecomposition = [MAVEigendecomposition eigendecompositionOfMatrix:matrixA];
+    NSLog(@"%@", eigenDecomposition.description);
     
     NSLog(@"whew!");
 }

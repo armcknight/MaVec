@@ -37,19 +37,19 @@
 {
     self = [super init];
     if (self) {
-        int lwork = -1;
-        int m = matrix.rows;
-        int n = matrix.columns;
-        int numSingularValues = MIN(m, n);
-        int *iwork = malloc(8 * numSingularValues);
-        int info = 0;
+        __CLPK_integer lwork = -1;
+        __CLPK_integer m = matrix.rows;
+        __CLPK_integer n = matrix.columns;
+        __CLPK_integer numSingularValues = MIN(m, n);
+        __CLPK_integer *iwork = malloc(8 * numSingularValues);
+        __CLPK_integer info = 0;
         
         if (matrix.precision == MCKPrecisionDouble) {
             double workSize;
             double *work = &workSize;
             double *singularValues = malloc(numSingularValues * sizeof(double));
             double *values = malloc(m * n * sizeof(double));
-            for (int i = 0; i < m * n; i++) {
+            for (size_t i = 0; i < m * n; i++) {
                 values[i] = ((double *)matrix.values.bytes)[i];
             }
             
@@ -63,7 +63,7 @@
             // call first with lwork = -1 to determine optimal size of working array
             dgesvd_("A", "A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, &info);
             
-            lwork = workSize;
+            lwork = (__CLPK_integer)workSize;
             work = malloc(lwork * sizeof(double));
             
             // now run the actual decomposition
@@ -74,9 +74,9 @@
             free(values);
             
             // build the sigma matrix
-            int idx = 0;
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
+            size_t idx = 0;
+            for (__CLPK_integer i = 0; i < n; i++) {
+                for (__CLPK_integer j = 0; j < m; j++) {
                     if (i == j) {
                         sValues[idx] = singularValues[i];
                     } else {
@@ -101,7 +101,7 @@
             float *work = &workSize;
             float *singularValues = malloc(numSingularValues * sizeof(float));
             float *values = malloc(m * n * sizeof(float));
-            for (int i = 0; i < m * n; i++) {
+            for (size_t i = 0; i < m * n; i++) {
                 values[i] = ((float *)matrix.values.bytes)[i];
             }
             
@@ -115,7 +115,7 @@
             // call first with lwork = -1 to determine optimal size of working array
             sgesvd_("A", "A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, &info);
             
-            lwork = workSize;
+            lwork = (__CLPK_integer)workSize;
             work = malloc(lwork * sizeof(float));
             
             // now run the actual decomposition
@@ -126,9 +126,9 @@
             free(values);
             
             // build the sigma matrix
-            int idx = 0;
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
+            size_t idx = 0;
+            for (__CLPK_integer i = 0; i < n; i++) {
+                for (__CLPK_integer j = 0; j < m; j++) {
                     if (i == j) {
                         sValues[idx] = singularValues[i];
                     } else {

@@ -30,7 +30,7 @@
 @class MAVMatrix;
 @class MAVVector;
 
-@interface MAVEigendecomposition : NSObject
+@interface MAVEigendecomposition : NSObject <NSCopying>
 
 /**
  @property eigenvectors
@@ -57,5 +57,7 @@
  @return A new instance of MAVEigendecomposition containing the resulting eigenvalues and eigenvectors of the decomposition.
  */
 + (instancetype)eigendecompositionOfMatrix:(MAVMatrix *)matrix;
+
+- (NSString *)description;
 
 @end

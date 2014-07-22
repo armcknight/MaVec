@@ -25,6 +25,8 @@
 //  SOFTWARE.
 //
 
+#import <Accelerate/Accelerate.h>
+
 #import "LeastSquaresApproximationViewController.h"
 #import "ApproximationView.h"
 
@@ -50,13 +52,13 @@
     self.navigationController.navigationBar.translucent = NO;
     self.approximationView.order = 3;
     self.orderLabel.text = @"2";
-    [self.orderSlider setValue:0.3 animated:YES];
+    [self.orderSlider setValue:0.3f animated:YES];
 }
 
 - (IBAction)changedOrder:(id)sender {
-    int order = self.orderSlider.value * 10;
+    __CLPK_integer order = (__CLPK_integer)self.orderSlider.value * 10;
     self.approximationView.order = order;
-    self.orderLabel.text = [NSString stringWithFormat:@"%u", order-1];
+    self.orderLabel.text = [NSString stringWithFormat:@"%lld", (long long int)order-1];
 }
 
 @end

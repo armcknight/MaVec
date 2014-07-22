@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVLUFactorization.h"
 
 @interface MAVLUDecompositionTests : XCTestCase
@@ -67,13 +68,10 @@
     
     MAVLUFactorization *f = m.luFactorization;
     
-    //    MAVMatrix *i = [MAVMatrix productOfMatrixA:f.lowerTriangularMatrix andMatrixB:f.upperTriangularMatrix];
-    //    MAVMatrix *product = [MAVMatrix productOfMatrixA:i andMatrixB:f.permutationMatrix];
-    MAVMatrix *pl = [MAVMatrix productOfMatrixA:f.permutationMatrix andMatrixB:f.lowerTriangularMatrix];
-    MAVMatrix *product = [MAVMatrix productOfMatrixA:pl andMatrixB:f.upperTriangularMatrix];
+    MAVMatrix *product = [[[f.permutationMatrix mutableCopy] multiplyByMatrix:f.lowerTriangularMatrix] multiplyByMatrix:f.upperTriangularMatrix];
     
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (unsigned int i = 0; i < 3; i++) {
+        for (unsigned int j = 0; j < 3; j++) {
             double a = [m valueAtRow:i column:j].doubleValue;
             double b = [product valueAtRow:i column:j].doubleValue;
             XCTAssertEqualWithAccuracy(a, b, 0.0000000000000003, @"Value at row %i and column %i was not recomputed correctly", i, j);
@@ -95,14 +93,13 @@
     
     MAVLUFactorization *f = m.luFactorization;
     
-    MAVMatrix *pl = [MAVMatrix productOfMatrixA:f.permutationMatrix andMatrixB:f.lowerTriangularMatrix];
-    MAVMatrix *product = [MAVMatrix productOfMatrixA:pl andMatrixB:f.upperTriangularMatrix];
+    MAVMatrix *product = [[[f.permutationMatrix mutableCopy] multiplyByMatrix:f.lowerTriangularMatrix] multiplyByMatrix:f.upperTriangularMatrix];
     
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 2; j++) {
+    for (unsigned int i = 0; i < 2; i++) {
+        for (unsigned int j = 0; j < 2; j++) {
             double a = [m valueAtRow:i column:j].doubleValue;
             double b = [product valueAtRow:i column:j].doubleValue;
-            XCTAssertEqualWithAccuracy(a, b, 0.0000000000000003, @"Value at row %i and column %i was not recomputed correctly", i, j);
+            XCTAssertEqualWithAccuracy(a, b, 0.0000000000000003, @"Value at row %u and column %u was not recomputed correctly", i, j);
         }
     }
 }

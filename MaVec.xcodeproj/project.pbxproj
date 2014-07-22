@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		491FF1A5193BC6FA00A5F3CE /* MAVMutableMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */; };
+		491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */; };
+		4941980C197AF207008CF78E /* MAVMutableVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980B197AF207008CF78E /* MAVMutableVectorTests.m */; };
+		4941980F197B058E008CF78E /* NSNumber+MCKRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980E197B058E008CF78E /* NSNumber+MCKRandom.m */; };
 		499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734B7192594DF0004A8E5 /* InfoPlist.strings */; };
 		499734BB192594DF0004A8E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BA192594DF0004A8E5 /* main.m */; };
 		499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BE192594DF0004A8E5 /* AppDelegate.m */; };
@@ -66,10 +70,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		49143DAA197C91760009D648 /* MAVConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAVConstants.h; sourceTree = "<group>"; };
+		49143DB2197CB0630009D648 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableMatrix.h; sourceTree = "<group>"; };
+		491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableMatrix.m; sourceTree = "<group>"; };
+		491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAVMutableVector.h; path = ../Matrices/MAVMutableVector.h; sourceTree = "<group>"; };
+		491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAVMutableVector.m; path = ../Matrices/MAVMutableVector.m; sourceTree = "<group>"; };
+		493974F01977659C001F6CA0 /* MAVVector-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVVector-Protected.h"; sourceTree = "<group>"; };
+		4941980B197AF207008CF78E /* MAVMutableVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableVectorTests.m; sourceTree = "<group>"; };
+		4941980D197B058E008CF78E /* NSNumber+MCKRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCKRandom.h"; sourceTree = "<group>"; };
+		4941980E197B058E008CF78E /* NSNumber+MCKRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCKRandom.m"; sourceTree = "<group>"; };
 		499734AB192594DF0004A8E5 /* MaVec-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		499734AE192594DF0004A8E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		499734B0192594DF0004A8E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		499734B2192594DF0004A8E5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		499734B6192594DF0004A8E5 /* MaVec-Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaVec-Demo-Info.plist"; sourceTree = "<group>"; };
 		499734B8192594DF0004A8E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		499734BA192594DF0004A8E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -167,6 +180,7 @@
 		499735C21925A1280004A8E5 /* NSNumber+MCKPrecision.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCKPrecision.m"; sourceTree = "<group>"; };
 		499735C41925A1D80004A8E5 /* NSData+MCKPrecision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MCKPrecision.h"; sourceTree = "<group>"; };
 		499735C51925A1D80004A8E5 /* NSData+MCKPrecision.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MCKPrecision.m"; sourceTree = "<group>"; };
+		499FE2D91957C179001F0C23 /* MAVMatrix-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVMatrix-Protected.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +201,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49143DA8197C90BE0009D648 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				49143DAA197C91760009D648 /* MAVConstants.h */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		499734A0192594B00004A8E5 = {
 			isa = PBXGroup;
 			children = (
@@ -213,8 +235,8 @@
 			children = (
 				499734AE192594DF0004A8E5 /* Foundation.framework */,
 				499734B0192594DF0004A8E5 /* CoreGraphics.framework */,
-				499734B2192594DF0004A8E5 /* UIKit.framework */,
 				499734C7192594DF0004A8E5 /* XCTest.framework */,
+				49143DB2197CB0630009D648 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -289,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				4997350F192596A10004A8E5 /* MAVVectorTests.m */,
+				4941980B197AF207008CF78E /* MAVMutableVectorTests.m */,
 			);
 			path = "Vector Tests";
 			sourceTree = "<group>";
@@ -323,6 +346,7 @@
 		49973529192596BE0004A8E5 /* MaVec */ = {
 			isa = PBXGroup;
 			children = (
+				49143DA8197C90BE0009D648 /* Utilities */,
 				4997352A192596BE0004A8E5 /* Matrices */,
 				49973535192596BE0004A8E5 /* Vectors */,
 			);
@@ -337,7 +361,10 @@
 				4997352D192596BE0004A8E5 /* MAVLUFactorization.h */,
 				4997352E192596BE0004A8E5 /* MAVLUFactorization.m */,
 				4997352F192596BE0004A8E5 /* MAVMatrix.h */,
+				499FE2D91957C179001F0C23 /* MAVMatrix-Protected.h */,
 				49973530192596BE0004A8E5 /* MAVMatrix.m */,
+				491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */,
+				491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */,
 				49973531192596BE0004A8E5 /* MAVQRFactorization.h */,
 				49973532192596BE0004A8E5 /* MAVQRFactorization.m */,
 				49973533192596BE0004A8E5 /* MAVSingularValueDecomposition.h */,
@@ -349,8 +376,11 @@
 		49973535192596BE0004A8E5 /* Vectors */ = {
 			isa = PBXGroup;
 			children = (
+				491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */,
+				491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */,
 				49973536192596BE0004A8E5 /* MAVVector.h */,
 				49973537192596BE0004A8E5 /* MAVVector.m */,
+				493974F01977659C001F6CA0 /* MAVVector-Protected.h */,
 			);
 			path = Vectors;
 			sourceTree = "<group>";
@@ -411,7 +441,6 @@
 				499735A61925A0290004A8E5 /* Categories */,
 				499735A91925A0290004A8E5 /* Data Types */,
 				499735B31925A0290004A8E5 /* Equations */,
-				499735B91925A0290004A8E5 /* MCKNumerics */,
 			);
 			name = MCKNumerics;
 			path = External/MCKNumerics/MCKNumerics;
@@ -426,6 +455,8 @@
 				499735C21925A1280004A8E5 /* NSNumber+MCKPrecision.m */,
 				499735C41925A1D80004A8E5 /* NSData+MCKPrecision.h */,
 				499735C51925A1D80004A8E5 /* NSData+MCKPrecision.m */,
+				4941980D197B058E008CF78E /* NSNumber+MCKRandom.h */,
+				4941980E197B058E008CF78E /* NSNumber+MCKRandom.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -455,13 +486,6 @@
 				499735B81925A0290004A8E5 /* MCKQuadratic.m */,
 			);
 			path = Equations;
-			sourceTree = "<group>";
-		};
-		499735B91925A0290004A8E5 /* MCKNumerics */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MCKNumerics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -564,6 +588,7 @@
 			files = (
 				499735C01925A0290004A8E5 /* MCKQuadratic.m in Sources */,
 				49973524192596B70004A8E5 /* LeastSquaresApproximationViewController.m in Sources */,
+				491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */,
 				49973563192599AB0004A8E5 /* RZObserverCollection.m in Sources */,
 				49973539192596BE0004A8E5 /* MAVLUFactorization.m in Sources */,
 				4997355F192599AB0004A8E5 /* RZCollectionListTableViewDataSource.m in Sources */,
@@ -571,11 +596,13 @@
 				4997353A192596BE0004A8E5 /* MAVMatrix.m in Sources */,
 				4997355E192599AB0004A8E5 /* RZCollectionListNotificationWrappers.m in Sources */,
 				49973522192596B70004A8E5 /* ApproximationView.m in Sources */,
+				4941980F197B058E008CF78E /* NSNumber+MCKRandom.m in Sources */,
 				499735BA1925A0290004A8E5 /* NSNumber+MCKMath.m in Sources */,
 				49973564192599AB0004A8E5 /* RZSortedCollectionList.m in Sources */,
 				4997353C192596BE0004A8E5 /* MAVSingularValueDecomposition.m in Sources */,
 				4997355C192599AB0004A8E5 /* RZBaseCollectionList.m in Sources */,
 				499735BF1925A0290004A8E5 /* MCKPolynomial.m in Sources */,
+				491FF1A5193BC6FA00A5F3CE /* MAVMutableMatrix.m in Sources */,
 				49973562192599AB0004A8E5 /* RZFilteredCollectionList.m in Sources */,
 				499735BB1925A0290004A8E5 /* MCKComplexNumber.m in Sources */,
 				49973523192596B70004A8E5 /* DemoChoiceTableViewController.m in Sources */,
@@ -614,6 +641,7 @@
 				499735061925969A0004A8E5 /* MAVMatrixMultiplicationTests.m in Sources */,
 				499734FF1925969A0004A8E5 /* MAVEigendecompositionTests.m in Sources */,
 				49973515192596AB0004A8E5 /* MaVecTests.m in Sources */,
+				4941980C197AF207008CF78E /* MAVMutableVectorTests.m in Sources */,
 				4997350C1925969A0004A8E5 /* MAVRotationMatrixTests.m in Sources */,
 				4997350A1925969A0004A8E5 /* MAVMinorCofactorAdjugateTests.m in Sources */,
 				499735031925969A0004A8E5 /* MAVMatrixConstructionTests.m in Sources */,
@@ -647,12 +675,82 @@
 		499734A5192594B00004A8E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = NO;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "-Wno-gnu";
+				WARNING_CFLAGS = "";
 			};
 			name = Debug;
 		};
 		499734A6192594B00004A8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = NO;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "-Wno-gnu";
+				WARNING_CFLAGS = "";
 			};
 			name = Release;
 		};

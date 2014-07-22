@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 #import <Accelerate/Accelerate.h>
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MAVVector.h"
 #import "MAVSingularValueDecomposition.h"
 #import "MAVLUFactorization.h"
@@ -83,7 +84,7 @@
     MAVMatrix *a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:aVals length:aSize] rows:4 columns:4];
     MAVVector *b = [MAVVector vectorWithValues:[NSData dataWithBytes:bVals length:bSize] length:4];
     
-    MAVVector *product = [MAVMatrix productOfMatrix:a andVector:b];
+    MAVVector *product = [[[a mutableCopy] multiplyByVector:b] columnVectorForColumn:0];
     
     double *solution = malloc(bSize);
     solution[0] = -15.6;
@@ -92,7 +93,7 @@
     solution[3] = 4.5;
     MAVVector *s = [MAVVector vectorWithValues:[NSData dataWithBytes:solution length:bSize] length:4];
     
-    for (int i = 0; i < 4; i++) {
+    for (unsigned int i = 0; i < 4; i++) {
         XCTAssertEqualWithAccuracy([s valueAtIndex:i].doubleValue, [product valueAtIndex:i].doubleValue, 0.0005, @"Coefficient %u incorrect", i);
     }
 }
