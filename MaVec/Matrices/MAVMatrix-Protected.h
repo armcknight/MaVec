@@ -76,10 +76,9 @@ MAVMatrixNorm;
                     precision:(MCKPrecision)precision;
 
 /**
- @brief Sets all properties to default states.
- @return A new instance of MAVMatrix in a default state with no values or row/column counts.
+ @brief Sets all calculated properties to default states.
  */
-- (instancetype)init;
+- (void)resetToDefaultState;
 
 /**
  @description Documentation on usage and other details can be found at http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_llange.htm. More information about different matrix norms can be found at http://en.wikipedia.org/wiki/Matrix_norm.

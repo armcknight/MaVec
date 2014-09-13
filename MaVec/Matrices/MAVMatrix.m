@@ -1939,25 +1939,31 @@
         
         _isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
         _definiteness = MAVMatrixDefinitenessUnknown;
-        _qrFactorization = nil;
-        _luFactorization = nil;
-        _singularValueDecomposition = nil;
-        _eigendecomposition = nil;
-        _inverse = nil;
-        _transpose = nil;
-        _conditionNumber = nil;
-        _determinant = nil;
-        _diagonalValues = nil;
-        _trace = nil;
-        _adjugate = nil;
-        _minorMatrix = nil;
-        _cofactorMatrix = nil;
-        _normInfinity = nil;
-        _normL1 = nil;
-        _normMax = nil;
-        _normFroebenius = nil;
+        
+        [self resetToDefaultState];
     }
     return self;
+}
+
+- (void)resetToDefaultState
+{
+    _qrFactorization = nil;
+    _luFactorization = nil;
+    _singularValueDecomposition = nil;
+    _eigendecomposition = nil;
+    _inverse = nil;
+    _transpose = nil;
+    _conditionNumber = nil;
+    _determinant = nil;
+    _diagonalValues = nil;
+    _trace = nil;
+    _adjugate = nil;
+    _minorMatrix = nil;
+    _cofactorMatrix = nil;
+    _normInfinity = nil;
+    _normL1 = nil;
+    _normMax = nil;
+    _normFroebenius = nil;
 }
 
 - (NSNumber *)normOfType:(MAVMatrixNorm)normType
