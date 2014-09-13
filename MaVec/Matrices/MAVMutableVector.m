@@ -52,7 +52,7 @@ typedef enum {
 }
 
 /**
- *  Enum representing the supported mutating operations.
+ *  Enum representing the supported vector mutating operations.
  */
 MAVVectorMutatingOperationType;
 
