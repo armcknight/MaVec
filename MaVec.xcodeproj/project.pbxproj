@@ -181,6 +181,7 @@
 		499735C41925A1D80004A8E5 /* NSData+MCKPrecision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MCKPrecision.h"; sourceTree = "<group>"; };
 		499735C51925A1D80004A8E5 /* NSData+MCKPrecision.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MCKPrecision.m"; sourceTree = "<group>"; };
 		499FE2D91957C179001F0C23 /* MAVMatrix-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVMatrix-Protected.h"; sourceTree = "<group>"; };
+		49B3ABBC19C5E6C800A78E70 /* MAVMutableMatrix-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVMutableMatrix-Protected.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,6 +365,7 @@
 				499FE2D91957C179001F0C23 /* MAVMatrix-Protected.h */,
 				49973530192596BE0004A8E5 /* MAVMatrix.m */,
 				491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */,
+				49B3ABBC19C5E6C800A78E70 /* MAVMutableMatrix-Protected.h */,
 				491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */,
 				49973531192596BE0004A8E5 /* MAVQRFactorization.h */,
 				49973532192596BE0004A8E5 /* MAVQRFactorization.m */,
