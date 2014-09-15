@@ -1979,10 +1979,9 @@
         
         _leadingDimension = MAVMatrixLeadingDimensionColumn;
         _packingMethod = MAVMatrixValuePackingMethodConventional;
-        _triangularComponent = MAVMatrixTriangularComponentBoth;
         
-        _isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
-        _definiteness = MAVMatrixDefinitenessUnknown;
+        // ???: should this be reset to default state for non-idempotent mutations?
+        _triangularComponent = MAVMatrixTriangularComponentBoth;
         
         [self resetToDefaultState];
     }
@@ -2008,8 +2007,11 @@
     _normL1 = nil;
     _normMax = nil;
     _normFroebenius = nil;
+    
+    _isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
     _isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
     _isZero = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
+    _definiteness = MAVMatrixDefinitenessUnknown;
 }
 
 - (NSNumber *)normOfType:(MAVMatrixNorm)normType
