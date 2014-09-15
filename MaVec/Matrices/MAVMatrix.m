@@ -213,6 +213,8 @@
 		                        columns:order];
     }
     
+    matrix.isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+    
     return matrix;
 }
 
@@ -851,6 +853,46 @@
     }
     
     return _isSymmetric;
+}
+
+- (MCKTribool *)isZero
+{
+    if (_isZero.triboolValue == MCKTriboolValueUnknown) {
+        MCKTriboolValue isZero = MCKTriboolValueYes;
+        for (__CLPK_integer rowIndex = 0; rowIndex < self.rows; rowIndex++) {
+            if ([[[self rowVectorForRow:rowIndex] isZero] isNo]) {
+                isZero = MCKTriboolValueNo;
+                break;
+            }
+        }
+        _isZero = [MCKTribool triboolWithValue:isZero];
+    }
+    return _isZero;
+}
+
+- (MCKTribool *)isIdentity
+{
+    if (_isIdentity.triboolValue == MCKTriboolValueUnknown) {
+        MCKTriboolValue isIdentity = MCKTriboolValueYes;
+        if (self.rows != self.columns) {
+            isIdentity = MCKTriboolValueNo;
+        }
+        else {
+            isIdentity = self.diagonalValues.isIdentity.triboolValue;
+            if (isIdentity) {
+                for (__CLPK_integer rowIndex = 0; rowIndex < self.rows; rowIndex++) {
+                    for (__CLPK_integer colIndex = 0; colIndex < self.columns; colIndex++) {
+                        if (rowIndex != colIndex && ![[self valueAtRow:rowIndex column:colIndex] isEqualToNumber:@0]) {
+                            isIdentity = MCKTriboolValueNo;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        _isIdentity = [MCKTribool triboolWithValue:isIdentity];
+    }
+    return _isIdentity;
 }
 
 - (MAVMatrixDefiniteness)definiteness
@@ -1889,6 +1931,8 @@
     newMatrix->_minorMatrix = matrix->_minorMatrix.copy;
     newMatrix->_cofactorMatrix = matrix->_cofactorMatrix.copy;
     newMatrix->_isSymmetric = matrix->_isSymmetric.copy;
+    newMatrix->_isIdentity = matrix->_isIdentity.copy;
+    newMatrix->_isZero = matrix->_isZero.copy;
     newMatrix->_trace = matrix->_trace.copy;
     newMatrix->_normInfinity = matrix->_normInfinity.copy;
     newMatrix->_normL1 = matrix->_normL1.copy;
@@ -1964,6 +2008,8 @@
     _normL1 = nil;
     _normMax = nil;
     _normFroebenius = nil;
+    _isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
+    _isZero = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
 }
 
 - (NSNumber *)normOfType:(MAVMatrixNorm)normType

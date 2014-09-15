@@ -31,6 +31,8 @@
 #import "MAVVector-Protected.h"
 #import "MAVMutableVector.h"
 
+#import "MCKTribool.h"
+
 #import "NSNumber+MCKPrecision.h"
 #import "NSData+MCKPrecision.h"
 
@@ -110,6 +112,8 @@
     _minimumValueIndex = -1;
     _maximumValueIndex = -1;
     _absoluteVector = nil;
+    _isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
+    _isZero = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
 }
 
 #pragma mark - Constructors
@@ -191,11 +195,50 @@
     for (int i = 0; i < length; i++) {
         [values addObject:value];
     }
-    return [[self class] vectorWithValuesInArray:values
-                                    vectorFormat:vectorFormat];
+    MAVVector *vector = [self vectorWithValuesInArray:values
+                                         vectorFormat:vectorFormat];
+    if ([value isEqualToNumber:@1]) {
+        vector.isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+        vector.isZero = [MCKTribool triboolWithValue:MCKTriboolValueNo];
+    }
+    else if ([value isEqualToNumber:@0]) {
+        vector.isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueNo];
+        vector.isZero = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+    }
+    return vector;
 }
 
 #pragma mark - Lazy loaded properties
+
+- (MCKTribool *)isZero
+{
+    if (_isZero.triboolValue == MCKTriboolValueUnknown) {
+        MCKTriboolValue isZero = MCKTriboolValueYes;
+        for (__CLPK_integer valueIndex = 0; valueIndex < self.length; valueIndex++) {
+            if (![[self valueAtIndex:valueIndex] isEqualToNumber:@0]) {
+                isZero = MCKTriboolValueNo;
+                break;
+            }
+        }
+        _isZero = [MCKTribool triboolWithValue:isZero];
+    }
+    return _isZero;
+}
+
+- (MCKTribool *)isIdentity
+{
+    if (_isIdentity.triboolValue == MCKTriboolValueUnknown) {
+        MCKTriboolValue isIdentity = MCKTriboolValueYes;
+        for (__CLPK_integer valueIndex = 0; valueIndex < self.length; valueIndex++) {
+            if (![[self valueAtIndex:valueIndex] isEqualToNumber:@1]) {
+                isIdentity = MCKTriboolValueNo;
+                break;
+            }
+        }
+        _isIdentity = [MCKTribool triboolWithValue:isIdentity];
+    }
+    return _isIdentity;
+}
 
 - (NSNumber *)sumOfValues
 {
@@ -369,6 +412,16 @@
                                             vectorFormat:self.vectorFormat];
         }
     }
+    
+    if (self.isIdentity) {
+        _absoluteVector.isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+        _absoluteVector.isZero = [MCKTribool triboolWithValue:MCKTriboolValueNo];
+    }
+    else if (self.isZero) {
+        _absoluteVector.isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueNo];
+        _absoluteVector.isZero = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+    }
+    
     return _absoluteVector;
 }
 

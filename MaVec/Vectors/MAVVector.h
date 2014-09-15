@@ -29,6 +29,8 @@
 
 #import "NSNumber+MCKPrecision.h"
 
+@class MCKTribool;
+
 typedef enum : UInt8 {
     /**
      Specifies that the values in the vector form a row with each value in its own column.
@@ -140,6 +142,18 @@ MAVVectorFormat;
  @brief The precision of the numeric values in the vector, either single- or double-precision floating point.
  */
 @property (assign, readonly, nonatomic) MCKPrecision precision;
+
+/**
+ *  @property isIdentity
+ *  @brief MCKTriboolValueYes if all values are 1, MCKTriboolValueNo otherwise. Defaults to MCKTriboolValueUnknown. (Lazy-loaded)
+ */
+@property (strong, readonly, nonatomic) MCKTribool *isIdentity;
+
+/**
+ *  @property isZero
+ *  @brief MCKTriboolValueYes if all values are 0, MCKTriboolValueNo otherwise. Defaults to MCKTriboolValueUnknown. (Lazy-loaded)
+ */
+@property (strong, readonly, nonatomic) MCKTribool *isZero;
 
 #pragma mark - Constructors
 

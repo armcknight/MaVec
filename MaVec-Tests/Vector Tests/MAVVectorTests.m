@@ -30,6 +30,8 @@
 #import "MAVVector.h"
 #import "MAVMutableVector.h"
 
+#import "MCKTribool.h"
+
 @interface MAVVectorTests : XCTestCase
 
 @end
@@ -187,6 +189,40 @@
     XCTAssertEqualWithAccuracy(vector.l2Norm.doubleValue, l2NormSolution, 1e-10, @"L2 norm incorrect.");
     XCTAssertEqualWithAccuracy(vector.l3Norm.doubleValue, l3NormSolution, 1e-10, @"L3 norm incorrect.");
     XCTAssertEqual(vector.infinityNorm.doubleValue, infinityNormSolution, @"Infinity norm incorrect.");
+}
+
+- (void)testIdentityVector
+{
+    MAVVector *doubleIdentityVector = [MAVVector vectorFilledWithValue:@1.0 length:4 vectorFormat:MAVVectorFormatRowVector];
+    XCTAssert(doubleIdentityVector.isIdentity.isYes, @"Double precision identity vector not identified as identity.");
+    
+    MAVVector *singleIdentityVector = [MAVVector vectorFilledWithValue:@1.0f length:4 vectorFormat:MAVVectorFormatRowVector];
+    XCTAssert(singleIdentityVector.isIdentity.isYes, @"Single precision identity vector not identified as identity.");
+    
+    MAVMutableVector *randomDoubleVector = [MAVMutableVector randomVectorOfLength:4 vectorFormat:MAVVectorFormatRowVector precision:MCKPrecisionDouble];
+    [randomDoubleVector setValue:@2.0 atIndex:0];
+    XCTAssert(randomDoubleVector.isIdentity.isNo, @"Non-identity double precision vector identified as identity.");
+    
+    MAVMutableVector *randomSingleVector = [MAVMutableVector randomVectorOfLength:4 vectorFormat:MAVVectorFormatRowVector precision:MCKPrecisionSingle];
+    [randomSingleVector setValue:@2.0f atIndex:0];
+    XCTAssert(randomSingleVector.isIdentity.isNo, @"Non-identity single precision vector identified as identity.");
+}
+
+- (void)testZeroVector
+{
+    MAVVector *doubleZeroVector = [MAVVector vectorFilledWithValue:@0.0 length:4 vectorFormat:MAVVectorFormatRowVector];
+    XCTAssert(doubleZeroVector.isZero.isYes, @"Double precision zero vector not identified as zero.");
+    
+    MAVVector *singleZeroVector = [MAVVector vectorFilledWithValue:@0.0f length:4 vectorFormat:MAVVectorFormatRowVector];
+    XCTAssert(singleZeroVector.isZero.isYes, @"Single precision zero vector not identified as zero.");
+    
+    MAVMutableVector *randomDoubleVector = [MAVMutableVector randomVectorOfLength:4 vectorFormat:MAVVectorFormatRowVector precision:MCKPrecisionDouble];
+    [randomDoubleVector setValue:@2.0 atIndex:0];
+    XCTAssert(randomDoubleVector.isZero.isNo, @"Non-zero double precision vector identified as zero.");
+    
+    MAVMutableVector *randomSingleVector = [MAVMutableVector randomVectorOfLength:4 vectorFormat:MAVVectorFormatRowVector precision:MCKPrecisionSingle];
+    [randomSingleVector setValue:@2.0f atIndex:0];
+    XCTAssert(randomSingleVector.isZero.isNo, @"Non-zero single precision vector identified as zero.");
 }
 
 @end

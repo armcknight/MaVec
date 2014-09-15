@@ -28,6 +28,7 @@
 #import <XCTest/XCTest.h>
 
 #import "MAVMatrix.h"
+#import "MAVMutableMatrix.h"
 #import "MCKTribool.h"
 
 @interface MAVMatrixPropertyTests : XCTestCase
@@ -200,6 +201,86 @@
     a = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bValues length:size] rows:3 columns:4];
     
     XCTAssertFalse(a.isSymmetric.isYes, @"Nonsquare matrix reported to be symmetric.");
+}
+
+- (void)testIdentityMatrix
+{
+    // double precision
+    MAVMatrix *doublePrecisionIdentity = [MAVMatrix identityMatrixOfOrder:5 precision:MCKPrecisionDouble];
+    XCTAssertTrue(doublePrecisionIdentity.isIdentity.isYes, @"Double precision identity matrix constructed using identityMatrixOfOrder: not determined to be an identity matix.");
+    
+    double values[16] = {   1.0, 0.0, 0.0, 0.0,
+                            0.0, 1.0, 0.0, 0.0,
+                            0.0, 0.0, 1.0, 0.0,
+                            0.0, 0.0, 0.0, 1.0 };
+    doublePrecisionIdentity = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:16*sizeof(double)] rows:4 columns:4 leadingDimension:MAVMatrixLeadingDimensionRow];
+    XCTAssertTrue(doublePrecisionIdentity.isIdentity.isYes, @"Double precision identity matrix constructed using matrixWithValues: not determined to be an identity matix.");
+    
+    double diagonalValues[4] = { 1.0, 1.0, 1.0, 1.0 };
+    doublePrecisionIdentity = [MAVMatrix diagonalMatrixWithValues:[NSData dataWithBytes:diagonalValues length:4*sizeof(double)] order:4];
+    XCTAssertTrue(doublePrecisionIdentity.isIdentity.isYes, @"Double precision identity matrix constructed using diagonalMatrixWithValues: not determined to be an identity matix.");
+    
+    MAVMatrix *nonIdentityDoubleMatrix = [MAVMatrix randomMatrixWithRows:3 columns:4 precision:MCKPrecisionDouble];
+    XCTAssert(nonIdentityDoubleMatrix.isIdentity.isNo, @"Non-square double precision matrix identified as identity.");
+    
+    MAVMutableMatrix *nonIdentitySquareDoubleMatrix = [MAVMutableMatrix randomMatrixWithRows:4 columns:4 precision:MCKPrecisionDouble];
+    [nonIdentitySquareDoubleMatrix setEntryAtRow:2 column:2 toValue:@2.0];
+    XCTAssert(nonIdentitySquareDoubleMatrix.isIdentity.isNo, @"Square double precision matrix with diagonal value not equal to 1 identified as identity.");
+    
+    nonIdentitySquareDoubleMatrix = [MAVMutableMatrix identityMatrixOfOrder:4 precision:MCKPrecisionDouble];
+    [nonIdentitySquareDoubleMatrix setEntryAtRow:0 column:1 toValue:@2.0];
+    XCTAssert(nonIdentitySquareDoubleMatrix.isIdentity.isNo, @"Square double precision matrix with diagonal value not equal to 1 identified as identity.");
+    
+    // single precision
+    MAVMatrix *singlePrecisionIdentity = [MAVMatrix identityMatrixOfOrder:5 precision:MCKPrecisionSingle];
+    XCTAssertTrue(singlePrecisionIdentity.isIdentity.isYes, @"Single precision identity matrix constructed using identityMatrixOfOrder: not determined to be an identity matix.");
+    
+    float floatValues[16] = {   1.0f, 0.0f, 0.0f, 0.0f,
+                                0.0f, 1.0f, 0.0f, 0.0f,
+                                0.0f, 0.0f, 1.0f, 0.0f,
+                                0.0f, 0.0f, 0.0f, 1.0f };
+    singlePrecisionIdentity = [MAVMatrix matrixWithValues:[NSData dataWithBytes:floatValues length:16*sizeof(float)] rows:4 columns:4 leadingDimension:MAVMatrixLeadingDimensionRow];
+    XCTAssertTrue(singlePrecisionIdentity.isIdentity.isYes, @"Single precision identity matrix constructed using matrixWithValues: not determined to be an identity matix.");
+    
+    float diagonalFloatValues[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    singlePrecisionIdentity = [MAVMatrix diagonalMatrixWithValues:[NSData dataWithBytes:diagonalFloatValues length:4*sizeof(float)] order:4];
+    XCTAssertTrue(singlePrecisionIdentity.isIdentity.isYes, @"Single precision identity matrix constructed using diagonalMatrixWithValues: not determined to be an identity matix.");
+    
+    MAVMatrix *nonIdentitySingleMatrix = [MAVMatrix randomMatrixWithRows:3 columns:4 precision:MCKPrecisionSingle];
+    XCTAssert(nonIdentitySingleMatrix.isIdentity.isNo, @"Non-square single precision matrix identified as identity.");
+    
+    MAVMutableMatrix *nonIdentitySquareSingleMatrix = [MAVMutableMatrix randomMatrixWithRows:4 columns:4 precision:MCKPrecisionSingle];
+    [nonIdentitySquareSingleMatrix setEntryAtRow:2 column:2 toValue:@2.0f];
+    XCTAssert(nonIdentitySquareSingleMatrix.isIdentity.isNo, @"Square single precision matrix with diagonal value not equal to 1 identified as identity.");
+    
+    nonIdentitySquareSingleMatrix = [MAVMutableMatrix identityMatrixOfOrder:4 precision:MCKPrecisionSingle];
+    [nonIdentitySquareSingleMatrix setEntryAtRow:0 column:1 toValue:@2.0f];
+    XCTAssert(nonIdentitySquareSingleMatrix.isIdentity.isNo, @"Square single precision matrix with diagonal value not equal to 1 identified as identity.");
+}
+
+- (void)testZeroMatrix
+{
+    double doubleValues[16] = { 0.0, 0.0, 0.0, 0.0,
+                                0.0, 0.0, 0.0, 0.0,
+                                0.0, 0.0, 0.0, 0.0,
+                                0.0, 0.0, 0.0, 0.0 };
+    MAVMatrix *zeroMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:doubleValues length:16*sizeof(double)] rows:4 columns:4];
+    XCTAssertTrue(zeroMatrix.isZero.isYes, @"Double precision zero matrix constructed using matrixWithValues: not determined to be a zero matix.");
+    
+    MAVMutableMatrix *nonzeroMatrix = zeroMatrix.mutableCopy;
+    [nonzeroMatrix setEntryAtRow:0 column:0 toValue:@1.0];
+    XCTAssert(nonzeroMatrix.isZero.isNo, @"Non zero double precision matrix identified as zero matrix.");
+    
+    float singleValues[16] = {  0.0f, 0.0f, 0.0f, 0.0f,
+                                0.0f, 0.0f, 0.0f, 0.0f,
+                                0.0f, 0.0f, 0.0f, 0.0f,
+                                0.0f, 0.0f, 0.0f, 0.0f };
+    zeroMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:singleValues length:16*sizeof(float)] rows:4 columns:4];
+    XCTAssertTrue(zeroMatrix.isZero.isYes, @"Single precision zero matrix constructed using matrixWithValues: not determined to be a zero matix.");
+    
+    nonzeroMatrix = zeroMatrix.mutableCopy;
+    [nonzeroMatrix setEntryAtRow:0 column:0 toValue:@1.0f];
+    XCTAssert(nonzeroMatrix.isZero.isNo, @"Non zero single precision matrix identified as zero matrix.");
 }
 
 @end

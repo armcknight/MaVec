@@ -301,6 +301,18 @@ MAVCoordinateAxis;
 @property (nonatomic, readonly, strong) MCKTribool *isSymmetric;
 
 /**
+ *  @property isIdentity
+ *  @brief YES if this matrix is the identity matrix, NO otherwise. Default value = MCKTriboolValueUnknown. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, assign) MCKTribool *isIdentity;
+
+/**
+ *  @property isZero
+ *  @brief YES if this matrix is the zero matrix, NO otherwise. Default value = MCKTriboolValueUnknown. (Lazy-loaded)
+ */
+@property (nonatomic, readonly, assign) MCKTribool *isZero;
+
+/**
  @property definiteness
  @brief The definiteness enum value for this matrix. Default value = MAVMatrixDefinitenessUnknown. (Lazy-loaded)
  */
