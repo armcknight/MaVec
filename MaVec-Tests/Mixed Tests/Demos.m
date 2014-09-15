@@ -30,6 +30,7 @@
 #import "MAVMatrix.h"
 #import "MAVMutableMatrix.h"
 #import "MAVVector.h"
+#import "MAVMutableVector.h"
 
 #import "MAVQRFactorization.h"
 #import "MAVEigenDecomposition.h"
@@ -50,6 +51,38 @@
 {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+}
+
+- (void)testReadmeDemos
+{
+    /* create some vectors and compare them */
+    double vectorValues[3] = { 1.0, 2.0, 3.0 };
+    MAVVector *vectorA = [MAVVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3 * sizeof(double)]
+                                              length:3];
+    MAVVector *vectorB = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
+    BOOL equal = [vectorA isEqualToVector:vectorB]; // YES
+    
+    /* multiply the vectors together and do some more comparisons */
+    MAVMutableVector *vectorC = vectorA.mutableCopy; // NSMutableCopying
+    [vectorC multiplyByVector:vectorB];
+    equal = [vectorA isEqualToVector:vectorC]; // NO
+    
+    /* vectors can be subscripted */
+    equal = [vectorA[0] isEqualToNumber:vectorC[0]]; // YES
+    equal = [vectorA[1] isEqualToNumber:vectorC[1]]; // NO
+    
+    /* create some matrices and compare them */
+    MAVMatrix *matrix = [MAVMatrix randomSymmetricMatrixOfOrder:3 precision:MCKPrecisionDouble];
+    MAVMatrix *transpose = matrix.transpose.copy; // NSCopying
+    equal = [matrix isEqualToMatrix:transpose]; // YES
+    
+    /* matrices can also be subscripted */
+    equal = [matrix[0][0] isEqualToNumber:transpose[0][0]]; // YES
+    
+    /* multiply matrix by another matrix and then by a vector */
+    MAVMutableMatrix *mutableMatrix = matrix.mutableCopy; // NSMutableCopying
+    [mutableMatrix multiplyByMatrix:transpose];
+    [mutableMatrix multiplyByVector:vectorA];
 }
 
 - (void)testDemos
