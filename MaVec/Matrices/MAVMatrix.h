@@ -210,13 +210,13 @@ MAVCoordinateAxis;
 
 /**
  @property leadingDimension 
- @brief The leading dimension used to store this matrix' values in a one-dimensional array, either row- or column-major. Setting this property to a new enum value will change the internal representation of values.
+ @brief The leading dimension used to store this matrix' values in a one-dimensional array, either row- or column-major.
  */
 @property (nonatomic, assign) MAVMatrixLeadingDimension leadingDimension;
 
 /**
  @property packingMethod
- @brief The packing format used to store this matrix' values in a one-dimensional array, either conventional, packed or band. Setting this property to a new enum value will change the internal representation of values.
+ @brief The packing format used to store this matrix' values in a one-dimensional array, either conventional, packed or band.
  */
 @property (nonatomic, assign) MAVMatrixValuePackingMethod packingMethod;
 
