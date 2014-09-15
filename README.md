@@ -1,4 +1,4 @@
-MaVec [![Build Status](https://travis-ci.org/sixstringtheory/MaVec.svg?branch=mutableClasses)](https://travis-ci.org/sixstringtheory/MaVec)
+MaVec [![Build Status](https://travis-ci.org/sixstringtheory/MaVec.svg?branch=master)](https://travis-ci.org/sixstringtheory/MaVec)
 ===
 
 A framework for performing matrix and vector math using first-class objects. Developed after trudging through the Accelerate framework's lack of quality documentation and cryptic function names, MaVec provides a more intuitive and Objective-C friendly interface (and documentation!). But don't worry--behind many of its methods are the same Accelerate functions you've grown to know and love. Or not. Which is why MaVec is here for you.
