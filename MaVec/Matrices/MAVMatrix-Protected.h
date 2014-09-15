@@ -25,7 +25,6 @@
 //  SOFTWARE.
 //
 
-static const __CLPK_integer kMAVNoCoordinate = NSNotFound;
 #import "MAVMatrix.h"
 
 typedef enum : UInt8 {

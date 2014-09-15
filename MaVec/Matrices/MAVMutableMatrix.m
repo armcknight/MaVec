@@ -36,6 +36,7 @@
 
 #import "NSNumber+MCKPrecision.h"
 #import "NSData+MCKPrecision.h"
+#import "MAVConstants.h"
 
 @interface MAVMutableMatrix ()
 
