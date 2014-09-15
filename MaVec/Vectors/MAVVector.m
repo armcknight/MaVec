@@ -401,15 +401,15 @@
             double *absoluteValues = malloc(size);
             vDSP_vabsD(self.values.bytes, 1, absoluteValues, 1, self.length);
             _absoluteVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:absoluteValues length:size]
-                                                  length:self.length
-                                            vectorFormat:self.vectorFormat];
+                                                   length:self.length
+                                             vectorFormat:self.vectorFormat];
         } else {
             size_t size = self.length * sizeof(float);
             float *absoluteValues = malloc(size);
             vDSP_vabs(self.values.bytes, 1, absoluteValues, 1, self.length);
             _absoluteVector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:absoluteValues length:size]
-                                                  length:self.length
-                                            vectorFormat:self.vectorFormat];
+                                                   length:self.length
+                                             vectorFormat:self.vectorFormat];
         }
     }
     
