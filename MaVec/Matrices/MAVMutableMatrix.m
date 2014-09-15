@@ -307,7 +307,7 @@
                              atRow:(__CLPK_integer)row
                             column:(__CLPK_integer)column
 {
-    BOOL isIdempotent;
+    BOOL isIdempotent = NO;
     
     /*
      the following have to be reset on an individual basis
