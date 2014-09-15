@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		491FF1A5193BC6FA00A5F3CE /* MAVMutableMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */; };
-		491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */; };
 		4941980C197AF207008CF78E /* MAVMutableVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980B197AF207008CF78E /* MAVMutableVectorTests.m */; };
 		4941980F197B058E008CF78E /* NSNumber+MCKRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980E197B058E008CF78E /* NSNumber+MCKRandom.m */; };
 		499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734B7192594DF0004A8E5 /* InfoPlist.strings */; };
@@ -67,6 +66,7 @@
 		499735C01925A0290004A8E5 /* MCKQuadratic.m in Sources */ = {isa = PBXBuildFile; fileRef = 499735B81925A0290004A8E5 /* MCKQuadratic.m */; };
 		499735C31925A1280004A8E5 /* NSNumber+MCKPrecision.m in Sources */ = {isa = PBXBuildFile; fileRef = 499735C21925A1280004A8E5 /* NSNumber+MCKPrecision.m */; };
 		499735C61925A1D80004A8E5 /* NSData+MCKPrecision.m in Sources */ = {isa = PBXBuildFile; fileRef = 499735C51925A1D80004A8E5 /* NSData+MCKPrecision.m */; };
+		49B3ABBF19C7243C00A78E70 /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B3ABBE19C7243C00A78E70 /* MAVMutableVector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,8 +74,6 @@
 		49143DB2197CB0630009D648 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableMatrix.h; sourceTree = "<group>"; };
 		491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableMatrix.m; sourceTree = "<group>"; };
-		491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAVMutableVector.h; path = ../Matrices/MAVMutableVector.h; sourceTree = "<group>"; };
-		491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAVMutableVector.m; path = ../Matrices/MAVMutableVector.m; sourceTree = "<group>"; };
 		493974F01977659C001F6CA0 /* MAVVector-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVVector-Protected.h"; sourceTree = "<group>"; };
 		4941980B197AF207008CF78E /* MAVMutableVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableVectorTests.m; sourceTree = "<group>"; };
 		4941980D197B058E008CF78E /* NSNumber+MCKRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCKRandom.h"; sourceTree = "<group>"; };
@@ -182,6 +180,8 @@
 		499735C51925A1D80004A8E5 /* NSData+MCKPrecision.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MCKPrecision.m"; sourceTree = "<group>"; };
 		499FE2D91957C179001F0C23 /* MAVMatrix-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVMatrix-Protected.h"; sourceTree = "<group>"; };
 		49B3ABBC19C5E6C800A78E70 /* MAVMutableMatrix-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVMutableMatrix-Protected.h"; sourceTree = "<group>"; };
+		49B3ABBD19C7243C00A78E70 /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableVector.h; sourceTree = "<group>"; };
+		49B3ABBE19C7243C00A78E70 /* MAVMutableVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableVector.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,8 +378,8 @@
 		49973535192596BE0004A8E5 /* Vectors */ = {
 			isa = PBXGroup;
 			children = (
-				491FF1A6193BC75300A5F3CE /* MAVMutableVector.h */,
-				491FF1A7193BC75300A5F3CE /* MAVMutableVector.m */,
+				49B3ABBD19C7243C00A78E70 /* MAVMutableVector.h */,
+				49B3ABBE19C7243C00A78E70 /* MAVMutableVector.m */,
 				49973536192596BE0004A8E5 /* MAVVector.h */,
 				49973537192596BE0004A8E5 /* MAVVector.m */,
 				493974F01977659C001F6CA0 /* MAVVector-Protected.h */,
@@ -590,7 +590,6 @@
 			files = (
 				499735C01925A0290004A8E5 /* MCKQuadratic.m in Sources */,
 				49973524192596B70004A8E5 /* LeastSquaresApproximationViewController.m in Sources */,
-				491FF1A8193BC75300A5F3CE /* MAVMutableVector.m in Sources */,
 				49973563192599AB0004A8E5 /* RZObserverCollection.m in Sources */,
 				49973539192596BE0004A8E5 /* MAVLUFactorization.m in Sources */,
 				4997355F192599AB0004A8E5 /* RZCollectionListTableViewDataSource.m in Sources */,
@@ -608,6 +607,7 @@
 				49973562192599AB0004A8E5 /* RZFilteredCollectionList.m in Sources */,
 				499735BB1925A0290004A8E5 /* MCKComplexNumber.m in Sources */,
 				49973523192596B70004A8E5 /* DemoChoiceTableViewController.m in Sources */,
+				49B3ABBF19C7243C00A78E70 /* MAVMutableVector.m in Sources */,
 				4997355A192599AB0004A8E5 /* NSFetchRequest+RZCreationHelpers.m in Sources */,
 				499735BC1925A0290004A8E5 /* MCKPair.m in Sources */,
 				499735BE1925A0290004A8E5 /* MCKTribool.m in Sources */,
