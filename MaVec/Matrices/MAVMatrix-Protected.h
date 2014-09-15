@@ -8,6 +8,8 @@
 
 #import "MAVMatrix.h"
 
+static const __CLPK_integer kMAVNoCoordinate = NSNotFound;
+
 typedef enum : UInt8 {
     /**
      The maximum absolute column sum of the matrix.
