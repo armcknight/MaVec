@@ -1,9 +1,9 @@
 MaVec [![Build Status](https://travis-ci.org/sixstringtheory/MaVec.svg?branch=master)](https://travis-ci.org/sixstringtheory/MaVec)
 ===
 
-A framework for performing matrix and vector math using first-class objects. Developed after trudging through the Accelerate framework's lack of quality documentation and cryptic function names, MaVec provides a more intuitive and Objective-C friendly interface (and documentation!). But don't worry--behind many of its methods are the same Accelerate functions you've grown to know and love. Or not. Which is why MaVec is here for you.
+MaVec is a framework for performing matrix and vector math using first-class objects. Developed after trudging through the Accelerate framework's lack of quality documentation and cryptic function names, MaVec provides a more intuitive and Objective-C friendly interface (and documentation!). But don't worry--behind many of its methods are the same Accelerate functions you've grown to know and love. Or not. Which is why MaVec is here for you.
 
-With MaVec you can create a matrix object from any of several array representations (conventional or packed row- or column- major, or band), with single- or double-precision floating point values, and then forget about the underlying details. It will choose the most efficient Accelerate function to perform a desired operation based on the matrix' characteristics (tridiagonal, symmetric, positive-definite, etc) and floating-point precision, while maintaining the most space-efficient backing store of values that you provide.
+With MaVec you can create an object from any of several array representations (conventional or packed row- or column- major, or band), with single- or double-precision floating point values, and then forget about the underlying details. It will choose the most efficient Accelerate function to perform a desired operation based on the object's characteristics (tridiagonal, symmetric, positive-definite, etc) and floating-point precision, while maintaining the most space-efficient backing store of values that you provide.
 
 ![](MatrixConversions.png)
 
@@ -54,7 +54,7 @@ Supported Operations
    - Band
    - Positive/negative/positive semi/negative semi/indefinite
 
-Both MCMatrix and MCVector override NSObject's equality, description and hashing methods, implement the NSCopying protocol (so they can be inserted in Foundation collections!), and support object subscripting (`[matrix valueAtRow:3 column:3] == matrix[3][3]`) and [`debugQuickLookObject`](https://developer.apple.com/library/ios/documentation/ToolsLanguages/Conceptual/Xcode_Overview/DebugYourApp/DebugYourApp.html) for easier debugging.
+Both MCMatrix and MCVector come in mutable and immutable flavors, override NSObject's equality, description and hashing methods, implement the NSCopying/NSMutableCopying protocol (so they can be inserted in Foundation collections!), and support object subscripting (`[matrix valueAtRow:3 column:3] == matrix[3][3]`) and [`debugQuickLookObject`](https://developer.apple.com/library/ios/documentation/ToolsLanguages/Conceptual/Xcode_Overview/DebugYourApp/DebugYourApp.html) for easier debugging.
 
 See For Yourself
 ===
@@ -63,26 +63,32 @@ See For Yourself
 ```objective-c
 /* create some vectors and compare them */
 double vectorValues[3] = { 1.0, 2.0, 3.0 };
-MCVector *vectorA = [MCVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3 * sizeof(double)] 
-                                        length:3];
-MCVector *vectorB = [MCVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
+MAVVector *vectorA = [MAVVector vectorWithValues:[NSData dataWithBytes:vectorValues length:3 * sizeof(double)]
+                                              length:3];
+MAVVector *vectorB = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
 BOOL equal = [vectorA isEqualToVector:vectorB]; // YES
-
+    
 /* multiply the vectors together and do some more comparisons */
-MCVector *product = [MCVector productOfVectorA:vectorA vectorB:vectorB];
-equal = [vectorA isEqualToVector:product]; // NO
-                         
-/* vectors can be subscripted */                                              
-equal = [vectorA[0] compare:product[0]]; // YES
-equal = [vectorA[1] compare:product[1]]; // NO
-
+MAVMutableVector *vectorC = vectorA.mutableCopy; // NSMutableCopying
+[vectorC multiplyByVector:vectorB];
+equal = [vectorA isEqualToVector:vectorC]; // NO
+    
+/* vectors can be subscripted */
+equal = [vectorA[0] isEqualToNumber:vectorC[0]]; // YES
+equal = [vectorA[1] isEqualToNumber:vectorC[1]]; // NO
+    
 /* create some matrices and compare them */
-MCMatrix *matrix = [MCMatrix randomSymmetricMatrixOfOrder:3 precision:MCValuePrecisionDouble];
-MCMatrix *transpose = matrix.transpose.copy; // MCMatrix adopts NSCopying
+MAVMatrix *matrix = [MAVMatrix randomSymmetricMatrixOfOrder:3 precision:MCKPrecisionDouble];
+MAVMatrix *transpose = matrix.transpose.copy; // NSCopying
 equal = [matrix isEqualToMatrix:transpose]; // YES
-
+    
 /* matrices can also be subscripted */
-equal = [matrix[0][0] compare:transpose[0][0]]; // YES
+equal = [matrix[0][0] isEqualToNumber:transpose[0][0]]; // YES
+    
+/* multiply matrix by another matrix and then by a vector */
+MAVMutableMatrix *mutableMatrix = matrix.mutableCopy; // NSMutableCopying
+[mutableMatrix multiplyByMatrix:transpose];
+[mutableMatrix multiplyByVector:vectorA];
 ```
 
 ### QR factorization
@@ -93,10 +99,10 @@ equal = [matrix[0][0] compare:transpose[0][0]]; // YES
 // of either floats or doubles exists in column major format
 //
 
-MCMatrix *matrix = [MCMatrix matrixWithValues:[NSData dataWithBytes:values length:sizeof(values)]
-                                         rows:3
-                                      columns:3];
-MCQRFactorization *qr = matrix.qrFactorization;
+MAVMatrix *matrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:values length:sizeof(values)]
+                                           rows:3
+                                        columns:3];
+MAVQRFactorization *qr = matrix.qrFactorization;
 ```
 
 **The Accelerate way:**
