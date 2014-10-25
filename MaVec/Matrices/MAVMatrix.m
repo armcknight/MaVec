@@ -1698,11 +1698,11 @@
             double *a = malloc(n * n * sizeof(double));
             for (size_t i = 0; i < n * n; i++) {
                 a[i] = ((double*)aData.bytes)[i];
-            } // TODO: maybe call -copy on aData instead of looping for deep copy here
+            }
             double *b = malloc(nb * sizeof(double));
             for (__CLPK_integer i = 0; i < nb; i++) {
                 b[i] = ((double *)B.values.bytes)[i];
-            } // TODO: maybe call -copy on B.values here instead of looping for deep copy
+            }
             
             dgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info);
             
@@ -1726,11 +1726,11 @@
             float *a = malloc(n * n * sizeof(float));
             for (size_t i = 0; i < n * n; i++) {
                 a[i] = ((float*)aData.bytes)[i];
-            } // TODO: maybe call -copy on aData instead of looping for deep copy here
+            }
             float *b = malloc(nb * sizeof(float));
             for (__CLPK_integer i = 0; i < nb; i++) {
                 b[i] = ((float *)B.values.bytes)[i];
-            } // TODO: maybe call -copy on B.values here instead of looping for deep copy
+            }
             
             sgesv_(&n, &nrhs, a, &lda, ipiv, b, &ldb, &info);
             
@@ -1781,11 +1781,11 @@
             double *a = malloc(m * n * sizeof(double));
             for (size_t i = 0; i < m * n; i++) {
                 a[i] = ((double *)aData.bytes)[i];
-            } // TODO: maybe call -copy on aData instead of looping for deep copy here
+            }
             double *b = malloc(nb * sizeof(double));
             for (__CLPK_integer i = 0; i < nb; i++) {
                 b[i] = ((double *)B.values.bytes)[i];
-            } // TODO: maybe call -copy on B.values here instead of looping for deep copy
+            }
             
             // get the optimal workspace
             dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
@@ -1818,11 +1818,11 @@
             float *a = malloc(m * n * sizeof(float));
             for (__CLPK_integer i = 0; i < m * n; i++) {
                 a[i] = ((float *)aData.bytes)[i];
-            } // TODO: maybe call -copy on aData instead of looping for deep copy here
+            }
             float *b = malloc(nb * sizeof(float));
             for (__CLPK_integer i = 0; i < nb; i++) {
                 b[i] = ((float *)B.values.bytes)[i];
-            } // TODO: maybe call -copy on B.values here instead of looping for deep copy
+            }
             
             // get the optimal workspace
             sgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
