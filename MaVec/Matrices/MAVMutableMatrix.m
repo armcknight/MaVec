@@ -102,8 +102,6 @@
 
 - (void)setEntryAtRow:(__CLPK_integer)row column:(__CLPK_integer)column toValue:(NSNumber *)value
 {
-    // TODO: take into account internal representation b/t conventional, packed and band, row- vs. col- major, triangular component, bandwidth, start/finish band offset
-    
     NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
     BOOL precisionsMatch = (self.precision == MCKPrecisionDouble && value.isDoublePrecision) || (self.precision == MCKPrecisionSingle && value.isSinglePrecision);
@@ -113,19 +111,84 @@
               notIdempotentWithInput:value
                                atRow:row
                               column:column];
+
+    size_t index;
+    switch (self.packingMethod) {
+            
+        case MAVMatrixValuePackingMethodConventional: {
+            if (self.precision == MCKPrecisionDouble) {
+                if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
+                    index = row * self.columns + column;
+                } else {
+                    index = column * self.rows + row;
+                }
+            } else {
+                if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
+                    index = row * self.columns + column;
+                } else {
+                    index = column * self.rows + row;
+                }
+            }
+        } break;
+            
+        case MAVMatrixValuePackingMethodPacked: {
+            if (self.triangularComponent == MAVMatrixTriangularComponentLower) {
+                NSAssert(column <= row || self.isSymmetric.isYes, @"Column must be <= row for a lower triangular non-symmetric matrix.");
+                if (column > row && self.isSymmetric.isYes) {
+                    __CLPK_integer temp = row;
+                    row = column;
+                    column = temp;
+                }
+                
+                if (self.leadingDimension == MAVMatrixLeadingDimensionColumn) {
+                    // number of values in columns before desired column
+                    size_t valuesInSummedColumns = ((self.rows * (self.rows + 1)) - ((self.rows - column) * (self.rows - column + 1))) / 2;
+                    index = valuesInSummedColumns + row - column;
+                } else {
+                    // number of values in rows before desired row
+                    __CLPK_integer summedRows = row;
+                    size_t valuesInSummedRows = summedRows * (summedRows + 1) / 2;
+                    index = valuesInSummedRows + column;
+                }
+            } else /* if (self.triangularComponent == MAVMatrixTriangularComponentUpper) */ {
+                NSAssert(row <= column || self.isSymmetric.isYes, @"Row must be <= column for upper triangular non-symmetric matrix.");
+                if (row > column && self.isSymmetric.isYes) {
+                    __CLPK_integer temp = row;
+                    row = column;
+                    column = temp;
+                }
+                
+                if (self.leadingDimension == MAVMatrixLeadingDimensionColumn) {
+                    // number of values in columns before desired column
+                    __CLPK_integer summedColumns = column;
+                    size_t valuesInSummedColumns = summedColumns * (summedColumns + 1) / 2;
+                    index = valuesInSummedColumns + row;
+                } else {
+                    // number of values in rows before desired row
+                    size_t valuesInSummedRows = ((self.columns * (self.columns + 1)) - ((self.columns - row) * (self.columns - row + 1))) / 2;
+                    index = valuesInSummedRows + column - row;
+                }
+            }
+        } break;
+            
+        case MAVMatrixValuePackingMethodBand: {
+            index = ( row - column + self.upperCodiagonals ) * self.columns + column;
+            NSAssert(index < self.bandwidth * self.columns, @"Location specified by row and column fall outside the current bandwidth.");
+        } break;
+            
+        default: break;
+    }
     
     if (self.precision == MCKPrecisionDouble) {
-        if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
-            ((double *)self.values.bytes)[row * self.columns + column] = value.doubleValue;
-        } else {
-            ((double *)self.values.bytes)[column * self.rows + row] = value.doubleValue;
-        }
+        double *newValue = malloc(sizeof(double));
+        newValue[0] = value.doubleValue;
+        [self.values replaceBytesInRange:NSMakeRange(index * sizeof(double), sizeof(double)) withBytes:newValue length:sizeof(double)];
+        free(newValue);
     } else {
-        if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
-            ((float *)self.values.bytes)[row * self.columns + column] = value.floatValue;
-        } else {
-            ((float *)self.values.bytes)[column * self.rows + row] = value.floatValue;
-        }
+        float *newValue = malloc(sizeof(float));
+        newValue[0] = value.floatValue;
+        [self.values replaceBytesInRange:NSMakeRange(index * sizeof(float), sizeof(float)) withBytes:newValue length:sizeof(float)];
+        free(newValue);
     }
 }
 
