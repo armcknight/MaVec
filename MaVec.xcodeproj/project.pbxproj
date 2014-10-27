@@ -10,6 +10,7 @@
 		491FF1A5193BC6FA00A5F3CE /* MAVMutableMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */; };
 		4941980C197AF207008CF78E /* MAVMutableVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980B197AF207008CF78E /* MAVMutableVectorTests.m */; };
 		4941980F197B058E008CF78E /* NSNumber+MCKRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980E197B058E008CF78E /* NSNumber+MCKRandom.m */; };
+		4962A08619FC3E6700738E96 /* MAVTypedefs.h in Sources */ = {isa = PBXBuildFile; fileRef = 4962A08519FC3E6700738E96 /* MAVTypedefs.h */; };
 		499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734B7192594DF0004A8E5 /* InfoPlist.strings */; };
 		499734BB192594DF0004A8E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BA192594DF0004A8E5 /* main.m */; };
 		499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BE192594DF0004A8E5 /* AppDelegate.m */; };
@@ -78,6 +79,7 @@
 		4941980B197AF207008CF78E /* MAVMutableVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableVectorTests.m; sourceTree = "<group>"; };
 		4941980D197B058E008CF78E /* NSNumber+MCKRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MCKRandom.h"; sourceTree = "<group>"; };
 		4941980E197B058E008CF78E /* NSNumber+MCKRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MCKRandom.m"; sourceTree = "<group>"; };
+		4962A08519FC3E6700738E96 /* MAVTypedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAVTypedefs.h; path = Utilities/MAVTypedefs.h; sourceTree = "<group>"; };
 		499734AB192594DF0004A8E5 /* MaVec-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		499734AE192594DF0004A8E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		499734B0192594DF0004A8E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -206,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				49143DAA197C91760009D648 /* MAVConstants.h */,
+				4962A08519FC3E6700738E96 /* MAVTypedefs.h */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -612,6 +615,7 @@
 				499735BC1925A0290004A8E5 /* MCKPair.m in Sources */,
 				499735BE1925A0290004A8E5 /* MCKTribool.m in Sources */,
 				4997355B192599AB0004A8E5 /* RZArrayCollectionList.m in Sources */,
+				4962A08619FC3E6700738E96 /* MAVTypedefs.h in Sources */,
 				4997353B192596BE0004A8E5 /* MAVQRFactorization.m in Sources */,
 				499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */,
 				4997355D192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.m in Sources */,
