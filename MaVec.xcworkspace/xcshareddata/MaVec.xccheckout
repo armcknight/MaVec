@@ -10,31 +10,63 @@
 	<string>MaVec</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>CE85F72F-BD1B-4D7F-AB00-529C976081A3</key>
+		<key>1D82B76233025D7813778273AB3EB49A99A629CD</key>
+		<string>git://github.com/sixstringtheory/MCKNumerics.git</string>
+		<key>6A9085300760D1BE7660BC0362DDE4A5DE580912</key>
+		<string>https://github.com/Raizlabs/RZCollectionList.git</string>
+		<key>BA85283EA9B07D00A1091FB8909520CA1C2F63D0</key>
 		<string>https://github.com/sixstringtheory/MaVec.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MaVec.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>CE85F72F-BD1B-4D7F-AB00-529C976081A3</key>
+		<key>1D82B76233025D7813778273AB3EB49A99A629CD</key>
+		<string>../External/MCKNumerics</string>
+		<key>6A9085300760D1BE7660BC0362DDE4A5DE580912</key>
+		<string>../External</string>
+		<key>BA85283EA9B07D00A1091FB8909520CA1C2F63D0</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/sixstringtheory/MaVec.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>CE85F72F-BD1B-4D7F-AB00-529C976081A3</string>
+	<string>BA85283EA9B07D00A1091FB8909520CA1C2F63D0</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>CE85F72F-BD1B-4D7F-AB00-529C976081A3</string>
+			<string>6A9085300760D1BE7660BC0362DDE4A5DE580912</string>
+			<key>IDESourceControlWCCName</key>
+			<string>External</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6A9085300760D1BE7660BC0362DDE4A5DE580912</string>
+			<key>IDESourceControlWCCName</key>
+			<string>External</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BA85283EA9B07D00A1091FB8909520CA1C2F63D0</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MaVec</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1D82B76233025D7813778273AB3EB49A99A629CD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MCKNumerics</string>
 		</dict>
 	</array>
 </dict>
