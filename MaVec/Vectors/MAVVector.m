@@ -34,6 +34,7 @@
 #import "MCKTribool.h"
 
 #import "NSNumber+MCKPrecision.h"
+#import "NSNumber+MCKRandom.h"
 #import "NSData+MCKPrecision.h"
 
 @implementation MAVVector
@@ -170,7 +171,7 @@
         NSUInteger size = length * sizeof(double);
         double *values = malloc(size);
         for (int i = 0; i < length; i++) {
-            values[i] = drand48();
+            values[i] = [NSNumber mck_randomDouble].doubleValue;
         }
         return [[self class] vectorWithValues:[NSData dataWithBytesNoCopy:values length:size]
                                        length:length
@@ -179,7 +180,7 @@
         NSUInteger size = length * sizeof(float);
         float *values = malloc(size);
         for (int i = 0; i < length; i++) {
-            values[i] = rand() / RAND_MAX;
+            values[i] = [NSNumber mck_randomFloat].floatValue;
         }
         return [[self class] vectorWithValues:[NSData dataWithBytesNoCopy:values length:size]
                                        length:length
