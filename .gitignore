@@ -2,3 +2,12 @@ MCNumerics/MCNumerics.xcodeproj/project.xcworkspace/xcshareddata/MCNumerics.xcch
 MCNumerics/MCNumerics.xcodeproj/project.xcworkspace/xcuserdata/andrew.mcknight.xcuserdatad/WorkspaceSettings.xcsettings
 MCNumerics/MCNumerics.xcodeproj/xcuserdata/andrew.mcknight.xcuserdatad/xcschemes/MCNumerics.xcscheme
 MCNumerics/MCNumerics.xcodeproj/xcuserdata/andrew.mcknight.xcuserdatad/xcschemes/xcschememanagement.plist
+MaVec.xcodeproj/project.xcworkspace/xcuserdata/
+MaVec.xcodeproj/xcuserdata/*
+MaVec.xcworkspace/xcuserdata/*
+MaVec/.DS_Store
+MaVec/Matrices/.DS_Store
+.DS_Store
+MaVec-Demo/.DS_Store
+MaVec-Tests/.DS_Store
+build/*
