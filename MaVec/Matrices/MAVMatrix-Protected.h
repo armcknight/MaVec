@@ -68,7 +68,7 @@ MAVMatrixNorm;
 @property (strong, readwrite, nonatomic) NSNumber *determinant;
 @property (strong, readwrite, nonatomic) NSNumber *conditionNumber;
 @property (assign, readwrite, nonatomic) MAVMatrixDefiniteness definiteness;
-@property (strong, readwrite, nonatomic) MCKTribool *isSymmetric;
+@property (strong, readwrite, nonatomic, getter=isSymmetric) MCKTribool *symmetric;
 @property (strong, readwrite, nonatomic) MCKTribool *isIdentity;
 @property (strong, readwrite, nonatomic) MCKTribool *isZero;
 @property (strong, readwrite, nonatomic) MAVVector *diagonalValues;

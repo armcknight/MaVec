@@ -298,7 +298,7 @@ MAVCoordinateAxis;
  @property isSymmetric
  @brief YES if this matrix is symmetric, NO otherwise. Default value = MCKTriboolValueUnknown. (Lazy-loaded)
  */
-@property (nonatomic, readonly, strong) MCKTribool *isSymmetric;
+@property (nonatomic, readonly, strong, getter=isSymmetric) MCKTribool *symmetric;
 
 /**
  *  @property isIdentity

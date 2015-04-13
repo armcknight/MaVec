@@ -235,7 +235,7 @@
 	                                leadingDimension:leadingDimension
 	                                   packingMethod:MAVMatrixValuePackingMethodPacked
 	                             triangularComponent:triangularComponent];
-    matrix.isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueNo];
+    matrix.symmetric = [MCKTribool triboolWithValue:MCKTriboolValueNo];
     return matrix;
 }
 
@@ -250,7 +250,7 @@
 	                                leadingDimension:leadingDimension
 	                                   packingMethod:MAVMatrixValuePackingMethodPacked
 	                             triangularComponent:triangularComponent];
-    matrix.isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+    matrix.symmetric = [MCKTribool triboolWithValue:MCKTriboolValueYes];
     return matrix;
 }
 
@@ -834,25 +834,24 @@
 
 - (MCKTribool *)isSymmetric
 {
-    if (_isSymmetric.triboolValue == MCKTriboolValueUnknown) {
+    if (_symmetric.triboolValue == MCKTriboolValueUnknown) {
         if (self.rows != self.columns) {
-            _isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueNo];
-            return _isSymmetric;
+            _symmetric = [MCKTribool triboolWithValue:MCKTriboolValueNo];
         } else {
-            _isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueYes];
-        }
-        
-        for (__CLPK_integer i = 0; i < self.rows; i++) {
-            for (__CLPK_integer j = i + 1; j < self.columns; j++) {
-                if ([[self valueAtRow:i column:j] compare:[self valueAtRow:j column:i]] != NSOrderedSame) {
-                    _isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueNo];
-                    return _isSymmetric;
+            BOOL isSymmetric = YES;
+            for (__CLPK_integer i = 0; i < self.rows; i++) {
+                for (__CLPK_integer j = i + 1; j < self.columns; j++) {
+                    if ([[self valueAtRow:i column:j] compare:[self valueAtRow:j column:i]] != NSOrderedSame) {
+                        isSymmetric = NO;
+                        break;
+                    }
                 }
             }
+            _symmetric = [MCKTribool triboolWithValue:isSymmetric ? MCKTriboolValueYes : MCKTriboolValueNo];
         }
     }
     
-    return _isSymmetric;
+    return _symmetric;
 }
 
 - (MCKTribool *)isZero
@@ -1536,8 +1535,8 @@
             
         case MAVMatrixValuePackingMethodPacked: {
             if (self.triangularComponent == MAVMatrixTriangularComponentLower) {
-                if (column <= row || self.isSymmetric.isYes) {
-                    if (column > row && self.isSymmetric.isYes) {
+                if (column <= row || _symmetric.isYes) {
+                    if (column > row && _symmetric.isYes) {
                         __CLPK_integer temp = row;
                         row = column;
                         column = temp;
@@ -1558,8 +1557,8 @@
                     return self.precision == MCKPrecisionDouble ? @0.0 : @0.0f;
                 }
             } else /* if (self.triangularComponent == MAVMatrixTriangularComponentUpper) */ {
-                if (row <= column || self.isSymmetric.isYes) {
-                    if (row > column && self.isSymmetric.isYes) {
+                if (row <= column || _symmetric.isYes) {
+                    if (row > column && _symmetric.isYes) {
                         __CLPK_integer temp = row;
                         row = column;
                         column = temp;
@@ -1930,7 +1929,7 @@
     newMatrix->_diagonalValues = matrix->_diagonalValues.copy;
     newMatrix->_minorMatrix = matrix->_minorMatrix.copy;
     newMatrix->_cofactorMatrix = matrix->_cofactorMatrix.copy;
-    newMatrix->_isSymmetric = matrix->_isSymmetric.copy;
+    newMatrix->_symmetric = matrix->_symmetric.copy;
     newMatrix->_isIdentity = matrix->_isIdentity.copy;
     newMatrix->_isZero = matrix->_isZero.copy;
     newMatrix->_trace = matrix->_trace.copy;
@@ -2008,7 +2007,7 @@
     _normMax = nil;
     _normFroebenius = nil;
     
-    _isSymmetric = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
+    _symmetric = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
     _isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
     _isZero = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
     _definiteness = MAVMatrixDefinitenessUnknown;
