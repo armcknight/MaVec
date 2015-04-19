@@ -3,4 +3,4 @@
 	url = git://github.com/Raizlabs/RZCollectionList.git
 [submodule "External/MCKNumerics"]
 	path = External/MCKNumerics
-	url = git://github.com/sixstringtheory/MCKNumerics.git
+	url = git://github.com/armcknight/MCKNumerics.git
