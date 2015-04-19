@@ -125,47 +125,20 @@
             
         case MAVMatrixValuePackingMethodPacked: {
             if (self.triangularComponent == MAVMatrixTriangularComponentLower) {
-                NSAssert(column <= row || self.isSymmetric.isYes, @"Column must be <= row for a lower triangular non-symmetric matrix.");
-                if (column > row && self.isSymmetric.isYes) {
-                    __CLPK_integer temp = row;
-                    row = column;
-                    column = temp;
-                }
-                
-                if (self.leadingDimension == MAVMatrixLeadingDimensionColumn) {
-                    // number of values in columns before desired column
-                    size_t valuesInSummedColumns = ((self.rows * (self.rows + 1)) - ((self.rows - column) * (self.rows - column + 1))) / 2;
-                    index = valuesInSummedColumns + row - column;
-                } else {
-                    // number of values in rows before desired row
-                    __CLPK_integer summedRows = row;
-                    size_t valuesInSummedRows = summedRows * (summedRows + 1) / 2;
-                    index = valuesInSummedRows + column;
-                }
+                index = [self indexForValueInTriangularComponent:MAVMatrixTriangularComponentLower row:row column:column];
             } else /* if (self.triangularComponent == MAVMatrixTriangularComponentUpper) */ {
-                NSAssert(row <= column || self.isSymmetric.isYes, @"Row must be <= column for upper triangular non-symmetric matrix.");
-                if (row > column && self.isSymmetric.isYes) {
-                    __CLPK_integer temp = row;
-                    row = column;
-                    column = temp;
-                }
-                
-                if (self.leadingDimension == MAVMatrixLeadingDimensionColumn) {
-                    // number of values in columns before desired column
-                    __CLPK_integer summedColumns = column;
-                    size_t valuesInSummedColumns = summedColumns * (summedColumns + 1) / 2;
-                    index = valuesInSummedColumns + row;
-                } else {
-                    // number of values in rows before desired row
-                    size_t valuesInSummedRows = ((self.columns * (self.columns + 1)) - ((self.columns - row) * (self.columns - row + 1))) / 2;
-                    index = valuesInSummedRows + column - row;
-                }
+                index = [self indexForValueInTriangularComponent:MAVMatrixTriangularComponentUpper row:row column:column];
             }
         } break;
             
         case MAVMatrixValuePackingMethodBand: {
             index = ( row - column + self.upperCodiagonals ) * self.columns + column;
-            NSAssert(index < self.bandwidth * self.columns, @"Location specified by row and column fall outside the current bandwidth.");
+            if (index >= self.bandwidth * self.columns) {
+                [self convertInternalRepresentationToColumnMajorConventional];
+                index = column * self.rows + row;
+            }
+            // TODO: uncomment assert for strict checking
+//            NSAssert(index < self.bandwidth * self.columns, @"Location specified by row and column fall outside the current bandwidth.");
         } break;
             
         default: break;
@@ -377,12 +350,22 @@
 
 #pragma mark - Private
 
+- (void)convertInternalRepresentationToColumnMajorConventional
+{
+    self.values = [NSMutableData dataWithData:[self valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn]];
+    self.packingMethod = MAVMatrixValuePackingMethodConventional;
+    self.leadingDimension = MAVMatrixLeadingDimensionColumn;
+    self.symmetric = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
+    self.triangularComponent = MAVMatrixTriangularComponentBoth;
+}
+
 - (void)invalidateStateIfOperation:(MAVMatrixMutatingOperation)operation
             notIdempotentWithInput:(id)input
                              atRow:(__CLPK_integer)row
                             column:(__CLPK_integer)column
 {
     BOOL isIdempotent = NO;
+    MCKTriboolValue preservesSymmetry = MCKTriboolValueUnknown;
     
     /*
      the following have to be reset on an individual basis
@@ -410,6 +393,9 @@
         case MAVMatrixMutatingOperationAssignmentValue: {
             NSAssert([input isKindOfClass:[NSNumber class]], @"Input should be of type NSNumber.");
             isIdempotent = [[self valueAtRow:row column:column] isEqualToNumber:input];
+            if (self.isSymmetric.isYes) {
+                preservesSymmetry = (row == column || [[self valueAtRow:column column:row] isEqualToNumber:input]) ? MCKTriboolValueYes : MCKTriboolValueNo;
+            }
             break;
         }
             
@@ -462,10 +448,42 @@
         }
             
     }
-    
+
+    if (preservesSymmetry == MCKTriboolValueNo) {
+        [self convertInternalRepresentationToColumnMajorConventional];
+    }
     if (!isIdempotent) {
         [self resetToDefaultState];
     }
+    if (preservesSymmetry == MCKTriboolValueYes) {
+        self.symmetric = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+    }
+}
+
+- (size_t)indexForValueInTriangularComponent:(MAVMatrixTriangularComponent)component row:(__CLPK_integer)row column:(__CLPK_integer)column
+{
+    // TODO: uncomment assert for strict checking
+    //                NSAssert(column <= row || self.isSymmetric.isYes, @"Column must be <= row for a lower triangular non-symmetric matrix.");
+    size_t index;
+    __CLPK_integer primaryDimension = component == MAVMatrixTriangularComponentLower ? self.rows : self.columns;
+    __CLPK_integer primaryIndex = component == MAVMatrixTriangularComponentLower ? column : row;
+    __CLPK_integer secondaryIndex = component == MAVMatrixTriangularComponentLower ? row : column;
+    if (primaryIndex <= secondaryIndex) {
+        if ((self.leadingDimension == MAVMatrixLeadingDimensionColumn && component == MAVMatrixTriangularComponentLower) || (self.leadingDimension == MAVMatrixLeadingDimensionRow && component == MAVMatrixTriangularComponentUpper)) {
+            // number of values in columns before desired column
+            size_t valuesInSummedPrimaryDimension = ((primaryDimension * (primaryDimension + 1)) - ((primaryDimension - primaryIndex) * (primaryDimension - primaryIndex + 1))) / 2;
+            index = valuesInSummedPrimaryDimension + secondaryIndex - primaryIndex;
+        } else {
+            // number of values in rows before desired row
+            __CLPK_integer summedSecondaryDimension = secondaryIndex;
+            size_t valuesInSummedSecondaryDimension = summedSecondaryDimension * (summedSecondaryDimension + 1) / 2;
+            index = valuesInSummedSecondaryDimension + primaryIndex;
+        }
+    } else {
+        [self convertInternalRepresentationToColumnMajorConventional];
+        index = column * self.rows + row;
+    }
+    return index;
 }
 
 @end
