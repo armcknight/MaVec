@@ -116,18 +116,10 @@
     switch (self.packingMethod) {
             
         case MAVMatrixValuePackingMethodConventional: {
-            if (self.precision == MCKPrecisionDouble) {
-                if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
-                    index = row * self.columns + column;
-                } else {
-                    index = column * self.rows + row;
-                }
+            if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
+                index = row * self.columns + column;
             } else {
-                if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
-                    index = row * self.columns + column;
-                } else {
-                    index = column * self.rows + row;
-                }
+                index = column * self.rows + row;
             }
         } break;
             
