@@ -1,4 +1,4 @@
-MaVec [![Build Status](https://travis-ci.org/sixstringtheory/MaVec.svg?branch=master)](https://travis-ci.org/sixstringtheory/MaVec)
+MaVec [![Build Status](https://travis-ci.org/armcknight/MaVec.svg?branch=master)](https://travis-ci.org/armcknight/MaVec)
 ===
 
 MaVec is a framework for performing matrix and vector math using first-class objects. Developed after trudging through the Accelerate framework's lack of quality documentation and cryptic function names, MaVec provides a more intuitive and Objective-C friendly interface (and documentation!). But don't worry--behind many of its methods are the same Accelerate functions you've grown to know and love. Or not. Which is why MaVec is here for you.
@@ -67,24 +67,24 @@ MAVVector *vectorA = [MAVVector vectorWithValues:[NSData dataWithBytes:vectorVal
                                               length:3];
 MAVVector *vectorB = [MAVVector vectorWithValuesInArray:@[@1.0, @2.0, @3.0]];
 BOOL equal = [vectorA isEqualToVector:vectorB]; // YES
-    
+
 /* multiply the vectors together and do some more comparisons */
 MAVMutableVector *vectorC = vectorA.mutableCopy; // NSMutableCopying
 [vectorC multiplyByVector:vectorB];
 equal = [vectorA isEqualToVector:vectorC]; // NO
-    
+
 /* vectors can be subscripted */
 equal = [vectorA[0] isEqualToNumber:vectorC[0]]; // YES
 equal = [vectorA[1] isEqualToNumber:vectorC[1]]; // NO
-    
+
 /* create some matrices and compare them */
 MAVMatrix *matrix = [MAVMatrix randomSymmetricMatrixOfOrder:3 precision:MCKPrecisionDouble];
 MAVMatrix *transpose = matrix.transpose.copy; // NSCopying
 equal = [matrix isEqualToMatrix:transpose]; // YES
-    
+
 /* matrices can also be subscripted */
 equal = [matrix[0][0] isEqualToNumber:transpose[0][0]]; // YES
-    
+
 /* multiply matrix by another matrix and then by a vector */
 MAVMutableMatrix *mutableMatrix = matrix.mutableCopy; // NSMutableCopying
 [mutableMatrix multiplyByMatrix:transpose];
@@ -95,7 +95,7 @@ MAVMutableMatrix *mutableMatrix = matrix.mutableCopy; // NSMutableCopying
 **The MaVec way:**
 ```objective-c
 //
-// assume an array named "values" representing a 3x3 matrix 
+// assume an array named "values" representing a 3x3 matrix
 // of either floats or doubles exists in column major format
 //
 
@@ -108,7 +108,7 @@ MAVQRFactorization *qr = matrix.qrFactorization;
 **The Accelerate way:**
 ```objective-c
 //
-// assume an array named "values" representing a 3x3 matrix 
+// assume an array named "values" representing a 3x3 matrix
 // of either floats or doubles exists in column major format
 //
 
@@ -116,7 +116,7 @@ int m = 3;
 int n = 3;
 int lwork = -1;
 int info;
-  
+
 if (sizeof(values) / sizeof(double) == 9) {
     double *a = malloc(9 * sizeof(double));
     for (int i = 0; i < 9; i++) {
@@ -126,22 +126,22 @@ if (sizeof(values) / sizeof(double) == 9) {
     int lda = m;
     double *tau = malloc(MIN(m, n) * sizeof(double));
     double wkopt;
-      
+
     dgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
-      
+
     lwork = wkopt;
     double *work = malloc(lwork * sizeof(double));
-      
+
     dgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);
-      
+
     lwork = -1;
     dorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
-      
+
     lwork = wkopt;
     free(work);
     work = malloc(lwork * sizeof(double));
     dorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
-      
+
     free(tau);
     free(work);
 
@@ -158,22 +158,22 @@ if (sizeof(values) / sizeof(double) == 9) {
     int lda = m;
     float *tau = malloc(MIN(m, n) * sizeof(float));
     float wkopt;
-      
+
     sgeqrf_(&m, &n, a, &lda, tau, &wkopt, &lwork, &info);
-      
+
     lwork = wkopt;
     float *work = malloc(lwork * sizeof(float));
-      
+
     sgeqrf_(&m, &n, a, &lda, tau, work, &lwork, &info);
-      
+
     lwork = -1;
     sorgqr_(&m, &m, &n, a, &lda, tau, &wkopt, &lwork, &info);
-      
+
     lwork = wkopt;
     free(work);
     work = malloc(lwork * sizeof(float));
     sorgqr_(&m, &m, &n, a, &lda, tau, work, &lwork, &info);
-      
+
     free(tau);
     free(work);
 
