@@ -26,7 +26,10 @@ typedef NS_ENUM(NSUInteger, MAVMatrixInternalRepresentation) {
     MAVMatrixInternalRepresentationSymmetricColumnMajorFromLower,
     MAVMatrixInternalRepresentationSymmetricRowMajorFromUpper,
     MAVMatrixInternalRepresentationSymmetricColumnMajorFromUpper,
-    MAVMatrixInternalRepresentationBand,
+    MAVMatrixInternalRepresentationBandBalanced,
+    MAVMatrixInternalRepresentationBandTopHeavy,
+    MAVMatrixInternalRepresentationBandBottomHeavy,
+    MAVMatrixInternalRepresentationDiagonal
 };
 
 static const MAVIndex rows = 3;
@@ -56,7 +59,10 @@ static const MAVIndex columns = 3;
                                        @(MAVMatrixInternalRepresentationSymmetricColumnMajorFromLower),
                                        @(MAVMatrixInternalRepresentationSymmetricRowMajorFromUpper),
                                        @(MAVMatrixInternalRepresentationSymmetricColumnMajorFromUpper),
-                                       @(MAVMatrixInternalRepresentationBand)
+                                       @(MAVMatrixInternalRepresentationBandBalanced),
+                                       @(MAVMatrixInternalRepresentationBandTopHeavy),
+                                       @(MAVMatrixInternalRepresentationBandBottomHeavy),
+                                       @(MAVMatrixInternalRepresentationDiagonal)
                                        ]) {
             [matrices addObject:[self matrixOfRepresentationType:(MAVMatrixInternalRepresentation)matrixType.unsignedIntegerValue withPrecision:(MCKPrecision)precision.unsignedIntegerValue]];
         }
@@ -95,7 +101,7 @@ static const MAVIndex columns = 3;
     MAVMutableMatrix *matrix;
     
     switch (representation) {
-        case MAVMatrixInternalRepresentationBand: {
+        case MAVMatrixInternalRepresentationBandBalanced: {
             if (precision == MCKPrecisionDouble) {
                 double values[9] = {
                     0.0, 1.0, 2.0,
@@ -110,6 +116,52 @@ static const MAVIndex columns = 3;
                     6.0f, 7.0f, 0.0f
                 };
                 matrix = [MAVMutableMatrix bandMatrixWithValues:[NSData dataWithBytes:values length:9 * sizeof(float)] order:3 upperCodiagonals:1 lowerCodiagonals:1];
+            }
+        } break;
+
+        case MAVMatrixInternalRepresentationBandTopHeavy: {
+            if (precision == MCKPrecisionDouble) {
+                double values[6] = {
+                    0.0, 1.0, 2.0,
+                    3.0, 4.0, 5.0
+                };
+                matrix = [MAVMutableMatrix bandMatrixWithValues:[NSData dataWithBytes:values length:6 * sizeof(double)] order:3 upperCodiagonals:1 lowerCodiagonals:0];
+            } else {
+                float values[6] = {
+                    0.0f, 1.0f, 2.0f,
+                    3.0f, 4.0f, 5.0f
+                };
+                matrix = [MAVMutableMatrix bandMatrixWithValues:[NSData dataWithBytes:values length:6 * sizeof(float)] order:3 upperCodiagonals:1 lowerCodiagonals:0];
+            }
+        } break;
+
+        case MAVMatrixInternalRepresentationBandBottomHeavy: {
+            if (precision == MCKPrecisionDouble) {
+                double values[6] = {
+                    1.0, 2.0, 3.0,
+                    4.0, 5.0, 0.0
+                };
+                matrix = [MAVMutableMatrix bandMatrixWithValues:[NSData dataWithBytes:values length:6 * sizeof(double)] order:3 upperCodiagonals:0 lowerCodiagonals:1];
+            } else {
+                float values[6] = {
+                    1.0f, 2.0f, 3.0f,
+                    4.0f, 5.0f, 0.0f
+                };
+                matrix = [MAVMutableMatrix bandMatrixWithValues:[NSData dataWithBytes:values length:6 * sizeof(float)] order:3 upperCodiagonals:0 lowerCodiagonals:1];
+            }
+        } break;
+
+        case MAVMatrixInternalRepresentationDiagonal: {
+            if (precision == MCKPrecisionDouble) {
+                double values[3] = {
+                    1.0, 2.0, 3.0
+                };
+                matrix = [MAVMutableMatrix diagonalMatrixWithValues:[NSData dataWithBytes:values length:3 * sizeof(double)] order:3];
+            } else {
+                float values[3] = {
+                    1.0f, 2.0f, 3.0f
+                };
+                matrix = [MAVMutableMatrix diagonalMatrixWithValues:[NSData dataWithBytes:values length:3 * sizeof(float)] order:3];
             }
         } break;
             
