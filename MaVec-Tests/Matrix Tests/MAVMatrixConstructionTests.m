@@ -504,7 +504,7 @@
 
 - (void)testRandomSingularMatrices
 {
-    int numberOfTests = 97;
+    int numberOfTests = 5;
     
     int singularFails = 0;
     
@@ -513,6 +513,7 @@
         MAVMatrix *singular = [MAVMatrix randomSingularMatrixOfOrder:order precision:MCKPrecisionDouble];
         if ([singular.determinant compare:@0.0] != NSOrderedSame) {
             singularFails++;
+            NSLog(@"randomSingularMatrixOfOrder returned %@", singular);
         }
         order++;
     }
@@ -522,7 +523,7 @@
 
 - (void)testRandomNonsingularMatrices
 {
-    int numberOfTests = 97;
+    int numberOfTests = 5;
     
     int nonsingularFails = 0;
     
@@ -531,6 +532,7 @@
         MAVMatrix *nonsingular = [MAVMatrix randomNonsigularMatrixOfOrder:order precision:MCKPrecisionDouble];
         if ([nonsingular.determinant compare:@0.0] == NSOrderedSame) {
             nonsingularFails++;
+            NSLog(@"randomNonsigularMatrixOfOrder returned %@", nonsingular);
         }
         order++;
     }
