@@ -1522,18 +1522,20 @@
 {
     NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
-    
+
     switch (self.packingMethod) {
             
         case MAVMatrixValuePackingMethodConventional: {
-            if (self.leadingDimension == MAVMatrixLeadingDimensionRow) {
-                return @(self.precision == MCKPrecisionDouble ? ((double *)self.values.bytes)[row * self.columns + column] : ((float *)self.values.bytes)[row * self.columns + column]);
+            size_t index = self.leadingDimension == MAVMatrixLeadingDimensionRow ? row * self.columns + column : column * self.rows + row;
+            if (self.precision == MCKPrecisionDouble) {
+                return @(((double *)self.values.bytes)[index]);
             } else {
-                return @(self.precision == MCKPrecisionDouble ? ((double *)self.values.bytes)[column * self.rows + row] : ((float *)self.values.bytes)[column * self.rows + row]);
+                return @(((float *)self.values.bytes)[index]);
             }
         } break;
             
         case MAVMatrixValuePackingMethodPacked: {
+            size_t index = 0;
             if (self.triangularComponent == MAVMatrixTriangularComponentLower) {
                 if (column <= row || _symmetric.isYes) {
                     if (column > row && _symmetric.isYes) {
@@ -1541,17 +1543,16 @@
                         row = column;
                         column = temp;
                     }
+
                     if (self.leadingDimension == MAVMatrixLeadingDimensionColumn) {
                         // number of values in columns before desired column
                         size_t valuesInSummedColumns = ((self.rows * (self.rows + 1)) - ((self.rows - column) * (self.rows - column + 1))) / 2;
-                        size_t index = valuesInSummedColumns + row - column;
-                        return @(self.precision == MCKPrecisionDouble ? ((double *)self.values.bytes)[index] : ((float *)self.values.bytes)[index]);
+                        index = valuesInSummedColumns + row - column;
                     } else {
                         // number of values in rows before desired row
                         __CLPK_integer summedRows = row;
                         size_t valuesInSummedRows = summedRows * (summedRows + 1) / 2;
-                        size_t index = valuesInSummedRows + column;
-                        return @(self.precision == MCKPrecisionDouble ? ((double *)self.values.bytes)[index] : ((float *)self.values.bytes)[index]);
+                        index = valuesInSummedRows + column;
                     }
                 } else {
                     return self.precision == MCKPrecisionDouble ? @0.0 : @0.0f;
@@ -1563,28 +1564,37 @@
                         row = column;
                         column = temp;
                     }
+
                     if (self.leadingDimension == MAVMatrixLeadingDimensionColumn) {
                         // number of values in columns before desired column
                         __CLPK_integer summedColumns = column;
                         size_t valuesInSummedColumns = summedColumns * (summedColumns + 1) / 2;
-                        size_t index = valuesInSummedColumns + row;
-                        return @(self.precision == MCKPrecisionDouble ? ((double *)self.values.bytes)[index] : ((float *)self.values.bytes)[index]);
+                        index = valuesInSummedColumns + row;
                     } else {
                         // number of values in rows before desired row
                         size_t valuesInSummedRows = ((self.columns * (self.columns + 1)) - ((self.columns - row) * (self.columns - row + 1))) / 2;
-                        size_t index = valuesInSummedRows + column - row;
-                        return @(self.precision == MCKPrecisionDouble ? ((double *)self.values.bytes)[index] : ((float *)self.values.bytes)[index]);
+                        index = valuesInSummedRows + column - row;
                     }
                 } else {
                     return self.precision == MCKPrecisionDouble ? @0.0 : @0.0f;
                 }
             }
+
+            if (self.precision == MCKPrecisionDouble) {
+                return @(((double *)self.values.bytes)[index]);
+            } else {
+                return @(((float *)self.values.bytes)[index]);
+            }
         } break;
-            
+
         case MAVMatrixValuePackingMethodBand: {
             size_t indexIntoBandArray = ( row - column + self.upperCodiagonals ) * self.columns + column;
             if (indexIntoBandArray < self.bandwidth * self.columns) {
-                return @(self.precision == MCKPrecisionDouble ? ((double *)self.values.bytes)[indexIntoBandArray] : ((float *)self.values.bytes)[indexIntoBandArray]);
+                if (self.precision == MCKPrecisionDouble) {
+                    return @(((double *)self.values.bytes)[indexIntoBandArray]);
+                } else {
+                    return @(((float *)self.values.bytes)[indexIntoBandArray]);
+                }
             } else {
                 return self.precision == MCKPrecisionDouble ? @0.0 : @0.0f;
             }
