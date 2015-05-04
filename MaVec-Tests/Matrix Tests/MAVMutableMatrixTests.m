@@ -41,11 +41,7 @@ static const MAVIndex columns = 3;
 
 @implementation MAVMutableMatrixTests
 
-- (void)testValueAssignment
-{
-    NSNumber *const doubleInput = @999.0;
-    NSNumber *const floatInput = @999.0f;
-    
+- (NSArray *)matrixCombinations {
     NSMutableArray *matrices = [NSMutableArray array];
     for (NSNumber *precision in @[@(MCKPrecisionSingle), @(MCKPrecisionDouble)]) {
         for (NSNumber *matrixType in @[
@@ -67,6 +63,16 @@ static const MAVIndex columns = 3;
             [matrices addObject:[self matrixOfRepresentationType:(MAVMatrixInternalRepresentation)matrixType.unsignedIntegerValue withPrecision:(MCKPrecision)precision.unsignedIntegerValue]];
         }
     }
+
+    return matrices;
+}
+
+- (void)testValueAssignment
+{
+    NSNumber *const doubleInput = @999.0;
+    NSNumber *const floatInput = @999.0f;
+
+    NSArray *matrices = [self matrixCombinations];
     
     for (MAVMutableMatrix *matrix in matrices) {
         for (MAVIndex row = 0; row < rows; row++) {
@@ -94,6 +100,78 @@ static const MAVIndex columns = 3;
             }
         }
     }
+}
+
+- (void)testAddition {
+    
+}
+
+- (void)testSubtraction {
+
+}
+
+- (void)testScalarMultiplication {
+
+}
+
+- (void)testVectorMultiplication {
+
+}
+
+- (void)testMatrixMultiplication {
+
+}
+
+- (void)testExponentiation {
+    
+}
+
+- (void)testDimensionalSwaps {
+    for (MAVMutableMatrix *matrix in [self matrixCombinations]) {
+        for (NSNumber *dimensionValue in @[@(MAVMatrixLeadingDimensionRow), @(MAVMatrixLeadingDimensionColumn)]) {
+            MAVMatrixLeadingDimension dimension = (MAVMatrixLeadingDimension)dimensionValue.unsignedIntegerValue;
+            __CLPK_integer vectorCount = dimension == MAVMatrixLeadingDimensionRow ? matrix.rows : matrix.columns;
+            for (__CLPK_integer vectorA = 0; vectorA < vectorCount - 1; vectorA += 1) {
+                for (__CLPK_integer vectorB = vectorA + 1; vectorB < vectorCount; vectorB += 1) {
+                    MAVMatrix *originalMatrix = [matrix copy];
+                    if (dimension == MAVMatrixLeadingDimensionRow) {
+                        [matrix swapRowA:vectorA withRowB:vectorB];
+                    } else {
+                        [matrix swapColumnA:vectorA withColumnB:vectorB];
+                    }
+                    for (__CLPK_integer row = 0; row < matrix.rows; row += 1) {
+                        for (__CLPK_integer column = 0; column < matrix.columns; column += 1) {
+                            if (dimension == MAVMatrixLeadingDimensionRow) {
+                                if (row == vectorA) {
+                                    XCTAssert([matrix[vectorA][column] isEqualToNumber:originalMatrix[vectorB][column]], @"Entry did not get swapped correctly.");
+                                } else if (row == vectorB) {
+                                    XCTAssert([matrix[vectorB][column] isEqualToNumber:originalMatrix[vectorA][column]], @"Entry did not get swapped correctly.");
+                                } else {
+                                    XCTAssert([matrix[row][column] isEqualToNumber:originalMatrix[row][column]], @"Entry changed that should not have during swap.");
+                                }
+                            } else {
+                                if (column == vectorA) {
+                                    XCTAssert([matrix[row][vectorA] isEqualToNumber:originalMatrix[row][vectorB]], @"Entry did not get swapped correctly.");
+                                } else if (column == vectorB) {
+                                    XCTAssert([matrix[row][vectorB] isEqualToNumber:originalMatrix[row][vectorA]], @"Entry did not get swapped correctly.");
+                                } else {
+                                    XCTAssert([matrix[row][column] isEqualToNumber:originalMatrix[row][column]], @"Entry changed that should not have during swap.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+- (void)testRowAssignment {
+
+}
+
+- (void)testColumnAssigment {
+
 }
 
 - (MAVMutableMatrix *)matrixOfRepresentationType:(MAVMatrixInternalRepresentation)representation withPrecision:(MCKPrecision)precision
