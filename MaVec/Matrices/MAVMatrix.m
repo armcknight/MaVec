@@ -241,7 +241,7 @@
         float *values = malloc(size);
         for (__CLPK_integer i = 0; i < order; i++) {
             for (__CLPK_integer j = 0; j < order; j++) {
-                values[i * order + j] = i == j ? 1.0 : 0.0;
+                values[i * order + j] = i == j ? 1.0f : 0.0f;
             }
         }
 		matrix = [self matrixWithValues:[NSData dataWithBytesNoCopy:values length:size]
