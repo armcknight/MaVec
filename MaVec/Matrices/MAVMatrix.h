@@ -435,6 +435,47 @@ MAVCoordinateAxis;
                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension;
 
 /**
+   @brief Class convenience method to create a general matrix filled with a single supplied value.
+
+   @param value   The value to fill the matrix with.
+   @param rows    Amount of rows in the matrix.
+   @param columns Amount of rows in the matrix.
+
+   @return New instance of MAVMatrix filled with the supplied value.
+ */
++ (instancetype)matrixFilledWithValue:(NSNumber *)value
+                                 rows:(__CLPK_integer)rows
+                              columns:(__CLPK_integer)columns;
+
+/**
+ @brief Class convenience method to create a triangular matrix filled with a single supplied value.
+
+ @param value               The value to fill the matrix with.
+ @param order               Amount of rows/columns in the square matrix.
+ @param triangularComponent Either upper or lower, specifying the part of the matrix to fill with the supplied value.
+
+ @return New triangular MAVMatrix with specified component filled with the supplied value.
+ */
++ (instancetype)triangularMatrixFilledWithValue:(NSNumber *)value
+                                          order:(__CLPK_integer)order
+                            triangularComponent:(MAVMatrixTriangularComponent)triangularComponent;
+
+/**
+ @brief Class convenience method to create a band matrix filled with a single supplied value.
+
+ @param value            The value to fill the matrix with.
+ @param order            Amount of rows/columns in the square matrix.
+ @param upperCodiagonals Amount of codiagonals above the diagonal to fill with the value.
+ @param lowerCodiagonals Amount of codiagonals below the diagonal to fill with the value.
+
+ @return New band MAVMatrix with band filled with the supplied value.
+ */
++ (instancetype)bandMatrixFilledWithValue:(NSNumber *)value
+                                    order:(__CLPK_integer)order
+                         upperCodiagonals:(__CLPK_integer)upperCodiagonals
+                         lowerCodiagonals:(__CLPK_integer)lowerCodiagonals;
+
+/**
  @brief Class convenience method to create a square identity matrix with the specified size.
  @description  Instantiates a new object of type MAVMatrix with dimensions size x size whose diagonal values are 1.0 and all other values are 0.0, stored in column-major format.
  @param order The square dimension in which to create this identity matrix.

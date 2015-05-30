@@ -30,6 +30,8 @@
 #import "MAVMatrix.h"
 #import "MAVVector.h"
 
+#import "NSNumber+MCKRandom.h"
+
 @interface MAVMatrixConstructionTests : XCTestCase
 
 @end
@@ -538,6 +540,276 @@
     }
     
     XCTAssert(nonsingularFails == 0, @"%i nonsingular failures", nonsingularFails);
+}
+
+- (void)testGeneralMatrixFilledWithValue {
+    // double precision
+    NSNumber *value = [NSNumber mck_randomDouble];
+    __CLPK_integer rows = 5;
+    __CLPK_integer columns = 5;
+    MAVMatrix *generalMatrix = [MAVMatrix matrixFilledWithValue:value
+                                                           rows:rows
+                                                        columns:columns];
+    for (__CLPK_integer column = 0; column < columns; column++) {
+        for (__CLPK_integer row = 0; row < rows; row++) {
+            XCTAssert([value isEqualToNumber:generalMatrix[row][column]], @"A different double value was retrieved from the matrix than the one the matrix was filled with.");
+        }
+    }
+
+    // single-precision
+    value = [NSNumber mck_randomFloat];
+    generalMatrix = [MAVMatrix matrixFilledWithValue:value
+                                                rows:rows
+                                             columns:columns];
+    for (__CLPK_integer column = 0; column < columns; column++) {
+        for (__CLPK_integer row = 0; row < rows; row++) {
+            XCTAssert([value isEqualToNumber:generalMatrix[row][column]], @"A different float value was retrieved from the matrix than the one the matrix was filled with.");
+        }
+    }
+}
+
+- (void)testTriangularMatrixFilledWithValue {
+    // double-precision lower triangular
+    NSNumber *value = [NSNumber mck_randomDouble];
+    __CLPK_integer order = 5;
+    MAVMatrix *triangularMatrix = [MAVMatrix triangularMatrixFilledWithValue:value
+                                                                       order:order
+                                                         triangularComponent:MAVMatrixTriangularComponentLower];
+    for (__CLPK_integer column = 0; column < order; column++) {
+        for (__CLPK_integer row = 0; row < order; row++) {
+            if (row >= column) {
+                XCTAssert([value isEqualToNumber:triangularMatrix[row][column]], @"A different double value was retrieved from the matrix than the one the matrix' lower triangular component was filled with.");
+            } else {
+                XCTAssert([@0 isEqualToNumber:triangularMatrix[row][column]], @"The upper part of the double-precision lower triangular matrix did not contain a 0.");
+            }
+        }
+    }
+
+    // single-precision lower triangular
+    value = [NSNumber mck_randomFloat];
+    triangularMatrix = [MAVMatrix triangularMatrixFilledWithValue:value
+                                                            order:order
+                                              triangularComponent:MAVMatrixTriangularComponentLower];
+    for (__CLPK_integer column = 0; column < order; column++) {
+        for (__CLPK_integer row = 0; row < order; row++) {
+            if (row >= column) {
+                XCTAssert([value isEqualToNumber:triangularMatrix[row][column]], @"A different float value was retrieved from the matrix than the one the matrix' lower triangular component was filled with.");
+            } else {
+                XCTAssert([@0 isEqualToNumber:triangularMatrix[row][column]], @"The upper part of the single-precision lower triangular matrix did not contain a 0.");
+            }
+        }
+    }
+
+    // double-precision lower triangular
+    value = [NSNumber mck_randomDouble];
+    triangularMatrix = [MAVMatrix triangularMatrixFilledWithValue:value
+                                                            order:order
+                                              triangularComponent:MAVMatrixTriangularComponentUpper];
+    for (__CLPK_integer column = 0; column < order; column++) {
+        for (__CLPK_integer row = 0; row < order; row++) {
+            if (row <= column) {
+                XCTAssert([value isEqualToNumber:triangularMatrix[row][column]], @"A different double value was retrieved from the matrix than the one the matrix' upper triangular component was filled with.");
+            } else {
+                XCTAssert([@0 isEqualToNumber:triangularMatrix[row][column]], @"The lower part of the double-precision upper triangular matrix did not contain a 0.");
+            }
+        }
+    }
+
+    // single-precision lower triangular
+    value = [NSNumber mck_randomFloat];
+    triangularMatrix = [MAVMatrix triangularMatrixFilledWithValue:value
+                                                            order:order
+                                              triangularComponent:MAVMatrixTriangularComponentUpper];
+    for (__CLPK_integer column = 0; column < order; column++) {
+        for (__CLPK_integer row = 0; row < order; row++) {
+            if (row <= column) {
+                XCTAssert([value isEqualToNumber:triangularMatrix[row][column]], @"A different float value was retrieved from the matrix than the one the matrix' upper triangular component was filled with.");
+            } else {
+                XCTAssert([@0 isEqualToNumber:triangularMatrix[row][column]], @"The lower part of the single-precision upper triangular matrix did not contain a 0.");
+            }
+        }
+    }
+}
+
+- (void)testBandMatrixFilledWithValue {
+    // double-precision diagonal
+    [NSNumber mck_randomDouble];
+    NSNumber *value = [NSNumber mck_randomDouble];
+    __CLPK_integer order = 5;
+    MAVMatrix *bandMatrix = [MAVMatrix bandMatrixFilledWithValue:value
+                                                           order:order
+                                                upperCodiagonals:0
+                                                lowerCodiagonals:0];
+    for (__CLPK_integer column = 0; column < order; column++) {
+        for (__CLPK_integer row = 0; row < order; row++) {
+            if (row == column) {
+                NSNumber *retrieved = bandMatrix[row][column];
+                XCTAssert([value isEqualToNumber:retrieved], @"A different double value was retrieved from the matrix than the one the matrix' diagonal was filled with.");
+            } else {
+                XCTAssert([@0 isEqualToNumber:bandMatrix[row][column]], @"The region outside of the double-precision diagonal matrix did not contain a 0.");
+            }
+        }
+    }
+
+    // single-precision diagonal
+    value = [NSNumber mck_randomFloat];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:value
+                                                order:order
+                                     upperCodiagonals:0
+                                     lowerCodiagonals:0];
+    for (__CLPK_integer column = 0; column < order; column++) {
+        for (__CLPK_integer row = 0; row < order; row++) {
+            if (row == column) {
+                XCTAssert([value isEqualToNumber:bandMatrix[row][column]], @"A different float value was retrieved from the matrix than the one the matrix' diagonal was filled with.");
+            } else {
+                XCTAssert([@0 isEqualToNumber:bandMatrix[row][column]], @"The region outside of the single-precision diagonal matrix did not contain a 0.");
+            }
+        }
+    }
+
+    // double-precision top-only
+    double topOnlyDoublePrecisionSolution[25] = {
+        1.0, 1.0, 1.0, 0.0, 0.0,
+        0.0, 1.0, 1.0, 1.0, 0.0,
+        0.0, 0.0, 1.0, 1.0, 1.0,
+        0.0, 0.0, 0.0, 1.0, 1.0,
+        0.0, 0.0, 0.0, 0.0, 1.0
+    };
+    MAVMatrix *solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:topOnlyDoublePrecisionSolution length:25 * sizeof(double)]
+                                                       rows:5
+                                                    columns:5
+                                           leadingDimension:MAVMatrixLeadingDimensionRow];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:@1.0
+                                                order:order
+                                     upperCodiagonals:2
+                                     lowerCodiagonals:0];
+    XCTAssert([solutionMatrix isEqualToMatrix:bandMatrix], @"Band matrix filled with values was not constructed correctly.");
+
+    // single-precision top-heavy
+    float topOnlySinglePrecisionSolution[25] = {
+        1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+        0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+        0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+    };
+    solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:topOnlySinglePrecisionSolution length:25 * sizeof(float)]
+                                            rows:5
+                                         columns:5
+                                leadingDimension:MAVMatrixLeadingDimensionRow];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:@1.0f
+                                                order:order
+                                     upperCodiagonals:2
+                                     lowerCodiagonals:0];
+    XCTAssert([solutionMatrix isEqualToMatrix:bandMatrix], @"Band matrix filled with values was not constructed correctly.");
+
+    // double-precision bottom-only
+    double bottomOnlyDoublePrecisionSolution[25] = {
+        1.0, 0.0, 0.0, 0.0, 0.0,
+        1.0, 1.0, 0.0, 0.0, 0.0,
+        1.0, 1.0, 1.0, 0.0, 0.0,
+        0.0, 1.0, 1.0, 1.0, 0.0,
+        0.0, 0.0, 1.0, 1.0, 1.0
+    };
+    solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bottomOnlyDoublePrecisionSolution length:25 * sizeof(double)]
+                                            rows:5
+                                         columns:5
+                                leadingDimension:MAVMatrixLeadingDimensionRow];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:@1.0
+                                                order:order
+                                     upperCodiagonals:0
+                                     lowerCodiagonals:2];
+    XCTAssert([solutionMatrix isEqualToMatrix:bandMatrix], @"Band matrix filled with values was not constructed correctly.");
+
+    // single-precision bottom-only
+    float bottomOnlySinglePrecisionSolution[25] = {
+        1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 1.0f, 1.0f
+    };
+    solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bottomOnlySinglePrecisionSolution length:25 * sizeof(float)]
+                                            rows:5
+                                         columns:5
+                                leadingDimension:MAVMatrixLeadingDimensionRow];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:@1.0f
+                                                order:order
+                                     upperCodiagonals:0
+                                     lowerCodiagonals:2];
+    XCTAssert([solutionMatrix isEqualToMatrix:bandMatrix], @"Band matrix filled with values was not constructed correctly.");
+
+    // double-precision bottom-heavy
+    double bottomHeavyDoublePrecisionSolution[25] = {
+        1.0, 1.0, 0.0, 0.0, 0.0,
+        1.0, 1.0, 1.0, 0.0, 0.0,
+        1.0, 1.0, 1.0, 1.0, 0.0,
+        0.0, 1.0, 1.0, 1.0, 1.0,
+        0.0, 0.0, 1.0, 1.0, 1.0
+    };
+    solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bottomHeavyDoublePrecisionSolution length:25 * sizeof(double)]
+                                            rows:5
+                                         columns:5
+                                leadingDimension:MAVMatrixLeadingDimensionRow];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:@1.0
+                                                order:order
+                                     upperCodiagonals:1
+                                     lowerCodiagonals:2];
+    XCTAssert([solutionMatrix isEqualToMatrix:bandMatrix], @"Band matrix filled with values was not constructed correctly.");
+
+    // single-precision bottom-heavy
+    float bottomHeavySinglePrecisionSolution[25] = {
+        1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        0.0f, 0.0f, 1.0f, 1.0f, 1.0f
+    };
+    solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:bottomHeavySinglePrecisionSolution length:25 * sizeof(float)]
+                                            rows:5
+                                         columns:5
+                                leadingDimension:MAVMatrixLeadingDimensionRow];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:@1.0f
+                                                order:order
+                                     upperCodiagonals:1
+                                     lowerCodiagonals:2];
+    XCTAssert([solutionMatrix isEqualToMatrix:bandMatrix], @"Band matrix filled with values was not constructed correctly.");
+
+    // double-precision top-heavy
+    double topHeavyDoublePrecisionSolution[25] = {
+        1.0, 1.0, 1.0, 0.0, 0.0,
+        1.0, 1.0, 1.0, 1.0, 0.0,
+        0.0, 1.0, 1.0, 1.0, 1.0,
+        0.0, 0.0, 1.0, 1.0, 1.0,
+        0.0, 0.0, 0.0, 1.0, 1.0
+    };
+    solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:topHeavyDoublePrecisionSolution length:25 * sizeof(double)]
+                                            rows:5
+                                         columns:5
+                                leadingDimension:MAVMatrixLeadingDimensionRow];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:@1.0
+                                                order:order
+                                     upperCodiagonals:2
+                                     lowerCodiagonals:1];
+    XCTAssert([solutionMatrix isEqualToMatrix:bandMatrix], @"Band matrix filled with values was not constructed correctly.");
+
+    // single-precision top-heavy
+    float topHeavySinglePrecisionSolution[25] = {
+        1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+        0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+        0.0f, 0.0f, 0.0f, 1.0f, 1.0f
+    };
+    solutionMatrix = [MAVMatrix matrixWithValues:[NSData dataWithBytes:topHeavySinglePrecisionSolution length:25 * sizeof(float)]
+                                            rows:5
+                                         columns:5
+                                leadingDimension:MAVMatrixLeadingDimensionRow];
+    bandMatrix = [MAVMatrix bandMatrixFilledWithValue:@1.0f
+                                                order:order
+                                     upperCodiagonals:2
+                                     lowerCodiagonals:1];
+    XCTAssert([solutionMatrix isEqualToMatrix:bandMatrix], @"Band matrix filled with values was not constructed correctly.");
 }
 
 @end

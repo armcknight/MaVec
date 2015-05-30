@@ -184,6 +184,42 @@
 	                triangularComponent:MAVMatrixTriangularComponentBoth];
 }
 
+
+
++ (instancetype)matrixFilledWithValue:(NSNumber *)value
+                                 rows:(__CLPK_integer)rows
+                              columns:(__CLPK_integer)columns
+{
+    MAVMatrix *matrix = [self matrixWithValues:[self dataForArrayFilledWithValue:value length:rows * columns]
+                                          rows:rows
+                                       columns:columns];
+    matrix.symmetric = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+    return matrix;
+}
+
++ (instancetype)triangularMatrixFilledWithValue:(NSNumber *)value
+                                          order:(__CLPK_integer)order
+                            triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
+{
+    size_t valueCount = (order * (order + 1)) / 2;
+    return [self triangularMatrixWithPackedValues:[self dataForArrayFilledWithValue:value length:valueCount]
+                            ofTriangularComponent:triangularComponent
+                                 leadingDimension:MAVMatrixLeadingDimensionColumn
+                                            order:order];
+}
+
++ (instancetype)bandMatrixFilledWithValue:(NSNumber *)value
+                                    order:(__CLPK_integer)order
+                         upperCodiagonals:(__CLPK_integer)upperCodiagonals
+                         lowerCodiagonals:(__CLPK_integer)lowerCodiagonals
+{
+    size_t valueCount = (lowerCodiagonals + upperCodiagonals + 1) * order;
+    return [MAVMatrix bandMatrixWithValues:[self dataForArrayFilledWithValue:value length:valueCount]
+                                     order:order
+                          upperCodiagonals:upperCodiagonals
+                          lowerCodiagonals:lowerCodiagonals];
+}
+
 + (instancetype)identityMatrixOfOrder:(__CLPK_integer)order
                             precision:(MCKPrecision)precision
 {
@@ -2082,6 +2118,31 @@
         data = [NSData dataWithBytesNoCopy:values length:size];
     }
     
+    return data;
+}
+
++ (NSData *)dataForArrayFilledWithValue:(NSNumber *)value length:(size_t)length
+{
+    NSData *data;
+
+    if ([value isDoublePrecision]) {
+        size_t size = length * sizeof(double);
+        double *values = malloc(size);
+        double doubleValue = value.doubleValue;
+        for (__CLPK_integer i = 0; i < length; i++) {
+            values[i] = doubleValue;
+        }
+        data = [NSData dataWithBytesNoCopy:values length:size];
+    } else {
+        size_t size = length * sizeof(float);
+        float *values = malloc(size);
+        float floatValue = value.floatValue;
+        for (__CLPK_integer i = 0; i < length; i++) {
+            values[i] = floatValue;
+        }
+        data = [NSData dataWithBytesNoCopy:values length:size];
+    }
+
     return data;
 }
 
