@@ -98,8 +98,9 @@ MAVMatrixNorm;
 
 /**
  @brief Sets all calculated properties to default states.
+ @param breakSymmetry YES if a symmetrical matrix has lost symmetry, NO if it should maintain it
  */
-- (void)resetToDefaultState;
+- (void)resetToDefaultStateAndBreakSymmetry:(BOOL)breakSymmetry;
 
 /**
  @description Documentation on usage and other details can be found at http://publib.boulder.ibm.com/infocenter/clresctr/vxrx/index.jsp?topic=%2Fcom.ibm.cluster.essl.v5r2.essl100.doc%2Fam5gr_llange.htm. More information about different matrix norms can be found at http://en.wikipedia.org/wiki/Matrix_norm.

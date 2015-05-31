@@ -219,7 +219,7 @@
         
         self.columns = matrix.columns;
         self.leadingDimension = MAVMatrixLeadingDimensionRow;
-        [self resetToDefaultState];
+        [self resetToDefaultStateAndBreakSymmetry:NO];
     }
     
     return self;
@@ -241,7 +241,7 @@
                 }
             }
         }
-        [self resetToDefaultState];
+        [self resetToDefaultStateAndBreakSymmetry:YES];
     }
     
     return self;
@@ -263,7 +263,7 @@
                 }
             }
         }
-        [self resetToDefaultState];
+        [self resetToDefaultStateAndBreakSymmetry:YES];
     }
     
     return self;
@@ -330,7 +330,7 @@
             free(values);
         }
         // ???: should only a subset of derived properties be reset?
-        [self resetToDefaultState];
+        [self resetToDefaultStateAndBreakSymmetry:NO];
     }
     
     return self;
@@ -450,13 +450,11 @@
     }
 
     if (preservesSymmetry == MCKTriboolValueNo) {
+        // can no longer represent the matrix as a packed array of a triangular component's entries
         [self convertInternalRepresentationToColumnMajorConventional];
     }
     if (!isIdempotent) {
-        [self resetToDefaultState];
-    }
-    if (preservesSymmetry == MCKTriboolValueYes) {
-        self.symmetric = [MCKTribool triboolWithValue:MCKTriboolValueYes];
+        [self resetToDefaultStateAndBreakSymmetry:!preservesSymmetry];
     }
 }
 

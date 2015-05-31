@@ -2028,12 +2028,12 @@
         // ???: should this be reset to default state for non-idempotent mutations?
         _triangularComponent = MAVMatrixTriangularComponentBoth;
         
-        [self resetToDefaultState];
+        [self resetToDefaultStateAndBreakSymmetry:YES];
     }
     return self;
 }
 
-- (void)resetToDefaultState
+- (void)resetToDefaultStateAndBreakSymmetry:(BOOL)breakSymmetry
 {
     _qrFactorization = nil;
     _luFactorization = nil;
@@ -2052,8 +2052,10 @@
     _normL1 = nil;
     _normMax = nil;
     _normFroebenius = nil;
-    
-    _symmetric = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
+
+    if (breakSymmetry) {
+        _symmetric = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
+    }
     _isIdentity = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
     _isZero = [MCKTribool triboolWithValue:MCKTriboolValueUnknown];
     _definiteness = MAVMatrixDefinitenessUnknown;
