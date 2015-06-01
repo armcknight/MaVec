@@ -540,7 +540,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MAV;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = AMProductions;
 				TargetAttributes = {
 					499734DE192595220004A8E5 = {
@@ -718,6 +718,7 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-Wno-gnu";
 				WARNING_CFLAGS = "";
 			};
