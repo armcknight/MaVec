@@ -60,6 +60,8 @@
 
 @implementation MAVMutableMatrix
 
+@dynamic values;
+
 #pragma mark - Public
 
 - (void)swapRowA:(MAVIndex)rowA withRowB:(MAVIndex)rowB
