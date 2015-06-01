@@ -15,7 +15,8 @@
 
 #import "MCKTribool.h"
 
-typedef NS_ENUM(NSUInteger, MAVMatrixInternalRepresentation) {
+typedef NS_ENUM(NSUInteger, MAVMatrixInternalRepresentation)
+{
     MAVMatrixInternalRepresentationConventionalRowMajor,
     MAVMatrixInternalRepresentationConventionalColumnMajor,
     MAVMatrixInternalRepresentationUpperTriangularRowMajor,
@@ -41,7 +42,8 @@ static const MAVIndex columns = 3;
 
 @implementation MAVMutableMatrixTests
 
-- (NSArray *)matrixCombinations {
+- (NSArray *)matrixCombinations
+{
     NSMutableArray *matrices = [NSMutableArray array];
     for (NSNumber *precision in @[@(MCKPrecisionSingle), @(MCKPrecisionDouble)]) {
         for (NSNumber *matrixType in @[
@@ -102,31 +104,69 @@ static const MAVIndex columns = 3;
     }
 }
 
-- (void)testAddition {
-    
+- (void)testAddition
+{
+    [self checkResultsOfAddition:YES];
 }
 
-- (void)testSubtraction {
-
+- (void)testSubtraction
+{
+    [self checkResultsOfAddition:NO];
 }
 
-- (void)testScalarMultiplication {
-
+- (void)checkResultsOfAddition:(BOOL)addition
+{
+    for (MAVMutableMatrix *matrix in [self matrixCombinations]) {
+        NSNumber *value = matrix.precision == MCKPrecisionDouble ? @1.0 : @1.0f;
+        MAVMatrix *addendOrSubtrahend = [MAVMatrix matrixFilledWithValue:value
+                                                                    rows:matrix.rows
+                                                                 columns:matrix.columns];
+        MAVMatrix *original = matrix.copy;
+        if (addition) {
+            [matrix addMatrix:addendOrSubtrahend];
+        } else {
+            [matrix subtractMatrix:addendOrSubtrahend];
+        }
+        for (__CLPK_integer row = 0; row < matrix.rows; row++) {
+            for (__CLPK_integer column = 0; column < matrix.columns; column++) {
+                if ([value isDoublePrecision]) {
+                    double resultValue = matrix[row][column].doubleValue;
+                    double computedValue = original[row][column].doubleValue + 1.0 * (addition ? 1.0 : -1.0);
+                    XCTAssertEqual(resultValue, computedValue, @"Value at (%lu, %lu) %@ incorrectly in double precision matrix", row, column, addition ? @"added" : @"subtracted");
+                } else {
+                    float resultValue = matrix[row][column].floatValue;
+                    float computedValue = original[row][column].floatValue + 1.0f * (addition ? 1.0f : -1.0f);
+                    XCTAssertEqual(resultValue, computedValue, @"Value at (%lu, %lu) %@ incorrectly in single precision matrix", row, column, addition ? @"added" : @"subtracted");
+                }
+            }
+        }
+    }
 }
 
-- (void)testVectorMultiplication {
-
+- (void)testScalarMultiplication
+{
+    for (MAVMutableMatrix *matrix in [self matrixCombinations]) {
+        BOOL isDouble = matrix.precision == MCKPrecisionDouble;
+        MAVMatrix *original = matrix.copy;
+        [matrix multiplyByScalar:(isDouble ? @5.0 : @5.0f)];
+        for (__CLPK_integer row = 0; row < matrix.rows; row++) {
+            for (__CLPK_integer column = 0; column < matrix.columns; column++) {
+                if (isDouble) {
+                    double computedValue = matrix[row][column].doubleValue;
+                    double solution = original[row][column].doubleValue * 5.0;
+                    XCTAssertEqual(computedValue, solution, @"Entry at (%lu, %lu) not multiplied correctly in double-precision matrix.", row, column);
+                } else {
+                    float computedValue = matrix[row][column].floatValue;
+                    float solution = original[row][column].floatValue * 5.0f;
+                    XCTAssertEqual(computedValue, solution, @"Entry at (%lu, %lu) not multiplied correctly in single-precision matrix.", row, column);
+                }
+            }
+        }
+    }
 }
 
-- (void)testMatrixMultiplication {
-
-}
-
-- (void)testExponentiation {
-    
-}
-
-- (void)testDimensionalSwaps {
+- (void)testDimensionalSwaps
+{
     for (MAVMutableMatrix *matrix in [self matrixCombinations]) {
         for (NSNumber *dimensionValue in @[@(MAVMatrixLeadingDimensionRow), @(MAVMatrixLeadingDimensionColumn)]) {
             MAVMatrixLeadingDimension dimension = (MAVMatrixLeadingDimension)dimensionValue.unsignedIntegerValue;
@@ -166,12 +206,55 @@ static const MAVIndex columns = 3;
     }
 }
 
-- (void)testRowAssignment {
-
+- (void)testRowAssignment
+{
+    [self checkRowAssignment:YES];
 }
 
-- (void)testColumnAssigment {
+- (void)testColumnAssigment
+{
+    [self checkRowAssignment:NO];
+}
 
+- (void)checkRowAssignment:(BOOL)rowAssignment
+{
+    for (MAVMutableMatrix *matrix in [self matrixCombinations]) {
+        for (__CLPK_integer dimension = 0; dimension < (rowAssignment ? matrix.rows : matrix.columns); dimension++) {
+            MAVMutableMatrix *mutatedMatrix = matrix.mutableCopy;
+            NSMutableArray *values = [NSMutableArray array];
+            BOOL isDouble = matrix.precision == MCKPrecisionDouble;
+            for (__CLPK_integer entry = 0; entry < (rowAssignment ? matrix.columns : matrix.rows); entry++) {
+                if (isDouble) {
+                    [values addObject:@(900.0 + entry * 1.0)];
+                } else {
+                    [values addObject:@(900.0f + entry * 1.0f)];
+                }
+            }
+            MAVVector *vector = [MAVVector vectorWithValuesInArray:values vectorFormat:rowAssignment ? MAVVectorFormatRowVector : MAVVectorFormatColumnVector];
+            if (rowAssignment) {
+                [mutatedMatrix setRowVector:vector atRow:dimension];
+            } else {
+                [mutatedMatrix setColumnVector:vector atColumn:dimension];
+            }
+            for (__CLPK_integer row = 0; row < matrix.rows; row++) {
+                for (__CLPK_integer column = 0; column < matrix.columns; column++) {
+                    if ((rowAssignment && row == dimension) || (!rowAssignment && column == dimension)) {
+                        if (isDouble) {
+                            XCTAssertEqual(vector[rowAssignment ? column : row].doubleValue, mutatedMatrix[row][column].doubleValue, @"Mutated %@ in double-precision matrix was not set correctly checking (%lu, %lu)", rowAssignment ? @"row" : @"column", row, column);
+                        } else {
+                            XCTAssertEqual(vector[rowAssignment ? column : row].floatValue, mutatedMatrix[row][column].floatValue, @"Mutated %@ in single-precision matrix was not set correctly checking (%lu, %lu)", rowAssignment ? @"row" : @"column", row, column);
+                        }
+                    } else {
+                        if (isDouble) {
+                            XCTAssertEqual(matrix[row][column].doubleValue, mutatedMatrix[row][column].doubleValue, @"%@ not mutated in double-precision row was incorrectly changed checking (%lu, %lu).", rowAssignment ? @"row" : @"column", row, column);
+                        } else {
+                            XCTAssertEqual(matrix[row][column].floatValue, mutatedMatrix[row][column].floatValue, @"%@ not mutated in single-precision row was incorrectly changed checking (%lu, %lu).", rowAssignment ? @"row" : @"column", row, column);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 - (MAVMutableMatrix *)matrixOfRepresentationType:(MAVMatrixInternalRepresentation)representation withPrecision:(MCKPrecision)precision
