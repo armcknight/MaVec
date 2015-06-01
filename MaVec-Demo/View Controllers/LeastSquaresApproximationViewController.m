@@ -25,8 +25,7 @@
 //  SOFTWARE.
 //
 
-#import <Accelerate/Accelerate.h>
-
+#import "MAVTypedefs.h"
 #import "LeastSquaresApproximationViewController.h"
 #import "ApproximationView.h"
 
@@ -56,7 +55,7 @@
 }
 
 - (IBAction)changedOrder:(id)sender {
-    __CLPK_integer order = (__CLPK_integer)self.orderSlider.value * 10;
+    MAVIndex order = (MAVIndex)self.orderSlider.value * 10;
     self.approximationView.order = order;
     self.orderLabel.text = [NSString stringWithFormat:@"%lld", (long long int)order-1];
 }

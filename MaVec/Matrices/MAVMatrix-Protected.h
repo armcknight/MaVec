@@ -57,8 +57,8 @@ MAVMatrixNorm;
 
 // public readonly properties redeclared as readwrite
 @property (strong, readwrite, nonatomic) NSData *values;
-@property (assign, readwrite, nonatomic) __CLPK_integer rows;
-@property (assign, readwrite, nonatomic) __CLPK_integer columns;
+@property (assign, readwrite, nonatomic) MAVIndex rows;
+@property (assign, readwrite, nonatomic) MAVIndex columns;
 @property (strong, readwrite, nonatomic) MAVMatrix *transpose;
 @property (strong, readwrite, nonatomic) MAVQRFactorization *qrFactorization;
 @property (strong, readwrite, nonatomic) MAVLUFactorization *luFactorization;
@@ -84,9 +84,9 @@ MAVMatrixNorm;
 @property (assign, readwrite, nonatomic) MCKPrecision precision;
 
 // private properties for band matrices
-@property (assign, nonatomic) __CLPK_integer bandwidth;
-@property (assign, nonatomic) __CLPK_integer numberOfBandValues;
-@property (assign, nonatomic) __CLPK_integer upperCodiagonals;
+@property (assign, nonatomic) MAVIndex bandwidth;
+@property (assign, nonatomic) MAVIndex numberOfBandValues;
+@property (assign, nonatomic) MAVIndex upperCodiagonals;
 
 /**
  @brief Generates specified number of floating-point values.

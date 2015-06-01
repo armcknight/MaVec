@@ -37,12 +37,12 @@
 {
     self = [super init];
     if (self) {
-        __CLPK_integer lwork = -1;
-        __CLPK_integer m = matrix.rows;
-        __CLPK_integer n = matrix.columns;
-        __CLPK_integer numSingularValues = MIN(m, n);
-        __CLPK_integer *iwork = malloc(8 * numSingularValues);
-        __CLPK_integer info = 0;
+        MAVIndex lwork = -1;
+        MAVIndex m = matrix.rows;
+        MAVIndex n = matrix.columns;
+        MAVIndex numSingularValues = MIN(m, n);
+        MAVIndex *iwork = malloc(8 * numSingularValues);
+        MAVIndex info = 0;
         
         if (matrix.precision == MCKPrecisionDouble) {
             double workSize;
@@ -63,7 +63,7 @@
             // call first with lwork = -1 to determine optimal size of working array
             dgesvd_("A", "A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, &info);
             
-            lwork = (__CLPK_integer)workSize;
+            lwork = (MAVIndex)workSize;
             work = malloc(lwork * sizeof(double));
             
             // now run the actual decomposition
@@ -75,8 +75,8 @@
             
             // build the sigma matrix
             size_t idx = 0;
-            for (__CLPK_integer i = 0; i < n; i++) {
-                for (__CLPK_integer j = 0; j < m; j++) {
+            for (MAVIndex i = 0; i < n; i++) {
+                for (MAVIndex j = 0; j < m; j++) {
                     if (i == j) {
                         sValues[idx] = singularValues[i];
                     } else {
@@ -115,7 +115,7 @@
             // call first with lwork = -1 to determine optimal size of working array
             sgesvd_("A", "A", &m, &n, values, &m, singularValues, uValues, &m, vTValues, &n, work, &lwork, &info);
             
-            lwork = (__CLPK_integer)workSize;
+            lwork = (MAVIndex)workSize;
             work = malloc(lwork * sizeof(float));
             
             // now run the actual decomposition
@@ -127,8 +127,8 @@
             
             // build the sigma matrix
             size_t idx = 0;
-            for (__CLPK_integer i = 0; i < n; i++) {
-                for (__CLPK_integer j = 0; j < m; j++) {
+            for (MAVIndex i = 0; i < n; i++) {
+                for (MAVIndex j = 0; j < m; j++) {
                     if (i == j) {
                         sValues[idx] = singularValues[i];
                     } else {

@@ -213,7 +213,7 @@
 {
     if (_isZero.triboolValue == MCKTriboolValueUnknown) {
         MCKTriboolValue isZero = MCKTriboolValueYes;
-        for (__CLPK_integer valueIndex = 0; valueIndex < self.length; valueIndex++) {
+        for (MAVIndex valueIndex = 0; valueIndex < self.length; valueIndex++) {
             if (![[self valueAtIndex:valueIndex] isEqualToNumber:@0]) {
                 isZero = MCKTriboolValueNo;
                 break;
@@ -228,7 +228,7 @@
 {
     if (_isIdentity.triboolValue == MCKTriboolValueUnknown) {
         MCKTriboolValue isIdentity = MCKTriboolValueYes;
-        for (__CLPK_integer valueIndex = 0; valueIndex < self.length; valueIndex++) {
+        for (MAVIndex valueIndex = 0; valueIndex < self.length; valueIndex++) {
             if (![[self valueAtIndex:valueIndex] isEqualToNumber:@1]) {
                 isIdentity = MCKTriboolValueNo;
                 break;
@@ -462,13 +462,13 @@
             for (int i = 0; i < self.length; i++) {
                 max = MAX(max, fabs(((double *)self.values.bytes)[i]));
             }
-            padding = (__CLPK_integer)floor(log10(max)) + 5;
+            padding = (MAVIndex)floor(log10(max)) + 5;
         } else {
             float max = FLT_MIN;
             for (int i = 0; i < self.length; i++) {
                 max = MAX(max, fabsf(((float *)self.values.bytes)[i]));
             }
-            padding = (__CLPK_integer)floorf(log10f(max)) + 5;
+            padding = (MAVIndex)floorf(log10f(max)) + 5;
         }
     }
     
@@ -564,7 +564,7 @@
 
 #pragma mark - Inspection
 
-- (NSNumber *)valueAtIndex:(__CLPK_integer)index
+- (NSNumber *)valueAtIndex:(MAVIndex)index
 {
     NSNumber *value;
     
@@ -579,7 +579,7 @@
 
 #pragma mark - Subscripting
 
-- (NSNumber *)objectAtIndexedSubscript:(__CLPK_integer)idx
+- (NSNumber *)objectAtIndexedSubscript:(MAVIndex)idx
 {
     return [self valueAtIndex:idx];
 }

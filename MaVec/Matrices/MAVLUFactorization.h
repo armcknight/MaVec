@@ -27,6 +27,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MAVTypedefs.h"
+
 @class MAVMatrix;
 
 /**
@@ -56,7 +58,7 @@
 /**
  @brief The number of row swaps induced by the permutation matrix.
  */
-@property (nonatomic, readonly, assign) __CLPK_integer numberOfPermutations;
+@property (nonatomic, readonly, assign) MAVIndex numberOfPermutations;
 
 #pragma mark - Init
 

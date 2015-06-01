@@ -7,5 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Accelerate/Accelerate.h>
 
 typedef __CLPK_integer MAVIndex;

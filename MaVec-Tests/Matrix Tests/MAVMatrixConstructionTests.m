@@ -429,8 +429,8 @@
      3  6  9 ]
      */
     MAVMatrix *a = [MAVMatrix matrixWithColumnVectors:@[v1, v2, v3]];
-    for (__CLPK_integer i = 0; i < 3; i++) {
-        for (__CLPK_integer j = 0; j < 3; j++) {
+    for (MAVIndex i = 0; i < 3; i++) {
+        for (MAVIndex j = 0; j < 3; j++) {
             MAVVector *vector = j == 0 ? v1 : j == 1 ? v2 : v3;
             XCTAssertEqual(a[i][j].doubleValue, vector[i].doubleValue, @"Value incorrect at [%d][%d]", i, j);
         }
@@ -442,9 +442,9 @@
      7  8  9 ]
      */
     MAVMatrix *b = [MAVMatrix matrixWithRowVectors:@[v1, v2, v3]];
-    for (__CLPK_integer i = 0; i < 3; i++) {
+    for (MAVIndex i = 0; i < 3; i++) {
         MAVVector *vector = i == 0 ? v1 : i == 1 ? v2 : v3;
-        for (__CLPK_integer j = 0; j < 3; j++) {
+        for (MAVIndex j = 0; j < 3; j++) {
             XCTAssertEqual(b[i][j].doubleValue, vector[j].doubleValue, @"Value incorrect at [%d][%d]", i, j);
         }
     }
@@ -545,13 +545,13 @@
 - (void)testGeneralMatrixFilledWithValue {
     // double precision
     NSNumber *value = [NSNumber mck_randomDouble];
-    __CLPK_integer rows = 5;
-    __CLPK_integer columns = 5;
+    MAVIndex rows = 5;
+    MAVIndex columns = 5;
     MAVMatrix *generalMatrix = [MAVMatrix matrixFilledWithValue:value
                                                            rows:rows
                                                         columns:columns];
-    for (__CLPK_integer column = 0; column < columns; column++) {
-        for (__CLPK_integer row = 0; row < rows; row++) {
+    for (MAVIndex column = 0; column < columns; column++) {
+        for (MAVIndex row = 0; row < rows; row++) {
             XCTAssert([value isEqualToNumber:generalMatrix[row][column]], @"A different double value was retrieved from the matrix than the one the matrix was filled with.");
         }
     }
@@ -561,8 +561,8 @@
     generalMatrix = [MAVMatrix matrixFilledWithValue:value
                                                 rows:rows
                                              columns:columns];
-    for (__CLPK_integer column = 0; column < columns; column++) {
-        for (__CLPK_integer row = 0; row < rows; row++) {
+    for (MAVIndex column = 0; column < columns; column++) {
+        for (MAVIndex row = 0; row < rows; row++) {
             XCTAssert([value isEqualToNumber:generalMatrix[row][column]], @"A different float value was retrieved from the matrix than the one the matrix was filled with.");
         }
     }
@@ -571,12 +571,12 @@
 - (void)testTriangularMatrixFilledWithValue {
     // double-precision lower triangular
     NSNumber *value = [NSNumber mck_randomDouble];
-    __CLPK_integer order = 5;
+    MAVIndex order = 5;
     MAVMatrix *triangularMatrix = [MAVMatrix triangularMatrixFilledWithValue:value
                                                                        order:order
                                                          triangularComponent:MAVMatrixTriangularComponentLower];
-    for (__CLPK_integer column = 0; column < order; column++) {
-        for (__CLPK_integer row = 0; row < order; row++) {
+    for (MAVIndex column = 0; column < order; column++) {
+        for (MAVIndex row = 0; row < order; row++) {
             if (row >= column) {
                 XCTAssert([value isEqualToNumber:triangularMatrix[row][column]], @"A different double value was retrieved from the matrix than the one the matrix' lower triangular component was filled with.");
             } else {
@@ -590,8 +590,8 @@
     triangularMatrix = [MAVMatrix triangularMatrixFilledWithValue:value
                                                             order:order
                                               triangularComponent:MAVMatrixTriangularComponentLower];
-    for (__CLPK_integer column = 0; column < order; column++) {
-        for (__CLPK_integer row = 0; row < order; row++) {
+    for (MAVIndex column = 0; column < order; column++) {
+        for (MAVIndex row = 0; row < order; row++) {
             if (row >= column) {
                 XCTAssert([value isEqualToNumber:triangularMatrix[row][column]], @"A different float value was retrieved from the matrix than the one the matrix' lower triangular component was filled with.");
             } else {
@@ -605,8 +605,8 @@
     triangularMatrix = [MAVMatrix triangularMatrixFilledWithValue:value
                                                             order:order
                                               triangularComponent:MAVMatrixTriangularComponentUpper];
-    for (__CLPK_integer column = 0; column < order; column++) {
-        for (__CLPK_integer row = 0; row < order; row++) {
+    for (MAVIndex column = 0; column < order; column++) {
+        for (MAVIndex row = 0; row < order; row++) {
             if (row <= column) {
                 XCTAssert([value isEqualToNumber:triangularMatrix[row][column]], @"A different double value was retrieved from the matrix than the one the matrix' upper triangular component was filled with.");
             } else {
@@ -620,8 +620,8 @@
     triangularMatrix = [MAVMatrix triangularMatrixFilledWithValue:value
                                                             order:order
                                               triangularComponent:MAVMatrixTriangularComponentUpper];
-    for (__CLPK_integer column = 0; column < order; column++) {
-        for (__CLPK_integer row = 0; row < order; row++) {
+    for (MAVIndex column = 0; column < order; column++) {
+        for (MAVIndex row = 0; row < order; row++) {
             if (row <= column) {
                 XCTAssert([value isEqualToNumber:triangularMatrix[row][column]], @"A different float value was retrieved from the matrix than the one the matrix' upper triangular component was filled with.");
             } else {
@@ -635,13 +635,13 @@
     // double-precision diagonal
     [NSNumber mck_randomDouble];
     NSNumber *value = [NSNumber mck_randomDouble];
-    __CLPK_integer order = 5;
+    MAVIndex order = 5;
     MAVMatrix *bandMatrix = [MAVMatrix bandMatrixFilledWithValue:value
                                                            order:order
                                                 upperCodiagonals:0
                                                 lowerCodiagonals:0];
-    for (__CLPK_integer column = 0; column < order; column++) {
-        for (__CLPK_integer row = 0; row < order; row++) {
+    for (MAVIndex column = 0; column < order; column++) {
+        for (MAVIndex row = 0; row < order; row++) {
             if (row == column) {
                 NSNumber *retrieved = bandMatrix[row][column];
                 XCTAssert([value isEqualToNumber:retrieved], @"A different double value was retrieved from the matrix than the one the matrix' diagonal was filled with.");
@@ -657,8 +657,8 @@
                                                 order:order
                                      upperCodiagonals:0
                                      lowerCodiagonals:0];
-    for (__CLPK_integer column = 0; column < order; column++) {
-        for (__CLPK_integer row = 0; row < order; row++) {
+    for (MAVIndex column = 0; column < order; column++) {
+        for (MAVIndex row = 0; row < order; row++) {
             if (row == column) {
                 XCTAssert([value isEqualToNumber:bandMatrix[row][column]], @"A different float value was retrieved from the matrix than the one the matrix' diagonal was filled with.");
             } else {

@@ -28,12 +28,14 @@
 #ifndef MaVec_Constants_h
 #define MaVec_Constants_h
 
+#import "MAVTypedefs.h"
+
 #if defined(__LP64__)
 #define MAV_CLPK_INTEGER_MAX INT64_MAX
 #else
 #define MAV_CLPK_INTEGER_MAX INT32_MAX
 #endif
 
-static const __CLPK_integer kMAVNoCoordinate = NSNotFound;
+static const MAVIndex kMAVNoCoordinate = NSNotFound;
 
 #endif

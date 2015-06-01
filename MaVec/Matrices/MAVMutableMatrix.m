@@ -53,8 +53,8 @@
 // TODO: change 'atRow' to 'coordinateA', 'column' to 'coordinateB' to make more generic
 - (void)invalidateStateIfOperation:(MAVMatrixMutatingOperation)operation
             notIdempotentWithInput:(id)input
-                             atRow:(__CLPK_integer)row
-                            column:(__CLPK_integer)column;
+                             atRow:(MAVIndex)row
+                            column:(MAVIndex)column;
 
 @end
 
@@ -62,14 +62,14 @@
 
 #pragma mark - Public
 
-- (void)swapRowA:(__CLPK_integer)rowA withRowB:(__CLPK_integer)rowB
+- (void)swapRowA:(MAVIndex)rowA withRowB:(MAVIndex)rowB
 {
     NSAssert1(rowA < self.rows, @"rowA = %lld is outside the range of possible rows.", (long long int)rowA);
     NSAssert1(rowB < self.rows, @"rowB = %lld is outside the range of possible rows.", (long long int)rowB);
     
     // TODO: implement using cblas_dswap
     
-    for (__CLPK_integer i = 0; i < self.columns; i++) {
+    for (MAVIndex i = 0; i < self.columns; i++) {
         NSNumber *temp = [self valueAtRow:rowA column:i];
         [self setEntryAtRow:rowA column:i toValue:[self valueAtRow:rowB column:i]];
         [self setEntryAtRow:rowB column:i toValue:temp];
@@ -81,14 +81,14 @@
                               column:rowB];
 }
 
-- (void)swapColumnA:(__CLPK_integer)columnA withColumnB:(__CLPK_integer)columnB
+- (void)swapColumnA:(MAVIndex)columnA withColumnB:(MAVIndex)columnB
 {
     NSAssert1(columnA < self.columns, @"columnA = %lld is outside the range of possible columns.", (long long int)columnA);
     NSAssert1(columnB < self.columns, @"columnB = %lld is outside the range of possible columns.", (long long int)columnB);
     
     // TODO: implement using cblas_dswap
     
-    for (__CLPK_integer i = 0; i < self.rows; i++) {
+    for (MAVIndex i = 0; i < self.rows; i++) {
         NSNumber *temp = [self valueAtRow:i column:columnA];
         [self setEntryAtRow:i column:columnA toValue:[self valueAtRow:i column:columnB]];
         [self setEntryAtRow:i column:columnB toValue:temp];
@@ -100,7 +100,7 @@
                               column:columnB];
 }
 
-- (void)setEntryAtRow:(__CLPK_integer)row column:(__CLPK_integer)column toValue:(NSNumber *)value
+- (void)setEntryAtRow:(MAVIndex)row column:(MAVIndex)column toValue:(NSNumber *)value
 {
     NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
@@ -157,7 +157,7 @@
     }
 }
 
-- (void)setRowVector:(MAVVector *)vector atRow:(__CLPK_integer)row
+- (void)setRowVector:(MAVVector *)vector atRow:(MAVIndex)row
 {
     NSAssert2(vector.length == self.columns, @"Vector length (%lld) must equal amount of columns in this matrix (%lld)", (long long int)vector.length, (long long int)self.columns);
     NSAssert2(row < self.rows, @"row (%lld) must be < the amount of rows in this matrix (%lld)", (long long int)row, (long long int)self.rows);
@@ -167,12 +167,12 @@
                                atRow:row
                               column:kMAVNoCoordinate];
     
-    for (__CLPK_integer i = 0; i < self.columns; i++) {
+    for (MAVIndex i = 0; i < self.columns; i++) {
         [self setEntryAtRow:row column:i toValue:vector[i]];
     }
 }
 
-- (void)setColumnVector:(MAVVector *)vector atColumn:(__CLPK_integer)column
+- (void)setColumnVector:(MAVVector *)vector atColumn:(MAVIndex)column
 {
     NSAssert2(vector.length == self.rows, @"Vector length (%lld) must equal amount of rows in this matrix (%lld)", (long long int)vector.length, (long long int)self.rows);
     NSAssert2(column < self.columns, @"column (%lld) must be < the amount of columns in this matrix (%lld)", (long long int)column, (long long int)self.columns);
@@ -182,12 +182,12 @@
                                atRow:kMAVNoCoordinate
                               column:column];
     
-    for (__CLPK_integer i = 0; i < self.rows; i++) {
+    for (MAVIndex i = 0; i < self.rows; i++) {
         [self setEntryAtRow:i column:column toValue:vector[i]];
     }
 }
 
-- (void)setObject:(MAVVector *)obj atIndexedSubscript:(__CLPK_integer)idx
+- (void)setObject:(MAVVector *)obj atIndexedSubscript:(MAVIndex)idx
 {
     [self setRowVector:obj atRow:idx];
 }
@@ -232,8 +232,8 @@
     NSAssert(self.precision == matrix.precision, @"Precisions do not match.");
     
     if (matrix.isZero.isNo) {
-        for (__CLPK_integer i = 0; i < self.rows; i++) {
-            for (__CLPK_integer j = 0; j < self.columns; j++) {
+        for (MAVIndex i = 0; i < self.rows; i++) {
+            for (MAVIndex j = 0; j < self.columns; j++) {
                 if (self.precision == MCKPrecisionDouble) {
                     [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].doubleValue + [matrix valueAtRow:i column:j].doubleValue)];
                 } else {
@@ -254,8 +254,8 @@
     NSAssert(self.precision == matrix.precision, @"Precisions do not match.");
     
     if (matrix.isZero.isNo) {
-        for (__CLPK_integer i = 0; i < self.rows; i++) {
-            for (__CLPK_integer j = 0; j < self.columns; j++) {
+        for (MAVIndex i = 0; i < self.rows; i++) {
+            for (MAVIndex j = 0; j < self.columns; j++) {
                 if (self.precision == MCKPrecisionDouble) {
                     [self setEntryAtRow:i column:j toValue:@([self valueAtRow:i column:j].doubleValue - [matrix valueAtRow:i column:j].doubleValue)];
                 } else {
@@ -276,8 +276,8 @@
     
     short order = self.leadingDimension == MAVMatrixLeadingDimensionColumn ? CblasColMajor : CblasRowMajor;
     short transpose = CblasNoTrans;
-    __CLPK_integer rows = self.rows;
-    __CLPK_integer cols = self.columns;
+    MAVIndex rows = self.rows;
+    MAVIndex cols = self.columns;
     
     if (self.precision == MCKPrecisionDouble) {
         double *result = calloc(vector.length, sizeof(double));
@@ -361,8 +361,8 @@
 
 - (void)invalidateStateIfOperation:(MAVMatrixMutatingOperation)operation
             notIdempotentWithInput:(id)input
-                             atRow:(__CLPK_integer)row
-                            column:(__CLPK_integer)column
+                             atRow:(MAVIndex)row
+                            column:(MAVIndex)column
 {
     BOOL isIdempotent = NO;
     MCKTriboolValue preservesSymmetry = MCKTriboolValueUnknown;
@@ -460,14 +460,14 @@
     }
 }
 
-- (size_t)indexForValueInTriangularComponent:(MAVMatrixTriangularComponent)component row:(__CLPK_integer)row column:(__CLPK_integer)column
+- (size_t)indexForValueInTriangularComponent:(MAVMatrixTriangularComponent)component row:(MAVIndex)row column:(MAVIndex)column
 {
     // TODO: uncomment assert for strict checking
     //                NSAssert(column <= row || self.isSymmetric.isYes, @"Column must be <= row for a lower triangular non-symmetric matrix.");
     size_t index;
-    __CLPK_integer primaryDimension = component == MAVMatrixTriangularComponentLower ? self.rows : self.columns;
-    __CLPK_integer primaryIndex = component == MAVMatrixTriangularComponentLower ? column : row;
-    __CLPK_integer secondaryIndex = component == MAVMatrixTriangularComponentLower ? row : column;
+    MAVIndex primaryDimension = component == MAVMatrixTriangularComponentLower ? self.rows : self.columns;
+    MAVIndex primaryIndex = component == MAVMatrixTriangularComponentLower ? column : row;
+    MAVIndex secondaryIndex = component == MAVMatrixTriangularComponentLower ? row : column;
     if (primaryIndex <= secondaryIndex) {
         if ((self.leadingDimension == MAVMatrixLeadingDimensionColumn && component == MAVMatrixTriangularComponentLower) || (self.leadingDimension == MAVMatrixLeadingDimensionRow && component == MAVMatrixTriangularComponentUpper)) {
             // number of values in columns before desired column
@@ -475,7 +475,7 @@
             index = valuesInSummedPrimaryDimension + secondaryIndex - primaryIndex;
         } else {
             // number of values in rows before desired row
-            __CLPK_integer summedSecondaryDimension = secondaryIndex;
+            MAVIndex summedSecondaryDimension = secondaryIndex;
             size_t valuesInSummedSecondaryDimension = summedSecondaryDimension * (summedSecondaryDimension + 1) / 2;
             index = valuesInSummedSecondaryDimension + primaryIndex;
         }

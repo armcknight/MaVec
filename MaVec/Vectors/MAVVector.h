@@ -26,7 +26,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Accelerate/Accelerate.h>
+
+#import "MAVTypedefs.h"
 
 #import "NSNumber+MCKPrecision.h"
 
@@ -255,7 +256,7 @@ MAVVectorFormat;
  @param index The index of the value to retrieve.
  @return The double-precision floating-point value at position index.
  */
-- (NSNumber *)valueAtIndex:(__CLPK_integer)index;
+- (NSNumber *)valueAtIndex:(MAVIndex)index;
 
 #pragma mark - Subscripting
 
@@ -264,7 +265,7 @@ MAVVectorFormat;
  @param idx The index of the value to extract.
  @return The double-precision floating-point value at the specified index.
  */
-- (NSNumber *)objectAtIndexedSubscript:(__CLPK_integer)idx;
+- (NSNumber *)objectAtIndexedSubscript:(MAVIndex)idx;
 
 #pragma mark - Instance Operations
 

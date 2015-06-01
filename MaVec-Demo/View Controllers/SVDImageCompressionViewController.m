@@ -78,13 +78,13 @@ void freePixelValues(void *info, const void *data, size_t size);
 
 - (IBAction)compressionSliderValueChanged:(id)sender
 {
-    __CLPK_integer singularValues = (__CLPK_integer)((UISlider *)sender).value;
+    MAVIndex singularValues = (MAVIndex)((UISlider *)sender).value;
     self.compressionLabel.text = [NSString stringWithFormat:@"Singular values: %d/%d", singularValues, self.imageSVD.s.diagonalValues.length];
 }
 
 - (IBAction)compressionSliderFinishedChangingValue:(id)sender
 {
-    __CLPK_integer singularValues = (__CLPK_integer)((UISlider *)sender).value;
+    MAVIndex singularValues = (MAVIndex)((UISlider *)sender).value;
     if (self.currentAmountOfSingularValues != singularValues) {
         self.currentAmountOfSingularValues = singularValues;
         __weak SVDImageCompressionViewController *wself = self;

@@ -35,7 +35,7 @@
  *  @param rowA The index of the first row to exchange.
  *  @param rowB The index of the first second to exchange.
  */
-- (void)swapRowA:(__CLPK_integer)rowA withRowB:(__CLPK_integer)rowB;
+- (void)swapRowA:(MAVIndex)rowA withRowB:(MAVIndex)rowB;
 
 /**
  *  Exchanges the values in the specified columns.
@@ -43,7 +43,7 @@
  *  @param columnA  The index of the first column to exchange.
  *  @param columnB  The index of the second column to exchange.
  */
-- (void)swapColumnA:(__CLPK_integer)columnA withColumnB:(__CLPK_integer)columnB;
+- (void)swapColumnA:(MAVIndex)columnA withColumnB:(MAVIndex)columnB;
 
 /**
  *  Set the value at a position specified by row and column. Raises an 
@@ -53,7 +53,7 @@
  *  @param column The column in which the value will be set.
  *  @param value The value to set at the specified position.
  */
-- (void)setEntryAtRow:(__CLPK_integer)row column:(__CLPK_integer)column toValue:(NSNumber *)value;
+- (void)setEntryAtRow:(MAVIndex)row column:(MAVIndex)column toValue:(NSNumber *)value;
 
 /**
  *  Insert a column vector at the specified position.
@@ -61,7 +61,7 @@
  *  @param vector The column vector of values to insert into this matrix.
  *  @param column The position at which to insert the column vector.
  */
-- (void)setColumnVector:(MAVVector *)vector atColumn:(__CLPK_integer)column;
+- (void)setColumnVector:(MAVVector *)vector atColumn:(MAVIndex)column;
 
 /**
  *  Insert a row vector at the specified position.
@@ -69,7 +69,7 @@
  *  @param vector The row vector of values to insert into this matrix.
  *  @param row The position at which to insert the row vector.
  */
-- (void)setRowVector:(MAVVector *)vector atRow:(__CLPK_integer)row;
+- (void)setRowVector:(MAVVector *)vector atRow:(MAVIndex)row;
 
 /**
  *  Enable bracket operators to set row vectors of this matrix.
@@ -77,7 +77,7 @@
  *  @param obj The row vector of values to insert.
  *  @param idx The row position at which to insert the values.
  */
-- (void)setObject:(id)obj atIndexedSubscript:(__CLPK_integer)idx;
+- (void)setObject:(id)obj atIndexedSubscript:(MAVIndex)idx;
 
 #pragma mark - Mathematical operations
 

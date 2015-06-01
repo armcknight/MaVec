@@ -47,8 +47,8 @@
 #pragma mark - Constructors
 
 - (instancetype)initWithValues:(NSData *)values
-                          rows:(__CLPK_integer)rows
-                       columns:(__CLPK_integer)columns
+                          rows:(MAVIndex)rows
+                       columns:(MAVIndex)columns
               leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
                  packingMethod:(MAVMatrixValuePackingMethod)packingMethod
            triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
@@ -88,8 +88,8 @@
 
 + (instancetype)matrixWithColumnVectors:(NSArray *)columnVectors
 {
-    __CLPK_integer columns = (__CLPK_integer)columnVectors.count;
-    __CLPK_integer rows = ((MAVVector *)columnVectors.firstObject).length;
+    MAVIndex columns = (MAVIndex)columnVectors.count;
+    MAVIndex rows = ((MAVVector *)columnVectors.firstObject).length;
     
     BOOL isDoublePrecision = ((MAVVector *)columnVectors[0])[0].isDoublePrecision;
     
@@ -106,8 +106,8 @@
 
 + (instancetype)matrixWithRowVectors:(NSArray *)rowVectors
 {
-    __CLPK_integer rows = (__CLPK_integer)rowVectors.count;
-    __CLPK_integer columns = ((MAVVector *)rowVectors.firstObject).length;
+    MAVIndex rows = (MAVIndex)rowVectors.count;
+    MAVIndex columns = ((MAVVector *)rowVectors.firstObject).length;
     
     BOOL isDoublePrecision = ((MAVVector *)rowVectors[0])[0].isDoublePrecision;
     
@@ -122,8 +122,8 @@
     return matrix;
 }
 
-+ (instancetype)matrixWithRows:(__CLPK_integer)rows
-                       columns:(__CLPK_integer)columns
++ (instancetype)matrixWithRows:(MAVIndex)rows
+                       columns:(MAVIndex)columns
                      precision:(MCKPrecision)precision
 {
     MAVMatrix *matrix;
@@ -149,8 +149,8 @@
     return matrix;
 }
 
-+ (instancetype)matrixWithRows:(__CLPK_integer)rows
-                       columns:(__CLPK_integer)columns
++ (instancetype)matrixWithRows:(MAVIndex)rows
+                       columns:(MAVIndex)columns
                      precision:(MCKPrecision)precision
               leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
 {
@@ -160,8 +160,8 @@
 }
 
 + (instancetype)matrixWithValues:(NSData *)values
-                            rows:(__CLPK_integer)rows
-                         columns:(__CLPK_integer)columns
+                            rows:(MAVIndex)rows
+                         columns:(MAVIndex)columns
 {
 	return [[self alloc] initWithValues:values
 	                               rows:rows
@@ -172,8 +172,8 @@
 }
 
 + (instancetype)matrixWithValues:(NSData *)values
-                            rows:(__CLPK_integer)rows
-                         columns:(__CLPK_integer)columns
+                            rows:(MAVIndex)rows
+                         columns:(MAVIndex)columns
                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
 {
 	return [[self alloc] initWithValues:values
@@ -187,8 +187,8 @@
 
 
 + (instancetype)matrixFilledWithValue:(NSNumber *)value
-                                 rows:(__CLPK_integer)rows
-                              columns:(__CLPK_integer)columns
+                                 rows:(MAVIndex)rows
+                              columns:(MAVIndex)columns
 {
     MAVMatrix *matrix = [self matrixWithValues:[self dataForArrayFilledWithValue:value length:rows * columns]
                                           rows:rows
@@ -198,7 +198,7 @@
 }
 
 + (instancetype)triangularMatrixFilledWithValue:(NSNumber *)value
-                                          order:(__CLPK_integer)order
+                                          order:(MAVIndex)order
                             triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
 {
     size_t valueCount = (order * (order + 1)) / 2;
@@ -209,9 +209,9 @@
 }
 
 + (instancetype)bandMatrixFilledWithValue:(NSNumber *)value
-                                    order:(__CLPK_integer)order
-                         upperCodiagonals:(__CLPK_integer)upperCodiagonals
-                         lowerCodiagonals:(__CLPK_integer)lowerCodiagonals
+                                    order:(MAVIndex)order
+                         upperCodiagonals:(MAVIndex)upperCodiagonals
+                         lowerCodiagonals:(MAVIndex)lowerCodiagonals
 {
     size_t valueCount = (lowerCodiagonals + upperCodiagonals + 1) * order;
     return [MAVMatrix bandMatrixWithValues:[self dataForArrayFilledWithValue:value length:valueCount]
@@ -220,7 +220,7 @@
                           lowerCodiagonals:lowerCodiagonals];
 }
 
-+ (instancetype)identityMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)identityMatrixOfOrder:(MAVIndex)order
                             precision:(MCKPrecision)precision
 {
     MAVMatrix *matrix;
@@ -228,8 +228,8 @@
     if (precision == MCKPrecisionDouble) {
         NSUInteger size = order * order * sizeof(double);
         double *values = malloc(size);
-        for (__CLPK_integer i = 0; i < order; i++) {
-            for (__CLPK_integer j = 0; j < order; j++) {
+        for (MAVIndex i = 0; i < order; i++) {
+            for (MAVIndex j = 0; j < order; j++) {
                 values[i * order + j] = i == j ? 1.0 : 0.0;
             }
         }
@@ -239,8 +239,8 @@
     } else {
         NSUInteger size = order * order * sizeof(float);
         float *values = malloc(size);
-        for (__CLPK_integer i = 0; i < order; i++) {
-            for (__CLPK_integer j = 0; j < order; j++) {
+        for (MAVIndex i = 0; i < order; i++) {
+            for (MAVIndex j = 0; j < order; j++) {
                 values[i * order + j] = i == j ? 1.0f : 0.0f;
             }
         }
@@ -255,7 +255,7 @@
 }
 
 + (instancetype)diagonalMatrixWithValues:(NSData *)values
-                                   order:(__CLPK_integer)order
+                                   order:(MAVIndex)order
 {
     return [self bandMatrixWithValues:values order:order upperCodiagonals:0 lowerCodiagonals:0];
 }
@@ -263,7 +263,7 @@
 + (instancetype)triangularMatrixWithPackedValues:(NSData *)values
                            ofTriangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
-                                           order:(__CLPK_integer)order
+                                           order:(MAVIndex)order
 {
 	MAVMatrix *matrix = [[self alloc] initWithValues:values
 	                                            rows:order
@@ -278,7 +278,7 @@
 + (instancetype)symmetricMatrixWithPackedValues:(NSData *)values
                             triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
-                                          order:(__CLPK_integer)order
+                                          order:(MAVIndex)order
 {
 	MAVMatrix *matrix = [[self alloc] initWithValues:values
 	                                            rows:order
@@ -291,9 +291,9 @@
 }
 
 + (instancetype)bandMatrixWithValues:(NSData *)values
-                               order:(__CLPK_integer)order
-                    upperCodiagonals:(__CLPK_integer)upperCodiagonals
-                    lowerCodiagonals:(__CLPK_integer)lowerCodiagonals
+                               order:(MAVIndex)order
+                    upperCodiagonals:(MAVIndex)upperCodiagonals
+                    lowerCodiagonals:(MAVIndex)lowerCodiagonals
 {
 	MAVMatrix *matrix = [[self alloc] initWithValues:values
 	                                            rows:order
@@ -415,8 +415,8 @@
     return [self matrixWithValues:valueData rows:3 columns:3 leadingDimension:MAVMatrixLeadingDimensionRow];
 }
 
-+ (instancetype)randomMatrixWithRows:(__CLPK_integer)rows
-                             columns:(__CLPK_integer)columns
++ (instancetype)randomMatrixWithRows:(MAVIndex)rows
+                             columns:(MAVIndex)columns
                            precision:(MCKPrecision)precision
 {
 	return [self matrixWithValues:[self randomArrayOfSize:rows * columns precision:precision]
@@ -424,7 +424,7 @@
 	                              columns:columns];
 }
 
-+ (instancetype)randomSymmetricMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)randomSymmetricMatrixOfOrder:(MAVIndex)order
                                    precision:(MCKPrecision)precision
 {
 	return [self symmetricMatrixWithPackedValues:[self randomArrayOfSize:(order * (order + 1)) / 2 precision:precision]
@@ -433,14 +433,14 @@
 	                                       order:order];
 }
 
-+ (instancetype)randomDiagonalMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)randomDiagonalMatrixOfOrder:(MAVIndex)order
                                   precision:(MCKPrecision)precision
 {
 	return [self diagonalMatrixWithValues:[self randomArrayOfSize:order precision:precision]
 	                                order:order];
 }
 
-+ (instancetype)randomTriangularMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)randomTriangularMatrixOfOrder:(MAVIndex)order
                           triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                     precision:(MCKPrecision)precision
 {
@@ -450,9 +450,9 @@
 	                                        order:order];
 }
 
-+ (instancetype)randomBandMatrixOfOrder:(__CLPK_integer)order
-                       upperCodiagonals:(__CLPK_integer)upperCodiagonals
-                       lowerCodiagonals:(__CLPK_integer)lowerCodiagonals
++ (instancetype)randomBandMatrixOfOrder:(MAVIndex)order
+                       upperCodiagonals:(MAVIndex)upperCodiagonals
+                       lowerCodiagonals:(MAVIndex)lowerCodiagonals
                               precision:(MCKPrecision)precision
 {
     size_t numberOfBandValues = (upperCodiagonals + lowerCodiagonals + 1) * order;
@@ -462,7 +462,7 @@
 	                 lowerCodiagonals:lowerCodiagonals];
 }
 
-+ (instancetype)randomMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)randomMatrixOfOrder:(MAVIndex)order
                        definiteness:(MAVMatrixDefiniteness)definiteness
                           precision:(MCKPrecision)precision
 {
@@ -472,13 +472,13 @@
             
         case MAVMatrixDefinitenessIndefinite: {
             BOOL shouldHaveZero = (arc4random() % 2) == 0;
-            __CLPK_integer zeroIndex = arc4random() % order;
+            MAVIndex zeroIndex = arc4random() % order;
             BOOL positive = (arc4random() % 2) == 0;
             NSData *valueData;
             if (precision == MCKPrecisionDouble) {
                 size_t length = order * sizeof(double);
                 double *values = malloc(length);
-                for (__CLPK_integer i = 0; i < order; i++) {
+                for (MAVIndex i = 0; i < order; i++) {
                     if (shouldHaveZero && i == zeroIndex) {
                         values[i] = 0.0;
                     } else {
@@ -493,7 +493,7 @@
             } else {
                 size_t length = order * sizeof(float);
                 float *values = malloc(length);
-                for (__CLPK_integer i = 0; i < order; i++) {
+                for (MAVIndex i = 0; i < order; i++) {
                     if (shouldHaveZero && i == zeroIndex) {
                         values[i] = 0.0f;
                     } else {
@@ -529,12 +529,12 @@
          */
             
         case MAVMatrixDefinitenessPositiveSemidefinite: {
-            __CLPK_integer zeroIndex = arc4random() % order;
+            MAVIndex zeroIndex = arc4random() % order;
             NSData *valueData;
             if (precision == MCKPrecisionDouble) {
                 size_t length = order * sizeof(double);
                 double *values = malloc(length);
-                for (__CLPK_integer i = 0; i < order; i++) {
+                for (MAVIndex i = 0; i < order; i++) {
                     if (i == zeroIndex) {
                         values[i] = 0.0;
                     } else {
@@ -548,7 +548,7 @@
             } else {
                 size_t length = order * sizeof(float);
                 float *values = malloc(length);
-                for (__CLPK_integer i = 0; i < order; i++) {
+                for (MAVIndex i = 0; i < order; i++) {
                     if (i == zeroIndex) {
                         values[i] = 0.0f;
                     } else {
@@ -564,12 +564,12 @@
         } break;
             
         case MAVMatrixDefinitenessNegativeSemidefinite: {
-            __CLPK_integer zeroIndex = arc4random() % order;
+            MAVIndex zeroIndex = arc4random() % order;
             NSData *valueData;
             if (precision == MCKPrecisionDouble) {
                 size_t length = order * sizeof(double);
                 double *values = malloc(length);
-                for (__CLPK_integer i = 0; i < order; i++) {
+                for (MAVIndex i = 0; i < order; i++) {
                     if (i == zeroIndex) {
                         values[i] = 0.0;
                     } else {
@@ -583,7 +583,7 @@
             } else {
                 size_t length = order * sizeof(float);
                 float *values = malloc(length);
-                for (__CLPK_integer i = 0; i < order; i++) {
+                for (MAVIndex i = 0; i < order; i++) {
                     if (i == zeroIndex) {
                         values[i] = 0.0f;
                     } else {
@@ -609,14 +609,14 @@
     return matrix;
 }
 
-+ (instancetype)randomSingularMatrixOfOrder:(__CLPK_integer)order precision:(MCKPrecision)precision
++ (instancetype)randomSingularMatrixOfOrder:(MAVIndex)order precision:(MCKPrecision)precision
 {
     BOOL shouldHaveZeroColumn = (arc4random() % 2) == 0;
-    __CLPK_integer zeroVectorIndex = arc4random() % order;
+    MAVIndex zeroVectorIndex = arc4random() % order;
     
     NSMutableArray *vectors = [NSMutableArray new];
     MAVVectorFormat vectorFormat = shouldHaveZeroColumn ? MAVVectorFormatColumnVector : MAVVectorFormatRowVector;
-    for (__CLPK_integer i = 0; i < order; i++) {
+    for (MAVIndex i = 0; i < order; i++) {
         if (i == zeroVectorIndex) {
             [vectors addObject:[MAVVector vectorFilledWithValue:(precision == MCKPrecisionDouble ? @0.0 : @0.0f) length:order vectorFormat:vectorFormat]];
         } else {
@@ -626,7 +626,7 @@
     return shouldHaveZeroColumn ? [self matrixWithColumnVectors:vectors] : [MAVMatrix matrixWithRowVectors:vectors];
 }
 
-+ (instancetype)randomNonsigularMatrixOfOrder:(__CLPK_integer)order precision:(MCKPrecision)precision
++ (instancetype)randomNonsigularMatrixOfOrder:(MAVIndex)order precision:(MCKPrecision)precision
 {
     MAVMatrix *matrix = [self randomMatrixWithRows:order columns:order precision:precision];
     while ([matrix.determinant compare:(precision == MCKPrecisionDouble ? @0.0 : @0.0f)] == NSOrderedSame) {
@@ -719,14 +719,14 @@
         if (_rows == _columns) {
             NSData *columnMajorData = [self valuesWithLeadingDimension:MAVMatrixLeadingDimensionColumn];
             
-            __CLPK_integer m = _rows;
-            __CLPK_integer n = _columns;
+            MAVIndex m = _rows;
+            MAVIndex n = _columns;
             
-            __CLPK_integer lda = m;
+            MAVIndex lda = m;
             
-            __CLPK_integer *ipiv = malloc(MIN(m, n) * sizeof(__CLPK_integer));
+            MAVIndex *ipiv = malloc(MIN(m, n) * sizeof(MAVIndex));
             
-            __CLPK_integer info = 0;
+            MAVIndex info = 0;
             
             void *a;
             if ([columnMajorData containsDoublePrecisionValues:(m * n)]) {
@@ -736,12 +736,12 @@
                 dgetrf_(&m, &n, a, &lda, ipiv, &info);
                 
                 double wkopt;
-                __CLPK_integer lwork = -1;
+                MAVIndex lwork = -1;
                 
                 // query optimal workspace size
                 dgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
                 
-                lwork = (__CLPK_integer)wkopt;
+                lwork = (MAVIndex)wkopt;
                 double *work = malloc(lwork * sizeof(double));
                 
                 // calculate the inverse
@@ -756,12 +756,12 @@
                 sgetrf_(&m, &n, a, &lda, ipiv, &info);
                 
                 float wkopt;
-                __CLPK_integer lwork = -1;
+                MAVIndex lwork = -1;
                 
                 // query optimal workspace size
                 sgetri_(&m, a, &lda, ipiv, &wkopt, &lwork, &info);
                 
-                lwork = (__CLPK_integer)wkopt;
+                lwork = (MAVIndex)wkopt;
                 float *work = malloc(lwork * sizeof(float));
                 
                 // calculate the inverse
@@ -785,20 +785,20 @@
 {
     if (_conditionNumber == nil) {
         NSData *rowMajorValues = [self valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
-        __CLPK_integer m = self.rows;
-        __CLPK_integer n = self.columns;
+        MAVIndex m = self.rows;
+        MAVIndex n = self.columns;
         if ([rowMajorValues containsDoublePrecisionValues:(m * n)]) {
             double *values = (double *)rowMajorValues.bytes;
             double norm = dlange_("1", &m, &n, values, &m, nil);
             
-            __CLPK_integer lda = self.rows;
-            __CLPK_integer *ipiv = malloc(m * sizeof(__CLPK_integer));
-            __CLPK_integer info;
+            MAVIndex lda = self.rows;
+            MAVIndex *ipiv = malloc(m * sizeof(MAVIndex));
+            MAVIndex info;
             dgetrf_(&m, &n, values, &lda, ipiv, &info);
             
             double conditionReciprocal;
             double *work = malloc(4 * m * sizeof(double));
-            __CLPK_integer *iwork = malloc(m * sizeof(__CLPK_integer));
+            MAVIndex *iwork = malloc(m * sizeof(MAVIndex));
             dgecon_("1", &m, values, &lda, &norm, &conditionReciprocal, work, iwork, &info);
             
             free(ipiv);
@@ -811,14 +811,14 @@
             
             float norm = (float)slange_("1", &m, &n, values, &m, nil);
             
-            __CLPK_integer lda = self.rows;
-            __CLPK_integer *ipiv = malloc(m * sizeof(__CLPK_integer));
-            __CLPK_integer info;
+            MAVIndex lda = self.rows;
+            MAVIndex *ipiv = malloc(m * sizeof(MAVIndex));
+            MAVIndex info;
             sgetrf_(&m, &n, values, &lda, ipiv, &info);
             
             float conditionReciprocal;
             float *work = malloc(4 * m * sizeof(float));
-            __CLPK_integer *iwork = malloc(m * sizeof(__CLPK_integer));
+            MAVIndex *iwork = malloc(m * sizeof(MAVIndex));
             sgecon_("1", &m, values, &lda, &norm, &conditionReciprocal, work, iwork, &info);
             
             free(ipiv);
@@ -875,8 +875,8 @@
             _symmetric = [MCKTribool triboolWithValue:MCKTriboolValueNo];
         } else {
             BOOL isSymmetric = YES;
-            for (__CLPK_integer i = 0; i < self.rows; i++) {
-                for (__CLPK_integer j = i + 1; j < self.columns; j++) {
+            for (MAVIndex i = 0; i < self.rows; i++) {
+                for (MAVIndex j = i + 1; j < self.columns; j++) {
                     if ([[self valueAtRow:i column:j] compare:[self valueAtRow:j column:i]] != NSOrderedSame) {
                         isSymmetric = NO;
                         break;
@@ -894,7 +894,7 @@
 {
     if (_isZero.triboolValue == MCKTriboolValueUnknown) {
         MCKTriboolValue isZero = MCKTriboolValueYes;
-        for (__CLPK_integer rowIndex = 0; rowIndex < self.rows; rowIndex++) {
+        for (MAVIndex rowIndex = 0; rowIndex < self.rows; rowIndex++) {
             if ([[[self rowVectorForRow:rowIndex] isZero] isNo]) {
                 isZero = MCKTriboolValueNo;
                 break;
@@ -915,8 +915,8 @@
         else {
             isIdentity = self.diagonalValues.isIdentity.triboolValue;
             if (isIdentity) {
-                for (__CLPK_integer rowIndex = 0; rowIndex < self.rows; rowIndex++) {
-                    for (__CLPK_integer colIndex = 0; colIndex < self.columns; colIndex++) {
+                for (MAVIndex rowIndex = 0; rowIndex < self.rows; rowIndex++) {
+                    for (MAVIndex colIndex = 0; colIndex < self.columns; colIndex++) {
                         if (rowIndex != colIndex && ![[self valueAtRow:rowIndex column:colIndex] isEqualToNumber:@0]) {
                             isIdentity = MCKTriboolValueNo;
                             break;
@@ -937,7 +937,7 @@
         BOOL hasFoundEigenvalueStrictlyLesserThanZero = NO;
         BOOL hasFoundEigenvalueEqualToZero = NO;
         MAVVector *eigenvalues = self.eigendecomposition.eigenvalues;
-        for (__CLPK_integer i = 0; i < eigenvalues.length; i += 1) {
+        for (MAVIndex i = 0; i < eigenvalues.length; i += 1) {
             NSNumber *eigenvalue = [eigenvalues valueAtIndex:i];
             if ([eigenvalue compare:@0] == NSOrderedDescending) {
                 hasFoundEigenvalueStrictlyGreaterThanZero = YES;
@@ -975,17 +975,17 @@
 - (MAVVector *)diagonalValues
 {
     if (_diagonalValues == nil) {
-        __CLPK_integer length = MIN(self.rows, self.columns);
+        MAVIndex length = MIN(self.rows, self.columns);
         
         if (self[0][0].isDoublePrecision) {
             double *values = malloc(length * sizeof(double));
-            for (__CLPK_integer i = 0; i < length; i += 1) {
+            for (MAVIndex i = 0; i < length; i += 1) {
                 values[i] = [self valueAtRow:i column:i].doubleValue;
             }
             _diagonalValues = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:length * sizeof(double)] length:length vectorFormat:MAVVectorFormatRowVector];
         } else {
             float *values = malloc(length * sizeof(float));
-            for (__CLPK_integer i = 0; i < length; i += 1) {
+            for (MAVIndex i = 0; i < length; i += 1) {
                 values[i] = [self valueAtRow:i column:i].floatValue;
             }
             _diagonalValues = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:length * sizeof(float)] length:length vectorFormat:MAVVectorFormatRowVector];
@@ -1040,16 +1040,16 @@
         if ([self.values containsDoublePrecisionValues:(self.rows * self.columns)]) {
             double *minorValues = malloc(self.rows * self.columns * sizeof(double));
             
-            __CLPK_integer minorIdx = 0;
-            for (__CLPK_integer row = 0; row < self.rows; row += 1) {
-                for (__CLPK_integer col = 0; col < self.columns; col += 1) {
+            MAVIndex minorIdx = 0;
+            for (MAVIndex row = 0; row < self.rows; row += 1) {
+                for (MAVIndex col = 0; col < self.columns; col += 1) {
 					MAVMutableMatrix *submatrix = [MAVMutableMatrix matrixWithRows:self.rows - 1
 					                                                       columns:self.columns - 1
 					                                                     precision:MCKPrecisionDouble
 					                                              leadingDimension:self.leadingDimension];
                     
-                    for (__CLPK_integer i = 0; i < self.rows; i++) {
-                        for (__CLPK_integer j = 0; j < self.rows; j++) {
+                    for (MAVIndex i = 0; i < self.rows; i++) {
+                        for (MAVIndex j = 0; j < self.rows; j++) {
                             if (i != row && j != col) {
                                 [submatrix setEntryAtRow:i > row ? i - 1 : i
                                                   column:j > col ? j - 1 : j
@@ -1069,16 +1069,16 @@
         } else {
             float *minorValues = malloc(self.rows * self.columns * sizeof(float));
             
-            __CLPK_integer minorIdx = 0;
-            for (__CLPK_integer row = 0; row < self.rows; row += 1) {
-                for (__CLPK_integer col = 0; col < self.columns; col += 1) {
+            MAVIndex minorIdx = 0;
+            for (MAVIndex row = 0; row < self.rows; row += 1) {
+                for (MAVIndex col = 0; col < self.columns; col += 1) {
 					MAVMutableMatrix *submatrix = [MAVMutableMatrix matrixWithRows:self.rows - 1
 					                                                       columns:self.columns - 1
 					                                                     precision:MCKPrecisionSingle
 					                                              leadingDimension:self.leadingDimension];
                     
-                    for (__CLPK_integer i = 0; i < self.rows; i++) {
-                        for (__CLPK_integer j = 0; j < self.rows; j++) {
+                    for (MAVIndex i = 0; i < self.rows; i++) {
+                        for (MAVIndex j = 0; j < self.rows; j++) {
                             if (i != row && j != col) {
                                 [submatrix setEntryAtRow:i > row ? i - 1 : i
                                                   column:j > col ? j - 1 : j
@@ -1109,9 +1109,9 @@
             size_t size = self.rows * self.columns * sizeof(double);
             double *cofactors = malloc(size);
             
-            __CLPK_integer cofactorIdx = 0;
-            for (__CLPK_integer row = 0; row < self.rows; row += 1) {
-                for (__CLPK_integer col = 0; col < self.columns; col += 1) {
+            MAVIndex cofactorIdx = 0;
+            for (MAVIndex row = 0; row < self.rows; row += 1) {
+                for (MAVIndex col = 0; col < self.columns; col += 1) {
                     double minor = self.minorMatrix[row][col].doubleValue;
                     double multiplier = pow(-1.0, row + col + 2.0);
                     cofactors[cofactorIdx++] = minor * multiplier;
@@ -1126,9 +1126,9 @@
             size_t size = self.rows * self.columns * sizeof(float);
             float *cofactors = malloc(size);
             
-            __CLPK_integer cofactorIdx = 0;
-            for (__CLPK_integer row = 0; row < self.rows; row += 1) {
-                for (__CLPK_integer col = 0; col < self.columns; col += 1) {
+            MAVIndex cofactorIdx = 0;
+            for (MAVIndex row = 0; row < self.rows; row += 1) {
+                for (MAVIndex col = 0; col < self.columns; col += 1) {
                     float minor = self.minorMatrix[row][col].floatValue;
                     float multiplier = powf(-1.0f, row + col + 2.0f);
                     cofactors[cofactorIdx++] = minor * multiplier;
@@ -1161,8 +1161,8 @@
     if (!([otherMatrix isKindOfClass:[MAVMatrix class]] && self.rows == otherMatrix.rows && self.columns == otherMatrix.columns)) {
         return NO;
     } else {
-        for (__CLPK_integer row = 0; row < self.rows; row += 1) {
-            for (__CLPK_integer col = 0; col < self.columns; col += 1) {
+        for (MAVIndex row = 0; row < self.rows; row += 1) {
+            for (MAVIndex col = 0; col < self.columns; col += 1) {
                 if ([[self valueAtRow:row column:col] compare:[otherMatrix valueAtRow:row column:col]] != NSOrderedSame) {
                     return NO;
                 }
@@ -1185,27 +1185,27 @@
 
 - (NSString *)description
 {
-    __CLPK_integer padding;
+    MAVIndex padding;
     
     if (self.precision == MCKPrecisionDouble) {
         double max = DBL_MIN;
         for (size_t i = 0; i < self.rows * self.columns; i++) {
             max = MAX(max, fabs(((double *)self.values.bytes)[i]));
         }
-        padding = (__CLPK_integer)floor(log10(max)) + 5;
+        padding = (MAVIndex)floor(log10(max)) + 5;
     } else {
         float max = FLT_MIN;
         for (size_t i = 0; i < self.rows * self.columns; i++) {
             max = MAX(max, fabsf(((float *)self.values.bytes)[i]));
         }
-        padding = (__CLPK_integer)floorf(log10f(max)) + 5;
+        padding = (MAVIndex)floorf(log10f(max)) + 5;
     }
     
     NSMutableString *description = [@"\n" mutableCopy];
     
-    for (__CLPK_integer j = 0; j < self.rows; j++) {
+    for (MAVIndex j = 0; j < self.rows; j++) {
         NSMutableString *line = [NSMutableString string];
-        for (__CLPK_integer k = 0; k < self.columns; k++) {
+        for (MAVIndex k = 0; k < self.columns; k++) {
             NSString *string = [NSString stringWithFormat:@"%.1f", self.precision == MCKPrecisionDouble ? [self valueAtRow:j column:k].doubleValue : [self valueAtRow:j column:k].floatValue];
             [line appendString:[string stringByPaddingToLength:padding withString:@" " startingAtIndex:0]];
         }
@@ -1238,8 +1238,8 @@
                     }
                 } else {
                     size_t i = 0;
-                    for (__CLPK_integer j = 0; j < (leadingDimension == MAVMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
-                        for (__CLPK_integer k = 0; k < (leadingDimension == MAVMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
+                    for (MAVIndex j = 0; j < (leadingDimension == MAVMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
+                        for (MAVIndex k = 0; k < (leadingDimension == MAVMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
                             size_t idx = ((i * (leadingDimension == MAVMatrixLeadingDimensionRow ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
                             values[i] = ((double *)self.values.bytes)[idx];
                             i++;
@@ -1256,8 +1256,8 @@
                     }
                 } else {
                     size_t i = 0;
-                    for (__CLPK_integer j = 0; j < (leadingDimension == MAVMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
-                        for (__CLPK_integer k = 0; k < (leadingDimension == MAVMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
+                    for (MAVIndex j = 0; j < (leadingDimension == MAVMatrixLeadingDimensionRow ? self.rows : self.columns); j++) {
+                        for (MAVIndex k = 0; k < (leadingDimension == MAVMatrixLeadingDimensionRow ? self.columns : self.rows); k++) {
                             size_t idx = ((i * (leadingDimension == MAVMatrixLeadingDimensionRow ? self.rows : self.columns)) % (self.columns * self.rows)) + j;
                             values[i] = ((float *)self.values.bytes)[idx];
                             i++;
@@ -1292,8 +1292,8 @@
                 double *values = malloc(size);
                 size_t k = 0; // current index in ivar array
                 size_t z = 0; // current index in constructing array
-                for (__CLPK_integer i = 0; i < self.columns; i += 1) {
-                    for (__CLPK_integer j = 0; j < self.columns; j += 1) {
+                for (MAVIndex i = 0; i < self.columns; i += 1) {
+                    for (MAVIndex j = 0; j < self.columns; j += 1) {
                         BOOL shouldTakePackedValue = (self.triangularComponent == MAVMatrixTriangularComponentUpper)
                         ? (self.leadingDimension == MAVMatrixLeadingDimensionColumn ? j <= i : i <= j)
                         : (self.leadingDimension == MAVMatrixLeadingDimensionColumn ? i <= j : j <= i);
@@ -1311,8 +1311,8 @@
                 if (self.leadingDimension != leadingDimension) {
                     double *cvalues = malloc(self.rows * self.columns * sizeof(double));
                     size_t i = 0;
-                    for (__CLPK_integer j = 0; j < self.columns; j++) {
-                        for (__CLPK_integer row = 0; row < self.rows; row++) {
+                    for (MAVIndex j = 0; j < self.columns; j++) {
+                        for (MAVIndex row = 0; row < self.rows; row++) {
                             size_t idx = ((i * self.columns) % (self.columns * self.rows)) + j;
                             cvalues[i] = values[idx];
                             i++;
@@ -1327,8 +1327,8 @@
                 float *values = malloc(size);
                 size_t k = 0; // current index in ivar array
                 size_t z = 0; // current index in constructing array
-                for (__CLPK_integer i = 0; i < self.columns; i += 1) {
-                    for (__CLPK_integer j = 0; j < self.columns; j += 1) {
+                for (MAVIndex i = 0; i < self.columns; i += 1) {
+                    for (MAVIndex j = 0; j < self.columns; j += 1) {
                         BOOL shouldTakePackedValue = (self.triangularComponent == MAVMatrixTriangularComponentUpper)
                         ? (self.leadingDimension == MAVMatrixLeadingDimensionColumn ? j <= i : i <= j)
                         : (self.leadingDimension == MAVMatrixLeadingDimensionColumn ? i <= j : j <= i);
@@ -1346,8 +1346,8 @@
                 if (self.leadingDimension != leadingDimension) {
                     float *cvalues = malloc(self.rows * self.columns * sizeof(float));
                     size_t i = 0;
-                    for (__CLPK_integer j = 0; j < self.columns; j++) {
-                        for (__CLPK_integer row = 0; row < self.rows; row++) {
+                    for (MAVIndex j = 0; j < self.columns; j++) {
+                        for (MAVIndex row = 0; row < self.rows; row++) {
                             size_t idx = ((i * self.columns) % (self.columns * self.rows)) + j;
                             cvalues[i] = values[idx];
                             i++;
@@ -1392,8 +1392,8 @@
             if (self.precision == MCKPrecisionDouble) {
                 size_t size = self.rows * self.columns * sizeof(double);
                 double *values = malloc(size);
-                for (__CLPK_integer i = 0; i < self.columns; i += 1) {
-                    for (__CLPK_integer j = 0; j < self.columns; j += 1) {
+                for (MAVIndex i = 0; i < self.columns; i += 1) {
+                    for (MAVIndex j = 0; j < self.columns; j += 1) {
                         size_t indexIntoBandArray = ( i - j + self.upperCodiagonals ) * self.columns + j;
                         size_t indexIntoUnpackedArray = (leadingDimension == MAVMatrixLeadingDimensionColumn ? j : i) * self.columns + (leadingDimension == MAVMatrixLeadingDimensionColumn ? i : j);
                         if (indexIntoBandArray < self.bandwidth * self.columns) {
@@ -1407,8 +1407,8 @@
             } else {
                 size_t size = self.rows * self.columns * sizeof(float);
                 float *values = malloc(size);
-                for (__CLPK_integer i = 0; i < self.columns; i += 1) {
-                    for (__CLPK_integer j = 0; j < self.columns; j += 1) {
+                for (MAVIndex i = 0; i < self.columns; i += 1) {
+                    for (MAVIndex j = 0; j < self.columns; j += 1) {
                         size_t indexIntoBandArray = ( i - j + self.upperCodiagonals ) * self.columns + j;
                         size_t indexIntoUnpackedArray = (leadingDimension == MAVMatrixLeadingDimensionColumn ? j : i) * self.columns + (leadingDimension == MAVMatrixLeadingDimensionColumn ? i : j);
                         if (indexIntoBandArray < self.bandwidth * self.columns) {
@@ -1438,16 +1438,16 @@
     
     size_t numberOfValues = packingMethod == MAVMatrixValuePackingMethodPacked ? ((self.rows * (self.rows + 1)) / 2) : self.rows * self.rows;
     size_t i = 0;
-    __CLPK_integer outerLimit = self.leadingDimension == MAVMatrixLeadingDimensionRow ? self.rows : self.columns;
-    __CLPK_integer innerLimit = self.leadingDimension == MAVMatrixLeadingDimensionRow ? self.columns : self.rows;
+    MAVIndex outerLimit = self.leadingDimension == MAVMatrixLeadingDimensionRow ? self.rows : self.columns;
+    MAVIndex innerLimit = self.leadingDimension == MAVMatrixLeadingDimensionRow ? self.columns : self.rows;
     
     if (self.precision == MCKPrecisionDouble) {
         size_t size = numberOfValues * sizeof(double);
         double *values = malloc(size);
-        for (__CLPK_integer j = 0; j < outerLimit; j++) {
-            for (__CLPK_integer k = 0; k < innerLimit; k++) {
-                __CLPK_integer row = leadingDimension == MAVMatrixLeadingDimensionRow ? j : k;
-                __CLPK_integer col = leadingDimension == MAVMatrixLeadingDimensionRow ? k : j;
+        for (MAVIndex j = 0; j < outerLimit; j++) {
+            for (MAVIndex k = 0; k < innerLimit; k++) {
+                MAVIndex row = leadingDimension == MAVMatrixLeadingDimensionRow ? j : k;
+                MAVIndex col = leadingDimension == MAVMatrixLeadingDimensionRow ? k : j;
                 
                 BOOL shouldStoreValueForLowerTriangle = triangularComponent == MAVMatrixTriangularComponentLower && col <= row;
                 BOOL shouldStoreValueForUpperTriangle = triangularComponent == MAVMatrixTriangularComponentUpper && row <= col;
@@ -1464,10 +1464,10 @@
     } else {
         size_t size = numberOfValues * sizeof(float);
         float *values = malloc(size);
-        for (__CLPK_integer j = 0; j < outerLimit; j++) {
-            for (__CLPK_integer k = 0; k < innerLimit; k++) {
-                __CLPK_integer row = leadingDimension == MAVMatrixLeadingDimensionRow ? j : k;
-                __CLPK_integer col = leadingDimension == MAVMatrixLeadingDimensionRow ? k : j;
+        for (MAVIndex j = 0; j < outerLimit; j++) {
+            for (MAVIndex k = 0; k < innerLimit; k++) {
+                MAVIndex row = leadingDimension == MAVMatrixLeadingDimensionRow ? j : k;
+                MAVIndex col = leadingDimension == MAVMatrixLeadingDimensionRow ? k : j;
                 
                 BOOL shouldStoreValueForLowerTriangle = triangularComponent == MAVMatrixTriangularComponentLower && col <= row;
                 BOOL shouldStoreValueForUpperTriangle = triangularComponent == MAVMatrixTriangularComponentUpper && row <= col;
@@ -1486,8 +1486,8 @@
     return data;
 }
 
-- (NSData *)valuesInBandBetweenUpperCodiagonal:(__CLPK_integer)upperCodiagonal
-                               lowerCodiagonal:(__CLPK_integer)lowerCodiagonal
+- (NSData *)valuesInBandBetweenUpperCodiagonal:(MAVIndex)upperCodiagonal
+                               lowerCodiagonal:(MAVIndex)lowerCodiagonal
 {
     NSAssert(self.rows == self.columns, @"Cannot extract bands from rectangular matrices.");
     
@@ -1495,15 +1495,15 @@
     
     NSData *data;
     
-    __CLPK_integer bandwidth = upperCodiagonal + lowerCodiagonal + 1;
-    __CLPK_integer numberOfValues = bandwidth * self.columns;
+    MAVIndex bandwidth = upperCodiagonal + lowerCodiagonal + 1;
+    MAVIndex numberOfValues = bandwidth * self.columns;
     size_t i = 0;
     
     if (self.precision == MCKPrecisionDouble) {
         size_t size = numberOfValues * sizeof(double);
         double *values = malloc(size);
-        for (__CLPK_integer col = upperCodiagonal; col >= 0; col--) {
-            for (__CLPK_integer row = -col; row < self.rows - col; row++) {
+        for (MAVIndex col = upperCodiagonal; col >= 0; col--) {
+            for (MAVIndex row = -col; row < self.rows - col; row++) {
                 if (row < 0) {
                     values[i++] = 0.0;
                 } else {
@@ -1513,8 +1513,8 @@
             }
         }
         
-        for (__CLPK_integer row = 1; row <= lowerCodiagonal; row++) {
-            for (__CLPK_integer col = 0; col < self.columns; col++) {
+        for (MAVIndex row = 1; row <= lowerCodiagonal; row++) {
+            for (MAVIndex col = 0; col < self.columns; col++) {
                 if (col < self.columns - row) {
                     double value = [self valueAtRow:row + col column:col].doubleValue;
                     values[i++] = value;
@@ -1527,8 +1527,8 @@
     } else {
         size_t size = numberOfValues * sizeof(float);
         float *values = malloc(size);
-        for (__CLPK_integer col = upperCodiagonal; col >= 0; col--) {
-            for (__CLPK_integer row = -col; row < self.rows - col; row++) {
+        for (MAVIndex col = upperCodiagonal; col >= 0; col--) {
+            for (MAVIndex row = -col; row < self.rows - col; row++) {
                 if (row < 0) {
                     values[i++] = 0.0f;
                 } else {
@@ -1538,8 +1538,8 @@
             }
         }
         
-        for (__CLPK_integer row = 1; row <= lowerCodiagonal; row++) {
-            for (__CLPK_integer col = 0; col < self.columns; col++) {
+        for (MAVIndex row = 1; row <= lowerCodiagonal; row++) {
+            for (MAVIndex col = 0; col < self.columns; col++) {
                 if (col < self.columns - row) {
                     float value = [self valueAtRow:row + col column:col].floatValue;
                     values[i++] = value;
@@ -1554,7 +1554,7 @@
     return data;
 }
 
-- (NSNumber *)valueAtRow:(__CLPK_integer)row column:(__CLPK_integer)column
+- (NSNumber *)valueAtRow:(MAVIndex)row column:(MAVIndex)column
 {
     NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
@@ -1575,7 +1575,7 @@
             if (self.triangularComponent == MAVMatrixTriangularComponentLower) {
                 if (column <= row || _symmetric.isYes) {
                     if (column > row && _symmetric.isYes) {
-                        __CLPK_integer temp = row;
+                        MAVIndex temp = row;
                         row = column;
                         column = temp;
                     }
@@ -1586,7 +1586,7 @@
                         index = valuesInSummedColumns + row - column;
                     } else {
                         // number of values in rows before desired row
-                        __CLPK_integer summedRows = row;
+                        MAVIndex summedRows = row;
                         size_t valuesInSummedRows = summedRows * (summedRows + 1) / 2;
                         index = valuesInSummedRows + column;
                     }
@@ -1596,14 +1596,14 @@
             } else /* if (self.triangularComponent == MAVMatrixTriangularComponentUpper) */ {
                 if (row <= column || _symmetric.isYes) {
                     if (row > column && _symmetric.isYes) {
-                        __CLPK_integer temp = row;
+                        MAVIndex temp = row;
                         row = column;
                         column = temp;
                     }
 
                     if (self.leadingDimension == MAVMatrixLeadingDimensionColumn) {
                         // number of values in columns before desired column
-                        __CLPK_integer summedColumns = column;
+                        MAVIndex summedColumns = column;
                         size_t valuesInSummedColumns = summedColumns * (summedColumns + 1) / 2;
                         index = valuesInSummedColumns + row;
                     } else {
@@ -1640,7 +1640,7 @@
     }
 }
 
-- (MAVVector *)rowVectorForRow:(__CLPK_integer)row
+- (MAVVector *)rowVectorForRow:(MAVIndex)row
 {
     NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
     
@@ -1649,14 +1649,14 @@
     if (self.precision == MCKPrecisionDouble) {
         size_t size = self.columns * sizeof(double);
         double *values = malloc(size);
-        for (__CLPK_integer col = 0; col < self.columns; col += 1) {
+        for (MAVIndex col = 0; col < self.columns; col += 1) {
             values[col] = [self valueAtRow:row column:col].doubleValue;
         }
         vector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:self.columns vectorFormat:MAVVectorFormatRowVector];
     } else {
         size_t size = self.columns * sizeof(float);
         float *values = malloc(size);
-        for (__CLPK_integer col = 0; col < self.columns; col += 1) {
+        for (MAVIndex col = 0; col < self.columns; col += 1) {
             values[col] = [self valueAtRow:row column:col].floatValue;
         }
         vector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:self.columns vectorFormat:MAVVectorFormatRowVector];
@@ -1665,7 +1665,7 @@
     return vector;
 }
 
-- (MAVVector *)columnVectorForColumn:(__CLPK_integer)column
+- (MAVVector *)columnVectorForColumn:(MAVIndex)column
 {
     NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
     
@@ -1674,14 +1674,14 @@
     if (self.precision == MCKPrecisionDouble) {
         size_t size = self.rows * sizeof(double);
         double *values = malloc(size);
-        for (__CLPK_integer row = 0; row < self.rows; row += 1) {
+        for (MAVIndex row = 0; row < self.rows; row += 1) {
             values[row] = [self valueAtRow:row column:column].doubleValue;
         }
         vector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:self.rows vectorFormat:MAVVectorFormatColumnVector];
     } else {
         size_t size = self.rows * sizeof(float);
         float *values = malloc(size);
-        for (__CLPK_integer row = 0; row < self.rows; row += 1) {
+        for (MAVIndex row = 0; row < self.rows; row += 1) {
             values[row] = [self valueAtRow:row column:column].floatValue;
         }
         vector = [MAVVector vectorWithValues:[NSData dataWithBytesNoCopy:values length:size] length:self.rows vectorFormat:MAVVectorFormatColumnVector];
@@ -1693,7 +1693,7 @@
 - (NSArray *)rowVectors
 {
     NSMutableArray *vectors = [NSMutableArray new];
-    for (__CLPK_integer i = 0; i < self.rows; i++) {
+    for (MAVIndex i = 0; i < self.rows; i++) {
         [vectors addObject:[self rowVectorForRow:i]];
     }
     return vectors;
@@ -1702,7 +1702,7 @@
 - (NSArray *)columnVectors
 {
     NSMutableArray *vectors = [NSMutableArray new];
-    for (__CLPK_integer i = 0; i < self.columns; i++) {
+    for (MAVIndex i = 0; i < self.columns; i++) {
         [vectors addObject:[self columnVectorForColumn:i]];
     }
     return vectors;
@@ -1710,7 +1710,7 @@
 
 #pragma mark - Subscripting
 
-- (MAVVector *)objectAtIndexedSubscript:(__CLPK_integer)idx
+- (MAVVector *)objectAtIndexedSubscript:(MAVIndex)idx
 {
     NSAssert1(idx >= 0 && idx < self.rows, @"idx = %lld is outside the range of possible rows.", (long long int)idx);
     
@@ -1731,13 +1731,13 @@
     if (A.rows == A.columns) {
         // solve for square matrix A
         
-        __CLPK_integer n = A.rows;
-        __CLPK_integer nrhs = 1;
-        __CLPK_integer lda = n;
-        __CLPK_integer ldb = n;
-        __CLPK_integer info;
-        __CLPK_integer *ipiv = malloc(n * sizeof(__CLPK_integer));
-        __CLPK_integer nb = B.length;
+        MAVIndex n = A.rows;
+        MAVIndex nrhs = 1;
+        MAVIndex lda = n;
+        MAVIndex ldb = n;
+        MAVIndex info;
+        MAVIndex *ipiv = malloc(n * sizeof(MAVIndex));
+        MAVIndex nb = B.length;
         
         if (A.precision == MCKPrecisionDouble) {
             double *a = malloc(n * n * sizeof(double));
@@ -1745,7 +1745,7 @@
                 a[i] = ((double*)aData.bytes)[i];
             }
             double *b = malloc(nb * sizeof(double));
-            for (__CLPK_integer i = 0; i < nb; i++) {
+            for (MAVIndex i = 0; i < nb; i++) {
                 b[i] = ((double *)B.values.bytes)[i];
             }
             
@@ -1759,7 +1759,7 @@
             } else {
                 size_t size = n * sizeof(double);
                 double *solutionValues = malloc(size);
-                for (__CLPK_integer i = 0; i < n; i++) {
+                for (MAVIndex i = 0; i < n; i++) {
                     solutionValues[i] = b[i];
                 }
                 free(ipiv);
@@ -1773,7 +1773,7 @@
                 a[i] = ((float*)aData.bytes)[i];
             }
             float *b = malloc(nb * sizeof(float));
-            for (__CLPK_integer i = 0; i < nb; i++) {
+            for (MAVIndex i = 0; i < nb; i++) {
                 b[i] = ((float *)B.values.bytes)[i];
             }
             
@@ -1811,14 +1811,14 @@
          minimum norm solution vectors;
          */
         
-        __CLPK_integer m = A.rows;
-        __CLPK_integer n = A.columns;
-        __CLPK_integer nrhs = 1;
-        __CLPK_integer lda = A.rows;
-        __CLPK_integer ldb = A.rows;
-        __CLPK_integer info;
-        __CLPK_integer lwork = -1;
-        __CLPK_integer nb = B.length;
+        MAVIndex m = A.rows;
+        MAVIndex n = A.columns;
+        MAVIndex nrhs = 1;
+        MAVIndex lda = A.rows;
+        MAVIndex ldb = A.rows;
+        MAVIndex info;
+        MAVIndex lwork = -1;
+        MAVIndex nb = B.length;
         
         if (A.precision == MCKPrecisionDouble) {
             double wkopt;
@@ -1828,14 +1828,14 @@
                 a[i] = ((double *)aData.bytes)[i];
             }
             double *b = malloc(nb * sizeof(double));
-            for (__CLPK_integer i = 0; i < nb; i++) {
+            for (MAVIndex i = 0; i < nb; i++) {
                 b[i] = ((double *)B.values.bytes)[i];
             }
             
             // get the optimal workspace
             dgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
             
-            lwork = (__CLPK_integer)wkopt;
+            lwork = (MAVIndex)wkopt;
             work = (double*)malloc(lwork * sizeof(double));
             
             // solve the system of equations
@@ -1849,7 +1849,7 @@
             } else {
                 size_t size = n * sizeof(double);
                 double *solutionValues = malloc(size);
-                for (__CLPK_integer i = 0; i < n; i++) {
+                for (MAVIndex i = 0; i < n; i++) {
                     solutionValues[i] = b[i];
                 }
                 free(a);
@@ -1861,18 +1861,18 @@
             float wkopt;
             float* work;
             float *a = malloc(m * n * sizeof(float));
-            for (__CLPK_integer i = 0; i < m * n; i++) {
+            for (MAVIndex i = 0; i < m * n; i++) {
                 a[i] = ((float *)aData.bytes)[i];
             }
             float *b = malloc(nb * sizeof(float));
-            for (__CLPK_integer i = 0; i < nb; i++) {
+            for (MAVIndex i = 0; i < nb; i++) {
                 b[i] = ((float *)B.values.bytes)[i];
             }
             
             // get the optimal workspace
             sgels_("No transpose", &m, &n, &nrhs, a, &lda, b, &ldb, &wkopt, &lwork, &info);
             
-            lwork = (__CLPK_integer)wkopt;
+            lwork = (MAVIndex)wkopt;
             work = (float*)malloc(lwork * sizeof(float));
             
             // solve the system of equations
@@ -1886,7 +1886,7 @@
             } else {
                 size_t size = n * sizeof(float);
                 float *solutionValues = malloc(size);
-                for (__CLPK_integer i = 0; i < n; i++) {
+                for (MAVIndex i = 0; i < n; i++) {
                     solutionValues[i] = b[i];
                 }
                 free(a);
@@ -1943,7 +1943,7 @@
     
     if (_precision == MCKPrecisionDouble) {
         double *values = malloc(matrix->_values.length);
-        for (__CLPK_integer i = 0; i < matrix->_values.length / sizeof(double); i++) {
+        for (MAVIndex i = 0; i < matrix->_values.length / sizeof(double); i++) {
             values[i] = ((double *)matrix->_values.bytes)[i];
         }
         if ( mutable ) {
@@ -1953,7 +1953,7 @@
         }
     } else {
         float *values = malloc(matrix->_values.length);
-        for (__CLPK_integer i = 0; i < matrix->_values.length / sizeof(float); i++) {
+        for (MAVIndex i = 0; i < matrix->_values.length / sizeof(float); i++) {
             values[i] = ((float *)matrix->_values.bytes)[i];
         }
         if ( mutable ) {
@@ -1997,14 +1997,14 @@
     if (precision == MCKPrecisionDouble) {
         size_t dataSize = size * sizeof(double);
         double *values = malloc(dataSize);
-        for (__CLPK_integer i = 0; i < size; i += 1) {
+        for (MAVIndex i = 0; i < size; i += 1) {
             values[i] = [NSNumber mck_randomDouble].doubleValue;
         }
         data = [NSData dataWithBytesNoCopy:values length:dataSize];
     } else {
         size_t dataSize = size * sizeof(float);
         float *values = malloc(dataSize);
-        for (__CLPK_integer i = 0; i < size; i += 1) {
+        for (MAVIndex i = 0; i < size; i += 1) {
             values[i] = [NSNumber mck_randomFloat].floatValue;
         }
         data = [NSData dataWithBytesNoCopy:values length:dataSize];
@@ -2065,8 +2065,8 @@
 {
     NSNumber *normResult;
     
-    __CLPK_integer m = self.rows;
-    __CLPK_integer n = self.columns;
+    MAVIndex m = self.rows;
+    MAVIndex n = self.columns;
     NSData *valueData = [self valuesWithLeadingDimension:MAVMatrixLeadingDimensionRow];
     char *norm = "";
     if (normType == MAVMatrixNormL1) {
@@ -2092,17 +2092,17 @@
 {
     MAVVector *firstVector = vectors.firstObject;
     BOOL isRowVector = firstVector.vectorFormat == MAVVectorFormatRowVector;
-    __CLPK_integer rows = isRowVector ? (__CLPK_integer)vectors.count : firstVector.length;
-    __CLPK_integer columns = isRowVector ? firstVector.length : (__CLPK_integer)vectors.count;
+    MAVIndex rows = isRowVector ? (MAVIndex)vectors.count : firstVector.length;
+    MAVIndex columns = isRowVector ? firstVector.length : (MAVIndex)vectors.count;
 
     NSData * data;
 
-    __CLPK_integer innerLoopLimit = isRowVector ? columns : rows;
+    MAVIndex innerLoopLimit = isRowVector ? columns : rows;
     if (((MAVVector *)vectors[0])[0].isDoublePrecision) {
         size_t size = rows * columns * sizeof(double);
         double *values = malloc(size);
         [vectors enumerateObjectsUsingBlock:^(MAVVector *vector, NSUInteger index, BOOL *stop) {
-            for(__CLPK_integer i = 0; i < innerLoopLimit; i++) {
+            for(MAVIndex i = 0; i < innerLoopLimit; i++) {
                 NSNumber *value = [vector valueAtIndex:i];
                 values[index * innerLoopLimit + i] = value.doubleValue;
             }
@@ -2112,7 +2112,7 @@
         size_t size = rows * columns * sizeof(float);
         float *values = malloc(size);
         [vectors enumerateObjectsUsingBlock:^(MAVVector *vector, NSUInteger index, BOOL *stop) {
-            for(__CLPK_integer i = 0; i < innerLoopLimit; i++) {
+            for(MAVIndex i = 0; i < innerLoopLimit; i++) {
                 NSNumber *value = [vector valueAtIndex:i];
                 values[index * innerLoopLimit + i] = value.floatValue;
             }
@@ -2131,7 +2131,7 @@
         size_t size = length * sizeof(double);
         double *values = malloc(size);
         double doubleValue = value.doubleValue;
-        for (__CLPK_integer i = 0; i < length; i++) {
+        for (MAVIndex i = 0; i < length; i++) {
             values[i] = doubleValue;
         }
         data = [NSData dataWithBytesNoCopy:values length:size];
@@ -2139,7 +2139,7 @@
         size_t size = length * sizeof(float);
         float *values = malloc(size);
         float floatValue = value.floatValue;
-        for (__CLPK_integer i = 0; i < length; i++) {
+        for (MAVIndex i = 0; i < length; i++) {
             values[i] = floatValue;
         }
         data = [NSData dataWithBytesNoCopy:values length:size];

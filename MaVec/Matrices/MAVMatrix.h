@@ -26,7 +26,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Accelerate/Accelerate.h>
+
+#import "MAVTypedefs.h"
 
 #import "NSNumber+MCKPrecision.h"
 
@@ -194,13 +195,13 @@ MAVCoordinateAxis;
  @property rows 
  @brief The number of rows in the matrix.
  */
-@property (nonatomic, readonly, assign) __CLPK_integer rows;
+@property (nonatomic, readonly, assign) MAVIndex rows;
 
 /**
  @property columns
  @brief The number of columns in the matrix.
  */
-@property (nonatomic, readonly, assign) __CLPK_integer columns;
+@property (nonatomic, readonly, assign) MAVIndex columns;
 
 /**
  @property values
@@ -374,8 +375,8 @@ MAVCoordinateAxis;
  @return A new MAVMatrix object.
  */
 - (instancetype)initWithValues:(NSData *)values
-                          rows:(__CLPK_integer)rows
-                       columns:(__CLPK_integer)columns
+                          rows:(MAVIndex)rows
+                       columns:(MAVIndex)columns
               leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
                  packingMethod:(MAVMatrixValuePackingMethod)packingMethod
            triangularComponent:(MAVMatrixTriangularComponent)triangularComponent;
@@ -390,8 +391,8 @@ MAVCoordinateAxis;
  @param precision The precision the matrix values will be stored in.
  @return New instance of MAVMatrix.
  */
-+ (instancetype)matrixWithRows:(__CLPK_integer)rows
-                       columns:(__CLPK_integer)columns
++ (instancetype)matrixWithRows:(MAVIndex)rows
+                       columns:(MAVIndex)columns
                      precision:(MCKPrecision)precision;
 
 /**
@@ -403,8 +404,8 @@ MAVCoordinateAxis;
  @param leadingDimension The format to store values in; either row- or column-major.
  @return New instance of MAVMatrix.
  */
-+ (instancetype)matrixWithRows:(__CLPK_integer)rows
-                       columns:(__CLPK_integer)columns
++ (instancetype)matrixWithRows:(MAVIndex)rows
+                       columns:(MAVIndex)columns
                      precision:(MCKPrecision)precision
               leadingDimension:(MAVMatrixLeadingDimension)leadingDimension;
 
@@ -417,8 +418,8 @@ MAVCoordinateAxis;
  @return New instance of MAVMatrix.
  */
 + (instancetype)matrixWithValues:(NSData *)values
-                            rows:(__CLPK_integer)rows
-                         columns:(__CLPK_integer)columns;
+                            rows:(MAVIndex)rows
+                         columns:(MAVIndex)columns;
 
 /**
  @brief Class convenience method to create a matrix with the specified values (in the specified storage format) and number of rows and columns.
@@ -430,8 +431,8 @@ MAVCoordinateAxis;
  @return New instance of MAVMatrix.
  */
 + (instancetype)matrixWithValues:(NSData *)values
-                            rows:(__CLPK_integer)rows
-                         columns:(__CLPK_integer)columns
+                            rows:(MAVIndex)rows
+                         columns:(MAVIndex)columns
                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension;
 
 /**
@@ -444,8 +445,8 @@ MAVCoordinateAxis;
    @return New instance of MAVMatrix filled with the supplied value.
  */
 + (instancetype)matrixFilledWithValue:(NSNumber *)value
-                                 rows:(__CLPK_integer)rows
-                              columns:(__CLPK_integer)columns;
+                                 rows:(MAVIndex)rows
+                              columns:(MAVIndex)columns;
 
 /**
  @brief Class convenience method to create a triangular matrix filled with a single supplied value.
@@ -457,7 +458,7 @@ MAVCoordinateAxis;
  @return New triangular MAVMatrix with specified component filled with the supplied value.
  */
 + (instancetype)triangularMatrixFilledWithValue:(NSNumber *)value
-                                          order:(__CLPK_integer)order
+                                          order:(MAVIndex)order
                             triangularComponent:(MAVMatrixTriangularComponent)triangularComponent;
 
 /**
@@ -471,9 +472,9 @@ MAVCoordinateAxis;
  @return New band MAVMatrix with band filled with the supplied value.
  */
 + (instancetype)bandMatrixFilledWithValue:(NSNumber *)value
-                                    order:(__CLPK_integer)order
-                         upperCodiagonals:(__CLPK_integer)upperCodiagonals
-                         lowerCodiagonals:(__CLPK_integer)lowerCodiagonals;
+                                    order:(MAVIndex)order
+                         upperCodiagonals:(MAVIndex)upperCodiagonals
+                         lowerCodiagonals:(MAVIndex)lowerCodiagonals;
 
 /**
  @brief Class convenience method to create a square identity matrix with the specified size.
@@ -482,7 +483,7 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return New instance of MAVMatrix representing the identity matrix of dimension size x size.
  */
-+ (instancetype)identityMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)identityMatrixOfOrder:(MAVIndex)order
                             precision:(MCKPrecision)precision;
 
 /**
@@ -493,7 +494,7 @@ MAVCoordinateAxis;
  @return New instance of MAVMatrix representing the square matrix of dimension size x size with specified diagonal values.
  */
 + (instancetype)diagonalMatrixWithValues:(NSData *)values
-                                   order:(__CLPK_integer)order;
+                                   order:(MAVIndex)order;
 
 /**
  @brief Class convenience method to create a matrix from an array of MAVVectors describing the matrix column vectors.
@@ -520,7 +521,7 @@ MAVCoordinateAxis;
 + (instancetype)triangularMatrixWithPackedValues:(NSData *)values
                            ofTriangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                 leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
-                                           order:(__CLPK_integer)order;
+                                           order:(MAVIndex)order;
 
 /**
  @brief Class convenience method to create a square symmetric from an array of values describing a triangular component of a matrix, either upper or lower.
@@ -533,7 +534,7 @@ MAVCoordinateAxis;
 + (instancetype)symmetricMatrixWithPackedValues:(NSData *)values
                             triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                leadingDimension:(MAVMatrixLeadingDimension)leadingDimension
-                                          order:(__CLPK_integer)order;
+                                          order:(MAVIndex)order;
 
 /**
  @brief Class convenience method to create a square band matrix with supplied (co)diagonal values in band matrix format (see http://www.roguewave.com/Portals/0/products/imsl-numerical-libraries/c-library/docs/6.0/math/default.htm?turl=matrixstoragemodes.htm for a good explanation).
@@ -544,9 +545,9 @@ MAVCoordinateAxis;
  @return A new instance of MAVMatrix representing the band matrix.
  */
 + (instancetype)bandMatrixWithValues:(NSData *)values
-                               order:(__CLPK_integer)order
-                    upperCodiagonals:(__CLPK_integer)upperCodiagonals
-                    lowerCodiagonals:(__CLPK_integer)lowerCodiagonals;
+                               order:(MAVIndex)order
+                    upperCodiagonals:(MAVIndex)upperCodiagonals
+                    lowerCodiagonals:(MAVIndex)lowerCodiagonals;
 
 /**
  @brief Class convenience method to create a matrix describing the rotation of a vector through a fixed two dimensional Cartesian space.
@@ -574,8 +575,8 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new instance of MAVMatrix containing rows * columns random values.
  */
-+ (instancetype)randomMatrixWithRows:(__CLPK_integer)rows
-                             columns:(__CLPK_integer)columns
++ (instancetype)randomMatrixWithRows:(MAVIndex)rows
+                             columns:(MAVIndex)columns
                            precision:(MCKPrecision)precision;
 
 /**
@@ -584,7 +585,7 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new square symmetric instance of MAVMatrix containing random values.
  */
-+ (instancetype)randomSymmetricMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)randomSymmetricMatrixOfOrder:(MAVIndex)order
                                    precision:(MCKPrecision)precision;
 
 /**
@@ -593,7 +594,7 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new square diagonal instance of MAVMatrix containing random values.
  */
-+ (instancetype)randomDiagonalMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)randomDiagonalMatrixOfOrder:(MAVIndex)order
                                   precision:(MCKPrecision)precision;
 
 /**
@@ -603,7 +604,7 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new square triangular instance of MAVMatrix containing random values.
  */
-+ (instancetype)randomTriangularMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)randomTriangularMatrixOfOrder:(MAVIndex)order
                           triangularComponent:(MAVMatrixTriangularComponent)triangularComponent
                                     precision:(MCKPrecision)precision;
 
@@ -615,9 +616,9 @@ MAVCoordinateAxis;
  @param precision The precision of the floating point values.
  @return A new square band instance of MAVMatrix containing random values.
  */
-+ (instancetype)randomBandMatrixOfOrder:(__CLPK_integer)order
-                       upperCodiagonals:(__CLPK_integer)upperCodiagonals
-                       lowerCodiagonals:(__CLPK_integer)lowerCodiagonals
++ (instancetype)randomBandMatrixOfOrder:(MAVIndex)order
+                       upperCodiagonals:(MAVIndex)upperCodiagonals
+                       lowerCodiagonals:(MAVIndex)lowerCodiagonals
                               precision:(MCKPrecision)precision;
 
 /**
@@ -627,7 +628,7 @@ MAVCoordinateAxis;
  @param precision The precision of the random floating point values to generate, either single- or double-precision.
  @return A square MAVMatrix object containing random floating point values of desired precision that satisfies the specified definiteness criteria.
  */
-+ (instancetype)randomMatrixOfOrder:(__CLPK_integer)order
++ (instancetype)randomMatrixOfOrder:(MAVIndex)order
                        definiteness:(MAVMatrixDefiniteness)definiteness
                           precision:(MCKPrecision)precision;
 
@@ -637,7 +638,7 @@ MAVCoordinateAxis;
  @param precision Either single- or double-precision floating point values.
  @return New instance of MAVMatrix with random values and determinant == 0.
  */
-+ (instancetype)randomSingularMatrixOfOrder:(__CLPK_integer)order precision:(MCKPrecision)precision;
++ (instancetype)randomSingularMatrixOfOrder:(MAVIndex)order precision:(MCKPrecision)precision;
 
 /**
  @brief Generate a square matrix of random values with a determinant not equal to 0.
@@ -645,7 +646,7 @@ MAVCoordinateAxis;
  @param precision Either single- or double-precision floating point values.
  @return New instance of MAVMatrix with random values and determinant != 0.
  */
-+ (instancetype)randomNonsigularMatrixOfOrder:(__CLPK_integer)order precision:(MCKPrecision)precision;
++ (instancetype)randomNonsigularMatrixOfOrder:(MAVIndex)order precision:(MCKPrecision)precision;
 
 #pragma mark - NSObject overrides
 
@@ -692,8 +693,8 @@ MAVCoordinateAxis;
  @param lowerCodiagonal The codiagonal below the main diagonal to use as a boundary for the band.
  @return Pointer to an array of band-format values.
  */
-- (NSData *)valuesInBandBetweenUpperCodiagonal:(__CLPK_integer)upperCodiagonal
-                               lowerCodiagonal:(__CLPK_integer)lowerCodiagonal;
+- (NSData *)valuesInBandBetweenUpperCodiagonal:(MAVIndex)upperCodiagonal
+                               lowerCodiagonal:(MAVIndex)lowerCodiagonal;
 
 /**
  @description Get the value at a position specified by row and column. Raises an NSRangeException if the position does not exist in the matrix.
@@ -701,21 +702,21 @@ MAVCoordinateAxis;
  @param column The column in which the desired value resides.
  @return The value at the specified row and column.
  */
-- (NSNumber *)valueAtRow:(__CLPK_integer)row column:(__CLPK_integer)column;
+- (NSNumber *)valueAtRow:(MAVIndex)row column:(MAVIndex)column;
 
 /**
  @brief Extract the values of a column of this matrix.
  @param column The index of the column to extract.
  @return An MAVVector object contaning the values in the specified column.
  */
-- (MAVVector *)columnVectorForColumn:(__CLPK_integer)column;
+- (MAVVector *)columnVectorForColumn:(MAVIndex)column;
 
 /**
  @brief Extract the values of a row of this matrix.
  @param column The index of the row to extract.
  @return An MAVVector object contaning the values in the specified row.
  */
-- (MAVVector *)rowVectorForRow:(__CLPK_integer)row;
+- (MAVVector *)rowVectorForRow:(MAVIndex)row;
 
 /**
  @return An array containing MAVVector objects representing the row vectors of the matrix from top to bottom.
@@ -734,7 +735,7 @@ MAVCoordinateAxis;
  @param column The index of the row to extract.
  @return An MAVVector object containing the values in the specified row.
  */
-- (MAVVector *)objectAtIndexedSubscript:(__CLPK_integer)idx;
+- (MAVVector *)objectAtIndexedSubscript:(MAVIndex)idx;
 
 #pragma mark - Class-level operations
 

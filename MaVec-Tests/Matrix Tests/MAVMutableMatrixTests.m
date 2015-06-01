@@ -127,8 +127,8 @@ static const MAVIndex columns = 3;
         } else {
             [matrix subtractMatrix:addendOrSubtrahend];
         }
-        for (__CLPK_integer row = 0; row < matrix.rows; row++) {
-            for (__CLPK_integer column = 0; column < matrix.columns; column++) {
+        for (MAVIndex row = 0; row < matrix.rows; row++) {
+            for (MAVIndex column = 0; column < matrix.columns; column++) {
                 if ([value isDoublePrecision]) {
                     double resultValue = matrix[row][column].doubleValue;
                     double computedValue = original[row][column].doubleValue + 1.0 * (addition ? 1.0 : -1.0);
@@ -149,8 +149,8 @@ static const MAVIndex columns = 3;
         BOOL isDouble = matrix.precision == MCKPrecisionDouble;
         MAVMatrix *original = matrix.copy;
         [matrix multiplyByScalar:(isDouble ? @5.0 : @5.0f)];
-        for (__CLPK_integer row = 0; row < matrix.rows; row++) {
-            for (__CLPK_integer column = 0; column < matrix.columns; column++) {
+        for (MAVIndex row = 0; row < matrix.rows; row++) {
+            for (MAVIndex column = 0; column < matrix.columns; column++) {
                 if (isDouble) {
                     double computedValue = matrix[row][column].doubleValue;
                     double solution = original[row][column].doubleValue * 5.0;
@@ -170,17 +170,17 @@ static const MAVIndex columns = 3;
     for (MAVMutableMatrix *matrix in [self matrixCombinations]) {
         for (NSNumber *dimensionValue in @[@(MAVMatrixLeadingDimensionRow), @(MAVMatrixLeadingDimensionColumn)]) {
             MAVMatrixLeadingDimension dimension = (MAVMatrixLeadingDimension)dimensionValue.unsignedIntegerValue;
-            __CLPK_integer vectorCount = dimension == MAVMatrixLeadingDimensionRow ? matrix.rows : matrix.columns;
-            for (__CLPK_integer vectorA = 0; vectorA < vectorCount - 1; vectorA += 1) {
-                for (__CLPK_integer vectorB = vectorA + 1; vectorB < vectorCount; vectorB += 1) {
+            MAVIndex vectorCount = dimension == MAVMatrixLeadingDimensionRow ? matrix.rows : matrix.columns;
+            for (MAVIndex vectorA = 0; vectorA < vectorCount - 1; vectorA += 1) {
+                for (MAVIndex vectorB = vectorA + 1; vectorB < vectorCount; vectorB += 1) {
                     MAVMatrix *originalMatrix = [matrix copy];
                     if (dimension == MAVMatrixLeadingDimensionRow) {
                         [matrix swapRowA:vectorA withRowB:vectorB];
                     } else {
                         [matrix swapColumnA:vectorA withColumnB:vectorB];
                     }
-                    for (__CLPK_integer row = 0; row < matrix.rows; row += 1) {
-                        for (__CLPK_integer column = 0; column < matrix.columns; column += 1) {
+                    for (MAVIndex row = 0; row < matrix.rows; row += 1) {
+                        for (MAVIndex column = 0; column < matrix.columns; column += 1) {
                             if (dimension == MAVMatrixLeadingDimensionRow) {
                                 if (row == vectorA) {
                                     XCTAssert([matrix[vectorA][column] isEqualToNumber:originalMatrix[vectorB][column]], @"Entry did not get swapped correctly.");
@@ -219,11 +219,11 @@ static const MAVIndex columns = 3;
 - (void)checkRowAssignment:(BOOL)rowAssignment
 {
     for (MAVMutableMatrix *matrix in [self matrixCombinations]) {
-        for (__CLPK_integer dimension = 0; dimension < (rowAssignment ? matrix.rows : matrix.columns); dimension++) {
+        for (MAVIndex dimension = 0; dimension < (rowAssignment ? matrix.rows : matrix.columns); dimension++) {
             MAVMutableMatrix *mutatedMatrix = matrix.mutableCopy;
             NSMutableArray *values = [NSMutableArray array];
             BOOL isDouble = matrix.precision == MCKPrecisionDouble;
-            for (__CLPK_integer entry = 0; entry < (rowAssignment ? matrix.columns : matrix.rows); entry++) {
+            for (MAVIndex entry = 0; entry < (rowAssignment ? matrix.columns : matrix.rows); entry++) {
                 if (isDouble) {
                     [values addObject:@(900.0 + entry * 1.0)];
                 } else {
@@ -236,8 +236,8 @@ static const MAVIndex columns = 3;
             } else {
                 [mutatedMatrix setColumnVector:vector atColumn:dimension];
             }
-            for (__CLPK_integer row = 0; row < matrix.rows; row++) {
-                for (__CLPK_integer column = 0; column < matrix.columns; column++) {
+            for (MAVIndex row = 0; row < matrix.rows; row++) {
+                for (MAVIndex column = 0; column < matrix.columns; column++) {
                     if ((rowAssignment && row == dimension) || (!rowAssignment && column == dimension)) {
                         if (isDouble) {
                             XCTAssertEqual(vector[rowAssignment ? column : row].doubleValue, mutatedMatrix[row][column].doubleValue, @"Mutated %@ in double-precision matrix was not set correctly checking (%lu, %lu)", rowAssignment ? @"row" : @"column", row, column);
