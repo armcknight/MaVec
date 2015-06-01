@@ -186,7 +186,7 @@ if (sizeof(values) / sizeof(double) == 9) {
 
 Unit Tests
 ===
-MaVec is a test-driven framework, where each method that is added comes with a unit test to ensure it doesn't break due to future changes. As of 4/19/2014 there are 223 tests.
+MaVec is a test-driven framework, where each method that is added comes with a unit test to ensure it doesn't break due to future changes. As of 5/31/2015 there are 292 test points in 85 unit tests.
 
 Future Goals
 ===
