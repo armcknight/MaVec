@@ -402,12 +402,14 @@
         case MAVMatrixMutatingOperationAssignmentRow: {
             NSAssert([input isKindOfClass:[MAVVector class]], @"Input should be of type MAVVector.");
             isIdempotent = [[self rowVectorForRow:row] isEqualToVector:input];
+            preservesSymmetry = isIdempotent ? MCKTriboolValueYes : MCKTriboolValueNo;
             break;
         }
 
         case MAVMatrixMutatingOperationAssignmentColumn: {
             NSAssert([input isKindOfClass:[MAVVector class]], @"Input should be of type MAVVector.");
             isIdempotent = [[self columnVectorForColumn:column] isEqualToVector:input];
+            preservesSymmetry = isIdempotent ? MCKTriboolValueYes : MCKTriboolValueNo;
             break;
         }
 
