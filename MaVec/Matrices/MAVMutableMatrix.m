@@ -394,7 +394,7 @@
             NSAssert([input isKindOfClass:[NSNumber class]], @"Input should be of type NSNumber.");
             isIdempotent = [[self valueAtRow:row column:column] isEqualToNumber:input];
             if (self.isSymmetric.isYes) {
-                preservesSymmetry = (row == column || [[self valueAtRow:column column:row] isEqualToNumber:input]) ? MCKTriboolValueYes : MCKTriboolValueNo;
+                preservesSymmetry = (row == column || isIdempotent) ? MCKTriboolValueYes : MCKTriboolValueNo;
             }
             break;
         }
