@@ -456,7 +456,7 @@
         [self convertInternalRepresentationToColumnMajorConventional];
     }
     if (!isIdempotent) {
-        [self resetToDefaultStateAndBreakSymmetry:!preservesSymmetry];
+        [self resetToDefaultStateAndBreakSymmetry:preservesSymmetry == MCKTriboolValueNo];
     }
 }
 
