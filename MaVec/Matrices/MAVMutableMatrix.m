@@ -177,7 +177,7 @@
     NSAssert2(vector.length == self.rows, @"Vector length (%lld) must equal amount of rows in this matrix (%lld)", (long long int)vector.length, (long long int)self.rows);
     NSAssert2(column < self.columns, @"column (%lld) must be < the amount of columns in this matrix (%lld)", (long long int)column, (long long int)self.columns);
     
-    [self invalidateStateIfOperation:MAVMatrixMutatingOperationAssignmentRow
+    [self invalidateStateIfOperation:MAVMatrixMutatingOperationAssignmentColumn
               notIdempotentWithInput:vector
                                atRow:kMAVNoCoordinate
                               column:column];
