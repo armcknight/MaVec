@@ -121,8 +121,8 @@ MAVVectorMutatingOperationType;
 - (void)setValues:(NSArray *)values inRange:(NSRange)range
 {
     NSAssert(values.count == range.length, @"Mismatch between amount of values (%lu) and range length (%lu)", (unsigned long)values.count, (unsigned long)range.length);
-    NSAssert2(range.location <= MAV_CLPK_INTEGER_MAX, @"Starting location must be lesser than MAVIndex (%lld) but got %lu.", (long long int)MAV_CLPK_INTEGER_MAX, range.location);
-    NSAssert2(range.location + range.length <= MAV_CLPK_INTEGER_MAX, @"Ending location must be lesser than MAVIndex (%lld) but got %lu.", (long long int)MAV_CLPK_INTEGER_MAX, range.location + range.length);
+    NSAssert2(range.location <= MAV_CLPK_INTEGER_MAX, @"Starting location must be lesser than MAVIndex (%lld) but got %lu.", (long long int)MAV_CLPK_INTEGER_MAX, (long unsigned)range.location);
+    NSAssert2(range.location + range.length <= MAV_CLPK_INTEGER_MAX, @"Ending location must be lesser than MAVIndex (%lld) but got %lu.", (long long int)MAV_CLPK_INTEGER_MAX, (long unsigned)range.location + range.length);
     
     for (NSUInteger i = 0; i < values.count; i++) {
         self[i+range.location] = values[i];
