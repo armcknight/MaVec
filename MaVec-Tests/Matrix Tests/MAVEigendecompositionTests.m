@@ -68,7 +68,8 @@
     for (unsigned int i = 0; i < 5; i += 1) {
         MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
-        MAVVector *left = [[[o mutableCopy] multiplyByVector:eigenvector] columnVectorForColumn:0];
+        MAVMutableMatrix *mutableCopy = o.mutableCopy;
+        MAVVector *left = [[mutableCopy multiplyByVector:eigenvector] columnVectorForColumn:0];
         MAVVector *right = [(MAVMutableVector *)[eigenvector mutableCopy] multiplyByScalar:eigenvalue];
         for (unsigned int j = 0; j < 5; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
@@ -95,7 +96,8 @@
     for (unsigned int i = 0; i < 4; i += 1) {
         MAVVector *eigenvector = [e.eigenvectors columnVectorForColumn:i];
         NSNumber *eigenvalue = [e.eigenvalues valueAtIndex:i];
-        MAVVector *left = [[[source mutableCopy] multiplyByVector:eigenvector] columnVectorForColumn:0];
+        MAVMutableMatrix *mutableCopy = source.mutableCopy;
+        MAVVector *left = [[mutableCopy multiplyByVector:eigenvector] columnVectorForColumn:0];
         MAVVector *right = [(MAVMutableVector *)[eigenvector mutableCopy] multiplyByScalar:eigenvalue];
         for (unsigned int j = 0; j < 4; j += 1) {
             double a = [left valueAtIndex:j].doubleValue;
