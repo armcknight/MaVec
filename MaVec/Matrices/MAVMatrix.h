@@ -305,13 +305,13 @@ MAVCoordinateAxis;
  *  @property isIdentity
  *  @brief YES if this matrix is the identity matrix, NO otherwise. Default value = MCKTriboolValueUnknown. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) MCKTribool *isIdentity;
+@property (nonatomic, readonly, strong) MCKTribool *isIdentity;
 
 /**
  *  @property isZero
  *  @brief YES if this matrix is the zero matrix, NO otherwise. Default value = MCKTriboolValueUnknown. (Lazy-loaded)
  */
-@property (nonatomic, readonly, assign) MCKTribool *isZero;
+@property (nonatomic, readonly, strong) MCKTribool *isZero;
 
 /**
  @property definiteness
