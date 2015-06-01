@@ -11,7 +11,6 @@
 		4941980C197AF207008CF78E /* MAVMutableVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980B197AF207008CF78E /* MAVMutableVectorTests.m */; };
 		4941980F197B058E008CF78E /* NSNumber+MCKRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 4941980E197B058E008CF78E /* NSNumber+MCKRandom.m */; };
 		4962A08419FC3B7E00738E96 /* MAVMutableMatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4962A08319FC3B7E00738E96 /* MAVMutableMatrixTests.m */; };
-		4962A08619FC3E6700738E96 /* MAVTypedefs.h in Sources */ = {isa = PBXBuildFile; fileRef = 4962A08519FC3E6700738E96 /* MAVTypedefs.h */; };
 		499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734B7192594DF0004A8E5 /* InfoPlist.strings */; };
 		499734BB192594DF0004A8E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BA192594DF0004A8E5 /* main.m */; };
 		499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BE192594DF0004A8E5 /* AppDelegate.m */; };
@@ -618,7 +617,6 @@
 				499735BC1925A0290004A8E5 /* MCKPair.m in Sources */,
 				499735BE1925A0290004A8E5 /* MCKTribool.m in Sources */,
 				4997355B192599AB0004A8E5 /* RZArrayCollectionList.m in Sources */,
-				4962A08619FC3E6700738E96 /* MAVTypedefs.h in Sources */,
 				4997353B192596BE0004A8E5 /* MAVQRFactorization.m in Sources */,
 				499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */,
 				4997355D192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.m in Sources */,
