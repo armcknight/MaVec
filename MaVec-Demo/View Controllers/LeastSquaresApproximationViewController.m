@@ -55,7 +55,7 @@
 }
 
 - (IBAction)changedOrder:(id)sender {
-    MAVIndex order = (MAVIndex)self.orderSlider.value * 10;
+    MAVIndex order = (MAVIndex)(self.orderSlider.value * 10 + 1);
     self.approximationView.order = order;
     self.orderLabel.text = [NSString stringWithFormat:@"%lld", (long long int)order-1];
 }
