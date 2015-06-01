@@ -36,6 +36,6 @@
 #define MAV_CLPK_INTEGER_MAX INT32_MAX
 #endif
 
-static const MAVIndex kMAVNoCoordinate = NSNotFound;
+static const MAVIndex kMAVNoCoordinate = -1;
 
 #endif
