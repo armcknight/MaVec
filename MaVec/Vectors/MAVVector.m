@@ -25,8 +25,6 @@
 //  SOFTWARE.
 //
 
-#import <Accelerate/Accelerate.h>
-
 #import "MAVVector.h"
 #import "MAVVector-Protected.h"
 #import "MAVMutableVector.h"
@@ -566,7 +564,7 @@
 
 #pragma mark - Inspection
 
-- (NSNumber *)valueAtIndex:(int)index
+- (NSNumber *)valueAtIndex:(__CLPK_integer)index
 {
     NSNumber *value;
     
@@ -581,9 +579,9 @@
 
 #pragma mark - Subscripting
 
-- (NSNumber *)objectAtIndexedSubscript:(NSUInteger)idx
+- (NSNumber *)objectAtIndexedSubscript:(__CLPK_integer)idx
 {
-    return [self valueAtIndex:(int)idx];
+    return [self valueAtIndex:idx];
 }
 
 #pragma mark - Instance Operations
