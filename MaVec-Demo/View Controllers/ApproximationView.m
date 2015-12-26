@@ -26,9 +26,10 @@
 //
 
 #import "ApproximationView.h"
-#import "MCKPolynomial.h"
+#import "MAVMatrix+MAVMatrixFactory.h"
 #import "MAVMatrix.h"
 #import "MAVVector.h"
+#import "MCKPolynomial.h"
 
 @interface MAVPoint : NSObject
 

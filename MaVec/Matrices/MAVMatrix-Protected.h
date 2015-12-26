@@ -110,6 +110,4 @@ MAVMatrixNorm;
  */
 - (NSNumber *)normOfType:(MAVMatrixNorm)normType;
 
-+ (NSData *)dataFromVectors:(NSArray *)vectors;
-
 @end

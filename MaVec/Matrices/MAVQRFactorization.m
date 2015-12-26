@@ -27,9 +27,10 @@
 
 #import <Accelerate/Accelerate.h>
 
-#import "MAVQRFactorization.h"
+#import "MAVMatrix+MAVMatrixFactory.h"
 #import "MAVMatrix.h"
 #import "MAVMutableMatrix.h"
+#import "MAVQRFactorization.h"
 #import "NSNumber+MCKPrecision.h"
 
 @interface MAVQRFactorization ()

@@ -27,8 +27,9 @@
 
 #import <Accelerate/Accelerate.h>
 
-#import "MAVSingularValueDecomposition.h"
+#import "MAVMatrix+MAVMatrixFactory.h"
 #import "MAVMatrix.h"
+#import "MAVSingularValueDecomposition.h"
 #import "NSNumber+MCKPrecision.h"
 
 @implementation MAVSingularValueDecomposition

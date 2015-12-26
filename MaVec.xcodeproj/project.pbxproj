@@ -69,6 +69,8 @@
 		499735C61925A1D80004A8E5 /* NSData+MCKPrecision.m in Sources */ = {isa = PBXBuildFile; fileRef = 499735C51925A1D80004A8E5 /* NSData+MCKPrecision.m */; };
 		49B3ABBF19C7243C00A78E70 /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = 49B3ABBE19C7243C00A78E70 /* MAVMutableVector.m */; };
 		E66A2FC01B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = E66A2FBF1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.m */; };
+		E67E50641C2F16A70048A75E /* MAVMatrix+MAVMatrixFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50631C2F16A70048A75E /* MAVMatrix+MAVMatrixFactory.m */; };
+		E67E50671C2F18740048A75E /* NSData+MAVMatrixData.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50661C2F18740048A75E /* NSData+MAVMatrixData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,8 +188,12 @@
 		49B3ABBC19C5E6C800A78E70 /* MAVMutableMatrix-Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAVMutableMatrix-Protected.h"; sourceTree = "<group>"; };
 		49B3ABBD19C7243C00A78E70 /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableVector.h; sourceTree = "<group>"; };
 		49B3ABBE19C7243C00A78E70 /* MAVMutableVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableVector.m; sourceTree = "<group>"; };
-		E66A2FBE1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MAVMatrix+MAVMatrixConverter.h"; path = "Matrices/Utilities/MAVMatrix+MAVMatrixConverter.h"; sourceTree = "<group>"; };
-		E66A2FBF1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MAVMatrix+MAVMatrixConverter.m"; path = "Matrices/Utilities/MAVMatrix+MAVMatrixConverter.m"; sourceTree = "<group>"; };
+		E66A2FBE1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAVMatrix+MAVMatrixConverter.h"; sourceTree = "<group>"; };
+		E66A2FBF1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MAVMatrix+MAVMatrixConverter.m"; sourceTree = "<group>"; };
+		E67E50621C2F16A70048A75E /* MAVMatrix+MAVMatrixFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAVMatrix+MAVMatrixFactory.h"; sourceTree = "<group>"; };
+		E67E50631C2F16A70048A75E /* MAVMatrix+MAVMatrixFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MAVMatrix+MAVMatrixFactory.m"; sourceTree = "<group>"; };
+		E67E50651C2F18740048A75E /* NSData+MAVMatrixData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MAVMatrixData.h"; sourceTree = "<group>"; };
+		E67E50661C2F18740048A75E /* NSData+MAVMatrixData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MAVMatrixData.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,8 +364,6 @@
 				49143DA8197C90BE0009D648 /* Utilities */,
 				4997352A192596BE0004A8E5 /* Matrices */,
 				49973535192596BE0004A8E5 /* Vectors */,
-				E66A2FBE1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.h */,
-				E66A2FBF1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.m */,
 			);
 			path = MaVec;
 			sourceTree = "<group>";
@@ -371,16 +375,17 @@
 				4997352C192596BE0004A8E5 /* MAVEigendecomposition.m */,
 				4997352D192596BE0004A8E5 /* MAVLUFactorization.h */,
 				4997352E192596BE0004A8E5 /* MAVLUFactorization.m */,
-				4997352F192596BE0004A8E5 /* MAVMatrix.h */,
 				499FE2D91957C179001F0C23 /* MAVMatrix-Protected.h */,
+				4997352F192596BE0004A8E5 /* MAVMatrix.h */,
 				49973530192596BE0004A8E5 /* MAVMatrix.m */,
-				491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */,
 				49B3ABBC19C5E6C800A78E70 /* MAVMutableMatrix-Protected.h */,
+				491FF1A3193BC6FA00A5F3CE /* MAVMutableMatrix.h */,
 				491FF1A4193BC6FA00A5F3CE /* MAVMutableMatrix.m */,
 				49973531192596BE0004A8E5 /* MAVQRFactorization.h */,
 				49973532192596BE0004A8E5 /* MAVQRFactorization.m */,
 				49973533192596BE0004A8E5 /* MAVSingularValueDecomposition.h */,
 				49973534192596BE0004A8E5 /* MAVSingularValueDecomposition.m */,
+				E67E50681C2F18790048A75E /* Categories */,
 			);
 			path = Matrices;
 			sourceTree = "<group>";
@@ -500,6 +505,19 @@
 			path = Equations;
 			sourceTree = "<group>";
 		};
+		E67E50681C2F18790048A75E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				E66A2FBE1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.h */,
+				E66A2FBF1B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.m */,
+				E67E50621C2F16A70048A75E /* MAVMatrix+MAVMatrixFactory.h */,
+				E67E50631C2F16A70048A75E /* MAVMatrix+MAVMatrixFactory.m */,
+				E67E50651C2F18740048A75E /* NSData+MAVMatrixData.h */,
+				E67E50661C2F18740048A75E /* NSData+MAVMatrixData.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -607,6 +625,8 @@
 				E66A2FC01B42449900B2E3F0 /* MAVMatrix+MAVMatrixConverter.m in Sources */,
 				4997353A192596BE0004A8E5 /* MAVMatrix.m in Sources */,
 				4997355E192599AB0004A8E5 /* RZCollectionListNotificationWrappers.m in Sources */,
+				E67E50641C2F16A70048A75E /* MAVMatrix+MAVMatrixFactory.m in Sources */,
+				E67E50671C2F18740048A75E /* NSData+MAVMatrixData.m in Sources */,
 				49973522192596B70004A8E5 /* ApproximationView.m in Sources */,
 				4941980F197B058E008CF78E /* NSNumber+MCKRandom.m in Sources */,
 				499735BA1925A0290004A8E5 /* NSNumber+MCKMath.m in Sources */,

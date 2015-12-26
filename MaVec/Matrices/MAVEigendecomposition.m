@@ -28,6 +28,7 @@
 #import <Accelerate/Accelerate.h>
 
 #import "MAVEigendecomposition.h"
+#import "MAVMatrix+MAVMatrixFactory.h"
 #import "MAVMatrix.h"
 #import "MAVVector.h"
 #import "MCKTribool.h"
