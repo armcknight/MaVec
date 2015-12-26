@@ -25,12 +25,8 @@
 //  SOFTWARE.
 //
 
-#import "MAVMatrix+MAVMatrixFactory.h"
-#import "MAVMatrix.h"
-#import "MAVMutableMatrix.h"
-#import "MAVMutableVector.h"
-#import "MAVSingularValueDecomposition.h"
-#import "MAVVector.h"
+#import <MaVec/MaVec.h>
+
 #import "SVDImageCompressionViewController.h"
 
 @interface SVDImageCompressionViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>

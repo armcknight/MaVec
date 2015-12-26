@@ -25,11 +25,10 @@
 //  SOFTWARE.
 //
 
+#import <MaVec/MaVec.h>
+#import <MCKNumerics/MCKNumerics.h>
+
 #import "ApproximationView.h"
-#import "MAVMatrix+MAVMatrixFactory.h"
-#import "MAVMatrix.h"
-#import "MAVVector.h"
-#import "MCKPolynomial.h"
 
 @interface MAVPoint : NSObject
 

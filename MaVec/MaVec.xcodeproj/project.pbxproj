@@ -1,0 +1,710 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E67E50C31C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50A51C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50C41C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50A61C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.m */; };
+		E67E50C51C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50A71C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50C61C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50A81C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.m */; };
+		E67E50C71C2F23DE0048A75E /* NSData+MAVMatrixData.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50A91C2F23DE0048A75E /* NSData+MAVMatrixData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50C81C2F23DE0048A75E /* NSData+MAVMatrixData.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50AA1C2F23DE0048A75E /* NSData+MAVMatrixData.m */; };
+		E67E50C91C2F23DE0048A75E /* MAVEigendecomposition.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50AB1C2F23DE0048A75E /* MAVEigendecomposition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50CA1C2F23DE0048A75E /* MAVEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50AC1C2F23DE0048A75E /* MAVEigendecomposition.m */; };
+		E67E50CB1C2F23DE0048A75E /* MAVLUFactorization.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50AD1C2F23DE0048A75E /* MAVLUFactorization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50CC1C2F23DE0048A75E /* MAVLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50AE1C2F23DE0048A75E /* MAVLUFactorization.m */; };
+		E67E50CD1C2F23DE0048A75E /* MAVMatrix-Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50AF1C2F23DE0048A75E /* MAVMatrix-Protected.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50CE1C2F23DE0048A75E /* MAVMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50B01C2F23DE0048A75E /* MAVMatrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50CF1C2F23DE0048A75E /* MAVMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50B11C2F23DE0048A75E /* MAVMatrix.m */; };
+		E67E50D01C2F23DE0048A75E /* MAVMutableMatrix-Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50B21C2F23DE0048A75E /* MAVMutableMatrix-Protected.h */; };
+		E67E50D11C2F23DE0048A75E /* MAVMutableMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50B31C2F23DE0048A75E /* MAVMutableMatrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50D21C2F23DE0048A75E /* MAVMutableMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50B41C2F23DE0048A75E /* MAVMutableMatrix.m */; };
+		E67E50D31C2F23DE0048A75E /* MAVQRFactorization.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50B51C2F23DE0048A75E /* MAVQRFactorization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50D41C2F23DE0048A75E /* MAVQRFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50B61C2F23DE0048A75E /* MAVQRFactorization.m */; };
+		E67E50D51C2F23DE0048A75E /* MAVSingularValueDecomposition.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50B71C2F23DE0048A75E /* MAVSingularValueDecomposition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50D61C2F23DE0048A75E /* MAVSingularValueDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50B81C2F23DE0048A75E /* MAVSingularValueDecomposition.m */; };
+		E67E50D71C2F23DE0048A75E /* MAVConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50B91C2F23DE0048A75E /* MAVConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50D81C2F23DE0048A75E /* MaVec.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E67E50BA1C2F23DE0048A75E /* MaVec.xcconfig */; };
+		E67E50D91C2F23DE0048A75E /* MAVTypedefs.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50BC1C2F23DE0048A75E /* MAVTypedefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50DA1C2F23DE0048A75E /* MAVMutableVector.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50BE1C2F23DE0048A75E /* MAVMutableVector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50DB1C2F23DE0048A75E /* MAVMutableVector.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50BF1C2F23DE0048A75E /* MAVMutableVector.m */; };
+		E67E50DC1C2F23DE0048A75E /* MAVVector-Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50C01C2F23DE0048A75E /* MAVVector-Protected.h */; };
+		E67E50DD1C2F23DE0048A75E /* MAVVector.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50C11C2F23DE0048A75E /* MAVVector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50DE1C2F23DE0048A75E /* MAVVector.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50C21C2F23DE0048A75E /* MAVVector.m */; };
+		E67E50E01C2F24F80048A75E /* MaVec.plist in Resources */ = {isa = PBXBuildFile; fileRef = E67E50DF1C2F24F80048A75E /* MaVec.plist */; };
+		E67E512C1C2F29370048A75E /* MCKNumerics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E512B1C2F29310048A75E /* MCKNumerics.framework */; };
+		E67E513C1C2F2C330048A75E /* MaVec.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E513B1C2F2C330048A75E /* MaVec.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E51621C2F31460048A75E /* MaVec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E50971C2F23AB0048A75E /* MaVec.framework */; };
+		E67E517F1C2F31800048A75E /* MAVEigendecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51691C2F317F0048A75E /* MAVEigendecompositionTests.m */; };
+		E67E51801C2F31800048A75E /* MAVLeastSquaresSolutionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E516A1C2F317F0048A75E /* MAVLeastSquaresSolutionTests.m */; };
+		E67E51811C2F31800048A75E /* MAVLUDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E516B1C2F317F0048A75E /* MAVLUDecompositionTests.m */; };
+		E67E51821C2F31800048A75E /* MAVMatrixArithmeticTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E516C1C2F317F0048A75E /* MAVMatrixArithmeticTests.m */; };
+		E67E51831C2F31800048A75E /* MAVMatrixConstructionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E516D1C2F317F0048A75E /* MAVMatrixConstructionTests.m */; };
+		E67E51841C2F31800048A75E /* MAVMatrixCopyAndEqualityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E516E1C2F317F0048A75E /* MAVMatrixCopyAndEqualityTests.m */; };
+		E67E51851C2F31800048A75E /* MAVMatrixInversionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E516F1C2F317F0048A75E /* MAVMatrixInversionTests.m */; };
+		E67E51861C2F31800048A75E /* MAVMatrixMultiplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51701C2F317F0048A75E /* MAVMatrixMultiplicationTests.m */; };
+		E67E51871C2F31800048A75E /* MAVMatrixOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51711C2F31800048A75E /* MAVMatrixOperationTests.m */; };
+		E67E51881C2F31800048A75E /* MAVMatrixPropertyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51721C2F31800048A75E /* MAVMatrixPropertyTests.m */; };
+		E67E51891C2F31800048A75E /* MAVMatrixValueRepresentationConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51731C2F31800048A75E /* MAVMatrixValueRepresentationConversion.m */; };
+		E67E518A1C2F31800048A75E /* MAVMinorCofactorAdjugateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51741C2F31800048A75E /* MAVMinorCofactorAdjugateTests.m */; };
+		E67E518B1C2F31800048A75E /* MAVMutableMatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51751C2F31800048A75E /* MAVMutableMatrixTests.m */; };
+		E67E518C1C2F31800048A75E /* MAVQRDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51761C2F31800048A75E /* MAVQRDecompositionTests.m */; };
+		E67E518D1C2F31800048A75E /* MAVRotationMatrixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51771C2F31800048A75E /* MAVRotationMatrixTests.m */; };
+		E67E518E1C2F31800048A75E /* MAVSingularValueDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E51781C2F31800048A75E /* MAVSingularValueDecompositionTests.m */; };
+		E67E518F1C2F31800048A75E /* Demos.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E517A1C2F31800048A75E /* Demos.m */; };
+		E67E51901C2F31800048A75E /* MaVecTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E517B1C2F31800048A75E /* MaVecTests.m */; };
+		E67E51911C2F31800048A75E /* MAVMutableVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E517D1C2F31800048A75E /* MAVMutableVectorTests.m */; };
+		E67E51921C2F31800048A75E /* MAVVectorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E517E1C2F31800048A75E /* MAVVectorTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E67E51091C2F280F0048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4997357019259BFF0004A8E5;
+			remoteInfo = "MCKNumerics-Test";
+		};
+		E67E51271C2F29300048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E67E510F1C2F286E0048A75E;
+			remoteInfo = MCKNumerics;
+		};
+		E67E512A1C2F29310048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E67E51101C2F286E0048A75E;
+			remoteInfo = MCKNumerics;
+		};
+		E67E51631C2F31460048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E508E1C2F23AB0048A75E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E67E50961C2F23AB0048A75E;
+			remoteInfo = MaVec;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E67E50971C2F23AB0048A75E /* MaVec.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MaVec.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E67E50A51C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAVMatrix+MAVMatrixConverter.h"; sourceTree = "<group>"; };
+		E67E50A61C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MAVMatrix+MAVMatrixConverter.m"; sourceTree = "<group>"; };
+		E67E50A71C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAVMatrix+MAVMatrixFactory.h"; sourceTree = "<group>"; };
+		E67E50A81C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MAVMatrix+MAVMatrixFactory.m"; sourceTree = "<group>"; };
+		E67E50A91C2F23DE0048A75E /* NSData+MAVMatrixData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MAVMatrixData.h"; sourceTree = "<group>"; };
+		E67E50AA1C2F23DE0048A75E /* NSData+MAVMatrixData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MAVMatrixData.m"; sourceTree = "<group>"; };
+		E67E50AB1C2F23DE0048A75E /* MAVEigendecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVEigendecomposition.h; sourceTree = "<group>"; };
+		E67E50AC1C2F23DE0048A75E /* MAVEigendecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVEigendecomposition.m; sourceTree = "<group>"; };
+		E67E50AD1C2F23DE0048A75E /* MAVLUFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVLUFactorization.h; sourceTree = "<group>"; };
+		E67E50AE1C2F23DE0048A75E /* MAVLUFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVLUFactorization.m; sourceTree = "<group>"; };
+		E67E50AF1C2F23DE0048A75E /* MAVMatrix-Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAVMatrix-Protected.h"; sourceTree = "<group>"; };
+		E67E50B01C2F23DE0048A75E /* MAVMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMatrix.h; sourceTree = "<group>"; };
+		E67E50B11C2F23DE0048A75E /* MAVMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrix.m; sourceTree = "<group>"; };
+		E67E50B21C2F23DE0048A75E /* MAVMutableMatrix-Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAVMutableMatrix-Protected.h"; sourceTree = "<group>"; };
+		E67E50B31C2F23DE0048A75E /* MAVMutableMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableMatrix.h; sourceTree = "<group>"; };
+		E67E50B41C2F23DE0048A75E /* MAVMutableMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableMatrix.m; sourceTree = "<group>"; };
+		E67E50B51C2F23DE0048A75E /* MAVQRFactorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVQRFactorization.h; sourceTree = "<group>"; };
+		E67E50B61C2F23DE0048A75E /* MAVQRFactorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVQRFactorization.m; sourceTree = "<group>"; };
+		E67E50B71C2F23DE0048A75E /* MAVSingularValueDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVSingularValueDecomposition.h; sourceTree = "<group>"; };
+		E67E50B81C2F23DE0048A75E /* MAVSingularValueDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVSingularValueDecomposition.m; sourceTree = "<group>"; };
+		E67E50B91C2F23DE0048A75E /* MAVConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVConstants.h; sourceTree = "<group>"; };
+		E67E50BA1C2F23DE0048A75E /* MaVec.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = MaVec.xcconfig; sourceTree = "<group>"; };
+		E67E50BC1C2F23DE0048A75E /* MAVTypedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVTypedefs.h; sourceTree = "<group>"; };
+		E67E50BE1C2F23DE0048A75E /* MAVMutableVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVMutableVector.h; sourceTree = "<group>"; };
+		E67E50BF1C2F23DE0048A75E /* MAVMutableVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableVector.m; sourceTree = "<group>"; };
+		E67E50C01C2F23DE0048A75E /* MAVVector-Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MAVVector-Protected.h"; sourceTree = "<group>"; };
+		E67E50C11C2F23DE0048A75E /* MAVVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAVVector.h; sourceTree = "<group>"; };
+		E67E50C21C2F23DE0048A75E /* MAVVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVVector.m; sourceTree = "<group>"; };
+		E67E50DF1C2F24F80048A75E /* MaVec.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MaVec.plist; sourceTree = "<group>"; };
+		E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MCKNumerics.xcodeproj; path = ../External/MCKNumerics/MCKNumerics.xcodeproj; sourceTree = "<group>"; };
+		E67E513B1C2F2C330048A75E /* MaVec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaVec.h; sourceTree = "<group>"; };
+		E67E515D1C2F31460048A75E /* MaVecTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaVecTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E67E51611C2F31460048A75E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E67E51691C2F317F0048A75E /* MAVEigendecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVEigendecompositionTests.m; sourceTree = "<group>"; };
+		E67E516A1C2F317F0048A75E /* MAVLeastSquaresSolutionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVLeastSquaresSolutionTests.m; sourceTree = "<group>"; };
+		E67E516B1C2F317F0048A75E /* MAVLUDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVLUDecompositionTests.m; sourceTree = "<group>"; };
+		E67E516C1C2F317F0048A75E /* MAVMatrixArithmeticTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrixArithmeticTests.m; sourceTree = "<group>"; };
+		E67E516D1C2F317F0048A75E /* MAVMatrixConstructionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrixConstructionTests.m; sourceTree = "<group>"; };
+		E67E516E1C2F317F0048A75E /* MAVMatrixCopyAndEqualityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrixCopyAndEqualityTests.m; sourceTree = "<group>"; };
+		E67E516F1C2F317F0048A75E /* MAVMatrixInversionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrixInversionTests.m; sourceTree = "<group>"; };
+		E67E51701C2F317F0048A75E /* MAVMatrixMultiplicationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrixMultiplicationTests.m; sourceTree = "<group>"; };
+		E67E51711C2F31800048A75E /* MAVMatrixOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrixOperationTests.m; sourceTree = "<group>"; };
+		E67E51721C2F31800048A75E /* MAVMatrixPropertyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrixPropertyTests.m; sourceTree = "<group>"; };
+		E67E51731C2F31800048A75E /* MAVMatrixValueRepresentationConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMatrixValueRepresentationConversion.m; sourceTree = "<group>"; };
+		E67E51741C2F31800048A75E /* MAVMinorCofactorAdjugateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMinorCofactorAdjugateTests.m; sourceTree = "<group>"; };
+		E67E51751C2F31800048A75E /* MAVMutableMatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableMatrixTests.m; sourceTree = "<group>"; };
+		E67E51761C2F31800048A75E /* MAVQRDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVQRDecompositionTests.m; sourceTree = "<group>"; };
+		E67E51771C2F31800048A75E /* MAVRotationMatrixTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVRotationMatrixTests.m; sourceTree = "<group>"; };
+		E67E51781C2F31800048A75E /* MAVSingularValueDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVSingularValueDecompositionTests.m; sourceTree = "<group>"; };
+		E67E517A1C2F31800048A75E /* Demos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Demos.m; sourceTree = "<group>"; };
+		E67E517B1C2F31800048A75E /* MaVecTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaVecTests.m; sourceTree = "<group>"; };
+		E67E517D1C2F31800048A75E /* MAVMutableVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVMutableVectorTests.m; sourceTree = "<group>"; };
+		E67E517E1C2F31800048A75E /* MAVVectorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAVVectorTests.m; sourceTree = "<group>"; };
+		E67E51961C2F323A0048A75E /* MaVecTests.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaVecTests.pch; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E67E50931C2F23AB0048A75E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E67E512C1C2F29370048A75E /* MCKNumerics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E67E515A1C2F31460048A75E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E67E51621C2F31460048A75E /* MaVec.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E67E508D1C2F23AB0048A75E = {
+			isa = PBXGroup;
+			children = (
+				E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */,
+				E67E50A21C2F23DE0048A75E /* MaVec */,
+				E67E515E1C2F31460048A75E /* MaVecTests */,
+				E67E50981C2F23AB0048A75E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E67E50981C2F23AB0048A75E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E67E50971C2F23AB0048A75E /* MaVec.framework */,
+				E67E515D1C2F31460048A75E /* MaVecTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E67E50A21C2F23DE0048A75E /* MaVec */ = {
+			isa = PBXGroup;
+			children = (
+				E67E513B1C2F2C330048A75E /* MaVec.h */,
+				E67E50A31C2F23DE0048A75E /* Matrices */,
+				E67E51031C2F25C90048A75E /* Supporting Files */,
+				E67E50BB1C2F23DE0048A75E /* Utilities */,
+				E67E50BD1C2F23DE0048A75E /* Vectors */,
+			);
+			path = MaVec;
+			sourceTree = "<group>";
+		};
+		E67E50A31C2F23DE0048A75E /* Matrices */ = {
+			isa = PBXGroup;
+			children = (
+				E67E50A41C2F23DE0048A75E /* Categories */,
+				E67E50AB1C2F23DE0048A75E /* MAVEigendecomposition.h */,
+				E67E50AC1C2F23DE0048A75E /* MAVEigendecomposition.m */,
+				E67E50AD1C2F23DE0048A75E /* MAVLUFactorization.h */,
+				E67E50AE1C2F23DE0048A75E /* MAVLUFactorization.m */,
+				E67E50AF1C2F23DE0048A75E /* MAVMatrix-Protected.h */,
+				E67E50B01C2F23DE0048A75E /* MAVMatrix.h */,
+				E67E50B11C2F23DE0048A75E /* MAVMatrix.m */,
+				E67E50B21C2F23DE0048A75E /* MAVMutableMatrix-Protected.h */,
+				E67E50B31C2F23DE0048A75E /* MAVMutableMatrix.h */,
+				E67E50B41C2F23DE0048A75E /* MAVMutableMatrix.m */,
+				E67E50B51C2F23DE0048A75E /* MAVQRFactorization.h */,
+				E67E50B61C2F23DE0048A75E /* MAVQRFactorization.m */,
+				E67E50B71C2F23DE0048A75E /* MAVSingularValueDecomposition.h */,
+				E67E50B81C2F23DE0048A75E /* MAVSingularValueDecomposition.m */,
+			);
+			path = Matrices;
+			sourceTree = "<group>";
+		};
+		E67E50A41C2F23DE0048A75E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				E67E50A51C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.h */,
+				E67E50A61C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.m */,
+				E67E50A71C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.h */,
+				E67E50A81C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.m */,
+				E67E50A91C2F23DE0048A75E /* NSData+MAVMatrixData.h */,
+				E67E50AA1C2F23DE0048A75E /* NSData+MAVMatrixData.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		E67E50BB1C2F23DE0048A75E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E67E50B91C2F23DE0048A75E /* MAVConstants.h */,
+				E67E50BC1C2F23DE0048A75E /* MAVTypedefs.h */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		E67E50BD1C2F23DE0048A75E /* Vectors */ = {
+			isa = PBXGroup;
+			children = (
+				E67E50BE1C2F23DE0048A75E /* MAVMutableVector.h */,
+				E67E50BF1C2F23DE0048A75E /* MAVMutableVector.m */,
+				E67E50C01C2F23DE0048A75E /* MAVVector-Protected.h */,
+				E67E50C11C2F23DE0048A75E /* MAVVector.h */,
+				E67E50C21C2F23DE0048A75E /* MAVVector.m */,
+			);
+			path = Vectors;
+			sourceTree = "<group>";
+		};
+		E67E51031C2F25C90048A75E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E67E50DF1C2F24F80048A75E /* MaVec.plist */,
+				E67E50BA1C2F23DE0048A75E /* MaVec.xcconfig */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E67E51061C2F280F0048A75E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E67E510A1C2F280F0048A75E /* MCKNumerics-Test.xctest */,
+				E67E512B1C2F29310048A75E /* MCKNumerics.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E67E515E1C2F31460048A75E /* MaVecTests */ = {
+			isa = PBXGroup;
+			children = (
+				E67E51681C2F317F0048A75E /* Matrix Tests */,
+				E67E51791C2F31800048A75E /* Mixed Tests */,
+				E67E517C1C2F31800048A75E /* Vector Tests */,
+				E67E51611C2F31460048A75E /* Info.plist */,
+				E67E51961C2F323A0048A75E /* MaVecTests.pch */,
+			);
+			path = MaVecTests;
+			sourceTree = "<group>";
+		};
+		E67E51681C2F317F0048A75E /* Matrix Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E67E51691C2F317F0048A75E /* MAVEigendecompositionTests.m */,
+				E67E516A1C2F317F0048A75E /* MAVLeastSquaresSolutionTests.m */,
+				E67E516B1C2F317F0048A75E /* MAVLUDecompositionTests.m */,
+				E67E516C1C2F317F0048A75E /* MAVMatrixArithmeticTests.m */,
+				E67E516D1C2F317F0048A75E /* MAVMatrixConstructionTests.m */,
+				E67E516E1C2F317F0048A75E /* MAVMatrixCopyAndEqualityTests.m */,
+				E67E516F1C2F317F0048A75E /* MAVMatrixInversionTests.m */,
+				E67E51701C2F317F0048A75E /* MAVMatrixMultiplicationTests.m */,
+				E67E51711C2F31800048A75E /* MAVMatrixOperationTests.m */,
+				E67E51721C2F31800048A75E /* MAVMatrixPropertyTests.m */,
+				E67E51731C2F31800048A75E /* MAVMatrixValueRepresentationConversion.m */,
+				E67E51741C2F31800048A75E /* MAVMinorCofactorAdjugateTests.m */,
+				E67E51751C2F31800048A75E /* MAVMutableMatrixTests.m */,
+				E67E51761C2F31800048A75E /* MAVQRDecompositionTests.m */,
+				E67E51771C2F31800048A75E /* MAVRotationMatrixTests.m */,
+				E67E51781C2F31800048A75E /* MAVSingularValueDecompositionTests.m */,
+			);
+			path = "Matrix Tests";
+			sourceTree = "<group>";
+		};
+		E67E51791C2F31800048A75E /* Mixed Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E67E517A1C2F31800048A75E /* Demos.m */,
+				E67E517B1C2F31800048A75E /* MaVecTests.m */,
+			);
+			path = "Mixed Tests";
+			sourceTree = "<group>";
+		};
+		E67E517C1C2F31800048A75E /* Vector Tests */ = {
+			isa = PBXGroup;
+			children = (
+				E67E517D1C2F31800048A75E /* MAVMutableVectorTests.m */,
+				E67E517E1C2F31800048A75E /* MAVVectorTests.m */,
+			);
+			path = "Vector Tests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E67E50941C2F23AB0048A75E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E67E50D51C2F23DE0048A75E /* MAVSingularValueDecomposition.h in Headers */,
+				E67E50D31C2F23DE0048A75E /* MAVQRFactorization.h in Headers */,
+				E67E50C71C2F23DE0048A75E /* NSData+MAVMatrixData.h in Headers */,
+				E67E50CD1C2F23DE0048A75E /* MAVMatrix-Protected.h in Headers */,
+				E67E50C31C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.h in Headers */,
+				E67E50D71C2F23DE0048A75E /* MAVConstants.h in Headers */,
+				E67E50CE1C2F23DE0048A75E /* MAVMatrix.h in Headers */,
+				E67E50DD1C2F23DE0048A75E /* MAVVector.h in Headers */,
+				E67E50D91C2F23DE0048A75E /* MAVTypedefs.h in Headers */,
+				E67E50DA1C2F23DE0048A75E /* MAVMutableVector.h in Headers */,
+				E67E50C91C2F23DE0048A75E /* MAVEigendecomposition.h in Headers */,
+				E67E513C1C2F2C330048A75E /* MaVec.h in Headers */,
+				E67E50C51C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.h in Headers */,
+				E67E50D11C2F23DE0048A75E /* MAVMutableMatrix.h in Headers */,
+				E67E50CB1C2F23DE0048A75E /* MAVLUFactorization.h in Headers */,
+				E67E50D01C2F23DE0048A75E /* MAVMutableMatrix-Protected.h in Headers */,
+				E67E50DC1C2F23DE0048A75E /* MAVVector-Protected.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E67E50961C2F23AB0048A75E /* MaVec */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E67E509F1C2F23AB0048A75E /* Build configuration list for PBXNativeTarget "MaVec" */;
+			buildPhases = (
+				E67E50921C2F23AB0048A75E /* Sources */,
+				E67E50931C2F23AB0048A75E /* Frameworks */,
+				E67E50941C2F23AB0048A75E /* Headers */,
+				E67E50951C2F23AB0048A75E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E67E51281C2F29300048A75E /* PBXTargetDependency */,
+			);
+			name = MaVec;
+			productName = MaVec;
+			productReference = E67E50971C2F23AB0048A75E /* MaVec.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E67E515C1C2F31460048A75E /* MaVecTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E67E51651C2F31460048A75E /* Build configuration list for PBXNativeTarget "MaVecTests" */;
+			buildPhases = (
+				E67E51591C2F31460048A75E /* Sources */,
+				E67E515A1C2F31460048A75E /* Frameworks */,
+				E67E515B1C2F31460048A75E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E67E51641C2F31460048A75E /* PBXTargetDependency */,
+			);
+			name = MaVecTests;
+			productName = MaVecTests;
+			productReference = E67E515D1C2F31460048A75E /* MaVecTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E67E508E1C2F23AB0048A75E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = AMProductions;
+				TargetAttributes = {
+					E67E50961C2F23AB0048A75E = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					E67E515C1C2F31460048A75E = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = E67E50911C2F23AB0048A75E /* Build configuration list for PBXProject "MaVec" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E67E508D1C2F23AB0048A75E;
+			productRefGroup = E67E50981C2F23AB0048A75E /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E67E51061C2F280F0048A75E /* Products */;
+					ProjectRef = E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				E67E50961C2F23AB0048A75E /* MaVec */,
+				E67E515C1C2F31460048A75E /* MaVecTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E67E510A1C2F280F0048A75E /* MCKNumerics-Test.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "MCKNumerics-Test.xctest";
+			remoteRef = E67E51091C2F280F0048A75E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E67E512B1C2F29310048A75E /* MCKNumerics.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MCKNumerics.framework;
+			remoteRef = E67E512A1C2F29310048A75E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E67E50951C2F23AB0048A75E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E67E50D81C2F23DE0048A75E /* MaVec.xcconfig in Resources */,
+				E67E50E01C2F24F80048A75E /* MaVec.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E67E515B1C2F31460048A75E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E67E50921C2F23AB0048A75E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E67E50C61C2F23DE0048A75E /* MAVMatrix+MAVMatrixFactory.m in Sources */,
+				E67E50C81C2F23DE0048A75E /* NSData+MAVMatrixData.m in Sources */,
+				E67E50D61C2F23DE0048A75E /* MAVSingularValueDecomposition.m in Sources */,
+				E67E50C41C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.m in Sources */,
+				E67E50DB1C2F23DE0048A75E /* MAVMutableVector.m in Sources */,
+				E67E50D41C2F23DE0048A75E /* MAVQRFactorization.m in Sources */,
+				E67E50CA1C2F23DE0048A75E /* MAVEigendecomposition.m in Sources */,
+				E67E50CC1C2F23DE0048A75E /* MAVLUFactorization.m in Sources */,
+				E67E50D21C2F23DE0048A75E /* MAVMutableMatrix.m in Sources */,
+				E67E50DE1C2F23DE0048A75E /* MAVVector.m in Sources */,
+				E67E50CF1C2F23DE0048A75E /* MAVMatrix.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E67E51591C2F31460048A75E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E67E51881C2F31800048A75E /* MAVMatrixPropertyTests.m in Sources */,
+				E67E518D1C2F31800048A75E /* MAVRotationMatrixTests.m in Sources */,
+				E67E51801C2F31800048A75E /* MAVLeastSquaresSolutionTests.m in Sources */,
+				E67E51891C2F31800048A75E /* MAVMatrixValueRepresentationConversion.m in Sources */,
+				E67E51811C2F31800048A75E /* MAVLUDecompositionTests.m in Sources */,
+				E67E518E1C2F31800048A75E /* MAVSingularValueDecompositionTests.m in Sources */,
+				E67E518F1C2F31800048A75E /* Demos.m in Sources */,
+				E67E51871C2F31800048A75E /* MAVMatrixOperationTests.m in Sources */,
+				E67E518C1C2F31800048A75E /* MAVQRDecompositionTests.m in Sources */,
+				E67E51851C2F31800048A75E /* MAVMatrixInversionTests.m in Sources */,
+				E67E51861C2F31800048A75E /* MAVMatrixMultiplicationTests.m in Sources */,
+				E67E517F1C2F31800048A75E /* MAVEigendecompositionTests.m in Sources */,
+				E67E51901C2F31800048A75E /* MaVecTests.m in Sources */,
+				E67E51921C2F31800048A75E /* MAVVectorTests.m in Sources */,
+				E67E51911C2F31800048A75E /* MAVMutableVectorTests.m in Sources */,
+				E67E518A1C2F31800048A75E /* MAVMinorCofactorAdjugateTests.m in Sources */,
+				E67E51831C2F31800048A75E /* MAVMatrixConstructionTests.m in Sources */,
+				E67E51841C2F31800048A75E /* MAVMatrixCopyAndEqualityTests.m in Sources */,
+				E67E51821C2F31800048A75E /* MAVMatrixArithmeticTests.m in Sources */,
+				E67E518B1C2F31800048A75E /* MAVMutableMatrixTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E67E51281C2F29300048A75E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MCKNumerics;
+			targetProxy = E67E51271C2F29300048A75E /* PBXContainerItemProxy */;
+		};
+		E67E51641C2F31460048A75E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E67E50961C2F23AB0048A75E /* MaVec */;
+			targetProxy = E67E51631C2F31460048A75E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E67E509D1C2F23AB0048A75E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E67E509E1C2F23AB0048A75E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E67E50A01C2F23AB0048A75E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E67E50BA1C2F23DE0048A75E /* MaVec.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.AMProductions.MaVec;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		E67E50A11C2F23AB0048A75E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E67E50BA1C2F23DE0048A75E /* MaVec.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.AMProductions.MaVec;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		E67E51661C2F31460048A75E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/MaVecTests/MaVecTests.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = MaVecTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.AMProductions.MaVecTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E67E51671C2F31460048A75E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/MaVecTests/MaVecTests.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = MaVecTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.AMProductions.MaVecTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E67E50911C2F23AB0048A75E /* Build configuration list for PBXProject "MaVec" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E67E509D1C2F23AB0048A75E /* Debug */,
+				E67E509E1C2F23AB0048A75E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E67E509F1C2F23AB0048A75E /* Build configuration list for PBXNativeTarget "MaVec" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E67E50A01C2F23AB0048A75E /* Debug */,
+				E67E50A11C2F23AB0048A75E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E67E51651C2F31460048A75E /* Build configuration list for PBXNativeTarget "MaVecTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E67E51661C2F31460048A75E /* Debug */,
+				E67E51671C2F31460048A75E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E67E508E1C2F23AB0048A75E /* Project object */;
+}

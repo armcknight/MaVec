@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:MaVec.xcodeproj">
+      location = "group:MaVec/MaVec.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/amcknight/Projects/MaVec/MaVec-Demo.xcodeproj">
    </FileRef>
 </Workspace>

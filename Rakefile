@@ -1,7 +1,7 @@
 
-TEST_PROJ_PATH="MaVec.xcodeproj"
+TEST_PROJ_PATH="MaVec/MaVec.xcodeproj"
 TEST_WORKSPACE_PATH="MaVec.xcworkspace"
-TEST_SCHEME="MaVec-Demo"
+TEST_SCHEME="MaVec"
 
 #
 # Install

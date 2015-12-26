@@ -25,7 +25,8 @@
 //  SOFTWARE.
 //
 
-#import "MAVTypedefs.h"
+#import <MaVec/MaVec.h>
+
 #import "LeastSquaresApproximationViewController.h"
 #import "ApproximationView.h"
 

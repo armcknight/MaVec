@@ -1,0 +1,623 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499734B7192594DF0004A8E5 /* InfoPlist.strings */; };
+		499734BB192594DF0004A8E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BA192594DF0004A8E5 /* main.m */; };
+		499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 499734BE192594DF0004A8E5 /* AppDelegate.m */; };
+		499734C1192594DF0004A8E5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 499734C0192594DF0004A8E5 /* Images.xcassets */; };
+		49973522192596B70004A8E5 /* ApproximationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973518192596B70004A8E5 /* ApproximationView.m */; };
+		49973523192596B70004A8E5 /* DemoChoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4997351A192596B70004A8E5 /* DemoChoiceTableViewController.m */; };
+		49973524192596B70004A8E5 /* LeastSquaresApproximationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4997351C192596B70004A8E5 /* LeastSquaresApproximationViewController.m */; };
+		49973525192596B70004A8E5 /* LeastSquaresApproximationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4997351D192596B70004A8E5 /* LeastSquaresApproximationViewController.xib */; };
+		49973526192596B70004A8E5 /* LinearApproximationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4997351E192596B70004A8E5 /* LinearApproximationView.xib */; };
+		49973527192596B70004A8E5 /* SVDImageCompressionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973520192596B70004A8E5 /* SVDImageCompressionViewController.m */; };
+		49973528192596B70004A8E5 /* SVDImageCompressionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 49973521192596B70004A8E5 /* SVDImageCompressionViewController.xib */; };
+		4997355A192599AB0004A8E5 /* NSFetchRequest+RZCreationHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973542192599AB0004A8E5 /* NSFetchRequest+RZCreationHelpers.m */; };
+		4997355B192599AB0004A8E5 /* RZArrayCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973544192599AB0004A8E5 /* RZArrayCollectionList.m */; };
+		4997355C192599AB0004A8E5 /* RZBaseCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973546192599AB0004A8E5 /* RZBaseCollectionList.m */; };
+		4997355D192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973549192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.m */; };
+		4997355E192599AB0004A8E5 /* RZCollectionListNotificationWrappers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4997354B192599AB0004A8E5 /* RZCollectionListNotificationWrappers.m */; };
+		4997355F192599AB0004A8E5 /* RZCollectionListTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4997354E192599AB0004A8E5 /* RZCollectionListTableViewDataSource.m */; };
+		49973560192599AB0004A8E5 /* RZCompositeCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973550192599AB0004A8E5 /* RZCompositeCollectionList.m */; };
+		49973561192599AB0004A8E5 /* RZFetchedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973552192599AB0004A8E5 /* RZFetchedCollectionList.m */; };
+		49973562192599AB0004A8E5 /* RZFilteredCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973554192599AB0004A8E5 /* RZFilteredCollectionList.m */; };
+		49973563192599AB0004A8E5 /* RZObserverCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973556192599AB0004A8E5 /* RZObserverCollection.m */; };
+		49973564192599AB0004A8E5 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973558192599AB0004A8E5 /* RZSortedCollectionList.m */; };
+		E67E51481C2F2D680048A75E /* MaVec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; };
+		E67E51491C2F2D680048A75E /* MaVec.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E67E51551C2F2DC00048A75E /* MCKNumerics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */; };
+		E67E51561C2F2DC00048A75E /* MCKNumerics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E67E51461C2F2D4F0048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E67E50971C2F23AB0048A75E;
+			remoteInfo = MaVec;
+		};
+		E67E514A1C2F2D680048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E67E50961C2F23AB0048A75E;
+			remoteInfo = MaVec;
+		};
+		E67E51531C2F2DBB0048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E67E51101C2F286E0048A75E;
+			remoteInfo = MCKNumerics;
+		};
+		E67E51571C2F2DC00048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E67E510F1C2F286E0048A75E;
+			remoteInfo = MCKNumerics;
+		};
+		E67E51941C2F31900048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E67E515D1C2F31460048A75E;
+			remoteInfo = MaVecTests;
+		};
+		E67E51A91C2F35170048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E67E519B1C2F34CE0048A75E;
+			remoteInfo = MCKNumericsTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E67E513F1C2F2D2D0048A75E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E67E51561C2F2DC00048A75E /* MCKNumerics.framework in CopyFiles */,
+				E67E51491C2F2D680048A75E /* MaVec.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		499734AB192594DF0004A8E5 /* MaVec-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		499734B6192594DF0004A8E5 /* MaVec-Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaVec-Demo-Info.plist"; sourceTree = "<group>"; };
+		499734B8192594DF0004A8E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		499734BA192594DF0004A8E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		499734BC192594DF0004A8E5 /* MaVec-Demo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MaVec-Demo-Prefix.pch"; sourceTree = "<group>"; };
+		499734BD192594DF0004A8E5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		499734BE192594DF0004A8E5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		499734C0192594DF0004A8E5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		49973517192596B70004A8E5 /* ApproximationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApproximationView.h; sourceTree = "<group>"; };
+		49973518192596B70004A8E5 /* ApproximationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApproximationView.m; sourceTree = "<group>"; };
+		49973519192596B70004A8E5 /* DemoChoiceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoChoiceTableViewController.h; sourceTree = "<group>"; };
+		4997351A192596B70004A8E5 /* DemoChoiceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoChoiceTableViewController.m; sourceTree = "<group>"; };
+		4997351B192596B70004A8E5 /* LeastSquaresApproximationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeastSquaresApproximationViewController.h; sourceTree = "<group>"; };
+		4997351C192596B70004A8E5 /* LeastSquaresApproximationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeastSquaresApproximationViewController.m; sourceTree = "<group>"; };
+		4997351D192596B70004A8E5 /* LeastSquaresApproximationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeastSquaresApproximationViewController.xib; sourceTree = "<group>"; };
+		4997351E192596B70004A8E5 /* LinearApproximationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LinearApproximationView.xib; sourceTree = "<group>"; };
+		4997351F192596B70004A8E5 /* SVDImageCompressionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDImageCompressionViewController.h; sourceTree = "<group>"; };
+		49973520192596B70004A8E5 /* SVDImageCompressionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDImageCompressionViewController.m; sourceTree = "<group>"; };
+		49973521192596B70004A8E5 /* SVDImageCompressionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SVDImageCompressionViewController.xib; sourceTree = "<group>"; };
+		49973541192599AB0004A8E5 /* NSFetchRequest+RZCreationHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+RZCreationHelpers.h"; sourceTree = "<group>"; };
+		49973542192599AB0004A8E5 /* NSFetchRequest+RZCreationHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFetchRequest+RZCreationHelpers.m"; sourceTree = "<group>"; };
+		49973543192599AB0004A8E5 /* RZArrayCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZArrayCollectionList.h; sourceTree = "<group>"; };
+		49973544192599AB0004A8E5 /* RZArrayCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZArrayCollectionList.m; sourceTree = "<group>"; };
+		49973545192599AB0004A8E5 /* RZBaseCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZBaseCollectionList.h; sourceTree = "<group>"; };
+		49973546192599AB0004A8E5 /* RZBaseCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZBaseCollectionList.m; sourceTree = "<group>"; };
+		49973547192599AB0004A8E5 /* RZBaseCollectionList_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZBaseCollectionList_Private.h; sourceTree = "<group>"; };
+		49973548192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionListCollectionViewDataSource.h; sourceTree = "<group>"; };
+		49973549192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionListCollectionViewDataSource.m; sourceTree = "<group>"; };
+		4997354A192599AB0004A8E5 /* RZCollectionListNotificationWrappers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionListNotificationWrappers.h; sourceTree = "<group>"; };
+		4997354B192599AB0004A8E5 /* RZCollectionListNotificationWrappers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionListNotificationWrappers.m; sourceTree = "<group>"; };
+		4997354C192599AB0004A8E5 /* RZCollectionListProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionListProtocol.h; sourceTree = "<group>"; };
+		4997354D192599AB0004A8E5 /* RZCollectionListTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionListTableViewDataSource.h; sourceTree = "<group>"; };
+		4997354E192599AB0004A8E5 /* RZCollectionListTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCollectionListTableViewDataSource.m; sourceTree = "<group>"; };
+		4997354F192599AB0004A8E5 /* RZCompositeCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCompositeCollectionList.h; sourceTree = "<group>"; };
+		49973550192599AB0004A8E5 /* RZCompositeCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZCompositeCollectionList.m; sourceTree = "<group>"; };
+		49973551192599AB0004A8E5 /* RZFetchedCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZFetchedCollectionList.h; sourceTree = "<group>"; };
+		49973552192599AB0004A8E5 /* RZFetchedCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZFetchedCollectionList.m; sourceTree = "<group>"; };
+		49973553192599AB0004A8E5 /* RZFilteredCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZFilteredCollectionList.h; sourceTree = "<group>"; };
+		49973554192599AB0004A8E5 /* RZFilteredCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZFilteredCollectionList.m; sourceTree = "<group>"; };
+		49973555192599AB0004A8E5 /* RZObserverCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZObserverCollection.h; sourceTree = "<group>"; };
+		49973556192599AB0004A8E5 /* RZObserverCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZObserverCollection.m; sourceTree = "<group>"; };
+		49973557192599AB0004A8E5 /* RZSortedCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZSortedCollectionList.h; sourceTree = "<group>"; };
+		49973558192599AB0004A8E5 /* RZSortedCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZSortedCollectionList.m; sourceTree = "<group>"; };
+		49973559192599AB0004A8E5 /* RZCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionList.h; sourceTree = "<group>"; };
+		E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MaVec.xcodeproj; path = MaVec/MaVec.xcodeproj; sourceTree = "<group>"; };
+		E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MCKNumerics.xcodeproj; path = MaVec/../External/MCKNumerics/MCKNumerics.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		499734A8192594DF0004A8E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E67E51551C2F2DC00048A75E /* MCKNumerics.framework in Frameworks */,
+				E67E51481C2F2D680048A75E /* MaVec.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		499734A0192594B00004A8E5 = {
+			isa = PBXGroup;
+			children = (
+				E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */,
+				E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */,
+				4997353E1925999F0004A8E5 /* External */,
+				499734B4192594DF0004A8E5 /* MaVec-Demo */,
+				499734AC192594DF0004A8E5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		499734AC192594DF0004A8E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				499734AB192594DF0004A8E5 /* MaVec-Demo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		499734B4192594DF0004A8E5 /* MaVec-Demo */ = {
+			isa = PBXGroup;
+			children = (
+				49973516192596B70004A8E5 /* View Controllers */,
+				499734BD192594DF0004A8E5 /* AppDelegate.h */,
+				499734BE192594DF0004A8E5 /* AppDelegate.m */,
+				499734C0192594DF0004A8E5 /* Images.xcassets */,
+				499734B5192594DF0004A8E5 /* Supporting Files */,
+			);
+			path = "MaVec-Demo";
+			sourceTree = "<group>";
+		};
+		499734B5192594DF0004A8E5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				499734B6192594DF0004A8E5 /* MaVec-Demo-Info.plist */,
+				499734B7192594DF0004A8E5 /* InfoPlist.strings */,
+				499734BA192594DF0004A8E5 /* main.m */,
+				499734BC192594DF0004A8E5 /* MaVec-Demo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		49973516192596B70004A8E5 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				49973517192596B70004A8E5 /* ApproximationView.h */,
+				49973518192596B70004A8E5 /* ApproximationView.m */,
+				49973519192596B70004A8E5 /* DemoChoiceTableViewController.h */,
+				4997351A192596B70004A8E5 /* DemoChoiceTableViewController.m */,
+				4997351B192596B70004A8E5 /* LeastSquaresApproximationViewController.h */,
+				4997351C192596B70004A8E5 /* LeastSquaresApproximationViewController.m */,
+				4997351D192596B70004A8E5 /* LeastSquaresApproximationViewController.xib */,
+				4997351E192596B70004A8E5 /* LinearApproximationView.xib */,
+				4997351F192596B70004A8E5 /* SVDImageCompressionViewController.h */,
+				49973520192596B70004A8E5 /* SVDImageCompressionViewController.m */,
+				49973521192596B70004A8E5 /* SVDImageCompressionViewController.xib */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		4997353E1925999F0004A8E5 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4997353F192599AB0004A8E5 /* RZCollectionList */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		4997353F192599AB0004A8E5 /* RZCollectionList */ = {
+			isa = PBXGroup;
+			children = (
+				49973540192599AB0004A8E5 /* Classes */,
+				49973559192599AB0004A8E5 /* RZCollectionList.h */,
+			);
+			name = RZCollectionList;
+			path = External/RZCollectionList/RZCollectionList;
+			sourceTree = "<group>";
+		};
+		49973540192599AB0004A8E5 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				49973541192599AB0004A8E5 /* NSFetchRequest+RZCreationHelpers.h */,
+				49973542192599AB0004A8E5 /* NSFetchRequest+RZCreationHelpers.m */,
+				49973543192599AB0004A8E5 /* RZArrayCollectionList.h */,
+				49973544192599AB0004A8E5 /* RZArrayCollectionList.m */,
+				49973545192599AB0004A8E5 /* RZBaseCollectionList.h */,
+				49973546192599AB0004A8E5 /* RZBaseCollectionList.m */,
+				49973547192599AB0004A8E5 /* RZBaseCollectionList_Private.h */,
+				49973548192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.h */,
+				49973549192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.m */,
+				4997354A192599AB0004A8E5 /* RZCollectionListNotificationWrappers.h */,
+				4997354B192599AB0004A8E5 /* RZCollectionListNotificationWrappers.m */,
+				4997354C192599AB0004A8E5 /* RZCollectionListProtocol.h */,
+				4997354D192599AB0004A8E5 /* RZCollectionListTableViewDataSource.h */,
+				4997354E192599AB0004A8E5 /* RZCollectionListTableViewDataSource.m */,
+				4997354F192599AB0004A8E5 /* RZCompositeCollectionList.h */,
+				49973550192599AB0004A8E5 /* RZCompositeCollectionList.m */,
+				49973551192599AB0004A8E5 /* RZFetchedCollectionList.h */,
+				49973552192599AB0004A8E5 /* RZFetchedCollectionList.m */,
+				49973553192599AB0004A8E5 /* RZFilteredCollectionList.h */,
+				49973554192599AB0004A8E5 /* RZFilteredCollectionList.m */,
+				49973555192599AB0004A8E5 /* RZObserverCollection.h */,
+				49973556192599AB0004A8E5 /* RZObserverCollection.m */,
+				49973557192599AB0004A8E5 /* RZSortedCollectionList.h */,
+				49973558192599AB0004A8E5 /* RZSortedCollectionList.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		E67E51431C2F2D4E0048A75E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E67E51471C2F2D4F0048A75E /* MaVec.framework */,
+				E67E51951C2F31900048A75E /* MaVecTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E67E514D1C2F2DBB0048A75E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */,
+				E67E51AA1C2F35170048A75E /* MCKNumericsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		499734AA192594DF0004A8E5 /* MaVec-Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 499734D5192594E00004A8E5 /* Build configuration list for PBXNativeTarget "MaVec-Demo" */;
+			buildPhases = (
+				499734A7192594DF0004A8E5 /* Sources */,
+				499734A8192594DF0004A8E5 /* Frameworks */,
+				499734A9192594DF0004A8E5 /* Resources */,
+				E67E513F1C2F2D2D0048A75E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E67E514B1C2F2D680048A75E /* PBXTargetDependency */,
+				E67E51581C2F2DC00048A75E /* PBXTargetDependency */,
+			);
+			name = "MaVec-Demo";
+			productName = "MaVec-Demo";
+			productReference = 499734AB192594DF0004A8E5 /* MaVec-Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		499734A1192594B00004A8E5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = MAV;
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = AMProductions;
+			};
+			buildConfigurationList = 499734A4192594B00004A8E5 /* Build configuration list for PBXProject "MaVec-Demo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 499734A0192594B00004A8E5;
+			productRefGroup = 499734AC192594DF0004A8E5 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E67E51431C2F2D4E0048A75E /* Products */;
+					ProjectRef = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
+				},
+				{
+					ProductGroup = E67E514D1C2F2DBB0048A75E /* Products */;
+					ProjectRef = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				499734AA192594DF0004A8E5 /* MaVec-Demo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E67E51471C2F2D4F0048A75E /* MaVec.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MaVec.framework;
+			remoteRef = E67E51461C2F2D4F0048A75E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MCKNumerics.framework;
+			remoteRef = E67E51531C2F2DBB0048A75E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E67E51951C2F31900048A75E /* MaVecTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MaVecTests.xctest;
+			remoteRef = E67E51941C2F31900048A75E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E67E51AA1C2F35170048A75E /* MCKNumericsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MCKNumericsTests.xctest;
+			remoteRef = E67E51A91C2F35170048A75E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		499734A9192594DF0004A8E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				499734B9192594DF0004A8E5 /* InfoPlist.strings in Resources */,
+				49973528192596B70004A8E5 /* SVDImageCompressionViewController.xib in Resources */,
+				49973526192596B70004A8E5 /* LinearApproximationView.xib in Resources */,
+				499734C1192594DF0004A8E5 /* Images.xcassets in Resources */,
+				49973525192596B70004A8E5 /* LeastSquaresApproximationViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		499734A7192594DF0004A8E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49973524192596B70004A8E5 /* LeastSquaresApproximationViewController.m in Sources */,
+				49973563192599AB0004A8E5 /* RZObserverCollection.m in Sources */,
+				4997355F192599AB0004A8E5 /* RZCollectionListTableViewDataSource.m in Sources */,
+				4997355E192599AB0004A8E5 /* RZCollectionListNotificationWrappers.m in Sources */,
+				49973522192596B70004A8E5 /* ApproximationView.m in Sources */,
+				49973564192599AB0004A8E5 /* RZSortedCollectionList.m in Sources */,
+				4997355C192599AB0004A8E5 /* RZBaseCollectionList.m in Sources */,
+				49973562192599AB0004A8E5 /* RZFilteredCollectionList.m in Sources */,
+				49973523192596B70004A8E5 /* DemoChoiceTableViewController.m in Sources */,
+				4997355A192599AB0004A8E5 /* NSFetchRequest+RZCreationHelpers.m in Sources */,
+				4997355B192599AB0004A8E5 /* RZArrayCollectionList.m in Sources */,
+				499734BF192594DF0004A8E5 /* AppDelegate.m in Sources */,
+				4997355D192599AB0004A8E5 /* RZCollectionListCollectionViewDataSource.m in Sources */,
+				499734BB192594DF0004A8E5 /* main.m in Sources */,
+				49973561192599AB0004A8E5 /* RZFetchedCollectionList.m in Sources */,
+				49973560192599AB0004A8E5 /* RZCompositeCollectionList.m in Sources */,
+				49973527192596B70004A8E5 /* SVDImageCompressionViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E67E514B1C2F2D680048A75E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MaVec;
+			targetProxy = E67E514A1C2F2D680048A75E /* PBXContainerItemProxy */;
+		};
+		E67E51581C2F2DC00048A75E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MCKNumerics;
+			targetProxy = E67E51571C2F2DC00048A75E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		499734B7192594DF0004A8E5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				499734B8192594DF0004A8E5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		499734A5192594B00004A8E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = NO;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-Wno-gnu";
+				WARNING_CFLAGS = "";
+			};
+			name = Debug;
+		};
+		499734A6192594B00004A8E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = NO;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "-Wno-gnu";
+				WARNING_CFLAGS = "";
+			};
+			name = Release;
+		};
+		499734D6192594E00004A8E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/MaVec/build/Debug-iphoneos",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MaVec-Demo/MaVec-Demo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				INFOPLIST_FILE = "MaVec-Demo/MaVec-Demo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		499734D7192594E00004A8E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)/MaVec/build/Debug-iphoneos",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MaVec-Demo/MaVec-Demo-Prefix.pch";
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				INFOPLIST_FILE = "MaVec-Demo/MaVec-Demo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		499734A4192594B00004A8E5 /* Build configuration list for PBXProject "MaVec-Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				499734A5192594B00004A8E5 /* Debug */,
+				499734A6192594B00004A8E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		499734D5192594E00004A8E5 /* Build configuration list for PBXNativeTarget "MaVec-Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				499734D6192594E00004A8E5 /* Debug */,
+				499734D7192594E00004A8E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 499734A1192594B00004A8E5 /* Project object */;
+}
