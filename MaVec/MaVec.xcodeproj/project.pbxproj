@@ -17,7 +17,7 @@
 		E67E50CA1C2F23DE0048A75E /* MAVEigendecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50AC1C2F23DE0048A75E /* MAVEigendecomposition.m */; };
 		E67E50CB1C2F23DE0048A75E /* MAVLUFactorization.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50AD1C2F23DE0048A75E /* MAVLUFactorization.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E67E50CC1C2F23DE0048A75E /* MAVLUFactorization.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50AE1C2F23DE0048A75E /* MAVLUFactorization.m */; };
-		E67E50CD1C2F23DE0048A75E /* MAVMatrix-Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50AF1C2F23DE0048A75E /* MAVMatrix-Protected.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E67E50CD1C2F23DE0048A75E /* MAVMatrix-Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50AF1C2F23DE0048A75E /* MAVMatrix-Protected.h */; };
 		E67E50CE1C2F23DE0048A75E /* MAVMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50B01C2F23DE0048A75E /* MAVMatrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E67E50CF1C2F23DE0048A75E /* MAVMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E50B11C2F23DE0048A75E /* MAVMatrix.m */; };
 		E67E50D01C2F23DE0048A75E /* MAVMutableMatrix-Protected.h in Headers */ = {isa = PBXBuildFile; fileRef = E67E50B21C2F23DE0048A75E /* MAVMutableMatrix-Protected.h */; };
@@ -336,7 +336,6 @@
 				E67E50D51C2F23DE0048A75E /* MAVSingularValueDecomposition.h in Headers */,
 				E67E50D31C2F23DE0048A75E /* MAVQRFactorization.h in Headers */,
 				E67E50C71C2F23DE0048A75E /* NSData+MAVMatrixData.h in Headers */,
-				E67E50CD1C2F23DE0048A75E /* MAVMatrix-Protected.h in Headers */,
 				E67E50C31C2F23DE0048A75E /* MAVMatrix+MAVMatrixConverter.h in Headers */,
 				E67E50D71C2F23DE0048A75E /* MAVConstants.h in Headers */,
 				E67E50CE1C2F23DE0048A75E /* MAVMatrix.h in Headers */,
@@ -350,6 +349,7 @@
 				E67E50CB1C2F23DE0048A75E /* MAVLUFactorization.h in Headers */,
 				E67E50D01C2F23DE0048A75E /* MAVMutableMatrix-Protected.h in Headers */,
 				E67E50DC1C2F23DE0048A75E /* MAVVector-Protected.h in Headers */,
+				E67E50CD1C2F23DE0048A75E /* MAVMatrix-Protected.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,8 +547,6 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -573,7 +571,6 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

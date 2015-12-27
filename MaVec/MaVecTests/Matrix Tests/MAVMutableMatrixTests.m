@@ -144,11 +144,11 @@ static const MAVIndex columns = 3;
                 if ([value isDoublePrecision]) {
                     double resultValue = matrix[row][column].doubleValue;
                     double computedValue = original[row][column].doubleValue + 1.0 * (addition ? 1.0 : -1.0);
-                    XCTAssertEqual(resultValue, computedValue, @"Value at (%lu, %lu) %@ incorrectly in double precision matrix", row, column, addition ? @"added" : @"subtracted");
+                    XCTAssertEqual(resultValue, computedValue, @"Value at (%d, %d) %@ incorrectly in double precision matrix", row, column, addition ? @"added" : @"subtracted");
                 } else {
                     float resultValue = matrix[row][column].floatValue;
                     float computedValue = original[row][column].floatValue + 1.0f * (addition ? 1.0f : -1.0f);
-                    XCTAssertEqual(resultValue, computedValue, @"Value at (%lu, %lu) %@ incorrectly in single precision matrix", row, column, addition ? @"added" : @"subtracted");
+                    XCTAssertEqual(resultValue, computedValue, @"Value at (%d, %d) %@ incorrectly in single precision matrix", row, column, addition ? @"added" : @"subtracted");
                 }
             }
         }
@@ -166,11 +166,11 @@ static const MAVIndex columns = 3;
                 if (isDouble) {
                     double computedValue = matrix[row][column].doubleValue;
                     double solution = original[row][column].doubleValue * 5.0;
-                    XCTAssertEqual(computedValue, solution, @"Entry at (%lu, %lu) not multiplied correctly in double-precision matrix.", row, column);
+                    XCTAssertEqual(computedValue, solution, @"Entry at (%d, %d) not multiplied correctly in double-precision matrix.", row, column);
                 } else {
                     float computedValue = matrix[row][column].floatValue;
                     float solution = original[row][column].floatValue * 5.0f;
-                    XCTAssertEqual(computedValue, solution, @"Entry at (%lu, %lu) not multiplied correctly in single-precision matrix.", row, column);
+                    XCTAssertEqual(computedValue, solution, @"Entry at (%d, %d) not multiplied correctly in single-precision matrix.", row, column);
                 }
             }
         }
@@ -252,15 +252,15 @@ static const MAVIndex columns = 3;
                 for (MAVIndex column = 0; column < matrix.columns; column++) {
                     if ((rowAssignment && row == dimension) || (!rowAssignment && column == dimension)) {
                         if (isDouble) {
-                            XCTAssertEqual(vector[rowAssignment ? column : row].doubleValue, mutatedMatrix[row][column].doubleValue, @"Mutated %@ in double-precision matrix was not set correctly checking (%lu, %lu)", rowAssignment ? @"row" : @"column", row, column);
+                            XCTAssertEqual(vector[rowAssignment ? column : row].doubleValue, mutatedMatrix[row][column].doubleValue, @"Mutated %@ in double-precision matrix was not set correctly checking (%d, %d)", rowAssignment ? @"row" : @"column", row, column);
                         } else {
-                            XCTAssertEqual(vector[rowAssignment ? column : row].floatValue, mutatedMatrix[row][column].floatValue, @"Mutated %@ in single-precision matrix was not set correctly checking (%lu, %lu)", rowAssignment ? @"row" : @"column", row, column);
+                            XCTAssertEqual(vector[rowAssignment ? column : row].floatValue, mutatedMatrix[row][column].floatValue, @"Mutated %@ in single-precision matrix was not set correctly checking (%d, %d)", rowAssignment ? @"row" : @"column", row, column);
                         }
                     } else {
                         if (isDouble) {
-                            XCTAssertEqual(matrix[row][column].doubleValue, mutatedMatrix[row][column].doubleValue, @"%@ not mutated in double-precision row was incorrectly changed checking (%lu, %lu).", rowAssignment ? @"row" : @"column", row, column);
+                            XCTAssertEqual(matrix[row][column].doubleValue, mutatedMatrix[row][column].doubleValue, @"%@ not mutated in double-precision row was incorrectly changed checking (%d, %d).", rowAssignment ? @"row" : @"column", row, column);
                         } else {
-                            XCTAssertEqual(matrix[row][column].floatValue, mutatedMatrix[row][column].floatValue, @"%@ not mutated in single-precision row was incorrectly changed checking (%lu, %lu).", rowAssignment ? @"row" : @"column", row, column);
+                            XCTAssertEqual(matrix[row][column].floatValue, mutatedMatrix[row][column].floatValue, @"%@ not mutated in single-precision row was incorrectly changed checking (%d, %d).", rowAssignment ? @"row" : @"column", row, column);
                         }
                     }
                 }

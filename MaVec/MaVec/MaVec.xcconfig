@@ -29,6 +29,20 @@ INFOPLIST_FILE = $(PROJECT_DIR)/MaVec/MaVec.plist
 
 OTHER_CFLAGS = -Wno-gnu
 
+// architectures
+
+ARCHS = i386 x86_64 armv7 armv7s armv7k arm64
+
+VALID_ARCHS[sdk=macosx*] = x86_64
+VALID_ARCHS[sdk=watchos*] = armv7k
+VALID_ARCHS[sdk=watchsimulator*] = i386
+VALID_ARCHS[sdk=appletvos*] = arm64
+VALID_ARCHS[sdk=appletvsimulator*] = x86_64
+VALID_ARCHS[sdk=iphoneos*] = arm64 armv7s armv7
+VALID_ARCHS[sdk=iphonesimulator*] = i386 x86_64
+
+SUPPORTED_PLATFORMS = macosx iphoneos iphonesimulator watchos watchsimulator appletvos appletvsimulator
+
 // enabled warnings
 CLANG_WARN_BOOL_CONVERSION = YES
 CLANG_WARN_CONSTANT_CONVERSION = YES

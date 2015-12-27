@@ -25,7 +25,7 @@
 //  SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for MaVec.
 FOUNDATION_EXPORT double MaVecVersionNumber;

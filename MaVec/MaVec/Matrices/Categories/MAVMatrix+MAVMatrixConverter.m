@@ -27,6 +27,8 @@
 
 #import "MAVMatrix+MAVMatrixConverter.h"
 
+#if TARGET_OS_IPHONE
+
 @implementation MAVMatrix (MAVMatrixConverter)
 
 - (CMRotationMatrix)CMRotationMatrix {
@@ -46,3 +48,5 @@
 }
 
 @end
+
+#endif

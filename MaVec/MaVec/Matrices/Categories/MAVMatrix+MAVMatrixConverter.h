@@ -27,6 +27,8 @@
 
 #import "MAVMatrix.h"
 
+#if TARGET_OS_IPHONE
+
 @import CoreMotion;
 
 @interface MAVMatrix (MAVMatrixConverter)
@@ -34,3 +36,5 @@
 - (CMRotationMatrix)CMRotationMatrix;
 
 @end
+
+#endif

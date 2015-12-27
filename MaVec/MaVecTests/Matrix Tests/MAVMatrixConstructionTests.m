@@ -427,7 +427,7 @@
     for (MAVIndex i = 0; i < 3; i++) {
         for (MAVIndex j = 0; j < 3; j++) {
             MAVVector *vector = j == 0 ? v1 : j == 1 ? v2 : v3;
-            XCTAssertEqual(a[i][j].doubleValue, vector[i].doubleValue, @"Value incorrect at [%ldd][%ld]", i, j);
+            XCTAssertEqual(a[i][j].doubleValue, vector[i].doubleValue, @"Value incorrect at [%d][%d]", i, j);
         }
     }
     
@@ -440,7 +440,7 @@
     for (MAVIndex i = 0; i < 3; i++) {
         MAVVector *vector = i == 0 ? v1 : i == 1 ? v2 : v3;
         for (MAVIndex j = 0; j < 3; j++) {
-            XCTAssertEqual(b[i][j].doubleValue, vector[j].doubleValue, @"Value incorrect at [%ld][%ld]", i, j);
+            XCTAssertEqual(b[i][j].doubleValue, vector[j].doubleValue, @"Value incorrect at [%d][%d]", i, j);
         }
     }
 }
