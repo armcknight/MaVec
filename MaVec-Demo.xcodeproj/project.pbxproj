@@ -30,9 +30,9 @@
 		49973563192599AB0004A8E5 /* RZObserverCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973556192599AB0004A8E5 /* RZObserverCollection.m */; };
 		49973564192599AB0004A8E5 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973558192599AB0004A8E5 /* RZSortedCollectionList.m */; };
 		E67E51481C2F2D680048A75E /* MaVec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; };
-		E67E51491C2F2D680048A75E /* MaVec.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E67E51491C2F2D680048A75E /* MaVec.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E67E51551C2F2DC00048A75E /* MCKNumerics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */; };
-		E67E51561C2F2DC00048A75E /* MCKNumerics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E67E51561C2F2DC00048A75E /* MCKNumerics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,15 +81,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E67E513F1C2F2D2D0048A75E /* CopyFiles */ = {
+		E67E513F1C2F2D2D0048A75E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E67E51561C2F2DC00048A75E /* MCKNumerics.framework in CopyFiles */,
-				E67E51491C2F2D680048A75E /* MaVec.framework in CopyFiles */,
+				E67E51561C2F2DC00048A75E /* MCKNumerics.framework in Embed Frameworks */,
+				E67E51491C2F2D680048A75E /* MaVec.framework in Embed Frameworks */,
 			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -293,7 +294,7 @@
 				499734A7192594DF0004A8E5 /* Sources */,
 				499734A8192594DF0004A8E5 /* Frameworks */,
 				499734A9192594DF0004A8E5 /* Resources */,
-				E67E513F1C2F2D2D0048A75E /* CopyFiles */,
+				E67E513F1C2F2D2D0048A75E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
