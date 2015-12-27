@@ -32,22 +32,6 @@
 
 @class MCKTribool;
 
-typedef enum : UInt8 {
-    /**
-     Specifies that the values in the vector form a row with each value in its own column.
-     */
-    MAVVectorFormatRowVector,
-    
-    /**
-     Specifies that the values in the vector form a column with each value in its own row.
-     */
-    MAVVectorFormatColumnVector
-}
-/**
- Constants specifying whether the vector is a row- or column- vector.
- */
-MAVVectorFormat;
-
 /**
  @class MAVVector
  @description A class providing storage and operations for vectors of double precision floating-point numbers, where underlying details about the internal representation (e.g. row- or column- orientation are abstracted away).
