@@ -62,13 +62,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E67E51091C2F280F0048A75E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4997357019259BFF0004A8E5;
-			remoteInfo = "MCKNumerics-Test";
-		};
 		E67E51271C2F29300048A75E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */;
@@ -89,6 +82,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = E67E50961C2F23AB0048A75E;
 			remoteInfo = MaVec;
+		};
+		E67E51AF1C2F86300048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E51051C2F280F0048A75E /* MCKNumerics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E67E519B1C2F34CE0048A75E;
+			remoteInfo = MCKNumericsTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -269,8 +269,8 @@
 		E67E51061C2F280F0048A75E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E67E510A1C2F280F0048A75E /* MCKNumerics-Test.xctest */,
 				E67E512B1C2F29310048A75E /* MCKNumerics.framework */,
+				E67E51B01C2F86300048A75E /* MCKNumericsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -401,6 +401,7 @@
 		E67E508E1C2F23AB0048A75E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = MAV;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = AMProductions;
 				TargetAttributes = {
@@ -437,18 +438,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E67E510A1C2F280F0048A75E /* MCKNumerics-Test.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "MCKNumerics-Test.xctest";
-			remoteRef = E67E51091C2F280F0048A75E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		E67E512B1C2F29310048A75E /* MCKNumerics.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = MCKNumerics.framework;
 			remoteRef = E67E512A1C2F29310048A75E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E67E51B01C2F86300048A75E /* MCKNumericsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MCKNumericsTests.xctest;
+			remoteRef = E67E51AF1C2F86300048A75E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -695,6 +696,7 @@
 				E67E50A11C2F23AB0048A75E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E67E51651C2F31460048A75E /* Build configuration list for PBXNativeTarget "MaVecTests" */ = {
 			isa = XCConfigurationList;
@@ -703,6 +705,7 @@
 				E67E51671C2F31460048A75E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

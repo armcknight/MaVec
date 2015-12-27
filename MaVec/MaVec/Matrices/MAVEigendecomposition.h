@@ -2,9 +2,9 @@
 //  MAVEigenvalueDecomposition.h
 //  MaVec
 //
-//  Created by andrew mcknight on 1/4/14.
+//  Created by Andrew McKnight on 1/4/14.
 //
-//  Copyright (c) 2014 Andrew Robert McKnight
+//  Copyright © 2015 AMProductions
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
