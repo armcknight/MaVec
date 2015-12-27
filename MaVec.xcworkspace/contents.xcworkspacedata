@@ -5,6 +5,6 @@
       location = "group:MaVec/MaVec.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/amcknight/Projects/MaVec/MaVec-Demo.xcodeproj">
+      location = "group:MaVec-Demo/MaVec-Demo.xcodeproj">
    </FileRef>
 </Workspace>

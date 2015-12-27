@@ -29,66 +29,39 @@
 		49973562192599AB0004A8E5 /* RZFilteredCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973554192599AB0004A8E5 /* RZFilteredCollectionList.m */; };
 		49973563192599AB0004A8E5 /* RZObserverCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973556192599AB0004A8E5 /* RZObserverCollection.m */; };
 		49973564192599AB0004A8E5 /* RZSortedCollectionList.m in Sources */ = {isa = PBXBuildFile; fileRef = 49973558192599AB0004A8E5 /* RZSortedCollectionList.m */; };
-		E67E51481C2F2D680048A75E /* MaVec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; };
-		E67E51491C2F2D680048A75E /* MaVec.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E67E51551C2F2DC00048A75E /* MCKNumerics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */; };
-		E67E51561C2F2DC00048A75E /* MCKNumerics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E67E51BE1C2F8C160048A75E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67E51BD1C2F8C160048A75E /* AppDelegate.swift */; };
 		E67E51C01C2F8C160048A75E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E67E51BF1C2F8C160048A75E /* Assets.xcassets */; };
 		E67E51C31C2F8C160048A75E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E67E51C11C2F8C160048A75E /* MainMenu.xib */; };
-		E67E51CA1C2F8C3A0048A75E /* MaVec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; };
-		E67E51CB1C2F8C3A0048A75E /* MaVec.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E67E51471C2F2D4F0048A75E /* MaVec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E67E51461C2F2D4F0048A75E /* PBXContainerItemProxy */ = {
+		E67E51D91C2F97770048A75E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E67E50971C2F23AB0048A75E;
 			remoteInfo = MaVec;
 		};
-		E67E514A1C2F2D680048A75E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E67E50961C2F23AB0048A75E;
-			remoteInfo = MaVec;
-		};
-		E67E51531C2F2DBB0048A75E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E67E51101C2F286E0048A75E;
-			remoteInfo = MCKNumerics;
-		};
-		E67E51571C2F2DC00048A75E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E67E510F1C2F286E0048A75E;
-			remoteInfo = MCKNumerics;
-		};
-		E67E51941C2F31900048A75E /* PBXContainerItemProxy */ = {
+		E67E51DB1C2F97770048A75E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E67E515D1C2F31460048A75E;
 			remoteInfo = MaVecTests;
 		};
-		E67E51A91C2F35170048A75E /* PBXContainerItemProxy */ = {
+		E67E51DF1C2F97770048A75E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E67E51101C2F286E0048A75E;
+			remoteInfo = MCKNumerics;
+		};
+		E67E51E11C2F97770048A75E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E67E519B1C2F34CE0048A75E;
 			remoteInfo = MCKNumericsTests;
-		};
-		E67E51CC1C2F8C3A0048A75E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = E67E50961C2F23AB0048A75E;
-			remoteInfo = MaVec;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -99,8 +72,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E67E51561C2F2DC00048A75E /* MCKNumerics.framework in Embed Frameworks */,
-				E67E51491C2F2D680048A75E /* MaVec.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,7 +82,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E67E51CB1C2F8C3A0048A75E /* MaVec.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,8 +133,8 @@
 		49973557192599AB0004A8E5 /* RZSortedCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZSortedCollectionList.h; sourceTree = "<group>"; };
 		49973558192599AB0004A8E5 /* RZSortedCollectionList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RZSortedCollectionList.m; sourceTree = "<group>"; };
 		49973559192599AB0004A8E5 /* RZCollectionList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RZCollectionList.h; sourceTree = "<group>"; };
-		E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MaVec.xcodeproj; path = MaVec/MaVec.xcodeproj; sourceTree = "<group>"; };
-		E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MCKNumerics.xcodeproj; path = MaVec/../External/MCKNumerics/MCKNumerics.xcodeproj; sourceTree = "<group>"; };
+		E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MaVec.xcodeproj; path = ../MaVec/MaVec.xcodeproj; sourceTree = "<group>"; };
+		E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MCKNumerics.xcodeproj; path = ../External/MCKNumerics/MCKNumerics.xcodeproj; sourceTree = "<group>"; };
 		E67E51BB1C2F8C160048A75E /* MaVec-Demo-Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo-Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67E51BD1C2F8C160048A75E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E67E51BF1C2F8C160048A75E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -177,8 +147,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E67E51551C2F2DC00048A75E /* MCKNumerics.framework in Frameworks */,
-				E67E51481C2F2D680048A75E /* MaVec.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,7 +154,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E67E51CA1C2F8C3A0048A75E /* MaVec.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +237,7 @@
 				49973559192599AB0004A8E5 /* RZCollectionList.h */,
 			);
 			name = RZCollectionList;
-			path = External/RZCollectionList/RZCollectionList;
+			path = ../External/RZCollectionList/RZCollectionList;
 			sourceTree = "<group>";
 		};
 		49973540192599AB0004A8E5 /* Classes */ = {
@@ -304,24 +271,6 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		E67E51431C2F2D4E0048A75E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E67E51471C2F2D4F0048A75E /* MaVec.framework */,
-				E67E51951C2F31900048A75E /* MaVecTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		E67E514D1C2F2DBB0048A75E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */,
-				E67E51AA1C2F35170048A75E /* MCKNumericsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		E67E51BC1C2F8C160048A75E /* MaVec-Demo-Mac */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +280,24 @@
 				E67E51C41C2F8C160048A75E /* Info.plist */,
 			);
 			path = "MaVec-Demo-Mac";
+			sourceTree = "<group>";
+		};
+		E67E51D31C2F97770048A75E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E67E51DA1C2F97770048A75E /* MaVec.framework */,
+				E67E51DC1C2F97770048A75E /* MaVecTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E67E51D51C2F97770048A75E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E67E51E01C2F97770048A75E /* MCKNumerics.framework */,
+				E67E51E21C2F97770048A75E /* MCKNumericsTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,8 +315,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E67E514B1C2F2D680048A75E /* PBXTargetDependency */,
-				E67E51581C2F2DC00048A75E /* PBXTargetDependency */,
 			);
 			name = "MaVec-Demo";
 			productName = "MaVec-Demo";
@@ -368,7 +333,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E67E51CD1C2F8C3A0048A75E /* PBXTargetDependency */,
 			);
 			name = "MaVec-Demo-Mac";
 			productName = "MaVec-Demo-Mac";
@@ -404,11 +368,11 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E67E51431C2F2D4E0048A75E /* Products */;
+					ProductGroup = E67E51D31C2F97770048A75E /* Products */;
 					ProjectRef = E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */;
 				},
 				{
-					ProductGroup = E67E514D1C2F2DBB0048A75E /* Products */;
+					ProductGroup = E67E51D51C2F97770048A75E /* Products */;
 					ProjectRef = E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */;
 				},
 			);
@@ -421,32 +385,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E67E51471C2F2D4F0048A75E /* MaVec.framework */ = {
+		E67E51DA1C2F97770048A75E /* MaVec.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = MaVec.framework;
-			remoteRef = E67E51461C2F2D4F0048A75E /* PBXContainerItemProxy */;
+			remoteRef = E67E51D91C2F97770048A75E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E67E51541C2F2DBB0048A75E /* MCKNumerics.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MCKNumerics.framework;
-			remoteRef = E67E51531C2F2DBB0048A75E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E67E51951C2F31900048A75E /* MaVecTests.xctest */ = {
+		E67E51DC1C2F97770048A75E /* MaVecTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = MaVecTests.xctest;
-			remoteRef = E67E51941C2F31900048A75E /* PBXContainerItemProxy */;
+			remoteRef = E67E51DB1C2F97770048A75E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E67E51AA1C2F35170048A75E /* MCKNumericsTests.xctest */ = {
+		E67E51E01C2F97770048A75E /* MCKNumerics.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MCKNumerics.framework;
+			remoteRef = E67E51DF1C2F97770048A75E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E67E51E21C2F97770048A75E /* MCKNumericsTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = MCKNumericsTests.xctest;
-			remoteRef = E67E51A91C2F35170048A75E /* PBXContainerItemProxy */;
+			remoteRef = E67E51E11C2F97770048A75E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -509,24 +473,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E67E514B1C2F2D680048A75E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MaVec;
-			targetProxy = E67E514A1C2F2D680048A75E /* PBXContainerItemProxy */;
-		};
-		E67E51581C2F2DC00048A75E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MCKNumerics;
-			targetProxy = E67E51571C2F2DC00048A75E /* PBXContainerItemProxy */;
-		};
-		E67E51CD1C2F8C3A0048A75E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MaVec;
-			targetProxy = E67E51CC1C2F8C3A0048A75E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		499734B7192594DF0004A8E5 /* InfoPlist.strings */ = {
@@ -646,7 +592,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(PROJECT_DIR)/MaVec/build/Debug-iphoneos",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -686,7 +631,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(PROJECT_DIR)/MaVec/build/Debug-iphoneos",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -804,6 +748,7 @@
 				E67E51C61C2F8C160048A75E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
