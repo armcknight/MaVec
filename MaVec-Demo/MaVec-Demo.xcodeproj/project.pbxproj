@@ -89,7 +89,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		499734AB192594DF0004A8E5 /* MaVec-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		499734AB192594DF0004A8E5 /* MaVec-Demo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MaVec-Demo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		499734B6192594DF0004A8E5 /* MaVec-Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaVec-Demo-Info.plist"; sourceTree = "<group>"; };
 		499734B8192594DF0004A8E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		499734BA192594DF0004A8E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 				E67E514C1C2F2DBB0048A75E /* MCKNumerics.xcodeproj */,
 				E67E51421C2F2D4E0048A75E /* MaVec.xcodeproj */,
 				4997353E1925999F0004A8E5 /* External */,
-				499734B4192594DF0004A8E5 /* MaVec-Demo */,
+				499734B4192594DF0004A8E5 /* MaVec-Demo-iOS */,
 				E67E51BC1C2F8C160048A75E /* MaVec-Demo-Mac */,
 				499734AC192594DF0004A8E5 /* Products */,
 			);
@@ -175,13 +175,13 @@
 		499734AC192594DF0004A8E5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				499734AB192594DF0004A8E5 /* MaVec-Demo.app */,
+				499734AB192594DF0004A8E5 /* MaVec-Demo-iOS.app */,
 				E67E51BB1C2F8C160048A75E /* MaVec-Demo-Mac.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		499734B4192594DF0004A8E5 /* MaVec-Demo */ = {
+		499734B4192594DF0004A8E5 /* MaVec-Demo-iOS */ = {
 			isa = PBXGroup;
 			children = (
 				49973516192596B70004A8E5 /* View Controllers */,
@@ -190,7 +190,7 @@
 				499734C0192594DF0004A8E5 /* Images.xcassets */,
 				499734B5192594DF0004A8E5 /* Supporting Files */,
 			);
-			path = "MaVec-Demo";
+			path = "MaVec-Demo-iOS";
 			sourceTree = "<group>";
 		};
 		499734B5192594DF0004A8E5 /* Supporting Files */ = {
@@ -303,9 +303,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		499734AA192594DF0004A8E5 /* MaVec-Demo */ = {
+		499734AA192594DF0004A8E5 /* MaVec-Demo-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 499734D5192594E00004A8E5 /* Build configuration list for PBXNativeTarget "MaVec-Demo" */;
+			buildConfigurationList = 499734D5192594E00004A8E5 /* Build configuration list for PBXNativeTarget "MaVec-Demo-iOS" */;
 			buildPhases = (
 				499734A7192594DF0004A8E5 /* Sources */,
 				499734A8192594DF0004A8E5 /* Frameworks */,
@@ -316,9 +316,9 @@
 			);
 			dependencies = (
 			);
-			name = "MaVec-Demo";
+			name = "MaVec-Demo-iOS";
 			productName = "MaVec-Demo";
-			productReference = 499734AB192594DF0004A8E5 /* MaVec-Demo.app */;
+			productReference = 499734AB192594DF0004A8E5 /* MaVec-Demo-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E67E51BA1C2F8C160048A75E /* MaVec-Demo-Mac */ = {
@@ -378,7 +378,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				499734AA192594DF0004A8E5 /* MaVec-Demo */,
+				499734AA192594DF0004A8E5 /* MaVec-Demo-iOS */,
 				E67E51BA1C2F8C160048A75E /* MaVec-Demo-Mac */,
 			);
 		};
@@ -597,14 +597,14 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MaVec-Demo/MaVec-Demo-Prefix.pch";
+				GCC_PREFIX_HEADER = "MaVec-Demo-iOS/MaVec-Demo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
-				INFOPLIST_FILE = "MaVec-Demo/MaVec-Demo-Info.plist";
+				INFOPLIST_FILE = "MaVec-Demo-iOS/MaVec-Demo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -634,9 +634,9 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MaVec-Demo/MaVec-Demo-Prefix.pch";
+				GCC_PREFIX_HEADER = "MaVec-Demo-iOS/MaVec-Demo-Prefix.pch";
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
-				INFOPLIST_FILE = "MaVec-Demo/MaVec-Demo-Info.plist";
+				INFOPLIST_FILE = "MaVec-Demo-iOS/MaVec-Demo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -732,7 +732,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		499734D5192594E00004A8E5 /* Build configuration list for PBXNativeTarget "MaVec-Demo" */ = {
+		499734D5192594E00004A8E5 /* Build configuration list for PBXNativeTarget "MaVec-Demo-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				499734D6192594E00004A8E5 /* Debug */,

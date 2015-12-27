@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "499734AA192594DF0004A8E5"
-               BuildableName = "MaVec-Demo.app"
-               BlueprintName = "MaVec-Demo"
+               BuildableName = "MaVec-Demo-iOS.app"
+               BlueprintName = "MaVec-Demo-iOS"
                ReferencedContainer = "container:MaVec-Demo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,8 +43,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "499734AA192594DF0004A8E5"
-            BuildableName = "MaVec-Demo.app"
-            BlueprintName = "MaVec-Demo"
+            BuildableName = "MaVec-Demo-iOS.app"
+            BlueprintName = "MaVec-Demo-iOS"
             ReferencedContainer = "container:MaVec-Demo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -66,8 +66,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "499734AA192594DF0004A8E5"
-            BuildableName = "MaVec-Demo.app"
-            BlueprintName = "MaVec-Demo"
+            BuildableName = "MaVec-Demo-iOS.app"
+            BlueprintName = "MaVec-Demo-iOS"
             ReferencedContainer = "container:MaVec-Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -85,8 +85,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "499734AA192594DF0004A8E5"
-            BuildableName = "MaVec-Demo.app"
-            BlueprintName = "MaVec-Demo"
+            BuildableName = "MaVec-Demo-iOS.app"
+            BlueprintName = "MaVec-Demo-iOS"
             ReferencedContainer = "container:MaVec-Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
