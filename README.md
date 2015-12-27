@@ -40,7 +40,7 @@ Supported Operations
 - Singular value decomposition
 - Eigendecomposition
 - Symmetry queries
-- Definitenes queries (positive/positive semi/negative/negative semi/indefinite)
+- Definiteness queries (positive/positive semi/negative/negative semi/indefinite)
 - Trace
 - L1/infinity/max/froebenius(euclidean) norm
 - Column/row swaps
