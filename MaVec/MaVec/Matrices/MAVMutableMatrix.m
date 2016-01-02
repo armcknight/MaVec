@@ -100,10 +100,12 @@
 
 - (void)setEntryAtRow:(MAVIndex)row column:(MAVIndex)column toValue:(NSNumber *)value
 {
+#if DEBUG
     NSAssert1(row >= 0 && row < self.rows, @"row = %lld is outside the range of possible rows.", (long long int)row);
     NSAssert1(column >= 0 && column < self.columns, @"column = %lld is outside the range of possible columns.", (long long int)column);
     BOOL precisionsMatch = (self.precision == MCKPrecisionDouble && value.isDoublePrecision) || (self.precision == MCKPrecisionSingle && value.isSinglePrecision);
     NSAssert(precisionsMatch, @"Precisions do not match.");
+#endif
     
     [self invalidateStateIfOperation:MAVMatrixMutatingOperationAssignmentValue
               notIdempotentWithInput:value

@@ -136,8 +136,10 @@ MAVVectorMutatingOperationType;
 
 - (MAVMutableVector *)multiplyByScalar:(NSNumber *)scalar
 {
+#if DEBUG
     BOOL precisionsMatch = (self.precision == MCKPrecisionDouble && scalar.isDoublePrecision) || (self.precision == MCKPrecisionSingle && scalar.isSinglePrecision);
     NSAssert(precisionsMatch, @"Precisions do not match");
+#endif
     
     [self resetToDefaultIfOperation:MAVVectorMutatingOperationTypeMultiplicationScalar notIdempotentWithInput:scalar atIndex:0];
     
